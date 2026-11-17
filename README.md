@@ -14,6 +14,9 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
+**Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
+**Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
+
 ## Stellschrauben
 
 - `pipeline.toml`: globale Standardwerte, z. B. **`face_limit`** (Polygon-Obergrenze = wichtigster Performance-Regler), Texturqualität, Rig-Version, Animationen
