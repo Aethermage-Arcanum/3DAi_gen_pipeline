@@ -23,6 +23,7 @@ role = "style"
 # (erreichen den Boden nicht), gelaufen wird auf den Paaren 2-4 → Ameisen-Dreifuß-Gang.
 [motion]
 style = "crawler/ant"
+vorbild = ["Ameise (Formica) – Dreifuß-Gang", "Crematogaster – Drohhaltung mit erhobenem Hinterleib", "Ameise – Mandibel-Biss/Alarmverhalten"]
 # variant = "spider"     # Beispiel: Varianten aus style.toml
 
 [motion.legs]

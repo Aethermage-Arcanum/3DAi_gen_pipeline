@@ -12,3 +12,10 @@ role = "design"
 [[concept]]
 file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
 role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "crawler/scorpion"
+variant = ""
+vorbild = ["Skorpion – Gang, Scheren vorne", "Skorpion – Stich und Drohhaltung (Schwanz über dem Rücken)"]

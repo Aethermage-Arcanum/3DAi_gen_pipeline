@@ -30,6 +30,13 @@ for i, c in enumerate(R["c"], 2):
             f'ignore the grey silhouettes and any text in the background."\n\n'
             f'[[concept]]\nfile = "input/concept/design_{c["artist"]}.png"\nrole = "design"\n\n'
             f'[[concept]]\nfile = "{style.as_posix()}"\nrole = "style"\n', encoding="utf-8")
+    cur = toml.read_text(encoding="utf-8")
+    if "[motion]" not in cur and c.get("motion"):      # Bewegungsmuster + Vorbild nachtragen (nie überschreiben)
+        refs = ", ".join(f'"{v}"' for v in c.get("vorbild", []))
+        block = ["", "# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die",
+                 "# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren",
+                 "[motion]", f'style = "{c["motion"]}"', f'variant = "{c.get("variant", "")}"', f"vorbild = [{refs}]", ""]
+        toml.write_text(cur.rstrip() + "\n" + "\n".join(block), encoding="utf-8")
     make_prompts.build(d)
     txt = (d / "prompts.md").read_text(encoding="utf-8")
     prompt = txt.split("```text\n", 1)[1].split("```", 1)[0]

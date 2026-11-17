@@ -3,6 +3,8 @@
 # (bestehende creature.toml werden NIE überschrieben) und schreibt PROMPTS_ALLE.md.
 # design = Name auf dem Concept-Sheet, artist = welche Version (A/B) als Design-Vorlage dient,
 # cell = Position auf dem Sheet (Artist, Reihe, Spalte) für den Ausschnitt (scripts/concept_crops.py).
+# motion = Skelett/Bewegungsmuster, variant = Variante des Musters, vorbild = echte Tiere, deren Videos
+#   vor dem Animieren gesucht werden (BITTE PRÜFEN/KORRIGIEREN).
 # hint = kurze Stütze für ChatGPT – das Concept-Sheet hat immer Vorrang.
 
 sheet = "../_concept/monster_progression_A_vs_B.webp"
@@ -11,6 +13,9 @@ style_ref = "creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.pn
 [[c]]
 id = "spore_drone"
 cell = "A r1c2"
+motion = "crawler/ant"
+variant = "beetle"
+vorbild = ["Käfer (z. B. Mistkäfer) – schwerer, langsamer Dreifuß-Gang", "von Pilz befallene Insekten (Ophiocordyceps) – Pulsieren"]
 design = "Spore Drone"
 artist = "A"
 bodyplan = "hexapod"
@@ -18,6 +23,9 @@ hint = "forest beetle-like insect carrying spore growths, six legs"
 [[c]]
 id = "needle_wasp"
 cell = "A r1c3"
+motion = "crawler/wasp"
+variant = ""
+vorbild = ["Wespe/Hornisse im Schwebeflug (Zeitlupe)", "Wespe beim Stechen – Hinterleib schnellt vor"]
 design = "Needle Wasp"
 artist = "A"
 bodyplan = "hexapod"
@@ -25,6 +33,9 @@ hint = "forest wasp with a needle stinger and clearly separated wings, six legs"
 [[c]]
 id = "broodling"
 cell = "A r1c4"
+motion = "crawler/ant"
+variant = "spider"
+vorbild = ["Wolfsspinne mit Eikokon/Jungen auf dem Rücken", "Springspinne – Sprungbiss"]
  design = "Broodling"
  artist = "A"
 bodyplan = "octopod"
@@ -32,6 +43,9 @@ hint = "small spider-like forest brood creature, eight legs"
 [[c]]
 id = "reef_snapper"
 cell = "A r2c1"
+motion = "quadruped/lizard"
+variant = ""
+vorbild = ["Waran (Komodowaran) – Gang mit seitlichem Körperschwingen", "Krokodil – High-Walk und Schnappbiss"]
    design = "Reef Snapper"
    artist = "A"
 bodyplan = "quadruped"
@@ -39,6 +53,9 @@ hint = "coastal lizard-like reptile predator with snapping jaws, four legs"
 [[c]]
 id = "shore_lurker"
 cell = "A r2c2"
+motion = "quadruped/lizard"
+variant = "lurker"
+vorbild = ["Krokodil im Hinterhalt – flach liegen, Vorschnellen", "Walross – schwerfälliges Robben an Land"]
    design = "Shore Lurker"
    artist = "A"
 bodyplan = "quadruped"
@@ -46,6 +63,9 @@ hint = "low, flat coastal ambush reptile, four legs"
 [[c]]
 id = "shellback"
 cell = "A r2c3"
+motion = "quadruped/tortoise"
+variant = ""
+vorbild = ["Schnappschildkröte – Biss", "Landschildkröte – langsamer Gang, Kopf einziehen"]
  design = "Shellback"
  artist = "A"
 bodyplan = "quadruped"
@@ -53,6 +73,9 @@ hint = "coastal tortoise-like beast with a heavy shell, four legs"
 [[c]]
 id = "eel_stalker"
 cell = "A r2c4"
+motion = "legless/cobra"
+variant = "eel"
+vorbild = ["Muräne – Vorschnellen aus der S-Kurve", "Kobra – aufgerichtete Drohhaltung", "Zitteraal – Schlängeln"]
 design = "Eel Stalker"
 artist = "A"
 bodyplan = "serpentine"
@@ -60,6 +83,9 @@ hint = "legless eel-like serpent from the coast, long body, head raised"
 [[c]]
 id = "ravine_stalker"
 cell = "A r3c1"
+motion = "quadruped/wolf"
+variant = ""
+vorbild = ["Wolf – Trab und Galopp (Muybridge-Sequenzen)", "Wolf – Drohhaltung, Anspringen"]
   design = "Ravine Stalker"
   artist = "A"
 bodyplan = "quadruped"
@@ -67,6 +93,9 @@ hint = "lean wolf-like highland predator, four legs"
 [[c]]
 id = "stone_boar"
 cell = "A r3c2"
+motion = "quadruped/boar"
+variant = ""
+vorbild = ["Wildschwein – Angriff/Rammen", "Wildschwein – Wühlen (Idle)"]
 design = "Stone Boar"
 artist = "A"
 bodyplan = "quadruped"
@@ -74,6 +103,9 @@ hint = "stocky boar with stone-like armor plates and tusks, four legs"
 [[c]]
 id = "hollow_stag"
 cell = "A r3c3"
+motion = "quadruped/deer"
+variant = ""
+vorbild = ["Hirsch – Galopp und Sprung", "Hirschkampf in der Brunft – Geweihstoß"]
 design = "Hollow Stag"
 artist = "A"
 bodyplan = "quadruped"
@@ -81,6 +113,9 @@ hint = "gaunt stag with large antlers, four long legs"
 [[c]]
 id = "rock_hyena"
 cell = "A r3c4"
+motion = "quadruped/wolf"
+variant = "hyena"
+vorbild = ["Tüpfelhyäne – geduckter, schaukelnder Gang", "Tüpfelhyäne – Lachen/Drohen"]
 design = "Rock Hyena"
 artist = "A"
 bodyplan = "quadruped"
@@ -88,6 +123,9 @@ hint = "hunched hyena-like highland scavenger, four legs"
 [[c]]
 id = "sand_leviathan"
 cell = "A r4c1"
+motion = "legless/sandworm"
+variant = ""
+vorbild = ["Regenwurm – Peristaltik", "Python – rectilineare (geradlinige) Fortbewegung", "Sandboa – Abtauchen in Sand"]
   design = "Sand Leviathan"
   artist = "A"
 bodyplan = "serpentine"
@@ -95,6 +133,9 @@ hint = "huge legless desert worm with a wide round maw, front part raised out of
 [[c]]
 id = "dune_raptor"
 cell = "A r4c2"
+motion = "biped_raptor/raptor"
+variant = ""
+vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff", "Huhn – Kopfstabilisierung"]
 design = "Dune Raptor"
 artist = "A"
 bodyplan = "biped"
@@ -102,6 +143,9 @@ hint = "two-legged desert raptor WITHOUT wings, long tail for balance, body lean
 [[c]]
 id = "glassback_colossus"
 cell = "B r4c3"
+motion = "quadruped/behemoth"
+variant = ""
+vorbild = ["Elefant – schwerer Passgang", "Nashorn – Angriff/Rammen"]
 design = "Glassback Colossus"
 artist = "B"
 bodyplan = "quadruped"
@@ -109,6 +153,9 @@ hint = "massive four-legged desert beast with glass-like crystal formations on i
 [[c]]
 id = "scorpion_matriarch"
 cell = "A r4c4"
+motion = "crawler/scorpion"
+variant = ""
+vorbild = ["Skorpion – Gang, Scheren vorne", "Skorpion – Stich und Drohhaltung (Schwanz über dem Rücken)"]
 design = "Scorpion Matriarch"
 artist = "A"
 bodyplan = "octopod"
@@ -116,6 +163,9 @@ hint = "giant desert scorpion: two large pincers, eight walking legs, segmented 
 [[c]]
 id = "frost_colossus"
 cell = "A r5c1"
+motion = "quadruped/gorilla"
+variant = ""
+vorbild = ["Gorilla – Knöchelgang (vierbeinig)", "Gorilla – Aufrichten, Brusttrommeln, Schläge (Angriff eher humanoid)"]
   design = "Frost Colossus"
   artist = "A"
 bodyplan = "quadruped"
@@ -123,6 +173,9 @@ hint = "huge gorilla-like ice beast standing on all fours on its knuckles, massi
 [[c]]
 id = "flesh_titan"
 cell = "B r5c2"
+motion = "biped_brute/titan"
+variant = ""
+vorbild = ["Gorilla aufrecht / Bodybuilder-Gang", "Sumo-Ringer – schwerer Stampfschritt", "Unity-Humanoid-Clips als Vorlage erlaubt (auch nur Oberkörper)"]
 design = "Flesh Titan"
 artist = "B"
 bodyplan = "biped"
@@ -130,6 +183,9 @@ hint = "hulking two-legged abyssal flesh monster with a partly humanoid upper bo
 [[c]]
 id = "void_manifestation"
 cell = "A r5c3"
+motion = "floater/tentacle"
+variant = ""
+vorbild = ["Oktopus – Tentakelwellen", "Qualle – Pulsieren beim Schweben", "Kalmar – Tentakel-Schlag"]
 design = "Void Manifestation"
 artist = "A"
 bodyplan = "aquatic"
@@ -137,6 +193,9 @@ hint = "floating void orb with squid-like tentacles hanging below it, hovering a
 [[c]]
 id = "void_harbinger"
 cell = "B r5c3"
+motion = "floater/harbinger"
+variant = ""
+vorbild = ["Weberknecht – lange dünne Beine (laut Concept)", "Fledermaus/Flughund – Flügel spreizen/schlagen", "teils humanoid (deine Notiz) – Design prüfen"]
   design = "Void Harbinger"
   artist = "B"
 bodyplan = "biped"
@@ -144,6 +203,9 @@ hint = "partly humanoid two-legged void creature with wings, wings clearly separ
 [[c]]
 id = "reality_ripper"
 cell = "A r5c4"
+motion = "crawler/mantis"
+variant = ""
+vorbild = ["Gottesanbeterin – Fangschlag (Zeitlupe)", "Gottesanbeterin – Wiegen/Schaukeln (Tarnung)"]
   design = "Reality Ripper"
   artist = "A"
 bodyplan = "hexapod"
