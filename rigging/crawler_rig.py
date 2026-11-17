@@ -274,13 +274,49 @@ def build(mesh_path, out_dir, creature_toml=None):
             return [(n1, 1 - w2), (n2, w2)]
         return [(n1, 1.0)]
 
-    # 1) Bein-Segmente: jedes Chitin-Segment (Insel) starr an EINEM Knochen seines Beins.
-    #    Sehr lange Inseln (über mehrere Knochen) pro Vertex mit weichem Übergang.
+    # 1) Bein-Gewichte.
+    #    "positional": nach Lage entlang der Beinkette; in einer Zone um jedes Gelenk (inkl. Beinansatz
+    #                  am Thorax) weich zwischen beiden Knochen überblendet → keine Lücken beim Knicken.
+    #    "island":     jedes Chitin-Segment starr an einem Knochen (alt, klafft an Gelenken auf).
     leg_blend = rc["leg_blend"] * d["size"]
+    joint_r = rc["joint_blend"] * d["size"]
+
+    def smooth(x):
+        x = max(0.0, min(1.0, x))
+        return x * x * (3 - 2 * x)
+
+    def leg_weights(p, side, slot):
+        pts = leg_pts[(side, slot)]
+        names = ["Thorax"] + [f"Leg_{side}{slot}_{q}" for q in LEG_PARTS]
+        seg_len = [(b - a).length for a, b in zip(pts, pts[1:])]
+        cum = [0.0]
+        for L_ in seg_len:
+            cum.append(cum[-1] + L_)
+        best = None
+        for k_, (a, b) in enumerate(zip(pts, pts[1:])):
+            t = max(0.0, min(1.0, intersect_point_line(p, a, b)[1]))
+            dd = (p - (a + (b - a) * t)).length
+            if best is None or dd < best[0]:
+                best = (dd, k_, cum[k_] + t * seg_len[k_])
+        _, k_, s = best
+        w = {names[k_ + 1]: 1.0}
+        for m in range(4):  # Gelenke: 0 = Thorax/Coxa, 1 = Coxa/Femur, 2 = Femur/Tibia, 3 = Tibia/Tarsus
+            r_ = min(joint_r, 0.4 * seg_len[m], 0.4 * seg_len[m - 1] if m > 0 else joint_r)
+            if abs(s - cum[m]) < r_ and r_ > 1e-6:
+                wc = smooth((s - cum[m] + r_) / (2 * r_))
+                w = {names[m]: 1 - wc, names[m + 1]: wc}
+                break
+        return [(n, x) for n, x in w.items() if x > 1e-3]
+
     for l in d["legs"]:
         if l.get("slot", 9) > 4:
             continue
         names = [f"Leg_{l['side']}{l['slot']}_{p}" for p in LEG_PARTS]
+        if rc["leg_weight_mode"] == "positional":
+            for i in l["islands"]:
+                for v in d["islands"][i]["verts"]:
+                    assigned[v] = leg_weights(co[v], l["side"], l["slot"])
+            continue
         for i in l["islands"]:
             isl = d["islands"][i]
             pts = [co[v] for v in isl["verts"]]
@@ -314,8 +350,10 @@ def build(mesh_path, out_dir, creature_toml=None):
             nl = nearest(isl["center"], all_leg_bones)
             ns = nearest(isl["center"], spine)
             if seg_dist(isl["center"], *bones_ws[nl]) < rc["leg_capture_ratio"] * seg_dist(isl["center"], *bones_ws[ns]):
+                side, slot = nl[4], int(nl[5])
                 for v in isl["verts"]:
-                    assigned[v] = [(nl, 1.0)]
+                    assigned[v] = (leg_weights(co[v], side, slot) if rc["leg_weight_mode"] == "positional"
+                                   else [(nl, 1.0)])
                 moved_to_leg += 1
                 continue
         if len(isl["verts"]) < rc["rigid_island_max_verts"]:
@@ -327,6 +365,39 @@ def build(mesh_path, out_dir, creature_toml=None):
             continue
         for v in isl["verts"]:
             assigned[v] = blended(co[v], spine, blend)
+
+    # 4) Rumpf-Vertices direkt am Beinansatz (Gelenkringe) teilweise mit der Coxa mitnehmen,
+    #    sonst klafft zwischen Ring und Bein eine Lücke, wenn das Bein schwenkt.
+    if rc["leg_weight_mode"] == "positional":
+        from mathutils.kdtree import KDTree
+        leg_vs = [v for v, ws in assigned.items() if any(n.startswith("Leg_") for n, _ in ws)]
+        kd = KDTree(len(leg_vs))
+        for idx, v in enumerate(leg_vs):
+            kd.insert(co[v], idx)
+        kd.balance()
+        leg_set = set(leg_vs)
+        root_r = rc["root_blend"] * d["size"]
+        for v, ws in list(assigned.items()):
+            if v in leg_set:
+                continue
+            near = [(p_, idx, dist) for (p_, idx, dist) in kd.find_range(co[v], root_r)]
+            if near:
+                # Gewichte der nahen Bein-Vertices (auch verschiedener Beine) anteilig übernehmen,
+                # gewichtet nach Nähe → Rumpf "klebt" an allen Beinen, die er berührt
+                dist = min(x[2] for x in near)
+                wc = rc["root_blend_max"] * (1 - dist / root_r)
+                mix = {}
+                for n, x in ws:
+                    mix[n] = mix.get(n, 0) + x * (1 - wc)
+                inv = [(1 - dd / root_r) ** 2 for _, _, dd in near]
+                tot_inv = sum(inv) or 1
+                for (_, idx, _), f_ in zip(near, inv):
+                    for n, x in assigned[leg_vs[idx]]:
+                        mix[n] = mix.get(n, 0) + x * wc * f_ / tot_inv
+                # max. 4 Einflüsse (Unity-Standard), normalisiert
+                top = sorted(mix.items(), key=lambda kv: -kv[1])[:4]
+                tot = sum(x for _, x in top)
+                assigned[v] = [(n, x / tot) for n, x in top if x / tot > 1e-3]
     for v, ws in assigned.items():
         for n, w in ws:
             groups[n].add([v], w, "REPLACE")

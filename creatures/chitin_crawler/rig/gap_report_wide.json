@@ -1,0 +1,69 @@
+{
+  "pairs_checked": 128,
+  "threshold_m": 0.006,
+  "max_opening_m": 0.0188,
+  "joints_over_threshold": 5,
+  "worst": [
+    [
+      "Leg_L2_Femur / Thorax",
+      0.0188,
+      10
+    ],
+    [
+      "Leg_L3_Coxa / Thorax",
+      0.0131,
+      10
+    ],
+    [
+      "Abdomen_1 / Leg_R4_Coxa",
+      0.0123,
+      18
+    ],
+    [
+      "Abdomen_1 / Leg_L4_Coxa",
+      0.0066,
+      8
+    ],
+    [
+      "Leg_R3_Femur / Thorax",
+      0.006,
+      4
+    ],
+    [
+      "Leg_L2_Coxa / Thorax",
+      0.0046,
+      9
+    ],
+    [
+      "Leg_L1_Coxa / Thorax",
+      0.002,
+      18
+    ],
+    [
+      "Leg_R1_Coxa / Thorax",
+      0.0013,
+      12
+    ],
+    [
+      "Leg_R3_Coxa / Thorax",
+      0.0009,
+      19
+    ],
+    [
+      "Leg_L1_Femur / Leg_L1_Tibia",
+      0.0,
+      17
+    ],
+    [
+      "Leg_R2_Tarsus / Leg_R2_Tibia",
+      0.0,
+      11
+    ],
+    [
+      "Leg_L4_Tarsus / Leg_L4_Tibia",
+      0.0,
+      13
+    ]
+  ],
+  "ok": false
+}

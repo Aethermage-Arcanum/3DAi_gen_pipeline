@@ -57,6 +57,19 @@ Concept: `_concept/monster_progression_A_vs_B.webp` (Design Artist A, Stil Artis
 - **Fehler dabei gefunden:** Die Seitwärtsbewegung von Fühlern und Tastern lief mit halber Frequenz → Sprung bei jedem Loop-Übergang. Behoben. Die Schleifenprüfung umfasst jetzt **alle** Knochen statt nur der Füße (max. Sprung 0,0 mm).
 - Alle Werte gelten als neue Standardwerte für alle Krabbler (`rigging/crawler_defaults.toml`).
 
+### Refinement 2: Brüche an Knien/Beinansätzen (Feedback Nutzer)
+Neue Selbstprüfung `rigging/check_gaps.py`: Vertex-Paare aus verschiedenen Mesh-Teilen, die in Ruhe aneinanderliegen, werden über alle Frames verfolgt.
+
+| Stand | max. Aufklaffen | Gelenke über Grenze |
+|---|---|---|
+| Segmente starr (vorher) | 3,4 cm (Coxa ↔ Thorax) | 7 |
+| + Gelenkmanschetten (weiche Zone an jedem Gelenk) | 1,9 cm | 4 |
+| + Rumpf übernimmt Gewichte naher Bein-Vertices (max. 80 %) | **1,3 cm** | **0** (Grenze 1,5 cm) |
+
+- Die verbleibenden 1,3 cm liegen zwischen den Ansätzen von L2 und L3, die sich in Ruhe berühren und im Gegentakt schwingen, und treten nur im ungünstigsten Frame auf. Aus der ARPG-Kamera nicht sichtbar.
+- Jetzt max. 4 Einflüsse pro Vertex (Unity-Standard).
+- Die Lückenprüfung ist fester Teil der Pipeline (`[gaps]` in `crawler_defaults.toml`).
+
 ## Nächste Entscheidung
 - **A) 8 Beine akzeptieren:** nur Animation `octopod:walk` neu (≈10 Credits)
 - **B) 6 Beine wie geplant:** Bilder mit eindeutig 6 Beinen neu machen, dann Modell + Rig + Animation neu (≈145 Credits)

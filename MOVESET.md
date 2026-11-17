@@ -24,8 +24,8 @@ Spalte **Typ:** P = prozedural mit Slidern (wie Walk) · K = Keyposen + prozedur
 | 5 | **Run** | 1 | P | ✓ | ~0,4 s | Gleicher Gang, längere Schritte und höhere Frequenz, Körper tiefer. Unity mischt Walk ↔ Run nach Tempo. | Ameise rennt (Gangart bleibt Dreifuß!) |
 | 6 | **Turn** (auf der Stelle) | 1 | P | ✓ | ~0,5 s | Beine trippeln seitlich, Körper dreht. **Nicht in der Ausgangsliste, aber nötig:** Auto-Battler-Units drehen sich ständig zum Ziel. | Ameise wendet |
 | 7 | **Attack 1** (Biss) | 1 | K | – | ~0,8 s | Ausholen (Kopf zurück, Mandibeln auf), Vorschnellen + Zubeißen (Treffer-Frame), zurück | Ameise beißt / Bulldoggenameise |
-| 8 | **Attack 2** (Stachel / Säure) | 2 | K | – | ~1,0 s | Hinterleib unter dem Körper nach vorne krümmen und stechen bzw. Säure spritzen (Fernkampf-Variante mit Projektil-Event) | Waldameise spritzt Ameisensäure, Wespe sticht |
-| 9 | **Dodge** | 2 | K | – | ~0,4 s | Schneller Seit- oder Rückwärtssatz mit Root Motion, Beine trippeln | Insekt weicht Berührung aus |
+| 8 | **Attack 2** (Stachel / Säure) | 2 | K | – | ~1,0 s | Hinterleib unter dem Körper nach vorne krümmen. **Option pro Monster:** stechen (Nahkampf) oder Säure spritzen (Fernkampf, Projektil-Event) | Waldameise spritzt Ameisensäure, Wespe sticht |
+| 9 | **Dodge** | 2 | K | – | ~0,4 s | Schneller Seit- oder Rückwärtssatz mit Root Motion, Beine trippeln. **Genutzt von Bossen und Elite-Monstern.** | Insekt weicht Berührung aus |
 | 10 | **Hit** (leicht) | 1 | A | – | ~0,25 s | Kurzes Zurückzucken von Kopf und Rumpf. **Additiv**, läuft also über Walk/Attack, ohne sie zu unterbrechen. | – (Spiel-Konvention) |
 | 11 | **Hit Heavy** (stark) | 2 | K | – | ~0,6 s | Taumeln nach hinten, Beine spreizen sich zum Abstützen, unterbricht die aktuelle Aktion | – |
 | 12 | **Knockdown** (umfallen) | 2 | K | – | ~0,8 s | Insekten-typisch: **auf den Rücken kippen**. Danach Loop „Beine strampeln“ als eigener kurzer Loop. | Käfer liegt auf dem Rücken, strampelt |
@@ -58,7 +58,8 @@ Spalte **Typ:** P = prozedural mit Slidern (wie Walk) · K = Keyposen + prozedur
 2. **Lebendig:** Attack 2, Hit Heavy, Knockdown, Get Up, Dodge, Spawn, Stun
 3. **Kür:** Think, Jump, Taunt, Cast
 
-## Offene Fragen an den Nutzer
-- Fernkampf-Krabbler (Säure spritzen) als Variante von Attack 2 oder als eigener Monstertyp?
-- Gibt es Knockdown im Spieldesign überhaupt (CC-System), oder reicht Hit Heavy?
-- Brauchen Monster Dodge, oder nur die Helden?
+## Entscheidungen des Nutzers (2026-11-17)
+- **Fernkampf = Variante von Attack 2.** Ein Regler bzw. eine Option pro Monster: Stich (Nahkampf) oder Säure spritzen (Projektil-Event).
+- **Knockdown gibt es** (echter Kontroll-Effekt) → Knockdown, Strampel-Loop und Get Up bleiben.
+- **Dodge: zumindest Bosse und Elite-Monster weichen aus.** Normale Monster brauchen den Clip nicht, er wird aber pro Bauplan trotzdem erzeugt (Standard-Skelett), damit Elite-Varianten ihn nutzen können.
+- **Keine Clips gestrichen**, die Liste bleibt vollständig.

@@ -24,7 +24,7 @@ BLENDER = r"D:\Blender\blender.exe"
 def blender(args, label):
     print(f"→ {label}", flush=True)
     r = subprocess.run([BLENDER, "-b", *args], capture_output=True, text=True, encoding="utf-8", errors="replace")
-    keep = [l for l in r.stdout.splitlines() if l.startswith(("RIG_REPORT", "WALK_REPORT", "  FOOT", "EXPORT_OK",
+    keep = [l for l in r.stdout.splitlines() if l.startswith(("WALK_REPORT", "EXPORT_OK", "GAPS",
                                                                "VERIFY", "Traceback", "Error"))]
     for l in keep:
         print("   ", l[:400])
@@ -50,6 +50,10 @@ def main():
     R = ROOT / "rigging"
     blender(["--factory-startup", "-P", str(R / "crawler_rig.py"), "--", str(src), str(rig), toml], "Rig")
     blender([str(rig / "crawler_rigged.blend"), "-P", str(R / "crawler_walk.py"), "--", str(rig), toml], "Laufzyklus")
+    import tomllib
+    gcfg = tomllib.loads((R / "crawler_defaults.toml").read_text(encoding="utf-8")).get("gaps", {})
+    blender([str(rig / "crawler_walk.blend"), "-P", str(R / "check_gaps.py"), "--", str(rig / "gap_report.json"),
+             str(gcfg.get("pair_eps", 0.015)), str(gcfg.get("max_opening", 0.015))], "Lückenprüfung (Gelenke)")
     if not a.no_preview:
         anim = rig / "anim"
         for p in anim.glob("*.png"):
@@ -64,7 +68,9 @@ def main():
                 f"Gegentest {ext.upper()}")
         ok &= json.loads((out / f"verify_{ext}.json").read_text(encoding="utf-8"))["ok"]
     walk = json.loads((rig / "walk_report.json").read_text(encoding="utf-8"))
-    ok &= walk["loop_ok"] and walk["foot_contact_ok"]
+    gaps = json.loads((rig / "gap_report.json").read_text(encoding="utf-8"))
+    ok &= walk["loop_ok"] and walk["foot_contact_ok"] and gaps["ok"]
+    print(f"Gelenk-Lücken: max {gaps['max_opening_m'] * 100:.1f} cm (Grenze {gaps['threshold_m'] * 100:.1f} cm)")
     print(f"\n{'✓ ALLES OK' if ok else '✗ PRÜFUNG FEHLGESCHLAGEN'}  ·  Unity-Laufgeschwindigkeit: "
           f"{walk['suggested_move_speed_mps']} m/s  ·  Ausgabe: {out}")
     if not ok:

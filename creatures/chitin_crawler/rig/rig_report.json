@@ -192,16 +192,15 @@
   },
   "loose_parts_to_legs": 5,
   "bones": 43,
-  "bones_with_weights": 39,
+  "bones_with_weights": 40,
   "bones_without_weights": [
-    "Leg_L2_Femur",
     "Mandible_L",
     "Mandible_R",
     "Root"
   ],
   "vertices": 2275,
   "unweighted_vertices": 0,
-  "max_influences": 2,
+  "max_influences": 4,
   "legs": {
     "L1": [
       [
