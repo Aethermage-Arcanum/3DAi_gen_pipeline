@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Blender-Backups
+*.blend1
+*.blend2
+
+# Geheimnisse (liegen eigentlich im Wurzelordner, hier nur zur Sicherheit)
+.env
+.env.*
+
+# Reproduzierbare Demo-Ausgaben (neu erzeugen mit procedural/demo.py)
+procedural/demo_output/
+
+# Tripo-Downloads in creatures/*/raw/ werden BEWUSST versioniert:
+# sie haben Credits gekostet und sind nicht kostenlos reproduzierbar.

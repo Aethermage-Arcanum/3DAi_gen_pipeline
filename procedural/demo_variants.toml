@@ -1,0 +1,41 @@
+# Demo: EIN Grundkörper, sechs Varianten – nur über Slider + Farben.
+# Slider-Namen = Namen im Blender-Modifier "Monster Anbauteile" (siehe addon_nodes.py).
+# Nicht angegebene Slider behalten ihren Standardwert.
+
+[[variant]]
+label = "1 · Grundkörper (keine Anbauteile)"
+body_color = [0.16, 0.30, 0.34]
+settings = { "Stacheln An" = false, "Platten An" = false }
+
+[[variant]]
+label = "2 · Rückenkamm, wenige lange Stacheln"
+body_color = [0.16, 0.30, 0.34]
+spike_color = [0.75, 0.22, 0.18]
+settings = { "Stachel Dichte" = 30.0, "Stachel Abstand" = 0.2, "Stachel Länge" = 0.55, "Stachel Breite" = 0.09, "Stachel Kammbreite" = 0.15, "Stachel Neigung" = 0.9 }
+
+[[variant]]
+label = "3 · Viele kurze Dornen auf der Oberseite"
+body_color = [0.30, 0.20, 0.14]
+spike_color = [0.85, 0.78, 0.60]
+settings = { "Stachel Dichte" = 60.0, "Stachel Abstand" = 0.12, "Stachel Länge" = 0.2, "Stachel Breite" = 0.04, "Stachel Kammbreite" = 10.0, "Stachel Abdeckung" = 0.35, "Stachel Neigung" = 0.3 }
+
+[[variant]]
+label = "4 · Panzerplatten klein + dicht (Schuppen)"
+body_color = [0.20, 0.32, 0.18]
+plate_color = [0.40, 0.55, 0.25]
+settings = { "Stacheln An" = false, "Platten An" = true, "Platten Größe" = 0.1, "Platten Abstand" = 0.12, "Platten Dichte" = 120.0, "Platten Schuppung" = 0.6 }
+
+[[variant]]
+label = "5 · Große Platten + Rückenstacheln"
+body_color = [0.22, 0.20, 0.26]
+plate_color = [0.45, 0.42, 0.50]
+spike_color = [0.85, 0.80, 0.70]
+settings = { "Platten An" = true, "Platten Größe" = 0.22, "Platten Abstand" = 0.26, "Platten Dicke" = 0.06, "Platten Abdeckung" = 0.35, "Stachel Dichte" = 30.0, "Stachel Länge" = 0.4, "Stachel Kammbreite" = 0.12 }
+
+[[variant]]
+label = "6 · Frost-Variante (gleiche Form, andere Werte)"
+body_color = [0.55, 0.66, 0.75]
+spike_color = [0.55, 0.85, 1.0]
+plate_color = [0.80, 0.90, 0.97]
+spike_emission = 0.6
+settings = { "Platten An" = true, "Platten Größe" = 0.14, "Platten Abdeckung" = 0.3, "Stachel Dichte" = 50.0, "Stachel Abstand" = 0.15, "Stachel Länge" = 0.5, "Stachel Breite" = 0.06, "Stachel Kanten" = 3, "Stachel Kammbreite" = 10.0, "Stachel Abdeckung" = 0.3, "Stachel Neigung" = 0.1, "Stachel Zufall Größe" = 0.8 }

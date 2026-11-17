@@ -1,0 +1,57 @@
+# Globale Standardwerte der Kreatur-Pipeline.
+# Jede Kreatur kann einzelne Werte in ihrer creature.toml überschreiben
+# (gleiche Abschnitte/Namen, z. B. [tripo] face_limit = 6000).
+
+# ---------------------------------------------------------------------------
+# Schritt 1: Referenzbilder (manuell in ChatGPT, Prompts kommen aus make_prompts.py)
+# ---------------------------------------------------------------------------
+[images]
+# Welche Ansichten erzeugt werden. "front" ist Pflicht. Mehr Ansichten = bessere
+# Rückseite/Seiten im Modell, aber mehr Handarbeit in ChatGPT.
+views = ["front", "left", "back", "right"]
+# Hintergrundfarbe als Wort für den Prompt. Mittelgrau funktioniert für helle
+# und dunkle Kreaturen; Tripo stellt das Motiv selbst frei.
+background = "plain flat medium-grey (#9a9a9a)"
+aspect = "square 1:1"
+
+# ---------------------------------------------------------------------------
+# Schritt 2: Tripo – Bild(er) → Mesh + Textur
+# ---------------------------------------------------------------------------
+[tripo]
+# Stil B (clean low-poly) → P-Serie: erzeugt direkt Low-Poly mit sauberer Topologie.
+#   P2-20260801 (Tris bis 50k, optional Quads) · P1-20260311 (bis 20k)
+# Alternative H-Serie "v3.1-20260211" = detailliert (dann geometry_quality / smart_low_poly möglich,
+# diese Parameter kennt die P-Serie NICHT).
+model = "P2-20260801"
+# Obergrenze Polygone = DER Performance-Regler. Top-down-ARPG: normale Monster ~2–5k, Bosse mehr.
+# Der Look kommt aus Textur + Shader, nicht aus Polygonen.
+face_limit = 4000
+texture = true
+pbr = true                       # BaseColor + Metallic + Roughness + Normal
+texture_quality = "standard"     # fast | standard | detailed | extreme (8K, teurer)
+texture_version = "v3.5-20260815"
+delight = true                   # entfernt eingebranntes Licht aus dem Referenzbild
+quad = false                     # true = Quads (nur P2)
+auto_size = false
+# Gleicher Seed + gleiche Bilder = gleiches Mesh. 0 = zufällig.
+model_seed = 0
+texture_seed = 0
+
+# ---------------------------------------------------------------------------
+# Schritt 3: Rig
+# ---------------------------------------------------------------------------
+[rig]
+# v2.5-20260210 = Nicht-Humanoide (Vierbeiner, Spinnen, Insekten, Schlangen, Vögel, Fische)
+model = "v2.5-20260210"
+# "auto" = Empfehlung aus dem kostenlosen Rig-Check übernehmen, sonst fest (z. B. "octopod")
+rig_type = "auto"
+out_format = "glb"
+
+# ---------------------------------------------------------------------------
+# Schritt 4: Animationen (Tripo-Presets; für Kreaturen gibt es nur Laufzyklen)
+# ---------------------------------------------------------------------------
+[animate]
+# "auto" = Standard-Laufzyklus passend zum Rig-Typ. Leere Liste = keine Animation.
+presets = "auto"
+animate_in_place = true          # Bewegung auf der Stelle (Fortbewegung macht Unity)
+out_format = "glb"

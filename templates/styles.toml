@@ -1,0 +1,17 @@
+# Stil-Vorlagen. Bewusst "3D-tauglich" formuliert: klare Formen, saubere Materialien,
+# keine Effekte, die Tripo als Geometrie missversteht (Rauch, Glühen, Partikel, Fell-Fransen).
+
+[dark_fantasy]
+label = "Dark Fantasy, realistisch"
+text = """dark fantasy game creature, realistic detailed materials (chitin, scales, leathery \
+skin), muted desaturated colors, rendered like a high-quality 3D game asset"""
+
+[stylized]
+label = "Stylized / Hand-painted"
+text = """stylized fantasy game creature, clean readable shapes, bold silhouette, hand-painted \
+texture look with soft color gradients, rendered like a stylized 3D game asset"""
+
+[realistic]
+label = "Naturalistisch"
+text = """realistic creature, natural believable anatomy and materials, rendered like a \
+photorealistic 3D game asset"""

@@ -1,0 +1,67 @@
+# Baupläne: legen Pose, Kamera und Rig-Typ fest, damit Bilder IMMER riggbar herauskommen.
+# pose      → Neutralpose fürs Riggen (wie die T-Pose bei Menschen)
+# camera    → Kamerawinkel für alle Ansichten
+# rig_type  → Tripo-Rig-Typ
+# walk      → Tripo-Preset für den Laufzyklus
+
+[octopod]
+label = "Achtbeiner (Spinne, Skorpion)"
+pose = """neutral rigging pose: body level and horizontal, all eight legs spread out \
+radially and symmetrically left/right, evenly spaced, clearly separated from each other, \
+no legs crossing or overlapping, leg tips resting on the ground plane, fangs/mandibles \
+closed, abdomen fully visible"""
+camera = "camera slightly elevated at about 25 degrees, orthographic-like, no perspective distortion"
+rig_type = "octopod"
+walk = "preset:octopod:walk"
+
+[hexapod]
+label = "Sechsbeiner (Insekt, Käfer, Ameise)"
+pose = """neutral rigging pose: body level and horizontal, all six legs spread out \
+symmetrically left/right, clearly separated, no legs crossing, leg tips on the ground, \
+antennae pointing forward and apart, mandibles closed, wings folded flat on the back"""
+camera = "camera slightly elevated at about 20 degrees, orthographic-like, no perspective distortion"
+rig_type = "hexapod"
+walk = "preset:hexapod:walk"
+
+[quadruped]
+label = "Vierbeiner (Bestie, Wolf, Echse)"
+pose = """neutral rigging pose: standing still, all four legs straight and slightly apart, \
+each leg clearly separated and visible, weight evenly on all four feet, head facing \
+straight forward, mouth closed, tail extended straight back, no twisting"""
+camera = "camera at body height, very slightly elevated, orthographic-like, no perspective distortion"
+rig_type = "quadruped"
+walk = "preset:quadruped:walk"
+
+[serpentine]
+label = "Schlange, Wurm"
+pose = """neutral rigging pose: body stretched out long with only one gentle S-curve, \
+lying flat on the ground, no coiling, no overlapping body parts, head slightly raised and \
+facing forward, mouth closed"""
+camera = "camera elevated at about 35 degrees, orthographic-like, whole body length in frame"
+rig_type = "serpentine"
+walk = "preset:serpentine:march"
+
+[avian]
+label = "Flieger (Vogel, Drache, Fledermaus)"
+pose = """neutral rigging pose: standing upright, both wings fully spread out horizontally \
+and symmetrically like a T-pose, wing membranes/feathers flat and clearly visible, legs \
+straight down, tail extended straight back, head facing forward, mouth/beak closed"""
+camera = "camera at body height, orthographic-like, no perspective distortion"
+rig_type = "avian"
+walk = ""   # Tripo hat (Stand 11/2026) kein Flieger-Preset
+
+[aquatic]
+label = "Wasserwesen (Fisch, Hai)"
+pose = """neutral rigging pose: body straight and horizontal, all fins extended and clearly \
+visible, tail fin straight, mouth closed"""
+camera = "camera at body height, orthographic-like, no perspective distortion"
+rig_type = "aquatic"
+walk = "preset:aquatic:march"
+
+[biped]
+label = "Zweibeiner/Humanoid"
+pose = """neutral rigging A-pose: standing straight, arms angled down about 45 degrees away \
+from the body, legs straight and slightly apart, palms facing down, head forward"""
+camera = "camera at chest height, orthographic-like, no perspective distortion"
+rig_type = "biped"
+walk = "preset:walk"
