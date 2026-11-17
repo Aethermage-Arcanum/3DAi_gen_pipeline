@@ -27,7 +27,63 @@
   ],
   "actions": [
     [
-      "ChitinCrawler|ChitinCrawler|Walk",
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Attack1",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Death",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Hit",
+      [
+        1,
+        9
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Idle",
+      [
+        1,
+        61
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Ready",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Run",
+      [
+        1,
+        10
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_TurnLeft",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_TurnRight",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Walk",
       [
         1,
         21
@@ -42,8 +98,8 @@
   "foot_moves_m": 0.102,
   "dimensions_m": [
     0.926,
-    1.007,
-    0.569
+    1.014,
+    0.566
   ],
   "ok": true
 }

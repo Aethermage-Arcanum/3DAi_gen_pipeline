@@ -18,7 +18,8 @@ for i in range(n):
         c.paste(frames[v][i], (k * w, 0))
     combo.append(c)
 dur = int(1000 / fps)
-combo[0].save(d / "walk_combined.gif", save_all=True, append_images=combo[1:], duration=dur, loop=0)
+name = sys.argv[3] if len(sys.argv) > 3 else "walk_combined"
+combo[0].save(d / f"{name}.gif", save_all=True, append_images=combo[1:], duration=dur, loop=0)
 # Kontaktbogen: jedes 2. Frame der Seitenansicht
 side = frames.get("side", combo)
 sheet = Image.new("RGB", (w * 5, h * 2))

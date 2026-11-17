@@ -26,35 +26,7 @@ leg_blend = 0.015             # (nur Modus "island") weiche Zone bei sehr langen
 split_long_leg_islands = true # Bein-Teile, die über 3+ Knochen reichen, pro Vertex aufteilen
 leg_capture_ratio = 0.6       # loses Teil gehört zum Bein, wenn es < 60 % so weit vom Bein wie vom Rumpf ist
 
-[walk]
-# Laufzyklus (in place). Referenz Ameise: Dreifuß-Gang, Tempo über Schrittlänge + Frequenz.
-fps = 30
-cycle_frames = 20          # Frames pro kompletten Zyklus (beide Gruppen je 1 Schritt)
-walking_slots = [1, 2, 3, 4]   # welche Beinpaare laufen (1 = vorne). Sechsbeiner: [1,2,3] oder [2,3,4]
-feeler_slots = []          # Beinpaare, die nur tasten (z. B. erhobene Vorderbeine)
-duty = 0.5                 # Anteil Standphase (0.5 = Gruppen wechseln exakt ab)
-wave_offset = 0.04         # leichter Versatz vorne→hinten innerhalb einer Gruppe
-stride = 0.11             # Schrittlänge als Anteil der Körpergröße – für ALLE Füße gleich (kein Rutschen)
-stride_max_deg = 35        # Obergrenze Hüft-Schwenk (für Beine, die fast nach vorne zeigen)
-lift_deg = 11              # Anheben im Schwung
-tibia_fold_deg = 7         # Unterschenkel zusätzlich anheben im Schwung
-body_bob = 0.002           # Rumpf-Wippen (Anteil Größe) – klein halten, Füße hängen am Rumpf
-body_roll_deg = 0.6        # Rollen kippt die Füße mit → klein halten
-body_sway_deg = 2.5
-abdomen_bob_deg = 3
-abdomen_sway_deg = 4
-abdomen_lag = 0.6          # Hinterleib folgt verzögert (Radiant)
-head_nod_deg = 1           # Kopfbewegung überträgt sich auf die Fühler → klein halten
-head_sway_deg = 2
-# Fühler: Ameisen halten sie beim Laufen eher ruhig nach vorne und tasten langsam.
-# Ziel (Selbstprüfung walk_report.json → antenna): Spitze ~3–4 cm Ausschlag, langsamer als das Lauftempo.
-antenna_deg = 4            # Ausschlag Grundglied (war 12 → zu zappelig)
-antenna_speed = 1          # Schwingungen pro Zyklus (war 2)
-antenna_tip_factor = 0.4   # Spitzenglied relativ zum Grundglied (war 0.8 → peitschte)
-antenna_stabilize = 0.8    # 0..1: wie stark die Fühler Kopf-/Körperdrehung ausgleichen (Insekten halten sie ruhig)
-feeler_deg = 10
-feeler_speed = 1
-contact_tolerance = 0.012  # Selbstprüfung: Fuß darf in der Standphase max. 1,2 % der Größe schweben/einsinken
+# Bewegung (Gang, Clips) liegt jetzt im Bewegungsmuster: motions/<skelett>/<muster>/style.toml
 
 [gaps]
 # Selbstprüfung: Lücken zwischen Mesh-Teilen beim Laufen (check_gaps.py)

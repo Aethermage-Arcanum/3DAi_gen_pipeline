@@ -19,9 +19,13 @@ role = "design"
 file = "input/concept/2_style_lowpoly_insects_B.png"
 role = "style"
 
-# Krabbler-Rig: Das vorderste Paar sind erhobene Taster (erreichen den Boden nicht),
-# gelaufen wird auf den Paaren 2-4 → Ameisen-Dreifuß-Gang.
-[crawler.walk]
+# Skelett + Bewegungsmuster (motions/crawler/ant). Das vorderste Paar sind erhobene Taster
+# (erreichen den Boden nicht), gelaufen wird auf den Paaren 2-4 → Ameisen-Dreifuß-Gang.
+[motion]
+style = "crawler/ant"
+# variant = "spider"     # Beispiel: Varianten aus style.toml
+
+[motion.legs]
 walking_slots = [2, 3, 4]
 feeler_slots = [1]
 

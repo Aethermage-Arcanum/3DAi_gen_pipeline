@@ -65,24 +65,33 @@ for i, c in enumerate(rest):
             pairs.append((i, j, d))
 
 sc = bpy.context.scene
+arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 worst = {}
 max_open = 0.0
-for f in range(sc.frame_start, sc.frame_end + 1):
-    sc.frame_set(f)
-    dg = bpy.context.evaluated_depsgraph_get()
-    ev = obj.evaluated_get(dg)
-    m = ev.to_mesh()
-    for i, j, d0 in pairs:
-        opening = (m.vertices[i].co - m.vertices[j].co).length - d0
-        key = " / ".join(sorted((dom[i], dom[j])))
-        if opening > worst.get(key, (0,))[0]:
-            worst[key] = (opening, f)
-        max_open = max(max_open, opening)
-    ev.to_mesh_clear()
+per_clip = {}
+# Alle Clips prüfen (jede Action des Rigs)
+for act in [a_ for a_ in bpy.data.actions if a_.users or a_.use_fake_user]:
+    arm.animation_data.action = act
+    f0, f1 = (int(v) for v in act.frame_range)
+    clip_max = 0.0
+    for f in range(f0, f1 + 1):
+        sc.frame_set(f)
+        dg = bpy.context.evaluated_depsgraph_get()
+        ev = obj.evaluated_get(dg)
+        m = ev.to_mesh()
+        for i, j, d0 in pairs:
+            opening = (m.vertices[i].co - m.vertices[j].co).length - d0
+            key = f"{act.name}: " + " / ".join(sorted((dom[i], dom[j])))
+            if opening > worst.get(key, (0,))[0]:
+                worst[key] = (opening, f)
+            clip_max = max(clip_max, opening)
+        ev.to_mesh_clear()
+    per_clip[act.name] = round(clip_max, 4)
+    max_open = max(max_open, clip_max)
 
 bad = {k: v for k, v in worst.items() if v[0] > THR}
 report = {"pairs_checked": len(pairs), "threshold_m": round(THR, 4),
-          "max_opening_m": round(max_open, 4), "joints_over_threshold": len(bad),
+          "max_opening_m": round(max_open, 4), "joints_over_threshold": len(bad), "per_clip_max_m": per_clip,
           "worst": sorted([[k, round(v[0], 4), v[1]] for k, v in worst.items()], key=lambda x: -x[1])[:12],
           "ok": not bad}
 open(OUT, "w", encoding="utf-8").write(json.dumps(report, indent=2, ensure_ascii=False))

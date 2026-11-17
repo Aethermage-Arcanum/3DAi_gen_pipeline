@@ -1,0 +1,103 @@
+{
+  "fps": 30,
+  "clips": {
+    "Crawler_Ant_Walk": [
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "R4"
+      }
+    ],
+    "Crawler_Ant_Run": [
+      {
+        "frame": 4,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "R3"
+      }
+    ],
+    "Crawler_Ant_Idle": [],
+    "Crawler_Ant_Ready": [],
+    "Crawler_Ant_TurnLeft": [
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "R4"
+      }
+    ],
+    "Crawler_Ant_TurnRight": [
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "R4"
+      }
+    ],
+    "Crawler_Ant_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Crawler_Ant_Hit": [],
+    "Crawler_Ant_Death": [
+      {
+        "frame": 36,
+        "event": "dead"
+      }
+    ]
+  }
+}

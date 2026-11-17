@@ -23,7 +23,7 @@ Root
 1. **Erkennung** (`crawler_detect.py`): Tripo-Low-Poly-Meshes bestehen aus vielen Einzelteilen (Chitin-Segmenten). Die Teile werden über einen Spannbaum nach Nähe verbunden. Fußspitzen sind Teile mit Bodenkontakt, die Beinkette ist der Weg Fuß → Rumpf. Teile, die mehrere Beine teilen (Gelenkringe), zählen zum Rumpf.
 2. **Skelett** (`crawler_rig.py`): Die Beingelenke liegen an den **echten Segment-Übergängen**, das Knie ist der höchste Übergang. Die Rumpfachse ergibt sich aus dem Breitenprofil (Engstellen = Taille/Petiolus und Hals).
 3. **Gewichte**: Beine nach Position entlang der Kette, starr innerhalb der Glieder, mit **weichen Gelenkmanschetten** um jedes Gelenk inklusive Beinansatz (`joint_blend`). Rumpf-Vertices nahe an Beinen übernehmen anteilig deren Gewichte (`root_blend`), sonst klaffen Ansätze auf. Der Rumpf hat weiche, positionsbasierte Übergänge, damit sich keine Risse zwischen Panzerplatten öffnen. Lose Teile neben einem Bein folgen dem Bein. Max. 4 Einflüsse pro Vertex.
-4. **Laufzyklus** (`crawler_walk.py`): zwei abwechselnde Beingruppen (L1,R2,L3,R4 gegen den Rest).
+4. **Bewegung** → jetzt im Bewegungsmuster `motions/crawler/ant/` (früher `crawler_walk.py`): zwei abwechselnde Beingruppen (L1,R2,L3,R4 gegen den Rest).
    - 6 Laufbeine → **Dreifuß-Gang** (Ameise), 8 → alternierender Vierfuß (Spinne).
    - Drehachsen werden pro Bein **aus der Geometrie berechnet**: Gieren um die echte Senkrechte, Heben quer zum Bein.
    - Schwenkwinkel pro Bein so, dass **alle Füße gleich weit schieben** (kein Rutschen in Unity).

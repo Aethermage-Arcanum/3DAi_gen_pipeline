@@ -13,8 +13,15 @@ from mathutils import Vector
 a = sys.argv[sys.argv.index("--") + 1:]
 OUT = pathlib.Path(a[0]).resolve()
 RES = int(a[1]) if len(a) > 1 else 360
+CLIP = a[2] if len(a) > 2 else None          # Action-Name; ohne Angabe die aktive Action
+VIEWS = a[3].split(",") if len(a) > 3 else ["side", "top", "arpg"]
 OUT.mkdir(parents=True, exist_ok=True)
 sc = bpy.context.scene
+arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
+if CLIP:
+    arm.animation_data.action = bpy.data.actions[CLIP]
+act = arm.animation_data.action
+sc.frame_start, sc.frame_end = (int(v) for v in act.frame_range)
 sc.render.engine = "BLENDER_EEVEE"
 sc.render.resolution_x = sc.render.resolution_y = RES
 w = bpy.data.worlds.new("w")
@@ -38,7 +45,7 @@ cam.data.ortho_scale = 1.4
 sc.collection.objects.link(cam)
 sc.camera = cam
 views = {"side": (-90, 4), "top": (0, 89.9), "arpg": (-55, 50)}
-for name, (az, el) in views.items():
+for name, (az, el) in ((k, v) for k, v in views.items() if k in VIEWS):
     az, el = math.radians(az), math.radians(el)
     cam.location = Vector((math.cos(az) * math.cos(el), math.sin(az) * math.cos(el), math.sin(el))) * 5
     cam.rotation_euler = (-cam.location).to_track_quat("-Z", "Y").to_euler()

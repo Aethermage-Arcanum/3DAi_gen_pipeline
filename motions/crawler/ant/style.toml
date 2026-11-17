@@ -1,0 +1,124 @@
+# Bewegungsmuster crawler/ant – alle Parameter (Slider) aller Clips.
+# Pro Monster überschreibbar in creature.toml unter [motion.<abschnitt>], Varianten über [motion] variant = "...".
+# Winkel in Grad, Längen als Anteil der Körpergröße (size), Zeiten in Frames.
+
+[meta]
+skeleton = "crawler"
+style = "ant"
+clip_prefix = "Crawler_Ant"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+
+[legs]
+walking_slots = [1, 2, 3, 4]   # welche Beinpaare laufen (1 = vorne). Ameise mit Tastern: [2,3,4]
+feeler_slots = []              # Beinpaare, die nur tasten (erhobene Vorderbeine)
+
+[walk]   # Referenz: Ameisen-Dreifuß-Gang (siehe README)
+cycle_frames = 20
+duty = 0.5                 # Anteil Standphase
+wave_offset = 0.04         # Versatz vorne→hinten innerhalb einer Gruppe
+stride = 0.11              # Schrittlänge (Anteil Größe) – gleich für alle Füße → kein Rutschen
+stride_max_deg = 35
+lift_deg = 11
+tibia_fold_deg = 7
+body_bob = 0.002
+body_roll_deg = 0.6
+body_sway_deg = 2.5
+abdomen_bob_deg = 3
+abdomen_sway_deg = 4
+abdomen_lag = 0.6
+head_nod_deg = 1
+head_sway_deg = 2
+antenna_deg = 4
+antenna_speed = 1
+antenna_tip_factor = 0.4
+antenna_stabilize = 0.8
+feeler_deg = 10
+feeler_speed = 1
+
+[run]    # erbt alles von [walk]. Referenz: Ameisen werden schneller über Schrittlänge + Frequenz, Gang bleibt Dreifuß
+cycle_frames = 9           # schneller statt längerer Schritte (längere reißen die Beinansätze auf)
+stride = 0.13
+stride_max_deg = 40
+lift_deg = 13
+body_sway_deg = 1.5
+abdomen_sway_deg = 5
+antenna_deg = 3
+antenna_stabilize = 0.9
+
+[turn]   # erbt von [walk]; auf der Stelle drehen: Füße einer Seite schieben vor, der anderen zurück
+cycle_frames = 20
+stride = 0.08
+body_sway_deg = 1.0
+abdomen_sway_deg = 3
+
+[idle]   # Referenz: stehende Ameise, Fühler tasten langsam
+frames = 60
+breathe_deg = 2.5          # Hinterleib "atmet" (Pumpen)
+antenna_deg = 9
+antenna_speed = 1
+antenna_tip_factor = 0.5
+antenna_stabilize = 0.0
+head_look_deg = 6          # Kopf schaut sich um
+weight_shift_deg = 0.5     # Thorax verlagert Gewicht (klein: Füße hängen am Thorax)
+feeler_deg = 6
+
+[ready]  # Referenz: Drohhaltung – Mandibeln auf, Hinterleib hoch ("gaster flagging"), Taster/Vorderbeine erhoben
+frames = 30
+head_up_deg = 14
+gaster_raise_deg = 24
+feeler_raise_deg = 30
+antenna_forward_deg = 10
+tremble_deg = 1.2          # leichtes Vibrieren (Anspannung)
+tremble_speed = 3          # Schwingungen pro Clip
+
+[attack1] # Biss: Ausholen (Telegraph) → Vorschnellen → zurück. Referenz: Ameise beißt
+frames = 24
+windup_end = 9
+strike_end = 13
+head_pull = 0.05           # Kopf zurückziehen beim Ausholen (Telegraph: aus Top-down gut lesbar)
+head_lunge = 0.13          # Kopf schnellt vor
+head_pitch_up_deg = 24
+head_pitch_down_deg = 22
+thorax_pitch_deg = 1      # Thorax trägt die Beine → nur minimal neigen, sonst rutschen die Füße
+gaster_deg = 8
+feeler_raise_deg = 20
+hit_frame = 12             # Event "hit" → Schaden in Unity
+
+[hit]    # leichter Treffer, additiv nutzbar: zuckt zurück und kehrt exakt zur Ruhe zurück
+frames = 8
+head_back_deg = 12
+thorax_jerk_deg = 1.1     # klein halten: Füße hängen am Thorax
+abdomen_deg = 8
+antenna_flick_deg = 15
+
+[death]  # Referenz: totes Insekt auf dem Rücken, Beine eingerollt (ohne Muskel-/Hydraulikspannung krümmen sie sich ein)
+style = "flip"             # "flip" = auf den Rücken kippen (Root-Drehung, keine Lücken) · "collapse" = einsacken
+frames = 36
+collapse_start = 4
+collapse_end = 18
+flip_side = 1              # 1 = über links, -1 = über rechts
+flip_hop = 0.12            # kleiner Hüpfer beim Umkippen (Anteil Größe)
+# folgende Werte für style = "flip": Beine auf dem Rücken einrollen
+# (für "collapse" kleiner halten, sonst klaffen die Beinansätze: femur 6 / tibia 30)
+drop_fraction = 0.45       # Körper sackt um 45 % seiner Bodenfreiheit ab (mehr → Knie müssen hoch → Beinansatz klafft)
+roll_deg = 6
+femur_curl_deg = 0         # Oberschenkel nicht bewegen (schon 5° → Beinansatz klafft beim Chitin Crawler)
+tibia_curl_deg = 55        # Einrollen nur über den Unterschenkel
+coxa_tuck_deg = 8
+antenna_droop_deg = 25
+twitch_frame = 27          # letztes Zucken eines Hinterbeins (Fake-Detail)
+twitch_deg = 10
+
+[checks]
+contact_tolerance = 0.012  # Locomotion: Fuß in Standphase max. 1,2 % Größe schwebend/einsinkend
+planted_tolerance = 0.012  # Stand-Clips (Idle/Ready/Attack/Hit): Füße bewegen sich max. so viel
+
+# ---------------- Varianten (nur Variablen, gleiches Muster) ----------------
+[variants.spider]          # Spinne: 8 Laufbeine → alternierender Vierfuß, keine Taster, flacher, längere Schritte
+legs = { walking_slots = [1, 2, 3, 4], feeler_slots = [] }
+walk = { cycle_frames = 18, stride = 0.13, lift_deg = 13, abdomen_sway_deg = 2, antenna_deg = 0 }
+idle = { breathe_deg = 1.5, antenna_deg = 0 }
+
+[variants.beetle]          # Käfer: schwerer, langsamer, kaum Hinterleib-Schwingen
+walk = { cycle_frames = 26, stride = 0.08, lift_deg = 9, abdomen_sway_deg = 1.5, body_sway_deg = 1.5 }

@@ -44,7 +44,10 @@ if arms and "Head" in arms[0].data.bones:
 moved = None
 if arms and bpy.data.actions:
     arm = arms[0]
-    act = bpy.data.actions[0]
+    # Fußbewegung am Lauf-Clip prüfen (in Stand-Clips wie Attack stehen die Füße absichtlich still)
+    act = next((x for x in bpy.data.actions if "Walk" in x.name), bpy.data.actions[0])
+    arm.animation_data_create()
+    arm.animation_data.action = act
     f0, f1 = (int(x) for x in act.frame_range)
     tip = lambda: (arm.matrix_world @ arm.pose.bones["Leg_L3_Tarsus"].tail).copy()
     bpy.context.scene.frame_set(f0)

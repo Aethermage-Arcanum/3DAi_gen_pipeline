@@ -52,9 +52,10 @@ for img in bpy.data.images:
     img.pack()
 
 action = arm.animation_data.action if arm.animation_data else None
-if action:
+if action and action.name == "Walk":          # alter Einzel-Clip ohne Muster-Präfix
     action.name = E.get("clip_name", "Walk")
-    action.use_fake_user = True
+for act in bpy.data.actions:
+    act.use_fake_user = True
 
 bpy.ops.export_scene.fbx(
     filepath=str(OUT / f"{NAME}.fbx"), use_selection=False, object_types={"ARMATURE", "MESH"},
@@ -69,6 +70,5 @@ bpy.ops.export_scene.gltf(filepath=str(OUT / f"{NAME}.glb"), export_format="GLB"
                           export_apply=False)
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT / f"{NAME}.blend"))
 info = {"name": NAME, "texture_size": size, "resized": resized,
-        "clip": action.name if action else None,
-        "frames": [int(v) for v in action.frame_range] if action else None}
+        "clips": {a_.name: [int(v) for v in a_.frame_range] for a_ in bpy.data.actions}}
 print("EXPORT_OK", json.dumps(info, ensure_ascii=False))
