@@ -1,0 +1,73 @@
+{
+  "fps": 30,
+  "clips": {
+    "Quadruped_Lizard_Walk": [
+      {
+        "frame": 16,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 16,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Lizard_Run": [
+      {
+        "frame": 2,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Lizard_Idle": [],
+    "Quadruped_Lizard_Ready": [],
+    "Quadruped_Lizard_TurnLeft": [
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Lizard_TurnRight": [
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Lizard_Attack1": [
+      {
+        "frame": 13,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Lizard_Hit": [],
+    "Quadruped_Lizard_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

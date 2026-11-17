@@ -19,3 +19,10 @@ role = "style"
 style = "quadruped/lizard"
 variant = ""
 vorbild = ["Waran (Komodowaran) – Gang mit seitlichem Körperschwingen", "Krokodil – High-Walk und Schnappbiss"]
+
+# Rückenkamm (Zacken) zieht die Wirbelsäulen-Mitte sonst nach oben → nur unteren Teil der Querschnitte nehmen
+[quadruped.rig]
+spine_top_pct = 65
+# Tripo hat die Vorderfüße unter der Brust mit einer Hautbrücke verbunden → trennen
+cut_leg_bridges = true
+exclusive_leg_pairs = true

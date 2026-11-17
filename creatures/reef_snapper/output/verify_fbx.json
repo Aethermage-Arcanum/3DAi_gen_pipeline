@@ -1,0 +1,106 @@
+{
+  "skeleton": "quadruped",
+  "file": "ReefSnapper.fbx",
+  "meshes": 1,
+  "triangles": 4638,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_53e55796-61e5-4c2e-82f5-45329e68f723"
+  ],
+  "textures": [
+    [
+      "Color_53e55796-61e5-4c2e-82f5-45329e68f723",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_53e55796-61e5-4c2e-82f5-45329e68f723",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Attack1",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Hit",
+      [
+        1,
+        11
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Idle",
+      [
+        1,
+        91
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Ready",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Run",
+      [
+        1,
+        17
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_TurnLeft",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_TurnRight",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "ReefSnapper|ReefSnapper|Quadruped_Lizard_Walk",
+      [
+        1,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -0.95,
+    -0.32
+  ],
+  "foot_moves_m": 0.129,
+  "dimensions_m": [
+    0.44,
+    0.942,
+    0.373
+  ],
+  "ok": true
+}

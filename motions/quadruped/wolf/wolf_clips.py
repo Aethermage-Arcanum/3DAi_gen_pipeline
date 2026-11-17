@@ -7,8 +7,10 @@ import math
 import pathlib
 import sys
 
-HERE = pathlib.Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent))
+# Andere Vierbeiner-Muster (lizard, deer …) nutzen diesen Generator mit ihrer eigenen style.toml:
+#   runpy.run_path(".../wolf/wolf_clips.py", init_globals={"STYLE_DIR": <ihr Ordner>}, run_name="__main__")
+HERE = globals().get("STYLE_DIR") or pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 import quadruped_kit as K  # noqa: E402
 
 K.init(HERE)
@@ -33,7 +35,8 @@ def locomotion(P, turn=0.0):
         pitch = R(P.get("pitch_deg", 0)) * math.sin(2 * math.pi * t)
         roll = R(P.get("roll_deg", 0)) * math.sin(2 * math.pi * t)
         body(dz=bob, pitch=pitch, roll=roll)
-        spine(flex=R(P.get("spine_flex_deg", 0)) * math.sin(2 * math.pi * t + 0.6))
+        spine(flex=R(P.get("spine_flex_deg", 0)) * math.sin(2 * math.pi * t + 0.6),
+              side=R(P.get("spine_side_deg", 0)) * math.sin(2 * math.pi * t))      # Echsen: seitliche Welle
         neck_head(head_pitch=R(P.get("head_bob_deg", 0)) * math.sin(4 * math.pi * t),
                   stabilize=P.get("head_stabilize", 0))
         tail(t, P.get("tail_deg", 0), 1, P.get("tail_lift_deg", 0))
@@ -84,9 +87,13 @@ def clip_attack1(P):
             k_c, k_l, k_j = 0.0, 1 - x, 0.0
         body(dz=-P["crouch"] * HGT * k_c + P["lunge_up"] * HGT * k_l,
              dx=-0.03 * SIZE * k_c + P["lunge"] * SIZE * k_l, pitch=-R(6) * k_c + R(4) * k_l)
-        neck_head(pitch=-R(10) * k_c + R(P["neck_reach_deg"]) * 0.3 * k_l,
-                  head_pitch=R(8) * k_c - R(P["neck_reach_deg"]) * 0.4 * k_l)
-        jaw(P["jaw_open_deg"] * k_j)
+        if P.get("type") == "headbutt":                  # Hirsch: Kopf tief, Geweih nach vorn stoßen
+            neck_head(pitch=-R(P["neck_reach_deg"]) * (0.6 * k_c + k_l), head_pitch=R(P["neck_reach_deg"]) * 0.5 * k_l)
+        else:                                             # Biss: Hals streckt, Maul auf → zu
+            neck_head(pitch=-R(10) * k_c + R(P["neck_reach_deg"]) * 0.3 * k_l,
+                      head_pitch=R(8) * k_c - R(P["neck_reach_deg"]) * 0.4 * k_l,
+                      yaw=R(P.get("snap_yaw_deg", 0)) * k_l)
+            jaw(P["jaw_open_deg"] * k_j)
         tail(0, 0, 1, 12 * k_l)
     return {"N": N, "loop": False, "kind": "stand", "pose": pose,
             "events": [{"frame": P["hit_frame"], "event": "hit"}]}
@@ -121,7 +128,8 @@ def clip_death(P):
         rot("Root", FWD, ang)
         K.move("Root", loc)
         for leg in LEGS:
-            ik_off(leg, min(1.0, k * 1.6))
+            s0 = P.get("ik_release_start", 0.0)            # wann die Beine loslassen (0 = sofort beim Kippen)
+            ik_off(leg, min(1.0, max(0.0, k - s0) * 1.6 / (1 - s0)))
             sgn = 1 if leg[0] == "F" else -1
             rot(f"Leg_{leg}_1", LEFT, sgn * R(P["legs_limp_deg"]) * k)
             rot(f"Leg_{leg}_2", LEFT, -sgn * R(P["legs_limp_deg"]) * k)
@@ -140,7 +148,8 @@ def clip_death(P):
     def pose(f):
         k = raw(f)
         K.move("Root", Vector((0, 0, -drop * k)))
-    return {"N": N, "loop": False, "kind": "death", "pose": pose, "events": [{"frame": N, "event": "dead"}]}
+    return {"N": N, "loop": False, "kind": "death", "pose": pose, "max_stretch": P.get("max_stretch"),
+            "events": [{"frame": N, "event": "dead"}]}
 
 
 turn = R(ST["turn"]["turn_deg"])

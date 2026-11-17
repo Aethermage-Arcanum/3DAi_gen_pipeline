@@ -182,7 +182,7 @@ def center_at(x, region=None):
         return None
     mid = s[np.abs(s[:, 1] - Y_MID) < D["mid_half_width"] * H]
     zz = mid[:, 2] if len(mid) >= 3 else s[:, 2]
-    return np.array([x, Y_MID, (np.percentile(zz, 8) + np.percentile(zz, 92)) / 2])
+    return np.array([x, Y_MID, (np.percentile(zz, 8) + np.percentile(zz, RIG.get("spine_top_pct", 92))) / 2])  # Rückenkamm ignorieren
 
 
 x_hip = (LEGS["BL"]["joint"][0] + LEGS["BR"]["joint"][0]) / 2
@@ -242,6 +242,35 @@ for n in order:
 bpy.ops.object.mode_set(mode="OBJECT")
 
 
+# ------------------------------------------------------------------ Tripo-Hautbrücken zwischen linkem/rechtem Bein entfernen
+def seg_dist(P, a, b):
+    ab = b - a
+    t = np.clip(((P - a) @ ab) / max(1e-12, ab @ ab), 0, 1)
+    return np.linalg.norm(P - (a + t[:, None] * ab), axis=1)
+
+
+if RIG.get("cut_leg_bridges", False):
+    sys.path.insert(0, str(HERE))
+    import rig_common as RC
+    fmask = np.zeros(len(me.polygons), bool)
+    for pair in (("FL", "FR"), ("BL", "BR")):
+        dpl = [np.min(np.stack([seg_dist(V, np.array(BONES[f"Leg_{lg}_{k}"][0]), np.array(BONES[f"Leg_{lg}_{k}"][1]))
+                                for k in (1, 2, 3)], 1), 1) for lg in pair]
+        left = dpl[0] < dpl[1]
+        low = V[:, 2] < min(LEGS[pair[0]]["belly"], LEGS[pair[1]]["belly"])
+        near_mid = np.abs(V[:, 1] - Y_MID) < RIG.get("bridge_half_width", 0.12) * H
+        for i, poly in enumerate(me.polygons):
+            vs = poly.vertices
+            if len({bool(left[v]) for v in vs}) == 2 and all(low[v] and near_mid[v] for v in vs):
+                fmask[i] = True
+    if fmask.any():
+        RC.delete_faces(body, fmask)
+        V, part, MAIN = RC.arrays(body)
+        N = len(V)
+        main = part == MAIN
+        ids = np.unique(part)
+    print(f"RIG_INFO Hautbrücken zwischen den Beinen: {int(fmask.sum())} Flächen entfernt")
+
 # ------------------------------------------------------------------ Gewichte
 def seg_dist(P, a, b):
     ab = b - a
@@ -282,6 +311,20 @@ for leg, lg in LEGS.items():
     near = (np.linalg.norm(V[:, :2] - lg["track"][:, :2].mean(0), axis=1) < RIG["leg_capture"] * H) \
         & (V[:, 2] < lg["belly"] - RIG["below_belly"] * H)
     allow[np.ix_(near, body_names)] = False
+# Linkes/rechtes Bein eines Paares: jeder Vertex nur am NÄHEREN (sonst ziehen beide gegenläufig an der Bauchmitte);
+# die Bauchmitte darf zusätzlich wieder an den Rumpf
+for pair in ((("FL", "FR"), ("BL", "BR")) if RIG.get("exclusive_leg_pairs", False) else ()):
+    dpl = [np.min(np.stack([seg_dist(V, np.array(BONES[f"Leg_{lg}_{k}"][0]), np.array(BONES[f"Leg_{lg}_{k}"][1]))
+                            for k in (1, 2, 3, 4)], 1), 1) for lg in pair]
+    left = dpl[0] < dpl[1]
+    for j, n in enumerate(names):
+        if n.startswith(f"Leg_{pair[0]}"):
+            allow[:, j] &= left
+        elif n.startswith(f"Leg_{pair[1]}"):
+            allow[:, j] &= ~left
+if RIG.get("exclusive_leg_pairs", False):
+    mid = np.abs(V[:, 1] - Y_MID) < RIG.get("belly_mid_width", 0.04) * H
+    allow[np.ix_(mid, body_names)] = True
 W = np.where(allow, 1.0 / (Dm + 1e-4) ** RIG["falloff"], 0.0)
 W[W.sum(1) == 0, :] = 1.0 / (Dm[W.sum(1) == 0] + 1e-4) ** RIG["falloff"]
 # Nebenteile: standardmäßig weiche Abstands-Gewichte wie der Hauptkörper (Pfoten gehen am Knöchel über,

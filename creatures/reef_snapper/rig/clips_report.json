@@ -1,0 +1,155 @@
+{
+  "style": "quadruped/lizard",
+  "variant": null,
+  "clips": {
+    "Quadruped_Lizard_Walk": {
+      "frames": 32,
+      "seconds": 1.067,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0156,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.153,
+        0.153
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.232,
+      "loop_ok": true,
+      "max_stretch": 1.77,
+      "stretch_at": "Leg_BR_2 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Run": {
+      "frames": 16,
+      "seconds": 0.533,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0262,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.146,
+        0.182
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.902,
+      "loop_ok": true,
+      "max_stretch": 1.93,
+      "stretch_at": "Leg_FR_1 @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Idle": {
+      "frames": 90,
+      "seconds": 3.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0008,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.7,
+      "stretch_at": "Shoulder_FR @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Ready": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0096,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.76,
+      "stretch_at": "Head @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_TurnLeft": {
+      "frames": 28,
+      "seconds": 0.933,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0192,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.106,
+        0.113
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 32.1,
+      "loop_ok": true,
+      "max_stretch": 1.82,
+      "stretch_at": "Leg_BR_2 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_TurnRight": {
+      "frames": 28,
+      "seconds": 0.933,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0185,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.106,
+        0.113
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": -32.1,
+      "loop_ok": true,
+      "max_stretch": 1.79,
+      "stretch_at": "Leg_BR_2 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Attack1": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0157,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "max_stretch": 1.78,
+      "stretch_at": "Leg_FR_1 @ Frame 15",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Hit": {
+      "frames": 10,
+      "seconds": 0.333,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0205,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.42,
+      "stretch_at": "Leg_BR_2 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Lizard_Death": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "final_min_z_vs_ground_m": 0.0,
+      "no_ground_penetration": true,
+      "max_stretch": 2.73,
+      "stretch_at": "Leg_FL_2 @ Frame 15",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

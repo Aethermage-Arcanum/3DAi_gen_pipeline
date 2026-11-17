@@ -1,0 +1,80 @@
+{
+  "pairs_checked": 372,
+  "threshold_m": 0.0142,
+  "max_opening_m": 0.009,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Quadruped_Lizard_Attack1": 0.0067,
+    "Quadruped_Lizard_Death": 0.0051,
+    "Quadruped_Lizard_Hit": 0.0042,
+    "Quadruped_Lizard_Idle": 0.0006,
+    "Quadruped_Lizard_Ready": 0.0011,
+    "Quadruped_Lizard_Run": 0.009,
+    "Quadruped_Lizard_TurnLeft": 0.0061,
+    "Quadruped_Lizard_TurnRight": 0.0064,
+    "Quadruped_Lizard_Walk": 0.0072
+  },
+  "worst": [
+    [
+      "Quadruped_Lizard_Run: Leg_BR_1 / Spine_1",
+      0.009,
+      9
+    ],
+    [
+      "Quadruped_Lizard_Run: Leg_BL_1 / Spine_1",
+      0.0087,
+      7
+    ],
+    [
+      "Quadruped_Lizard_Walk: Leg_BR_1 / Spine_1",
+      0.0072,
+      6
+    ],
+    [
+      "Quadruped_Lizard_Run: Leg_BR_3 / Leg_BR_4",
+      0.007,
+      0
+    ],
+    [
+      "Quadruped_Lizard_Walk: Leg_BL_1 / Spine_1",
+      0.0068,
+      22
+    ],
+    [
+      "Quadruped_Lizard_Attack1: Leg_BR_1 / Spine_1",
+      0.0067,
+      13
+    ],
+    [
+      "Quadruped_Lizard_Attack1: Leg_BL_1 / Spine_1",
+      0.0066,
+      13
+    ],
+    [
+      "Quadruped_Lizard_TurnRight: Leg_BR_1 / Spine_1",
+      0.0064,
+      6
+    ],
+    [
+      "Quadruped_Lizard_TurnLeft: Leg_BR_1 / Spine_1",
+      0.0061,
+      11
+    ],
+    [
+      "Quadruped_Lizard_TurnLeft: Leg_BL_1 / Spine_1",
+      0.0055,
+      20
+    ],
+    [
+      "Quadruped_Lizard_Walk: Leg_BR_3 / Leg_BR_4",
+      0.0053,
+      12
+    ],
+    [
+      "Quadruped_Lizard_TurnRight: Leg_BL_1 / Spine_1",
+      0.0052,
+      25
+    ]
+  ],
+  "ok": true
+}

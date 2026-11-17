@@ -34,3 +34,5 @@ scapula_back = 0.05      # Schulterblatt-Oberkante liegt so weit hinter dem Schu
 scapula_height = 0.8     # … und so hoch zwischen Gelenk (0) und Rücken (1)
 leg_top_margin_back = 0.22 # hinten weicher in die Hüfte überblenden (Oberschenkel schwingt weit)
 rigid_parts = false      # true = Nebenteile starr an einem Knochen (harte Platten), false = weich überblenden
+cut_leg_bridges = false   # Tripo-Hautbrücke zwischen linkem/rechtem Bein löschen (bei verschmolzenen Beinen einschalten)
+exclusive_leg_pairs = false # jeder Vertex nur am näheren Bein eines Paares (zusammen mit cut_leg_bridges)

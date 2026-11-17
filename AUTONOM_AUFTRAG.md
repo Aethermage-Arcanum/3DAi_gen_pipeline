@@ -30,7 +30,7 @@
 | 4 | Void Manifestation | ✅ | ✅ Tripo-UV | ✅ floater (19 Tentakel) | ✅ 9/9 tentacle | ✅ | ✅ | 110 |
 | 5 | Scorpion Matriarch | ✅ | ✅ Tripo-UV | ✅ multileg (59 Kn., 5 Beinpaare) | ✅ 9/9 scorpion | ✅ | ✅ | 110 |
 | 6 | Needle Wasp | ✅ | ✅ Tripo-UV | ✅ flyer (13 Ketten) | ✅ 9/9 wasp | ✅ | ✅ | 110 |
-| 8 | Reef Snapper | | | | | | | |
-| 9 | Hollow Stag | | | | | | | |
+| 8 | Reef Snapper | ✅ | ✅ Tripo-UV | ✅ quadruped (Brücke getrennt) | ✅ 9/9 lizard | ✅ | ✅ | 110 |
+| 9 | Hollow Stag | ✅ | | | | | | 110 |
 
-Ausgegebene Credits gesamt: 660 / 1.500 (Guthaben 1.695)
+Ausgegebene Credits gesamt: 880 / 1.500 (Guthaben 1.475)

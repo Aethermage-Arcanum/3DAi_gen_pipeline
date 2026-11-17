@@ -1,0 +1,11 @@
+{
+  "generate": {
+    "task_id": "53e55796-61e5-4c2e-82f5-45329e68f723",
+    "fingerprint": "c925c10980b3",
+    "credits": 110.0,
+    "files": [
+      "generate_model.glb",
+      "generate_rendered_image.webp"
+    ]
+  }
+}
