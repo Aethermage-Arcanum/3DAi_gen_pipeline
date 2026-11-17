@@ -19,7 +19,8 @@
       "angles": true,
       "coverage": true
     },
-    "error_score": 0.721
+    "error_score": 1.055,
+    "seam_penalty": 0.334
   },
   "smart": {
     "uv_map": "UVSmart",
@@ -37,7 +38,8 @@
       "angles": true,
       "coverage": false
     },
-    "error_score": 0.7305
+    "error_score": 1.9693,
+    "seam_penalty": 1.2388
   },
   "renders": [
     "uv_original_arpg.png",
@@ -49,6 +51,60 @@
     "uv_abyss_arpg.png",
     "uv_abyss_side.png"
   ],
+  "inspect": {
+    "tripo": {
+      "metrics": {
+        "parts": 18,
+        "uv_islands": 78,
+        "parts_in_one_island": 0.222,
+        "parts_split_max": 13,
+        "big_parts_split_mean": 6.33,
+        "seam_length_per_size": 16.7,
+        "seams_on_top_fraction": 0.386,
+        "part_density_min_max": [
+          0.88,
+          2.12
+        ],
+        "parts_density_outside_0.6_1.6": 3,
+        "head_density": 1.6
+      },
+      "images": {
+        "islands_arpg": "insp_tripo_islands_arpg.png",
+        "islands_side": "insp_tripo_islands_side.png",
+        "islands_head": "insp_tripo_islands_head.png",
+        "seams_arpg": "insp_tripo_seams_arpg.png",
+        "seams_head": "insp_tripo_seams_head.png",
+        "density_arpg": "insp_tripo_density_arpg.png",
+        "layout": "insp_tripo_layout.png"
+      }
+    },
+    "smart": {
+      "metrics": {
+        "parts": 18,
+        "uv_islands": 595,
+        "parts_in_one_island": 0.0,
+        "parts_split_max": 95,
+        "big_parts_split_mean": 51.56,
+        "seam_length_per_size": 61.94,
+        "seams_on_top_fraction": 0.325,
+        "part_density_min_max": [
+          0.98,
+          1.02
+        ],
+        "parts_density_outside_0.6_1.6": 0,
+        "head_density": 1.0
+      },
+      "images": {
+        "islands_arpg": "insp_smart_islands_arpg.png",
+        "islands_side": "insp_smart_islands_side.png",
+        "islands_head": "insp_smart_islands_head.png",
+        "seams_arpg": "insp_smart_seams_arpg.png",
+        "seams_head": "insp_smart_seams_head.png",
+        "density_arpg": "insp_smart_density_arpg.png",
+        "layout": "insp_smart_layout.png"
+      }
+    }
+  },
   "warnings": [],
   "export_vertices": {
     "before": 2275,

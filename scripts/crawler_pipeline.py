@@ -68,13 +68,10 @@ def main():
     if not (ROOT / "uv" / "textures" / "uv_checker.png").exists():
         subprocess.run([sys.executable, str(ROOT / "uv" / "biome_textures.py"), str(ROOT / "uv" / "textures")], check=True)
     blender(["--factory-startup", "-P", str(ROOT / "uv" / "uv_check.py"), "--", str(src), str(uvdir), toml],
-            "UV-Prüfung", show=("UV_TRIPO", "UV_SMART", "UV_CHOSEN", "Traceback", "Error"))
+            "UV-Prüfung", show=("UV_INSPECT", "UV_SCORE", "UV_CHOSEN", "Traceback", "Error"))
     uvrep = json.loads((uvdir / "uv_report.json").read_text(encoding="utf-8"))
-    subprocess.run([sys.executable, "-c", (
-        "import sys;from PIL import Image;d=sys.argv[1];L=sys.argv[2:];"
-        "I=[[Image.open(f'{d}/uv_{l}_{v}.png').convert('RGB').resize((360,360)) for v in ('arpg','side')] for l in L];"
-        "s=Image.new('RGB',(360*len(L),720));[ (s.paste(a,(i*360,0)),s.paste(b,(i*360,360))) for i,(a,b) in enumerate(I)];"
-        "s.save(f'{d}/uv_preview.png')"), str(uvdir)] + [r.split("_")[1] for r in uvrep["renders"][::2]], check=True)
+    # Prüfblatt: Inseln eingefärbt, Nähte, Dichte, Kopf-Nahaufnahme, 2D-Layout – Tripo vs. Smart UV
+    subprocess.run([sys.executable, str(ROOT / "uv" / "uv_sheet.py"), str(uvdir)], check=True)
     src = uvdir / "model_uv.glb"
     blender(["--factory-startup", "-P", str(R / "crawler_rig.py"), "--", str(src), str(rig), toml], "Rig")
     blender([str(rig / "crawler_rigged.blend"), "-P", str(clips_script), "--", str(clips_dir), toml], f"Clips ({style})")

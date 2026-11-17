@@ -1,10 +1,10 @@
 {
   "pairs_checked": 102,
   "threshold_m": 0.015,
-  "max_opening_m": 0.0083,
+  "max_opening_m": 0.0089,
   "joints_over_threshold": 0,
   "per_clip_max_m": {
-    "Crawler_Crab_Attack1": 0.0012,
+    "Crawler_Crab_Attack1": 0.0089,
     "Crawler_Crab_Death": 0.0015,
     "Crawler_Crab_Hit": 0.0002,
     "Crawler_Crab_Idle": 0.0003,
@@ -16,6 +16,11 @@
     "Crawler_Crab_WalkLeft": 0.0048
   },
   "worst": [
+    [
+      "Crawler_Crab_Attack1: Leg_L3_Coxa / Thorax",
+      0.0089,
+      10
+    ],
     [
       "Crawler_Crab_TurnLeft: Leg_L3_Coxa / Thorax",
       0.0083,
@@ -35,6 +40,11 @@
       "Crawler_Crab_Run: Leg_L2_Coxa / Thorax",
       0.0067,
       7
+    ],
+    [
+      "Crawler_Crab_Attack1: Leg_L2_Coxa / Thorax",
+      0.006,
+      10
     ],
     [
       "Crawler_Crab_TurnLeft: Leg_L2_Coxa / Thorax",
@@ -65,16 +75,6 @@
       "Crawler_Crab_WalkLeft: Leg_L2_Coxa / Thorax",
       0.0037,
       0
-    ],
-    [
-      "Crawler_Crab_Death: Leg_L1_Coxa / Thorax",
-      0.0015,
-      20
-    ],
-    [
-      "Crawler_Crab_Death: Leg_R1_Coxa / Thorax",
-      0.0014,
-      20
     ]
   ],
   "ok": true

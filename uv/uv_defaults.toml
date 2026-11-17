@@ -2,7 +2,8 @@
 
 mode = "auto"              # "tripo" = Tripo-UV behalten · "smart" = immer Blender Smart UV · "auto" = bessere wählen
 switch_ratio = 0.8         # "auto": Smart UV nur nehmen, wenn ihr Fehlerwert < 80 % des Tripo-Werts ist
-raster = 512               # Auflösung für Abdeckungs-/Überlappungsmessung
+seam_weight = 0.02         # Strafpunkte pro "Nahtlänge in Körpergrößen" (zerschnittene Teile = sichtbare Textur-Sprünge)
+raster = 512              # Auflösung für Abdeckungs-/Überlappungsmessung
 bake_size = 1024           # Texturgröße beim Übertragen auf eine neue UV
 
 [smart_uv]                 # Blender "Smart UV Project"
@@ -16,6 +17,13 @@ overlap_max = 0.02         # max. 2 % überlappende UV-Fläche (gespiegelte Inse
 density_outlier_max = 0.10 # max. 10 % der Fläche mit Texturdichte außerhalb ×0,5 … ×2
 angle_distortion_max_deg = 8
 coverage_min = 0.45        # min. 45 % des UV-Raums genutzt (sonst verschenkte Texturauflösung)
+
+[inspect]                  # Sichtprüfung: Inseln eingefärbt, Nähte, Dichte, Kopf-Nahaufnahme
+seam_width = 0.0025        # Linienstärke der Nähte (Anteil Größe)
+head_fraction = 0.18       # vorderster Anteil der Länge = "Kopf" für die Nahaufnahme
+head_zoom = 0.5            # Bildausschnitt Kopf (Anteil Größe)
+head_view = [-25, 62]      # Kamera Kopf: Azimut, Höhe in Grad (steil von oben-vorne wie im Spiel, Beine verdecken weniger)
+layout_resolution = 1024   # 2D-Layout-Bild
 
 [preview]
 test_biomes = ["forest", "abyss"]   # nur 1-2 Beispieltexturen (verfügbar: forest, coast, highlands, desert, snow, abyss)

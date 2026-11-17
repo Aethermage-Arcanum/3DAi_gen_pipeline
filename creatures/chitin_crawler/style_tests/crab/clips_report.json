@@ -121,6 +121,12 @@
       "frames": 22,
       "seconds": 0.733,
       "loop": false,
+      "planted_legs": [
+        "L3",
+        "R3",
+        "L4",
+        "R4"
+      ],
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "ok": true

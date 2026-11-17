@@ -9,8 +9,8 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 | 1 | `creature.toml` schreiben (Bauplan, Stil, Beschreibung) | du | – |
 | 2 | `python scripts/make_prompts.py creatures/<name>` → `prompts.md` | Skript | – |
 | 3 | Prompts in ChatGPT kopieren, Bilder als `front/left/back/right.png` in `input/` speichern | du | ChatGPT-Abo |
-| 4 | `python scripts/tripo_run.py creatures/<name>` → Mesh, Rig-Check, Rig, Laufanimation in `raw/` | Skript | Tripo-Credits |
-| 5 | Blender-Nachbearbeitung (LODs, Texturgrößen, Unity-Export) | Skript | – *(kommt als Nächstes)* |
+| 4 | `python scripts/tripo_run.py creatures/<name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
+| 5 | `python scripts/crawler_pipeline.py creatures/<name>` → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 

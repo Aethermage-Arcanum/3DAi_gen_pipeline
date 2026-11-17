@@ -51,6 +51,56 @@ def body_raise_planted(h):
         set_leg_ik(leg, 0.0, 0.0, -h * SIZE)
 
 
+def rear_split(P):
+    """Aufbäumen: vorderste Laufbein-Paare heben mit ab, die übrigen (hinteren) tragen den Körper."""
+    slots = sorted({int(l[1]) for l in walking})
+    lifted_slots = slots[:P.get("lift_front_pairs", 1)]
+    carry = [l for l in walking if int(l[1]) not in lifted_slots]
+    lifted = [l for l in walking if int(l[1]) in lifted_slots]
+    hips = [DB[f"Leg_{l}_Coxa"].head_local for l in carry if int(l[1]) == min(int(c[1]) for c in carry)]
+    pivot = sum(hips, Vector()) / len(hips)          # Kipp-Achse = Hüftlinie des vordersten tragenden Paars
+    return carry, lifted, Vector((pivot.x, 0.0, pivot.z))
+
+
+def rear_up(pitch, carry, lifted, pivot, P, k=1.0):
+    """Rumpf vorne um 'pitch' (rad) anheben, Kippachse quer durch 'pivot'. Tragende Füße bleiben per
+    Fuß-IK exakt stehen, die vorderen Laufbeine heben mit ab und ziehen sich leicht an, der Hinterleib
+    wird gegengedreht (sonst sackt er Richtung Boden)."""
+    q = Quaternion(LEFT, -pitch)                     # -: Vorderseite (+X) hoch
+    h = DB["Thorax"].head_local
+    rot("Thorax", LEFT, -pitch, mul=False)
+    move("Thorax", (pivot - h) - q @ (pivot - h))
+    rot("Abdomen_1", LEFT, pitch * P["abdomen_counter"])
+    to_arm = arm.matrix_world.inverted()
+    qi = q.inverted()
+    for leg in carry:
+        F = to_arm @ REST_FOOT[leg]
+        d = (pivot + qi @ (F - pivot)) - F           # Ziel im Ruhe-Raum des Rumpfs
+        set_foot(leg, d.x, d.y, d.z)
+    for leg in lifted:
+        set_leg(leg, back=-R(P["front_legs_forward_deg"]) * k, lift=R(P["front_legs_lift_deg"]) * k,
+                fold=-R(P["front_legs_fold_deg"]) * k)
+
+
+def carry_error(carry):
+    bpy.context.view_layer.update()
+    return max((foot(l) - REST_FOOT[l]).length for l in carry)
+
+
+def max_rear_pitch(P, carry, lifted, pivot, want):
+    """Größter Kippwinkel ≤ want, bei dem die tragenden Füße noch exakt stehen (Bisektion)."""
+    tol = ST["checks"]["planted_tolerance"] * SIZE * 0.5
+    reset(); rear_up(want, carry, lifted, pivot, P)
+    if carry_error(carry) <= tol:
+        return want
+    lo, hi = 0.0, want
+    for _ in range(16):
+        mid = (lo + hi) / 2
+        reset(); rear_up(mid, carry, lifted, pivot, P)
+        lo, hi = (mid, hi) if carry_error(carry) <= tol else (lo, mid)
+    return lo
+
+
 def lateral_amplitudes(P):
     """Pro Bein: Amplitude A (gleiche seitliche Strecke für alle Füße) + Mittelpunkt-Verschiebung c.
     Kann ein Bein nicht weiter hinausreichen (gestreckt), wird sein Arbeitsbereich nach innen verlegt."""
@@ -144,6 +194,10 @@ def clip_ready(P):
 def clip_attack1(P):
     N, w_end, s_end, h_end = P["frames"], P["windup_end"], P["strike_end"], P["hold_end"]
     striker = [l for l in feelers if l[0] == "L"] or feelers[:1]
+    carry, lifted, pivot = rear_split(P)
+    pitch = max_rear_pitch(P, carry, lifted, pivot, R(P["rear_pitch_deg"]))
+    print(f"  crab attack: aufbäumen auf {carry}, Kippwinkel {math.degrees(pitch):.1f}° "
+          f"(gewünscht {P['rear_pitch_deg']}°), vorne hoch: {lifted}")
 
     def pose(f):
         reset()
@@ -160,14 +214,16 @@ def clip_attack1(P):
             k3 = ease((f - h_end) / (N - h_end))
             raise_, back = -P["strike_down_deg"] * (1 - k3), P["strike_forward_deg"] * (1 - k3)
         body = ease(f / w_end) if f <= h_end else 1 - ease((f - h_end) / (N - h_end))
-        body_raise_planted(P["body_raise"] * body)
+        # Aufbäumen beim Ausholen, beim Zuschnappen leicht nach vorne "hineinfallen" (mehr Wucht)
+        drop = P["strike_pitch_drop"] * (ease((f - w_end) / (s_end - w_end)) if w_end < f <= h_end else 0.0)
+        rear_up(pitch * body * (1 - drop), carry, lifted, pivot, P, k=body)
         guard = [l for l in feelers if l not in striker]
         claws_hold(P["claw_raise_deg"] * 0.7 * body, spread_deg=15 * body, only=guard)
         for leg in striker:
             # "back" negativ = Schere nach vorne; Vorzeichen über back_sign der Hüfte
             set_leg(leg, back=-R(back), lift=R(raise_), fold=R(-20 if f > w_end else 10) * body)
         antennae(f / N, 2, 2, 0.4, 0.5, forward_deg=6 * body)
-    return {"N": N, "loop": False, "kind": "stand", "pose": pose,
+    return {"N": N, "loop": False, "kind": "stand", "pose": pose, "planted": carry,
             "events": [{"frame": P["hit_frame"], "event": "hit"}]}
 
 

@@ -413,7 +413,8 @@ def mesh_min_z():
 # ---------------------------------------------------------------- Backen + Selbstprüfung
 def bake(clips):
     """clips: {Name: spec}. spec = {N, loop, kind, pose(f), swing(leg, f)->bool (Locomotion),
-    axis: "x" | "y" | "turn", events: [...] }"""
+    axis: "x" | "y" | "turn", events: [...], planted: [Beine] (Standard: alle Laufbeine – z. B. beim
+    Aufbäumen nur die tragenden) }"""
     tol_c = ST["checks"]["contact_tolerance"] * SIZE
     tol_p = ST["checks"]["planted_tolerance"] * SIZE
     arm.animation_data_create()
@@ -471,7 +472,10 @@ def bake(clips):
                 r["move_speed_mps"] = round(sum(strides) / len(strides) / (spec["duty"] * N / FPS), 3)
                 r["move_axis"] = ax
         if kind in ("stand", "stand_return"):
-            mv = max((p - REST_FOOT[leg]).length for leg, s in feet.items() for p, _ in s)
+            planted = spec.get("planted", walking)       # z. B. Aufbäumen: nur die tragenden Beine
+            mv = max((p - REST_FOOT[leg]).length for leg, s in feet.items() if leg in planted for p, _ in s)
+            if len(planted) < len(walking):
+                r["planted_legs"] = planted
             r["feet_moved_max_m"] = round(mv, 4)
             r["feet_planted_ok"] = mv <= tol_p
         if kind == "stand_return":
