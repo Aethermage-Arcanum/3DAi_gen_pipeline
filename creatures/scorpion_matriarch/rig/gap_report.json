@@ -1,0 +1,80 @@
+{
+  "pairs_checked": 71,
+  "threshold_m": 0.0312,
+  "max_opening_m": 0.0251,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Multileg_Scorpion_Attack1": 0.0211,
+    "Multileg_Scorpion_Death": 0.017,
+    "Multileg_Scorpion_Hit": 0.0071,
+    "Multileg_Scorpion_Idle": 0.0041,
+    "Multileg_Scorpion_Ready": 0.0152,
+    "Multileg_Scorpion_Run": 0.0251,
+    "Multileg_Scorpion_TurnLeft": 0.0156,
+    "Multileg_Scorpion_TurnRight": 0.0157,
+    "Multileg_Scorpion_Walk": 0.0192
+  },
+  "worst": [
+    [
+      "Multileg_Scorpion_Run: Hips / Leg_R5_2",
+      0.0251,
+      12
+    ],
+    [
+      "Multileg_Scorpion_Attack1: Hips / Leg_R5_2",
+      0.0211,
+      12
+    ],
+    [
+      "Multileg_Scorpion_Walk: Hips / Leg_R5_2",
+      0.0192,
+      21
+    ],
+    [
+      "Multileg_Scorpion_Death: Leg_L1_2 / Neck_2",
+      0.017,
+      4
+    ],
+    [
+      "Multileg_Scorpion_TurnRight: Leg_L1_1 / Neck_1",
+      0.0157,
+      0
+    ],
+    [
+      "Multileg_Scorpion_TurnLeft: Hips / Leg_R5_2",
+      0.0156,
+      6
+    ],
+    [
+      "Multileg_Scorpion_Ready: Hips / Leg_R5_2",
+      0.0152,
+      10
+    ],
+    [
+      "Multileg_Scorpion_TurnLeft: Leg_L1_1 / Neck_1",
+      0.0151,
+      15
+    ],
+    [
+      "Multileg_Scorpion_TurnRight: Hips / Leg_R5_2",
+      0.013,
+      0
+    ],
+    [
+      "Multileg_Scorpion_TurnRight: Head / Leg_R1_2",
+      0.0108,
+      8
+    ],
+    [
+      "Multileg_Scorpion_TurnLeft: Head / Leg_R1_2",
+      0.0106,
+      7
+    ],
+    [
+      "Multileg_Scorpion_Run: Head / Leg_R1_2",
+      0.0105,
+      4
+    ]
+  ],
+  "ok": true
+}

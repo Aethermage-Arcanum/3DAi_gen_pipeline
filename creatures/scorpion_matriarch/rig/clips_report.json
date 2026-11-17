@@ -1,0 +1,155 @@
+{
+  "style": "multileg/scorpion",
+  "variant": null,
+  "clips": {
+    "Multileg_Scorpion_Walk": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.081,
+        0.087
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.174,
+      "loop_ok": true,
+      "max_stretch": 3.48,
+      "stretch_at": "Leg_R5_2 @ Frame 21",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Run": {
+      "frames": 14,
+      "seconds": 0.467,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.083,
+        0.095
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.314,
+      "loop_ok": true,
+      "max_stretch": 4.24,
+      "stretch_at": "Leg_R5_2 @ Frame 12",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Idle": {
+      "frames": 80,
+      "seconds": 2.667,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.53,
+      "stretch_at": "Leg_R5_2 @ Frame 21",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Ready": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 3.62,
+      "stretch_at": "Claw_L_1 @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_TurnLeft": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.174,
+        0.236
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 37.5,
+      "loop_ok": true,
+      "max_stretch": 3.01,
+      "stretch_at": "Leg_R5_2 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_TurnRight": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.174,
+        0.236
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": -37.5,
+      "loop_ok": true,
+      "max_stretch": 3.17,
+      "stretch_at": "Leg_L5_2 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Attack1": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "max_stretch": 3.73,
+      "stretch_at": "Leg_R5_2 @ Frame 12",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Hit": {
+      "frames": 10,
+      "seconds": 0.333,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.36,
+      "stretch_at": "Leg_R1_2 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Multileg_Scorpion_Death": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "final_min_z_vs_ground_m": -0.0,
+      "no_ground_penetration": true,
+      "max_stretch": 1.87,
+      "stretch_at": "Leg_R5_2 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

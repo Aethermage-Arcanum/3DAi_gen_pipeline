@@ -1,0 +1,203 @@
+{
+  "fps": 30,
+  "clips": {
+    "Multileg_Scorpion_Walk": [
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "R5"
+      },
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "L5"
+      },
+      {
+        "frame": 20,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "L3"
+      },
+      {
+        "frame": 23,
+        "event": "footstep",
+        "leg": "R2"
+      }
+    ],
+    "Multileg_Scorpion_Run": [
+      {
+        "frame": 4,
+        "event": "footstep",
+        "leg": "R5"
+      },
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 6,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "L5"
+      },
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "L3"
+      }
+    ],
+    "Multileg_Scorpion_Idle": [],
+    "Multileg_Scorpion_Ready": [],
+    "Multileg_Scorpion_TurnLeft": [
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "R5"
+      },
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "L5"
+      },
+      {
+        "frame": 20,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "L3"
+      },
+      {
+        "frame": 23,
+        "event": "footstep",
+        "leg": "R2"
+      }
+    ],
+    "Multileg_Scorpion_TurnRight": [
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "R5"
+      },
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "L5"
+      },
+      {
+        "frame": 20,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "L3"
+      },
+      {
+        "frame": 23,
+        "event": "footstep",
+        "leg": "R2"
+      }
+    ],
+    "Multileg_Scorpion_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Multileg_Scorpion_Hit": [],
+    "Multileg_Scorpion_Death": [
+      {
+        "frame": 36,
+        "event": "dead"
+      }
+    ]
+  }
+}

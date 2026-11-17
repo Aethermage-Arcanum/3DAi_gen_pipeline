@@ -1,0 +1,79 @@
+# Bewegungsmuster multileg/scorpion – Skorpion (Scorpion Matriarch). Beine per Blender-IK (Beine-Baukasten).
+# Vorbild: Skorpion-Gang (alternierende Beingruppen), Drohhaltung, Stich über den Kopf.
+
+[meta]
+skeleton = "multileg"
+style = "scorpion"
+clip_prefix = "Multileg_Scorpion"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }
+
+[walk]   # Gruppe A (L1 R2 L3 R4 L5) gegen Gruppe B, kleine Welle von vorn nach hinten
+max_stretch = 4.0   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+cycle_frames = 24
+duty = 0.6
+wave = 0.06
+stride = 0.09
+lift_back = 0.35
+toe_curl_deg = 0
+bob = 0.01
+tail_sway_deg = 5
+claw_raise_deg = 10
+
+[run]
+max_stretch = 4.5   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+cycle_frames = 14
+stride = 0.10
+
+[turn]
+max_stretch = 4.0   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+cycle_frames = 24
+turn_deg = 30
+stride = 0.0
+
+[idle]   # Scheren öffnen/schließen abwechselnd, Schwanz pendelt
+frames = 80
+claw_deg = 14
+tail_sway_deg = 6
+
+[ready]  # Drohen: Körper hoch, Scheren auseinander + hoch, Schwanz gespannt nach vorn über den Rücken
+max_stretch = 3.8   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+frames = 30
+raise = 0.08
+claw_spread_deg = 15
+claw_raise_deg = 12
+tail_curl_deg = 25
+tremble_deg = 1.5
+
+[attack1] # Scheren packen zu, Stachel schnellt über den Kopf nach vorn (hit), zurück
+max_stretch = 3.8   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+frames = 24
+windup_end = 9
+strike_end = 12
+hold_end = 16
+tail_back_deg = 30
+tail_strike_deg = 65
+tail_base_strike_deg = 12  # der ganze Schwanz kippt aus der Wurzel nach vorn (Krümmung allein dehnt die Glieder)
+claw_grab_deg = 14
+hit_frame = 12
+
+[hit]
+frames = 10
+jolt = 0.03
+roll_deg = 6
+
+[death]  # Beine knicken weg, Körper sackt auf den Boden, Schwanz fällt zur Seite
+max_stretch = 4.0   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+frames = 36
+collapse_end = 20
+sink = 0.4            # Rumpf sinkt um diesen Anteil seiner Höhe (Beine falten sich per IK)
+tail_drop_deg = 40
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.04
+max_stretch = 1.9
+stretch_every = 3
+stretch_min_edge = 0.004

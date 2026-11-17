@@ -28,7 +28,7 @@
 | 2 | Eel Stalker | ✅ | ✅ Tripo-UV (manuell) | ✅ legless (17 Kn.) | ✅ 9/9 cobra | ✅ | ✅ | 110 |
 | 3 | Dune Raptor | ✅ | ✅ Tripo-UV | ✅ biped_raptor (26 Kn.) | ✅ 9/9 raptor | ✅ | ✅ | 110 |
 | 4 | Void Manifestation | ✅ | ✅ Tripo-UV | ✅ floater (19 Tentakel) | ✅ 9/9 tentacle | ✅ | ✅ | 110 |
-| 5 | Scorpion Matriarch | ✅ | | | | | | 110 |
+| 5 | Scorpion Matriarch | ✅ | ✅ Tripo-UV | ✅ multileg (59 Kn., 5 Beinpaare) | ✅ 9/9 scorpion | ✅ | ✅ | 110 |
 | 6 | Needle Wasp | | | | | | | |
 | 8 | Reef Snapper | | | | | | | |
 | 9 | Hollow Stag | | | | | | | |

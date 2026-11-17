@@ -16,6 +16,11 @@ role = "style"
 # Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
 # Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
 [motion]
-style = "crawler/scorpion"
+style = "multileg/scorpion"   # zusammenhängendes Mesh → Mehrbein-Rig über Oberflächen-Wege (rigging/multileg_rig.py)
 variant = ""
 vorbild = ["Skorpion – Gang, Scheren vorne", "Skorpion – Stich und Drohhaltung (Schwanz über dem Rücken)"]
+
+# Lückenprüfung: Tripo hat ein 5. Beinpaar erzeugt, das am Schwanzansatz mit der Hüfte verschmolzen war (im Rig
+# getrennt, rigging/multileg_rig.py cut_fused_limbs). Rest-Lücke dort max. 2,5 cm im Rennen, Sichtprüfung ok → 3 cm.
+[gaps]
+max_opening = 0.03

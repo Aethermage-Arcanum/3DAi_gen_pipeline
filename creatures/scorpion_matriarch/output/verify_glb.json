@@ -1,0 +1,113 @@
+{
+  "skeleton": "multileg",
+  "file": "ScorpionMatriarch.glb",
+  "meshes": 1,
+  "triangles": 3952,
+  "bones": 59,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_89d55c3a-89a5-43b0-9a6b-1dbc566f9a8a"
+  ],
+  "textures": [
+    [
+      "Color_89d55c3a-89a5-43b0-9a6b-1dbc566f9a8a",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_89d55c3a-89a5-43b0-9a6b-1dbc566f9a8a",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_89d55c3a-89a5-43b0-9a6b-1dbc566f9a8a",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Multileg_Scorpion_Attack1",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Death",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Hit",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Idle",
+      [
+        0,
+        64
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Run",
+      [
+        0,
+        11
+      ]
+    ],
+    [
+      "Multileg_Scorpion_TurnLeft",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Multileg_Scorpion_TurnRight",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Multileg_Scorpion_Walk",
+      [
+        0,
+        19
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.06,
+    -0.85,
+    0.52
+  ],
+  "foot_moves_m": 0.0701,
+  "dimensions_m": [
+    0.947,
+    1.056,
+    0.764
+  ],
+  "ok": true
+}

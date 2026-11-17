@@ -1,0 +1,24 @@
+{
+  "vertices": 3159,
+  "size_m": 1.0,
+  "legs": {
+    "L": 5,
+    "R": 5
+  },
+  "limbs": [
+    "Claw_L",
+    "Claw_R",
+    "Leg_L1",
+    "Leg_L2",
+    "Leg_L3",
+    "Leg_L4",
+    "Leg_L5",
+    "Leg_R1",
+    "Leg_R2",
+    "Leg_R3",
+    "Leg_R4",
+    "Leg_R5",
+    "Tail"
+  ],
+  "bones": 59
+}

@@ -238,6 +238,14 @@ def reach_fix(margin=0.97, iters=4):
     return total
 
 
+def ground_above():
+    """Ragt irgendein Teil in den Boden, wird der Rumpf genau so weit angehoben (Füße bleiben per IK stehen)."""
+    bpy.context.view_layer.update()
+    dz = GROUND - mesh_min_z()
+    if dz > 0:
+        move("Root", Vector((0, 0, dz)))
+
+
 def mesh_min_z():
     dg = bpy.context.evaluated_depsgraph_get()
     ev = body_obj.evaluated_get(dg)

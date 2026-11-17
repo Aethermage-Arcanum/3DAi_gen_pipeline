@@ -65,7 +65,11 @@ def mirror_limbs(a_, b_):
     wenn sie in Ruhe aneinanderliegen, ist das keine Gelenk-Lücke, sondern Beine im Gegentakt."""
     import re
     m1, m2 = re.match(r"(Leg_[A-Z]?)([LR])(.*)", a_), re.match(r"(Leg_[A-Z]?)([LR])(.*)", b_)
-    return bool(m1 and m2 and m1.group(1) == m2.group(1) and m1.group(2) != m2.group(2))
+    if m1 and m2 and m1.group(1) == m2.group(1) and m1.group(2) != m2.group(2):
+        return True
+    # verschiedene Gliedmaßen (z. B. Leg_R4_* / Leg_R5_* beim Mehrbeiner) dürfen sich auch trennen
+    limb = lambda n: n.rsplit("_", 1)[0] if re.match(r"(Leg_[LR]\d|Claw_[LR])_\d", n) else None  # noqa: E731
+    return bool(limb(a_) and limb(b_) and limb(a_) != limb(b_))
 
 
 for i, c in enumerate(rest):

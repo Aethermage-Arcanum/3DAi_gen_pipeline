@@ -1,0 +1,21 @@
+# Mehrbein-Rig (rigging/multileg_rig.py). Pro Kreatur überschreibbar unter [multileg].
+foot_band = 0.04          # Bodenkontakt: Vertices bis zu dieser Höhe (Anteil H)
+foot_merge = 0.03         # Kontakt-Vertices näher als das gehören zum selben Fuß (Anteil Größe)
+section_radius = 0.025    # Umgebung für die Mittellinie einer Gliedmaße (Anteil Größe)
+thickness_radius = 0.04   # Umgebung für "betritt den Körper" (Anteil Größe)
+thickness_jump = 2.5      # so viel dichter = Körper erreicht
+mid_half_width = 0.06
+chest_ahead = 0.6         # Brust-Ende: Anteil Mitte → Vorderkante
+hips_back = 0.6           # Hüft-Ende: Anteil Mitte → Hinterkante
+leg_fracs = [0.0, 0.12, 0.45, 0.8, 1.0]   # Hüfte, Oberschenkel, Schiene, Fuß (Anteil der Beinlänge; Knie = höchster Punkt)
+claws = true
+claw_min_side = 0.05
+claw_fracs = [0.0, 0.35, 0.65, 1.0]
+tail = true
+tail_start = 0.15         # Schwanz beginnt bei diesem Anteil des Weges Mitte → Stachel
+tail_bones = 5
+body_reach = 1.6
+falloff = 4
+smooth_iterations = 5
+smooth_factor = 0.5
+cut_fused_limbs = true    # Flächen zwischen verschiedenen Gliedmaßen löschen (Tripo verschmilzt sich berührende Beine)
