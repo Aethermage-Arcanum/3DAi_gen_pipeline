@@ -162,7 +162,8 @@ def main():
         mode = "multiview-to-model" if len(images) > 1 else "image-to-model"
         print(f"[dry-run] generate → POST /generation/{mode} mit {json.dumps(t, ensure_ascii=False)}")
         print(f"[dry-run] rig_check (kostenlos) → rig mit {json.dumps(cfg['rig'], ensure_ascii=False)}")
-        print(f"[dry-run] animate → {cfg['animate']['presets']} (auto = {bp.get('walk') or 'keins'})")
+        used = state.get("rig", {}).get("rig_type", bp["rig_type"])
+        print(f"[dry-run] animate → {cfg['animate']['presets']} (auto = {WALK_PRESETS.get(used) or 'keins'}, Rig-Typ {used})")
         print("[dry-run] Status:", {s: ("erledigt" if s in state else "offen") for s in STEPS})
         return
 
