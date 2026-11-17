@@ -82,7 +82,9 @@ def build(creature_dir):
               f"Please generate {len(views)} SEPARATE images, one after another (NOT a grid, NOT a collage, "
               f"NOT one sheet with several views). All images show EXACTLY the same creature - identical "
               f"design, proportions, number of legs, colors, materials, pose and lighting. Only the camera "
-              f"angle changes:\n{vlist}\n\n"
+              f"angle changes - the body posture is IDENTICAL in every view (do not stand the creature upright "
+              f"in the front/back views if it leans forward in the side views; imagine one frozen 3D model and "
+              f"a camera circling around it):\n{vlist}\n\n"
               f"Keep the exact number of legs, wings, tails and claws of the design and keep all of them "
               f"clearly visible and separated in every view.\n\n{rules}")
     parts += [f"## Ein Prompt für alle {len(views)} Ansichten", "",

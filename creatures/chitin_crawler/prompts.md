@@ -20,13 +20,13 @@ ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create a clean reference image of the creature from the design image for 3D modeling.
+Create clean reference images of the creature from the design image for 3D modeling.
 
 Creature: ant-like forest insect predator: small head with a glossy green carapace and short mandibles, reddish-brown segmented chitin armor plates on thorax and a large rounded abdomen, long thin jointed legs with dark tips, two short antennae
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
 
-Please generate 4 SEPARATE images, one after another (NOT a grid, NOT a collage, NOT one sheet with several views). All images show EXACTLY the same creature - identical design, proportions, number of legs, colors, materials, pose and lighting. Only the camera angle changes:
+Please generate 4 SEPARATE images, one after another (NOT a grid, NOT a collage, NOT one sheet with several views). All images show EXACTLY the same creature - identical design, proportions, number of legs, colors, materials, pose and lighting. Only the camera angle changes - the body posture is IDENTICAL in every view (do not stand the creature upright in the front/back views if it leans forward in the side views; imagine one frozen 3D model and a camera circling around it):
 1. `front.png` - front view: the creature faces the camera directly
 2. `left.png` - exact side view of the creature's own LEFT flank: rotated 90 degrees, its head points to the LEFT edge of the image
 3. `right.png` - exact side view of the creature's own RIGHT flank: rotated 90 degrees, its head points to the RIGHT edge of the image
