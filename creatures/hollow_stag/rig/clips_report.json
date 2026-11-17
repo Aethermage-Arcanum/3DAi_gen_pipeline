@@ -1,0 +1,155 @@
+{
+  "style": "quadruped/deer",
+  "variant": null,
+  "clips": {
+    "Quadruped_Deer_Walk": {
+      "frames": 32,
+      "seconds": 1.067,
+      "loop": true,
+      "ik_reach_error_m": 0.0001,
+      "body_lowered_max_m": 0.0161,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.157,
+        0.157
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.237,
+      "loop_ok": true,
+      "max_stretch": 3.06,
+      "stretch_at": "Shoulder_FL @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Run": {
+      "frames": 16,
+      "seconds": 0.533,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0104,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.133,
+        0.166
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.821,
+      "loop_ok": true,
+      "max_stretch": 2.84,
+      "stretch_at": "Shoulder_FR @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Idle": {
+      "frames": 90,
+      "seconds": 3.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.85,
+      "stretch_at": "Neck_2 @ Frame 72",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Ready": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0002,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_ok": true,
+      "max_stretch": 3.47,
+      "stretch_at": "Shoulder_FL @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_TurnLeft": {
+      "frames": 28,
+      "seconds": 0.933,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.008,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.087,
+        0.149
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 32.1,
+      "loop_ok": true,
+      "max_stretch": 2.83,
+      "stretch_at": "Shoulder_FL @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_TurnRight": {
+      "frames": 28,
+      "seconds": 0.933,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0052,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.087,
+        0.149
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": -32.1,
+      "loop_ok": true,
+      "max_stretch": 2.79,
+      "stretch_at": "Shoulder_FL @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Attack1": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": false,
+      "ik_reach_error_m": 0.0002,
+      "body_lowered_max_m": 0.0172,
+      "feet_moved_max_m": 0.0002,
+      "feet_planted_ok": true,
+      "max_stretch": 4.35,
+      "stretch_at": "Neck_2 @ Frame 15",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Hit": {
+      "frames": 10,
+      "seconds": 0.333,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0011,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.32,
+      "stretch_at": "Neck_2 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Quadruped_Deer_Death": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "final_min_z_vs_ground_m": 0.0,
+      "no_ground_penetration": true,
+      "max_stretch": 2.01,
+      "stretch_at": "Leg_BL_1 @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

@@ -1,6 +1,6 @@
 """Bewegungsmuster quadruped/deer: nutzt den Vierbeiner-Generator ../wolf/wolf_clips.py mit eigener style.toml.
 
-& "D:\Blender\blender.exe" -b <quadruped_rigged.blend> -P motions/quadruped/deer/deer_clips.py -- <ausgabe> [<creature.toml>]
+& "D:\\Blender\\blender.exe" -b <quadruped_rigged.blend> -P motions/quadruped/deer/deer_clips.py -- <ausgabe> [<creature.toml>]
 """
 import pathlib
 import runpy

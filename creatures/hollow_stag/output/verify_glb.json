@@ -1,0 +1,113 @@
+{
+  "skeleton": "quadruped",
+  "file": "HollowStag.glb",
+  "meshes": 1,
+  "triangles": 4243,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab"
+  ],
+  "textures": [
+    [
+      "Color_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Quadruped_Deer_Attack1",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Quadruped_Deer_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Quadruped_Deer_Hit",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Quadruped_Deer_Idle",
+      [
+        0,
+        72
+      ]
+    ],
+    [
+      "Quadruped_Deer_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Quadruped_Deer_Run",
+      [
+        0,
+        12
+      ]
+    ],
+    [
+      "Quadruped_Deer_TurnLeft",
+      [
+        0,
+        22
+      ]
+    ],
+    [
+      "Quadruped_Deer_TurnRight",
+      [
+        0,
+        22
+      ]
+    ],
+    [
+      "Quadruped_Deer_Walk",
+      [
+        0,
+        25
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.81,
+    0.59
+  ],
+  "foot_moves_m": 0.0858,
+  "dimensions_m": [
+    0.573,
+    0.901,
+    0.993
+  ],
+  "ok": true
+}

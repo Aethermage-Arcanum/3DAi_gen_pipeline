@@ -1,0 +1,106 @@
+{
+  "skeleton": "quadruped",
+  "file": "HollowStag.fbx",
+  "meshes": 1,
+  "triangles": 4243,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab"
+  ],
+  "textures": [
+    [
+      "Color_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_0e1a14df-9bf5-4c8d-bf38-1e1702a858ab",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Attack1",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Hit",
+      [
+        1,
+        11
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Idle",
+      [
+        1,
+        91
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Ready",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Run",
+      [
+        1,
+        17
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_TurnLeft",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_TurnRight",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "HollowStag|HollowStag|Quadruped_Deer_Walk",
+      [
+        1,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -0.81,
+    0.59
+  ],
+  "foot_moves_m": 0.0797,
+  "dimensions_m": [
+    0.577,
+    0.902,
+    0.99
+  ],
+  "ok": true
+}

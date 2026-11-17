@@ -31,6 +31,20 @@
 | 5 | Scorpion Matriarch | ✅ | ✅ Tripo-UV | ✅ multileg (59 Kn., 5 Beinpaare) | ✅ 9/9 scorpion | ✅ | ✅ | 110 |
 | 6 | Needle Wasp | ✅ | ✅ Tripo-UV | ✅ flyer (13 Ketten) | ✅ 9/9 wasp | ✅ | ✅ | 110 |
 | 8 | Reef Snapper | ✅ | ✅ Tripo-UV | ✅ quadruped (Brücke getrennt) | ✅ 9/9 lizard | ✅ | ✅ | 110 |
-| 9 | Hollow Stag | ✅ | | | | | | 110 |
+| 9 | Hollow Stag | ✅ | ✅ Tripo-UV | ✅ quadruped | ✅ 9/9 deer | ✅ | ✅ | 110 |
 
 Ausgegebene Credits gesamt: 880 / 1.500 (Guthaben 1.475)
+
+## Ergebnis (2026-11-17, Lauf abgeschlossen)
+Alle 8 Kreaturen fertig, je 9 Clips grün, exportiert (FBX/GLB + Events), gepusht. Credits: 880 von 1.500 (Guthaben 1.475).
+
+**Neue Skelett-Familien** (alle per `python scripts/creature_pipeline.py creatures/<name>`):
+quadruped (wolf, lizard, deer) · legless (cobra) · biped_raptor (raptor) · floater (tentacle) · multileg (scorpion) · flyer (wasp).
+
+**Wichtigste Erkenntnisse:**
+- Tripo verschmilzt sich berührende Gliedmaßen (Beine, Schwanz auf dem Rücken) mit Hautbrücken → Brücken-Schnitt im Rig (raptor, multileg, Vierbeiner optional).
+- UV-Naht-Duplikate brauchen identische Gewichte (sonst Risse bis 5 cm).
+- Tripo-Beine oft fast gestreckt → automatische Rumpf-Absenkung in der IK.
+- Dehnungs-Grenzen wurden pro Clip nur nach Sichtprüfung erhöht, Begründung steht jeweils in der style.toml.
+
+**Offen / für später:** Flesh Titan (#7, zusammen), Unity-Test aller Exporte, Ready/Attack der Echse verstärken, Wolf-Tod (Beine lassen sofort los).

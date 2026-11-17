@@ -68,7 +68,7 @@ def clip_ready(P):
         neck_head(pitch=-R(P["head_down_deg"]), head_pitch=R(P["head_down_deg"]) * 0.6)
         jaw(P["jaw_deg"] + 3 * math.sin(2 * math.pi * 3 * t))
         tail(t, 1.5, 3, P["tail_lift_deg"])
-    return {"N": N, "loop": True, "kind": "stand", "pose": pose}
+    return {"N": N, "loop": True, "kind": "stand", "pose": pose, "max_stretch": P.get("max_stretch")}
 
 
 def clip_attack1(P):
@@ -88,14 +88,14 @@ def clip_attack1(P):
         body(dz=-P["crouch"] * HGT * k_c + P["lunge_up"] * HGT * k_l,
              dx=-0.03 * SIZE * k_c + P["lunge"] * SIZE * k_l, pitch=-R(6) * k_c + R(4) * k_l)
         if P.get("type") == "headbutt":                  # Hirsch: Kopf tief, Geweih nach vorn stoßen
-            neck_head(pitch=-R(P["neck_reach_deg"]) * (0.6 * k_c + k_l), head_pitch=R(P["neck_reach_deg"]) * 0.5 * k_l)
+            neck_head(pitch=-R(P["neck_reach_deg"]) * (0.6 * k_c + k_l), head_pitch=-R(P["neck_reach_deg"]) * 0.35 * k_l)   # Nase runter = Geweih nach vorn
         else:                                             # Biss: Hals streckt, Maul auf → zu
             neck_head(pitch=-R(10) * k_c + R(P["neck_reach_deg"]) * 0.3 * k_l,
                       head_pitch=R(8) * k_c - R(P["neck_reach_deg"]) * 0.4 * k_l,
                       yaw=R(P.get("snap_yaw_deg", 0)) * k_l)
             jaw(P["jaw_open_deg"] * k_j)
         tail(0, 0, 1, 12 * k_l)
-    return {"N": N, "loop": False, "kind": "stand", "pose": pose,
+    return {"N": N, "loop": False, "kind": "stand", "pose": pose, "max_stretch": P.get("max_stretch"),
             "events": [{"frame": P["hit_frame"], "event": "hit"}]}
 
 

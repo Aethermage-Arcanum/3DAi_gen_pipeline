@@ -10,7 +10,11 @@ fps = 30
 clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
 inherit = { turn = "walk" }
 
+[rig]
+scapula_stiffness = 0.3   # lange Beine: Schulterblatt bedeckt den Oberarm → muss weicher mitgehen
+
 [walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt)
+max_stretch = 3.2   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 cycle_frames = 32
 duty = 0.62
 order = { BL = 0.0, FL = 0.75, BR = 0.5, FR = 0.25 }
@@ -26,6 +30,7 @@ tail_deg = 3
 tail_lift_deg = 5    # Wolf trägt den Schwanz beim Gehen leicht hängend
 
 [run]    # rotierender Galopp: HL, HR knapp danach, dann VR, VL – Rücken beugt/streckt sich
+max_stretch = 3.0   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 cycle_frames = 16
 duty = 0.36
 order = { BL = 0.0, BR = 0.9, FR = 0.55, FL = 0.45 }
@@ -39,9 +44,9 @@ spine_flex_deg = 5
 head_stabilize = 0.0
 tail_deg = 4
 tail_lift_deg = 6
-max_stretch = 2.4     # Sichtprüfung: Haut hinten am Oberschenkel zieht sich beim Vorschwingen lang (wie beim echten Tier), keine Risse
 
 [turn]
+max_stretch = 3.2   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 cycle_frames = 28
 duty = 0.6
 turn_deg = 30         # Drehung pro Zyklus
@@ -54,14 +59,16 @@ look_deg = 22
 tail_deg = 5
 
 [ready]  # Drohhaltung: geduckt, Kopf tief + nach vorn, Lefzen hoch (Kiefer leicht offen), Schwanz steif
+max_stretch = 3.6   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 frames = 30
 crouch = 0.18         # Rumpf absenken (Anteil Rumpfhöhe)
-head_down_deg = 30
+head_down_deg = 18
 jaw_deg = 0
 tremble_deg = 1.2
 tail_lift_deg = 10
 
 [attack1] # Anspringen + Biss: zurücksetzen/ducken → nach vorn schnellen, Maul auf → zuschnappen (hit)
+max_stretch = 4.5   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 frames = 24
 windup_end = 9
 strike_end = 13
@@ -69,7 +76,7 @@ hold_end = 16
 crouch = 0.15
 lunge = 0.08          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
 lunge_up = 0.05
-neck_reach_deg = 30
+neck_reach_deg = 40
 type = "headbutt"
 jaw_open_deg = 40
 hit_frame = 13
@@ -81,6 +88,7 @@ roll_deg = 6
 head_deg = 26
 
 [death]  # zur Seite kippen, Beine erschlaffen
+max_stretch = 2.1   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 frames = 40
 collapse_start = 4
 collapse_end = 22

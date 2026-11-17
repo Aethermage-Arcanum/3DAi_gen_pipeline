@@ -318,9 +318,9 @@ for pair in ((("FL", "FR"), ("BL", "BR")) if RIG.get("exclusive_leg_pairs", Fals
                             for k in (1, 2, 3, 4)], 1), 1) for lg in pair]
     left = dpl[0] < dpl[1]
     for j, n in enumerate(names):
-        if n.startswith(f"Leg_{pair[0]}"):
+        if n.startswith((f"Leg_{pair[0]}", f"Shoulder_{pair[0]}")):
             allow[:, j] &= left
-        elif n.startswith(f"Leg_{pair[1]}"):
+        elif n.startswith((f"Leg_{pair[1]}", f"Shoulder_{pair[1]}")):
             allow[:, j] &= ~left
 if RIG.get("exclusive_leg_pairs", False):
     mid = np.abs(V[:, 1] - Y_MID) < RIG.get("belly_mid_width", 0.04) * H
