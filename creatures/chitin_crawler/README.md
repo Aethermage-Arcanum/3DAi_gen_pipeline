@@ -35,6 +35,17 @@ Concept: `_concept/monster_progression_A_vs_B.webp` (Design Artist A, Stil Artis
 - **Video:** YouTube-Kanal „Ant Lab“ (Dr. Adrian Smith), Makro- und Zeitlupenaufnahmen von Ameisen ([Hinweis](https://digitalcameraworld.com/news/this-incredible-slow-motion-video-shows-insects-taking-flight)). Freie Makro-Clips: [Videezy: rote Ameisen in Nahaufnahme](https://www.videezy.com/abstract/33664-close-up-of-red-ants-walking-around-on-the-ground)
 - Falls 8 Beine bleiben: Spinnen laufen mit abwechselnden 4er-Gruppen (alternating tetrapod). Dafür bräuchten wir ein Spinnen-Video als Referenz.
 
+## Lauf 2: eigenes Standard-Rig (2026-11-17, 0 Credits)
+`python scripts/crawler_pipeline.py creatures/chitin_crawler --name ChitinCrawler` → **✓ alle Prüfungen bestanden**
+
+- Erkennung: 8/8 Beinketten, Fühler, Rumpfachse (Taille x = −0.043, Hals x = 0.215)
+- **Das vorderste Paar (Slot 1) sind erhobene Taster** und erreichen den Boden nicht → `feeler_slots = [1]`. Gelaufen wird auf den Paaren 2–4: Ameisen-Dreifuß A = {R2, L3, R4}, B = {L2, R3, L4}.
+- Rig: 43 Knochen, 0 Vertices ohne Gewicht, max. 2 Einflüsse pro Vertex
+- Walk: 20 Frames @ 30 fps (0,67 s), Bodenkontakt in der Standphase ≤ 7 mm, Schrittlänge 8–11 cm, Fußhöhe im Schwung 7–14 cm
+- **Unity-Laufgeschwindigkeit: 0,28 m/s** (bei Modellgröße ~1 m; skaliert linear mit der Größe)
+- Export: `output/ChitinCrawler.fbx` (3.122 Dreiecke, 1 Material, Texturen 1024², Clip „ChitinCrawler|Walk“) + `.glb`
+- Iterationen bis dahin: Beine nicht erkannt (Lücken) → Spannbaum. Untere Segmente als Füße → nur Spitzen. Taille falsch (zu wenige Vertices) → Oberflächen-Sampling. Lose Segmente/Panzerrisse → Zuordnung + weiche Rumpfgewichte. Füße hoben sich nicht/sanken ein → Achsen aus der Geometrie. Ungleiche Schritte → Schwenkwinkel pro Bein.
+
 ## Nächste Entscheidung
 - **A) 8 Beine akzeptieren:** nur Animation `octopod:walk` neu (≈10 Credits)
 - **B) 6 Beine wie geplant:** Bilder mit eindeutig 6 Beinen neu machen, dann Modell + Rig + Animation neu (≈145 Credits)

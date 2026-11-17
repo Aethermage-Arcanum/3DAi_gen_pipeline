@@ -16,7 +16,38 @@ profile_samples = 30000       # Oberflächenpunkte für das Profil
 petiole_search_ahead = 0.1    # Petiolus darf bis 10 % der Länge vor den hintersten Beinwurzeln liegen
 antenna_mid_highest = true    # Fühler-Mittelgelenk = höchster Punkt (geknickte Fühler)
 spine_blend = 0.06            # weiche Übergangszone zwischen Rumpfknochen (Anteil der Größe)
-rigid_island_max_verts = 120  # Rumpf-Teile kleiner als das hängen starr an einem Knochen
+rigid_island_max_verts = 0    # Rumpf-Teile kleiner als das hängen starr an einem Knochen.
+                              # 0 = alle Rumpfteile weich nach Position → keine Risse zwischen Panzerplatten
 leg_blend = 0.015             # weiche Zone an Beingelenken (nur bei sehr langen Bein-Teilen)
 split_long_leg_islands = true # Bein-Teile, die über 3+ Knochen reichen, pro Vertex aufteilen
 leg_capture_ratio = 0.6       # loses Teil gehört zum Bein, wenn es < 60 % so weit vom Bein wie vom Rumpf ist
+
+[walk]
+# Laufzyklus (in place). Referenz Ameise: Dreifuß-Gang, Tempo über Schrittlänge + Frequenz.
+fps = 30
+cycle_frames = 20          # Frames pro kompletten Zyklus (beide Gruppen je 1 Schritt)
+walking_slots = [1, 2, 3, 4]   # welche Beinpaare laufen (1 = vorne). Sechsbeiner: [1,2,3] oder [2,3,4]
+feeler_slots = []          # Beinpaare, die nur tasten (z. B. erhobene Vorderbeine)
+duty = 0.5                 # Anteil Standphase (0.5 = Gruppen wechseln exakt ab)
+wave_offset = 0.04         # leichter Versatz vorne→hinten innerhalb einer Gruppe
+stride = 0.11             # Schrittlänge als Anteil der Körpergröße – für ALLE Füße gleich (kein Rutschen)
+stride_max_deg = 35        # Obergrenze Hüft-Schwenk (für Beine, die fast nach vorne zeigen)
+lift_deg = 11              # Anheben im Schwung
+tibia_fold_deg = 7         # Unterschenkel zusätzlich anheben im Schwung
+body_bob = 0.002           # Rumpf-Wippen (Anteil Größe) – klein halten, Füße hängen am Rumpf
+body_roll_deg = 0.6        # Rollen kippt die Füße mit → klein halten
+body_sway_deg = 2.5
+abdomen_bob_deg = 3
+abdomen_sway_deg = 4
+abdomen_lag = 0.6          # Hinterleib folgt verzögert (Radiant)
+head_nod_deg = 2
+head_sway_deg = 3
+antenna_deg = 12
+antenna_speed = 2          # Fühler-Schwingungen pro Zyklus
+feeler_deg = 10
+feeler_speed = 1
+contact_tolerance = 0.012  # Selbstprüfung: Fuß darf in der Standphase max. 1,2 % der Größe schweben/einsinken
+
+[export]
+texture_size = 1024        # Tripo liefert 2048² – für Schwarmgegner reicht 512–1024
+clip_name = "Walk"

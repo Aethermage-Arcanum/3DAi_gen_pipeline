@@ -1,0 +1,56 @@
+{
+  "file": "ChitinCrawler.glb",
+  "meshes": 1,
+  "triangles": 3122,
+  "bones": 43,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 2,
+  "materials": [
+    "tripo_material_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2"
+  ],
+  "textures": [
+    [
+      "Color_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Walk",
+      [
+        0,
+        16
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    -0.0
+  ],
+  "foot_moves_m": 0.102,
+  "dimensions_m": [
+    0.926,
+    0.996,
+    0.598
+  ],
+  "ok": true
+}

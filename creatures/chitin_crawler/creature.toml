@@ -19,6 +19,12 @@ role = "design"
 file = "input/concept/2_style_lowpoly_insects_B.png"
 role = "style"
 
+# Krabbler-Rig: Das vorderste Paar sind erhobene Taster (erreichen den Boden nicht),
+# gelaufen wird auf den Paaren 2-4 → Ameisen-Dreifuß-Gang.
+[crawler.walk]
+walking_slots = [2, 3, 4]
+feeler_slots = [1]
+
 # Early-Game-Schwarmgegner: viele gleichzeitig auf dem Bildschirm → knappes Budget
 [tripo]
 face_limit = 3000

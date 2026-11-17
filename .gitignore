@@ -22,3 +22,5 @@ creatures/*/review/
 # Rig-Ausgaben (reproduzierbar mit rigging/crawler_rig.py)
 creatures/*/rig/test/
 creatures/*/rig/*.blend1
+creatures/*/rig/*.blend
+creatures/*/rig/anim/*.png
