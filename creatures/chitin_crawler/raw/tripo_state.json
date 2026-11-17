@@ -1,0 +1,38 @@
+{
+  "generate": {
+    "task_id": "53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+    "fingerprint": "77d0b3dd4d44",
+    "credits": 110.0,
+    "files": [
+      "generate_model.glb",
+      "generate_rendered_image.webp"
+    ]
+  },
+  "rig_check": {
+    "task_id": "f164f54f-26b1-4274-beaa-1693507b2e11",
+    "fingerprint": "9b769b20c60a",
+    "riggable": true,
+    "rig_type": "octopod"
+  },
+  "rig": {
+    "task_id": "72e296fc-c0fc-488a-9858-4a3f8df7b0a9",
+    "fingerprint": "cf1f65f53033",
+    "rig_type": "octopod",
+    "credits": 25.0,
+    "files": [
+      "rig_model.glb",
+      "rig_rendered_image.webp"
+    ]
+  },
+  "animate": {
+    "task_id": "c3fa0243-1959-4caf-9aa0-fa0e09b9bc6c",
+    "fingerprint": "edc1500781fc",
+    "presets": [
+      "preset:hexapod:walk"
+    ],
+    "credits": 10.0,
+    "files": [
+      "animate_model.glb"
+    ]
+  }
+}

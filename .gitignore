@@ -15,3 +15,6 @@ procedural/demo_output/
 
 # Tripo-Downloads in creatures/*/raw/ werden BEWUSST versioniert:
 # sie haben Credits gekostet und sind nicht kostenlos reproduzierbar.
+
+# Vorschau-Renders aus inspect_model.py (reproduzierbar)
+creatures/*/review/

@@ -28,6 +28,11 @@ STEPS = ["generate", "rig_check", "rig", "animate"]
 VIEW_ORDER = ["front", "left", "back", "right"]
 IMG_EXT = [".png", ".jpg", ".jpeg", ".webp"]
 FAIL = {"failed", "cancelled", "banned", "expired"}
+# Tripo-Laufzyklen je Rig-Typ (Stand 11/2026). Preset muss zum Skelett passen!
+WALK_PRESETS = {
+    "biped": "preset:walk", "quadruped": "preset:quadruped:walk", "hexapod": "preset:hexapod:walk",
+    "octopod": "preset:octopod:walk", "serpentine": "preset:serpentine:march", "aquatic": "preset:aquatic:march",
+}
 
 
 class Tripo:
@@ -202,9 +207,14 @@ def main():
             raise SystemExit("Rig-Check sagt: nicht riggbar. Bild/Pose verbessern und neu generieren.")
         rig_type = cfg["rig"]["rig_type"]
         if rig_type == "auto":
-            rig_type = rc.get("rig_type") or bp["rig_type"]
-        if rc.get("rig_type") and rc["rig_type"] != bp["rig_type"]:
-            print(f"  ⚠ Rig-Check empfiehlt '{rc['rig_type']}', Bauplan erwartet '{bp['rig_type']}'. Verwende '{rig_type}'.")
+            # Bauplan = Entscheidung des Nutzers. Weicht der Rig-Check ab, VOR dem Bezahlen stoppen.
+            rig_type = bp["rig_type"]
+            if rc.get("rig_type") and rc["rig_type"] != rig_type:
+                raise SystemExit(
+                    f"STOPP: Rig-Check erkennt '{rc['rig_type']}', Bauplan sagt '{rig_type}'. "
+                    f"Das Modell passt vermutlich nicht zum Bauplan (z. B. falsche Beinzahl). "
+                    f"Modell prüfen, dann entweder neu generieren oder in creature.toml "
+                    f"[rig] rig_type = \"{rc['rig_type']}\" setzen.")
         body = {"input": gen_id, "model": cfg["rig"]["model"], "rig_type": rig_type,
                 "out_format": cfg["rig"]["out_format"]}
         if fp := should_run("rig", body):
@@ -222,7 +232,10 @@ def main():
     if "animate" in steps and rig_id:
         presets = cfg["animate"]["presets"]
         if presets == "auto":
-            presets = [bp["walk"]] if bp.get("walk") else []
+            # Preset muss zum TATSÄCHLICHEN Rig-Typ passen, nicht zum Bauplan
+            used = state["rig"].get("rig_type", bp["rig_type"])
+            walk = WALK_PRESETS.get(used, "")
+            presets = [walk] if walk else []
         if not presets:
             print("– animate: keine Presets für diesen Bauplan, übersprungen.")
         else:
