@@ -69,5 +69,21 @@
       "length_m": 0.437
     }
   ],
-  "bones": 51
+  "bones": 51,
+  "double_sided": {
+    "faces_checked": 4172,
+    "open_back_faces": 124,
+    "regions": 6,
+    "region_areas_m2": [
+      0.0538,
+      0.0538,
+      0.034,
+      0.034,
+      0.0182,
+      0.0182
+    ],
+    "faces_added": 124,
+    "verts_total": 6444,
+    "faces_total": 4296
+  }
 }

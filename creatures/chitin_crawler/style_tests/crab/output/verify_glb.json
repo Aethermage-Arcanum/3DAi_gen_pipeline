@@ -1,4 +1,5 @@
 {
+  "skeleton": "crawler",
   "file": "ChitinCrawler_Crab.glb",
   "meshes": 1,
   "triangles": 3122,
@@ -34,70 +35,70 @@
   ],
   "actions": [
     [
-      "Crawler_Crab_Attack1",
+      "Octopod_Crab_Attack1",
       [
         0,
         17
       ]
     ],
     [
-      "Crawler_Crab_Death",
+      "Octopod_Crab_Death",
       [
         0,
         28
       ]
     ],
     [
-      "Crawler_Crab_Hit",
+      "Octopod_Crab_Hit",
       [
         0,
         7
       ]
     ],
     [
-      "Crawler_Crab_Idle",
+      "Octopod_Crab_Idle",
       [
         0,
         48
       ]
     ],
     [
-      "Crawler_Crab_Ready",
+      "Octopod_Crab_Ready",
       [
         0,
         24
       ]
     ],
     [
-      "Crawler_Crab_Run",
+      "Octopod_Crab_Run",
       [
         0,
         11
       ]
     ],
     [
-      "Crawler_Crab_TurnLeft",
+      "Octopod_Crab_TurnLeft",
       [
         0,
         17
       ]
     ],
     [
-      "Crawler_Crab_TurnRight",
+      "Octopod_Crab_TurnRight",
       [
         0,
         17
       ]
     ],
     [
-      "Crawler_Crab_Walk",
+      "Octopod_Crab_Walk",
       [
         0,
         19
       ]
     ],
     [
-      "Crawler_Crab_WalkLeft",
+      "Octopod_Crab_WalkLeft",
       [
         0,
         19

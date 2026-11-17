@@ -203,6 +203,11 @@ if CFG["tail"]:
     pts = resample(p, 80)
     start = int(CFG["tail_start"] * len(pts))
     js = [pts[start + int(round(f * (len(pts) - 1 - start)))] for f in np.linspace(0, 1, CFG["tail_bones"] + 2)]
+    if CFG.get("tail_midline", False):
+        # Der Oberflächen-Weg läuft am Schwanzansatz seitlich über die Haut (Skorpion: 10 cm links der Mitte) →
+        # Gelenke auf die Körper-Mittelebene legen (Schwanz ist symmetrisch), sonst bekommt die rechte Seite des
+        # Schwanzansatzes falsche Gewichte und reißt beim Stich auf.
+        js = [np.array([j[0], c[1], j[2]]) for j in js]
     for k in range(len(js) - 1):
         n = f"Tail_{k + 1}" if k < CFG["tail_bones"] else "Stinger"
         B[n] = (js[k], js[k + 1], "Hips" if k == 0 else (f"Tail_{k}"))
@@ -238,9 +243,22 @@ if CFG.get("cut_fused_limbs", True):
         if far_bones:
             d_far = np.min(np.stack([RC.seg_dist(V, B[n][0], B[n][1]) for n in far_bones], 1), 1)
             tail_far = limbish & (nearest == limbs.index("Tail")) & (d_far <= dl[:, limbs.index("Tail")] + 1e-9)
+    # Schwanz ↔ Bein (seit 2026-11-17): Tripo hat beim Skorpion ein 5. Beinpaar direkt am Schwanzansatz erzeugt und mit
+    # ihm verschmolzen. Diese Flächen liegen nah am Körper (nicht "limbish") und blieben stehen → beim Stich (Schwanz
+    # schwingt über den Kopf, Bein steht) Dehnung ×12. Eine Fläche, die Schwanz und ein Bein verbindet, ist nie echt.
+    tail_leg = np.zeros(N, int)                       # 1 = nächste Gliedmaße Schwanz, 2 = ein Bein
+    if CFG.get("cut_tail_leg_bridges", False) and "Tail" in limbs:
+        tail_leg[nearest == limbs.index("Tail")] = 1
+        tail_leg[np.isin(nearest, [i for i, L in enumerate(limbs) if L.startswith("Leg_")])] = 2
+
+    def tl_bridge(poly):
+        k = {int(tail_leg[v]) for v in poly.vertices}
+        return 1 in k and 2 in k and any(limbish[v] for v in poly.vertices)
     fmask = [(len({int(nearest[v]) for v in poly.vertices}) > 1 and all(limbish[v] for v in poly.vertices)) or
-             (any(tail_far[v] for v in poly.vertices) and any(not limbish[v] for v in poly.vertices))
+             (any(tail_far[v] for v in poly.vertices) and any(not limbish[v] for v in poly.vertices)) or
+             tl_bridge(poly)
              for poly in obj.data.polygons]
+    print(f"RIG_INFO Schwanz↔Bein-Brücken: {sum(tl_bridge(p) for p in obj.data.polygons)} Flächen")
     n_cut = int(sum(fmask))
     if n_cut:
         RC.delete_faces(obj, fmask)

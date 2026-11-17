@@ -1,0 +1,22 @@
+# Einstellungen des Flieger-Rigs (rigging/flyer_rig.py). Entstanden 2026-11-17 als Kopie von floater_defaults.toml – ab jetzt eigenständig.
+# Pro Kreatur überschreibbar in creature.toml unter [flyer] (alter Name [floater] geht weiterhin).
+facing = "+x"          # Richtung, in die das Modell schaut (wird nach +X gedreht): "+x" | "-y" | "-x" | "+y"
+core_search = 0.3      # Kernradius wird innerhalb dieses Abstands gesucht (Anteil Größe)
+core_scale = 1.7      # Kernkugel etwas größer als die Dichte-Spitze (Ansätze gehören zum Kern)
+core_bone = 0.08
+core_blend = 2.0       # Tentakel-Vertices bis zu diesem Vielfachen des Kernradius mischen mit dem Kern
+min_verts = 12         # kleinere Stücke (Splitter) bleiben am Kern
+min_length = 0.04      # kürzere Stücke = Stacheln ohne eigene Kette (Anteil Größe)
+bone_length = 0.08     # Ziel-Knochenlänge in Tentakeln (Anteil Größe)
+max_bones = 5
+falloff = 4
+smooth_iterations = 6
+smooth_factor = 0.5
+
+# Einseitige Flächen doppelseitig machen (rigging/double_sided.py). Tripo baut Insektenflügel als offene Platten
+# ohne Rückseite → in Unity/jeder Engine von einer Seite unsichtbar (Backface Culling), nur der Schatten bleibt.
+# Pro Kreatur: [flyer.double_sided] in creature.toml (z. B. enabled = false).
+[double_sided]
+enabled = true
+min_area = 0.002       # kleinere offene Bereiche (Splitter in Körperfalten) bleiben, wie sie sind (Anteil Größe²)
+offset = 0.001         # Rückseite so weit nach hinten versetzt (Anteil Größe) – verhindert Flimmern ohne Culling

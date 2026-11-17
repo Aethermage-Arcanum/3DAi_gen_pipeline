@@ -1,0 +1,19 @@
+# Unity – erzeugt/lokal
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+.vs/
+*.csproj
+*.sln
+*.user
+
+# Vom Menü "Kreaturen" erzeugt (Kopien der Pipeline-Exporte, Katalog, Szene) – jederzeit neu erzeugbar
+Assets/Creatures/
+Assets/Creatures.meta
+Assets/CreatureViewer/Generated/
+Assets/CreatureViewer/Generated.meta

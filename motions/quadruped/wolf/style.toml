@@ -9,74 +9,116 @@ fps = 30
 clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
 inherit = { turn = "walk" }
 
-[walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt)
-cycle_frames = 32
+[walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt). Werte aus Naturdaten, siehe README "Abgeleitete Werte"
+cycle_frames = 32     # 0,94 Schritte/s (Hund/Wolf gehen ≈ 1 Hz)
 duty = 0.62
 order = { BL = 0.0, FL = 0.75, BR = 0.5, FR = 0.25 }
-stride = 0.18
-lift_front = 0.14
-lift_back = 0.11
-toe_curl_deg = 18
-bob = 0.012           # Rumpf auf/ab (Anteil Rumpfhöhe), 2× pro Zyklus
-roll_deg = 2.0
-head_bob_deg = 3.0
-head_stabilize = 0.6
-tail_deg = 6
-tail_lift_deg = -8    # Wolf trägt den Schwanz beim Gehen leicht hängend
-
-[run]    # rotierender Galopp: HL, HR knapp danach, dann VR, VL – Rücken beugt/streckt sich
-cycle_frames = 16
-duty = 0.36
-order = { BL = 0.0, BR = 0.9, FR = 0.55, FL = 0.45 }
-stride = 0.21
-lift_front = 0.17
-lift_back = 0.17
-toe_curl_deg = 25
-bob = 0.03
-pitch_deg = 3
-spine_flex_deg = 5
-head_stabilize = 0.0
+foot_profile = "smooth"   # Fuß hebt/setzt ohne Ruck ab (Kit: gait_smooth)
+swing_match = 0.7     # Schwung übernimmt 70 % der Standgeschwindigkeit (Fuß „rollt" ab statt aus dem Stand zu springen)
+lift_peak = 0.4       # höchster Punkt früh im Schwung (Pfote wird nach dem Abdruck angezogen)
+curl_peak = 0.3
+stride = 0.22         # war 0,18 (wegen Beinreichweite verkleinert) – Rumpf sinkt jetzt geglättet ab statt Schritt zu kürzen
+lift_front = 0.16
+lift_back = 0.13
+toe_curl_deg = 32
+bob = 0.02            # Gürtel heben/senken (Anteil Rumpfhöhe), 2× pro Zyklus, Hüfte/Schulter ¼ versetzt (Katze: 1,5 cm Kopfhub)
+hip_yaw_deg = 5       # Becken giert mit dem schwingenden Hinterbein (aus der ARPG-Kamera gut sichtbar)
+shoulder_yaw_deg = 3.5
+hip_roll_deg = 3.5    # Katze/Affe: Rollen 1,5–3° bzw. ≤ 10° → sichtbar, aber ruhig
+shoulder_roll_deg = 2.5
+sway = 0.008          # Rumpf seitlich zum Standbein (Anteil Länge)
+head_bob_deg = 2.0    # Caniden < 1,3 Hz: Kopf nickt im Takt des Widerrists (Loscher 2016)
+head_gain = 0.55      # Kopf macht nur 55 % pro Glied der Brustbewegung mit → ruhiger, „gleitender" Kopf
+neck_lag = 0.05       # Verzögerung pro Halsglied (Zyklus-Anteil)
+tail_lag = 0.07       # Verzögerung pro Schwanzglied
+tail_gain = 1.35      # jedes Schwanzglied schwingt weiter als das vorige (Peitsche)
 tail_deg = 4
-tail_lift_deg = 6
-max_stretch = 2.4     # Sichtprüfung: Haut hinten am Oberschenkel zieht sich beim Vorschwingen lang (wie beim echten Tier), keine Risse
+tail_lift_deg = -10   # (− = hängend; ab 2026-11-17 gilt + = hoch, vorher war das Vorzeichen vertauscht)
+tail_bob_deg = 3
+reach_smooth = 4      # Rumpf-Absenkung bei gestreckten Beinen glätten (Frames)
+reach_flat = 0.3
 
-[turn]
+[run]    # rotierender Galopp HL → HR → VR → VL, zwei Schwebephasen (gestreckt nach HR, gesammelt nach VL), Rücken beugt/streckt
+body = "gallop"
+cycle_frames = 16     # 1,9 Sprünge/s
+duty = 0.30           # Galopp: Stand ≈ 30 % (vorher 0,36 → keine gestreckte Schwebe)
+order = { BL = 0.0, BR = 0.9, FR = 0.5, FL = 0.4 }   # Aufsetzen HL 0 · HR 0,1 · VR 0,5 · VL 0,6 (vanat.ahc.umn.edu)
+foot_profile = "smooth"
+swing_match = 0.6
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.24         # Standphase (Fuß am Boden); das weite Ausgreifen passiert in der Luft (swing_ext_*)
+swing_ext_front = 0.10  # Vorderbeine greifen vor dem Aufsetzen weit nach vorn (Anteil Länge)
+swing_ext_back = 0.09   # Hinterbeine strecken nach dem Abdruck weit nach hinten
+reach_flat = 0.75     # Rumpf-Absenkung für gestreckte Beine überwiegend konstant (sonst Auf/Ab 2× pro Sprung = Hoppeln)
+lift_front = 0.22
+lift_back = 0.18
+toe_curl_deg = 45
+spine_flex_deg = 13   # war 5: Rücken rund beim Aufsetzen der Hinterbeine, gestreckt in der Schwebe (± 13° = 26° Spanne)
+flex_peak = 0.97      # stärkste Beugung kurz vor dem Aufsetzen hinten (gesammelte Schwebe)
+pitch_deg = 6         # war 3: Schaukeln – Brust hoch beim Abdruck hinten, tief über den Vorderbeinen
+pitch_peak = 0.30
+bob = 0.035           # tiefster Punkt MITTEN im Stand (Feder), höchster in den Schwebephasen – vorher genau umgekehrt (= Hoppeln)
+bob_low = 0.2
+roll_deg = 2
+spine_side_deg = 3
+head_gain = 0.5
+neck_lag = 0.06
+tail_lag = 0.08
+tail_gain = 1.2
+tail_deg = 3
+tail_lift_deg = -2    # Schwanz im Galopp fast waagerecht als Steuer
+tail_bob_deg = 6
+reach_smooth = 3
+max_stretch = 2.4     # nur Info
+
+[turn]   # auf der Stelle drehen; Körper biegt sich in die Kurve, Kopf führt, Schwanz folgt dem Bogen
 cycle_frames = 28
 duty = 0.6
 turn_deg = 30         # Drehung pro Zyklus
 stride = 0.0
+turn_bend_deg = 20
+turn_head_deg = 26
+turn_tail_deg = 12
 
-[idle]   # stehen, atmen, umschauen, Schwanz pendelt ruhig
+[idle]   # stehen, atmen, Gewicht verlagern, umschauen (Kopf führt, Hals folgt), Schwanz pendelt nach
 frames = 90
 breathe_deg = 1.5
-look_deg = 22
+look_deg = 24
 tail_deg = 5
+reach_smooth = 3
 
-[ready]  # Drohhaltung: geduckt, Kopf tief + nach vorn, Lefzen hoch (Kiefer leicht offen), Schwanz steif
-frames = 30
-crouch = 0.18         # Rumpf absenken (Anteil Rumpfhöhe)
+[ready]  # Pirsch: geduckt, Kopf tief + vorn, wiegt langsam vor/zurück, Kopf fixiert, Lefzen zucken, Schwanz steif
+frames = 48
+crouch = 0.18
+pitch_deg = 4
+rock = 0.015          # vor/zurück wiegen (Anteil Länge)
 head_down_deg = 26
-jaw_deg = 16
-tremble_deg = 1.2
-tail_lift_deg = 10
+jaw_deg = 10
+snarl_deg = 6
+tail_lift_deg = -4
+tail_twitch_deg = 8
+reach_smooth = 4
 
-[attack1] # Anspringen + Biss: zurücksetzen/ducken → nach vorn schnellen, Maul auf → zuschnappen (hit)
-frames = 24
-windup_end = 9
-strike_end = 13
-hold_end = 16
-crouch = 0.15
-lunge = 0.08          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
-lunge_up = 0.05
-neck_reach_deg = 28
-jaw_open_deg = 40
-hit_frame = 13
+[attack1] # Sprung-Biss: ducken/zurückladen → nach vorn schnellen, Maul auf → zuschnappen (hit) → zerren + schütteln → zurück
+frames = 32
+windup_end = 10
+strike_end = 14
+hit_frame = 14
+crouch = 0.18
+lunge = 0.10          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
+lunge_up = 0.06
+neck_reach_deg = 30
+jaw_open_deg = 42
+shake_deg = 14
+reach_smooth = 3
 
 [hit]
-frames = 10
+frames = 15
 jolt = 0.05
-roll_deg = 6
+roll_deg = 7
 head_deg = 26
+reach_smooth = 2
 
 [death]  # zur Seite kippen, Beine erschlaffen
 frames = 40

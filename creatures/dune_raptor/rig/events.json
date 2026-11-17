@@ -3,7 +3,7 @@
   "clips": {
     "Biped_Raptor_Walk": [
       {
-        "frame": 15,
+        "frame": 14,
         "event": "footstep",
         "leg": "BR"
       }

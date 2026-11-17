@@ -8,6 +8,9 @@ Erkennung: Kern-Mittelpunkt (dichtester Bereich) + Kernradius; alle Vertices au�
 `max_bones` Knochen vom Ansatz (nah am Kern) zur Spitze, entlang der Querschnitte nach Abstand zum Kern.
 Skelett: Root (Boden) → Core → Tent_<NN>_<k>. Tentakel sind nach Größe sortiert (Tent_01 = längster).
 Blickrichtung: [floater] facing = "+x" | "-y" | … – Modell wird so gedreht, dass vorn = +X.
+Einseitige Flächen (Tripo-Flügel sind offene Platten → von hinten unsichtbar) werden nach dem Gewichten
+doppelseitig gemacht: rigging/double_sided.py, Schalter [double_sided] in flyer_defaults.toml, pro Kreatur
+[flyer.double_sided] in creature.toml (Kreatur-Werte: [flyer] gewinnt vor dem alten Namen [floater]).
 """
 import math
 import pathlib
@@ -19,14 +22,18 @@ import numpy as np
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import double_sided  # noqa: E402
 import rig_common as RC  # noqa: E402
 
 a = sys.argv[sys.argv.index("--") + 1:]
 SRC, OUT = pathlib.Path(a[0]).resolve(), pathlib.Path(a[1]).resolve()
 OUT.mkdir(parents=True, exist_ok=True)
-CFG = tomllib.loads((HERE / "floater_defaults.toml").read_text(encoding="utf-8"))
+CFG = tomllib.loads((HERE / "flyer_defaults.toml").read_text(encoding="utf-8"))
 if len(a) > 2:
-    CFG.update(tomllib.loads(pathlib.Path(a[2]).read_text(encoding="utf-8")).get("floater", {}))
+    _ct = tomllib.loads(pathlib.Path(a[2]).read_text(encoding="utf-8"))
+    for _sec in ("floater", "flyer"):                  # [floater] = alter Name, [flyer] = neu (gewinnt)
+        for _k, _v in _ct.get(_sec, {}).items():
+            CFG[_k] = {**CFG[_k], **_v} if isinstance(_v, dict) and isinstance(CFG.get(_k), dict) else _v
 
 obj, V, part, MAIN = RC.load_mesh(SRC)
 # Blickrichtung → +X drehen
@@ -118,4 +125,7 @@ RC.skin(obj, V, part, MAIN, B, names, allow, CFG)
 report = {"vertices": int(len(V)), "size_m": round(size, 3), "core_radius_m": round(r_core, 3),
           "tentacles": [{"name": T["name"], "bones": T["bones"], "length_m": round(T["length"], 3)} for T in TENT],
           "bones": len(order)}
+# Einseitige Flächen (Tripo-Flügel) doppelseitig – NACH dem Gewichten, damit die Kopien Gewichte + UVs erben
+if CFG["double_sided"]["enabled"]:
+    report["double_sided"] = double_sided.apply(obj, size, CFG["double_sided"])
 RC.finish(obj, arm, OUT, "flyer_rigged.blend", report, B, order, V)

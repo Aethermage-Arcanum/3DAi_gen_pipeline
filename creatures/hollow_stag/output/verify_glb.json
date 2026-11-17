@@ -99,15 +99,15 @@
     ]
   ],
   "head_direction_blender": [
-    0.0,
+    -0.0,
     -0.81,
-    0.59
+    0.58
   ],
-  "foot_moves_m": 0.0858,
+  "foot_moves_m": 0.0863,
   "dimensions_m": [
-    0.573,
-    0.901,
-    0.993
+    0.563,
+    0.912,
+    0.997
   ],
   "ok": true
 }

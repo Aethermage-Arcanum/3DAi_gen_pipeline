@@ -4,6 +4,13 @@ core_search = 0.3      # Kernradius wird innerhalb dieses Abstands gesucht (Ante
 core_scale = 1.7      # Kernkugel etwas größer als die Dichte-Spitze (Ansätze gehören zum Kern)
 core_bone = 0.08
 core_blend = 2.0       # Tentakel-Vertices bis zu diesem Vielfachen des Kernradius mischen mit dem Kern
+# Wurzel-Verlängerung (2026-11-17): Tentakel beginnen nicht an der großen Kernkugel, sondern an ihrer echten Wurzel.
+root_depth = 0.6       # Tentakel wachsen bis zu diesem Anteil des Kernradius nach innen (1.0 = aus, alte Rigs)
+root_radius = 2.2      # Wurzel-Röhre: max. Abstand zur nach innen verlängerten Tentakel-Achse (× Tentakel-Radius am Ansatz)
+root_bend_to_core = 0.3   # Wurzel-Achse: 0 = Tentakel-Richtung am Ansatz verlängern, 1 = gerade zur Kern-Mitte
+root_min_radius = 0.025  # Mindest-Röhrenradius (Anteil Größe)
+seed_min_verts = 3     # auch winzige Stücke außerhalb der Kernkugel wachsen nach innen (zählen erst danach als Tentakel)
+ring_fade = [0.5, 0.2]  # Kern-Mesh um jeden Tentakel geht weich mit: Anteil je Kanten-Ring (gegen Risse an der Wurzel)
 min_verts = 12         # kleinere Stücke (Splitter) bleiben am Kern
 min_length = 0.04      # kürzere Stücke = Stacheln ohne eigene Kette (Anteil Größe)
 bone_length = 0.08     # Ziel-Knochenlänge in Tentakeln (Anteil Größe)

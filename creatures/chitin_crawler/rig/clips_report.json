@@ -1,5 +1,5 @@
 {
-  "style": "crawler/ant",
+  "style": "hexapod/ant",
   "variant": null,
   "walking_legs": [
     "L2",
@@ -14,7 +14,7 @@
     "R1"
   ],
   "clips": {
-    "Crawler_Ant_Walk": {
+    "Hexapod_Ant_Walk": {
       "frames": 20,
       "seconds": 0.667,
       "loop": true,
@@ -31,7 +31,7 @@
       "move_axis": "x",
       "ok": true
     },
-    "Crawler_Ant_Run": {
+    "Hexapod_Ant_Run": {
       "frames": 9,
       "seconds": 0.3,
       "loop": true,
@@ -48,7 +48,7 @@
       "move_axis": "x",
       "ok": true
     },
-    "Crawler_Ant_Idle": {
+    "Hexapod_Ant_Idle": {
       "frames": 60,
       "seconds": 2.0,
       "loop": true,
@@ -58,7 +58,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Ant_Ready": {
+    "Hexapod_Ant_Ready": {
       "frames": 30,
       "seconds": 1.0,
       "loop": true,
@@ -68,7 +68,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Ant_TurnLeft": {
+    "Hexapod_Ant_TurnLeft": {
       "frames": 20,
       "seconds": 0.667,
       "loop": true,
@@ -84,7 +84,7 @@
       "turn_speed_deg_s": 33.9,
       "ok": true
     },
-    "Crawler_Ant_TurnRight": {
+    "Hexapod_Ant_TurnRight": {
       "frames": 20,
       "seconds": 0.667,
       "loop": true,
@@ -100,7 +100,7 @@
       "turn_speed_deg_s": 33.9,
       "ok": true
     },
-    "Crawler_Ant_Attack1": {
+    "Hexapod_Ant_Attack1": {
       "frames": 24,
       "seconds": 0.8,
       "loop": false,
@@ -108,7 +108,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Ant_Hit": {
+    "Hexapod_Ant_Hit": {
       "frames": 8,
       "seconds": 0.267,
       "loop": false,
@@ -117,7 +117,7 @@
       "returns_to_rest": true,
       "ok": true
     },
-    "Crawler_Ant_Death": {
+    "Hexapod_Ant_Death": {
       "frames": 36,
       "seconds": 1.2,
       "loop": false,

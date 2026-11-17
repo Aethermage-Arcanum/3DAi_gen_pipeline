@@ -94,13 +94,13 @@
   "head_direction_blender": [
     -0.0,
     -0.81,
-    0.59
+    0.58
   ],
-  "foot_moves_m": 0.0797,
+  "foot_moves_m": 0.08,
   "dimensions_m": [
-    0.577,
-    0.902,
-    0.99
+    0.563,
+    0.912,
+    0.994
   ],
   "ok": true
 }

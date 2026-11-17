@@ -14,6 +14,11 @@ inherit = { run = "walk", turn = "walk" }
 height = 0.18          # Flughöhe über dem Boden (Anteil Größe)
 flap_frames = 4        # ein Flügelschlag = 4 Frames (alle Clip-Längen sind Vielfache)
 flap_deg = 38
+# Mindestabstand JEDES Mesh-Punkts zum Boden im Flug (alle Clips außer Death; Anteil Größe, Wespe 1 m → 3 cm).
+# Boden = Unterkante der Tripo-Ruhepose (Beine hängen nach unten = "gelandet"). Ohne diesen Wert schleifte der
+# eingekrümmte Stachel in Ready / Attack1 (Ausholen) / Hit genau auf dem Boden (0,0 cm). Eine schwebende Wespe
+# berührt den Boden nie (Naturvideos, siehe README) – der Wert ist zugleich Selbstprüfung (clearance_ok).
+min_clearance = 0.03
 
 [walk]   # Vorwärtsflug: Körper neigt sich nach vorn, Beine hängen nach hinten, Hinterleib pumpt
 cycle_frames = 32

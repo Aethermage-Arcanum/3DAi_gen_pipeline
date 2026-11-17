@@ -12,80 +12,150 @@ inherit = { turn = "walk" }
 [rig]
 thigh_stiffness = 0.75   # Vogel/Raptor: Oberschenkel fast starr, Bewegung aus Knie + Sprunggelenk (Blender-IK-Steifigkeit)
 
-[walk]   # Beine im Gegentakt, Rumpf rollt zum Standbein, Kopf bleibt im Raum stehen (Huhn)
-max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
-cycle_frames = 30
-duty = 0.6
+[walk]   # Ganzkörper-Schritt (Strauß/Emu): weicher Schwung, Becken giert + verlagert Gewicht, Brust dreht dagegen,
+         # Kopf hält Höhe + Blick (Huhn/Wachtel), Schwanz pendelt als verzögerte Welle (Bishop 2021). Werte: README.
+max_stretch = 6.0   # nur Info
+cycle_frames = 28        # 1,07 Hz (dynamisch ähnlich zum Strauß-Gehen bei ~0,42 m Hüfthöhe, etwas langsamer für Lesbarkeit)
+duty = 0.62              # Gehen: Standphase > 50 %, kurze Doppelstütze
 order = { BL = 0.0, BR = 0.5 }
-stride = 0.20
-lift_back = 0.30
-toe_curl_deg = 30
-bob = 0.025
-roll_deg = 4
-pitch_deg = 0
-head_stabilize = 0.9
-tail_deg = 6
-tail_lift_deg = 0
-arm_swing_deg = 6
-
-[run]    # Laufvogel-Galopp: kurze Bodenphase, Flugphase, Körper nach vorn geneigt
-max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
-cycle_frames = 16
-duty = 0.36
-order = { BL = 0.0, BR = 0.5 }
-stride = 0.30
-lift_back = 0.40
-toe_curl_deg = 40
-bob = 0.05
+stride = 0.30            # Fußweg in der Standphase (Anteil Länge) → Schrittlänge pro Zyklus 0,48 m ≈ 1,15 × Hüfthöhe
+swing = "smooth"         # weicher Schwung ohne Ruck (biped_kit.gait_smooth)
+speed_match = 1.0        # Fuß hebt/setzt mit Geschwindigkeit 0 im Raum ab/auf
+lift_back = 0.32
+lift_peak = 0.38         # Fuß früh hoch, dann weit nach vorn strecken und sanft aufsetzen
+toe_curl_deg = 40        # Zehen im Schwung einrollen (Laufvögel)
+toe_peak = 0.4
+toe_follow = 0.6         # Zehen folgen im Schwung zu 60 % dem Mittelfuß (kein harter Knick am Ballen)
+bob = 0.03               # Rumpf federt 2× pro Zyklus …
+bob_phase = 0.05         # … tiefster Punkt in der Doppelstütze (umgekehrtes Pendel)
+sway = 0.016             # Gewicht seitlich übers Standbein
+hip_yaw_deg = 7          # Becken giert: Hüfte des Schwungbeins geht mit vor
 roll_deg = 3
+counter = 0.7            # Brust dreht zu 70 % dagegen (verzögert)
+spine_bob_deg = 2.5      # Brust nickt nach dem Aufsetzen nach
+pitch_deg = 1.5
+lean_deg = 0
+head_stabilize = 0.85    # Kopf hält Blickrichtung im Raum
+neck_level_deg = 4       # Hals gleicht das Federn aus (Kopf bleibt auf Höhe)
+tail_yaw_deg = 3.5       # pro Glied (wächst zur Spitze) → Gesamtausschlag an der Spitze ≈ 6× so groß
+tail_pitch_deg = 1.0
+tail_lag = 0.07          # Verzögerung pro Glied (Anteil Zyklus) → Welle/Peitsche
+tail_yaw_phase = 0.5     # Schwanz pendelt gegen das Becken
+tail_pitch_lag = 0.06
+tail_lift_deg = 0
+arm_bob_deg = 6          # Arme baumeln verzögert mit
+arm_swing_deg = 4
+
+[run]    # Laufvogel-Rennen mit Flugphase: Rumpf vorgeneigt, federt (tiefster Punkt Standmitte), Schwanz als Gegengewicht
+max_stretch = 6.0   # nur Info
+cycle_frames = 16        # 1,9 Hz
+duty = 0.36              # < 0,5 → Flugphase
+order = { BL = 0.0, BR = 0.5 }
+stride = 0.38            # → 1,05 m pro Zyklus ≈ 2,5 × Hüfthöhe, ~2 m/s
+swing = "smooth"
+speed_match = 1.0
+lift_back = 0.45
+lift_peak = 0.4
+toe_curl_deg = 55
+toe_peak = 0.4
+toe_follow = 0.7
+bob = 0.05
+bob_phase = 0.18         # = duty/2: Feder-Masse-Lauf, tiefster Punkt in der Standmitte, höchster in der Flugphase
+sway = 0.008
+hip_yaw_deg = 9
+roll_deg = 2.5
+counter = 0.7
+spine_bob_deg = 3
 pitch_deg = 3
-lean_deg = 8          # Rumpf nach vorn (Schwanz hoch als Gegengewicht)
+lean_deg = 12            # Rumpf nach vorn
 head_stabilize = 0.9
-tail_deg = 4
-tail_lift_deg = 10
+neck_level_deg = 6
+tail_yaw_deg = 2.5
+tail_pitch_deg = 1.5
+tail_lag = 0.08
+tail_yaw_phase = 0.5
+tail_pitch_lag = 0.06
+tail_lift_deg = -4       # relativ leicht runter: durch die Vorlage (lean) steht er im Raum ~8° hoch als Gegengewicht
+arm_bob_deg = 10
 arm_swing_deg = 3
 
-[turn]
-max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+[turn]   # erbt alles von walk; Körper biegt sich in die Kurve, Kopf führt, Schwanz folgt der Kurve
+max_stretch = 6.0   # nur Info
 cycle_frames = 26
 duty = 0.62
 turn_deg = 40
 stride = 0.0
+bend_deg = 10
+head_lead_deg = 12
+tail_trail_deg = 10
+hip_yaw_deg = 3
+sway = 0.012
 
-[idle]   # Vogel-typisch: ruckartige Kopfwendungen mit Halten dazwischen
+[idle]   # Vogel-typisch: ruckartige Kopfwendungen mit Halten, Gewicht wandert langsam, Atem läuft von Brust in Hals
 frames = 90
 breathe_deg = 1.5
 look_deg = 30
-tail_deg = 5
+tilt_deg = 8
+tail_deg = 4
+tail_pitch_deg = 1.5
+sway = 0.008
+roll_deg = 1.5
+hip_yaw_deg = 2
+head_stabilize = 0.5
 
-[ready]  # Drohen: tief geduckt, Kopf vor, Maul auf (Fauchen), Arme mit Krallen erhoben, Schwanz steif hoch
-max_stretch = 2.4   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+[ready]  # Drohen mit dem ganzen Körper: geduckt, Gewicht pendelt, Brust pumpt, Hals-S, Kopf fixiert das Ziel,
+         # Schwanz peitscht langsam, Fauchen, Krallen hoch
+max_stretch = 2.4   # nur Info
 frames = 30
 crouch = 0.14
-head_down_deg = 10
+lean_deg = 8
+sway = 0.02
+roll_deg = 3
+hip_yaw_deg = 5
+breathe_deg = 3
+neck_coil_deg = 14
+head_lock = 0.8
+head_down_deg = 6
 jaw_deg = 18
+hiss_deg = 8
 arms_up_deg = 35
-tail_lift_deg = 14
+tail_lash_deg = 5
+tail_pitch_deg = 0.7
+tail_lift_deg = 6        # Schwanz leicht hoch (mit der Vorlage im Raum ≈ 15°)
 tremble_deg = 1.5
 
-[attack1] # Stampf-Tritt (Sekretärvogel): Gewicht aufs linke Bein, rechter Fuß hoch → nach vorn-unten stampfen (hit)
-max_stretch = 5.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+[attack1] # Stampf-Tritt mit dem ganzen Körper (Sekretärvogel): Ausholen → Tritt in 2 Frames → Nachfedern → zurück
+max_stretch = 5.0   # nur Info
 frames = 26
 windup_end = 10
 strike_end = 12                # Tritt in 2 Frames (Sekretärvogel: ~15 ms Kontakt)
 hold_end = 18
 kick_leg = "BR"
-kick_height = 0.55    # Fuß hoch (Anteil Rumpfhöhe)
-kick_reach = 0.12     # nach vorn (Anteil Länge)
-lean_back_deg = 10
-jaw_deg = 22
+kick_height = 0.6     # Fuß hoch (Anteil Rumpfhöhe)
+kick_reach = 0.2      # nach vorn (Anteil Länge)
+kick_cock = 0.35      # beim Ausholen steht der Fuß schon so weit vorn (Anteil von kick_reach) – hoch vor der Brust
+rise = 0.0           # Rumpf beim Ausholen etwas hoch (Anteil Rumpfhöhe) …
+drop = 0.08           # … beim Tritt einsacken
+lunge = 0.05          # Rumpf stößt beim Tritt vor (Anteil Länge)
+shift = 0.035         # Gewicht seitlich aufs Standbein
+lean_back_deg = 14
+lunge_pitch_deg = 10
+roll_deg = 5
+neck_back_deg = 20
+neck_thrust_deg = 18
+head_aim_deg = 14     # Kopf blickt aufs Ziel am Boden
+jaw_deg = 26
+tail_up_deg = 0       # zusätzlich hoch (Grad gesamt)
+tail_inertia = 0.9    # Schwanz bleibt bei schnellen Rumpf-Neigungen zurück und peitscht nach (0 = starr am Rumpf)
+arms_up_deg = 45
+arms_spread_deg = 25
 hit_frame = 12
 
 [hit]
 frames = 10
-jolt = 0.04
-roll_deg = 8
-head_deg = 24
+jolt = 0.05
+roll_deg = 9
+head_deg = 26
 
 [death]
 max_stretch = 4.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar

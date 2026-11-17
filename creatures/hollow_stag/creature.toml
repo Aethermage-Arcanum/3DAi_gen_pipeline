@@ -20,3 +20,10 @@ style = "quadruped/deer"
 variant = ""
 vorbild = ["Hirsch – Galopp und Sprung", "Hirschkampf in der Brunft – Geweihstoß"]
 
+# Nutzer-Feedback Unity 2026-11-17: Vorderknie knickten nach innen (Vorderbeine stehen so eng, dass sie im
+# Bauch-Streifen lagen → Gelenke viel zu tief erkannt), Hinterhufe 2,4× so breit wie vorne (Tripo), Geweih wackelte
+# (hing am Hals-Knochen).
+[quadruped.rig]
+adaptive_belly_strip = true
+narrow_hind_legs = 0.8
+rigid_head_above = 0.02

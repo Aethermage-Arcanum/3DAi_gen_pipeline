@@ -1,4 +1,4 @@
-"""Gemeinsame Rig-Bausteine für alle Skelette außer crawler/quadruped (die haben ihre eigenen, validierten Versionen).
+"""Gemeinsame Rig-Bausteine für alle Skelette außer hexapod/octopod/quadruped (die haben ihre eigenen, validierten Versionen).
 
 - load_mesh(src)               glTF laden, zusammenführen, Transformationen anwenden → (obj, V, part, MAIN)
 - seg_dist(P, a, b)            Abstand Punkte → Knochen-Strecke

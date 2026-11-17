@@ -36,3 +36,11 @@ creatures/*/style_tests/*/*.blend
 creatures/*/style_tests/*/output/*.blend*
 creatures/*/uv/insp_*.png
 creatures/*/output/*.blend1
+
+# Arbeits-/Testordner (Regressions-Neubauten, Vergleichsstände)
+temp/
+# Bau-Nachweis + Fingerabdruck im rig/ sind reproduzierbar; versioniert wird nur approved/
+creatures/*/rig/build_manifest.json
+creatures/*/rig/fingerprint.json.gz
+creatures/*/style_tests/*/build_manifest.json
+creatures/*/style_tests/*/fingerprint.json.gz

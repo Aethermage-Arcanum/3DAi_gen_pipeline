@@ -2,7 +2,7 @@
   "skeleton": "floater",
   "file": "NeedleWasp.fbx",
   "meshes": 1,
-  "triangles": 4172,
+  "triangles": 4296,
   "bones": 51,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,
@@ -94,7 +94,7 @@
   "head_direction_blender": null,
   "foot_moves_m": null,
   "dimensions_m": [
-    1.0,
+    1.001,
     1.0,
     0.568
   ],

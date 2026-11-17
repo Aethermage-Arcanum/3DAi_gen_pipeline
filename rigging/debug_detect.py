@@ -13,12 +13,12 @@ from mathutils import Vector
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from crawler_detect import detect  # noqa: E402
+from hexapod_detect import detect  # noqa: E402
 
 args = sys.argv[sys.argv.index("--") + 1:]
 OUT = pathlib.Path(args[1]).resolve()
 OUT.mkdir(parents=True, exist_ok=True)
-cfg = tomllib.loads((HERE / "crawler_defaults.toml").read_text(encoding="utf-8"))["detect"]
+cfg = tomllib.loads((HERE / "hexapod_defaults.toml").read_text(encoding="utf-8"))["detect"]
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=args[0])

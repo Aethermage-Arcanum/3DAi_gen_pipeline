@@ -16,6 +16,6 @@ role = "style"
 # Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
 # Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
 [motion]
-style = "crawler/mantis"
+style = "hexapod/mantis"
 variant = ""
 vorbild = ["Gottesanbeterin – Fangschlag (Zeitlupe)", "Gottesanbeterin – Wiegen/Schaukeln (Tarnung)"]

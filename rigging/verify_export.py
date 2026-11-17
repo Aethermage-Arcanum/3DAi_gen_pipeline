@@ -26,6 +26,7 @@ bones = [b.name for a_ in arms for b in a_.data.bones]
 # Standard-Skelette: Pflichtknochen, Rumpfknochen (für Blickrichtung), Fuß zum Bewegungstest
 QL = [f"Leg_{n}_{k}" for n in ("FL", "FR", "BL", "BR") for k in range(1, 5)]
 SKELETONS = {
+    # Hexapod + Octopod (gleiche Knochennamen)
     "crawler": {"marker": "Thorax", "body": "Thorax", "foot": "Leg_L3_Tarsus",
                 "std": {"Root", "Thorax", "Abdomen_1", "Abdomen_2", "Head"} |
                 {f"Leg_{s}{k}_{p}" for s in "LR" for k in range(1, 5) for p in ("Coxa", "Femur", "Tibia", "Tarsus")}},
@@ -82,6 +83,13 @@ r = {"skeleton": SK_NAME, "file": path.split("\\")[-1].split("/")[-1], "meshes":
      "textures": [[i.name, list(i.size)] for i in bpy.data.images if i.size[0]],
      "actions": [[x.name, [int(v) for v in x.frame_range]] for x in bpy.data.actions],
      "head_direction_blender": facing, "foot_moves_m": moved, "dimensions_m": dims}
+# Frei hängende Teile (rigging/dangling.py): Markierung muss im Export ankommen (FBX: Vertex-Farbe, GLB: Attribut)
+for o in meshes:
+    at = o.data.attributes.get("_DANGLING")
+    if at:
+        vals = [d.color[0] for d in at.data]
+        r["dangling"] = {"domain": at.domain, "values": len(vals), "marked": sum(v > 0.004 for v in vals),
+                         "max": round(max(vals), 3)}
 r["ok"] = (not missing and unweighted == 0 and bool(r["actions"]) and (moved is None and SK_NAME in ("legless", "floater") or (moved or 0) > 0.001))
 print("VERIFY", json.dumps(r, ensure_ascii=False))
 if len(a) > 1:

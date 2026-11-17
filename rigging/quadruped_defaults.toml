@@ -36,3 +36,6 @@ leg_top_margin_back = 0.22 # hinten weicher in die Hüfte überblenden (Obersche
 rigid_parts = false      # true = Nebenteile starr an einem Knochen (harte Platten), false = weich überblenden
 cut_leg_bridges = false   # Tripo-Hautbrücke zwischen linkem/rechtem Bein löschen (bei verschmolzenen Beinen einschalten)
 exclusive_leg_pairs = false # jeder Vertex nur am näheren Bein eines Paares (zusammen mit cut_leg_bridges)
+narrow_hind_legs = 0        # 0..1: Tripo-Hinterbeine zur Mitte schieben (1 = Hinterhufe so breit wie vorne), Mesh-Korrektur
+adaptive_belly_strip = false # Bauch-Streifen schmaler als der Fußabstand (eng stehende Beine, sonst Gelenke zu tief)
+# rigid_head_above = 0.02   # gesetzt: alles so weit (Anteil H) über dem Kopf-Knochen starr am Kopf (Geweih, Hörner)

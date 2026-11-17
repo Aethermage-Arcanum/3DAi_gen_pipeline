@@ -20,8 +20,8 @@ style = "biped_raptor/raptor"
 variant = ""
 vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff","echter Raptor - Sprungangriff mit Maul/Zähnen", "Huhn – Kopfstabilisierung"]
 
-# Lückenprüfung: Tripo hatte die Beine mit einer Hautbrücke verbunden (im Rig entfernt, siehe
-# rigging/biped_raptor_rig.py cut_between_legs). Ein Rest hängt am Rumpf und wird vom Schienbein im Rennen
-# um max. 2,2 cm gestreift – Sichtprüfung seitlich + schräg: nicht sichtbar. → Grenze 2,5 cm.
-[gaps]
-max_opening = 0.025
+
+# Das Frontbild zeigte den Schwanz zwischen den Beinen → Tripo hat dort einen Hautstreifen gebaut, der an den
+# Schienbeinen hing und wie ein 2. Schwanz mitschwang (vom Nutzer in Unity entdeckt, 2026-11-17) → löschen.
+[biped_raptor]
+cut_belly_flap = true

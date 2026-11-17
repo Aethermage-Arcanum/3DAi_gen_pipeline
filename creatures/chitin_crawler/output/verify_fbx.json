@@ -1,4 +1,5 @@
 {
+  "skeleton": "crawler",
   "file": "ChitinCrawler.fbx",
   "meshes": 1,
   "triangles": 3122,
@@ -27,63 +28,63 @@
   ],
   "actions": [
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Attack1",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Attack1",
       [
         1,
         25
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Death",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Death",
       [
         1,
         37
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Hit",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Hit",
       [
         1,
         9
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Idle",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Idle",
       [
         1,
         61
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Ready",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Ready",
       [
         1,
         31
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Run",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Run",
       [
         1,
         10
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_TurnLeft",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_TurnLeft",
       [
         1,
         21
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_TurnRight",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_TurnRight",
       [
         1,
         21
       ]
     ],
     [
-      "ChitinCrawler|ChitinCrawler|Crawler_Ant_Walk",
+      "ChitinCrawler|ChitinCrawler|Hexapod_Ant_Walk",
       [
         1,
         21

@@ -18,7 +18,8 @@ stride = 0.09
 lift_back = 0.35
 toe_curl_deg = 0
 bob = 0.01
-tail_sway_deg = 5
+tail_sway_deg = 5         # seitliches Pendeln, Welle Wurzel → Spitze (ganze Kette)
+tail_bob_deg = 4          # Heben/Senken im Schritt-Takt, ebenfalls als Welle über alle Glieder
 claw_raise_deg = 10
 
 [run]
@@ -36,32 +37,51 @@ stride = 0.0
 frames = 80
 claw_deg = 14
 tail_sway_deg = 6
+tail_bob_deg = 5
 
-[ready]  # Drohen: Körper hoch, Scheren auseinander + hoch, Schwanz gespannt nach vorn über den Rücken
+[ready]  # Drohen: Körper hoch, Scheren gespreizt + erhoben, Schwanz hoch gespannt, Stachel zeigt nach vorn auf den Gegner
 max_stretch = 3.8   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
 frames = 30
 raise = 0.08
 claw_spread_deg = 15
 claw_raise_deg = 12
-tail_curl_deg = 25
+tail_cock = 0.85          # Anteil der Ausholform aus [attack1] cock_pitch_deg (1 = ganz gespannt)
+tail_tremble_deg = 2.5    # Zittern als schnelle Welle über alle Glieder
+tail_sway_deg = 4
 tremble_deg = 1.5
 
-[attack1] # Scheren packen zu, Stachel schnellt über den Kopf nach vorn (hit), zurück
-max_stretch = 3.8   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter
+# Stich nach Naturvideo (offener Stich, Coelho et al. 2017): Ausholen → über den Kopf nach vorn zustoßen → halten → zurück.
+# Der Schwanz wird über die ABSOLUTE Neigung jedes Glieds gesteuert (0° = waagerecht nach vorn, 90° = senkrecht hoch).
+[attack1]
+max_stretch = 7.5   # Sichtprüfung 2026-11-17 ok: einzige starke Dehnung = schmaler Hautstreifen zwischen Schwanzwurzel und dem (von Tripo zusätzlich erzeugten) 5. Beinpaar, solange der Schwanz über den Kopf gestreckt ist; Haut bleibt geschlossen. Lockerere Schnitt-Regel öffnet Löcher am Hinterleib (temp/agent_scorpion/rear_compare.png) → verworfen
 frames = 24
-windup_end = 9
-strike_end = 12
-hold_end = 16
-tail_back_deg = 30
-tail_strike_deg = 65
-tail_base_strike_deg = 12  # der ganze Schwanz kippt aus der Wurzel nach vorn (Krümmung allein dehnt die Glieder)
-claw_grab_deg = 14
+windup_end = 9            # Ausholen (lesbar für den Spieler)
+strike_end = 12           # Zustoßen in 3 Frames (100 ms) – im Video ein Wimpernschlag
+hold_end = 16             # Stachel steckt, kurzes Nachdrücken (push)
 hit_frame = 12
+# Ausholform: Tail_1 … Tail_5, Stinger (Ruhe ≈ 136, 122, 87, 41, -20, -47) → Bogen höher gespannt, Stachel waagerecht nach vorn
+cock_pitch_deg = [128, 112, 88, 55, 15, -5]
+# Zielpunkt der Stachelspitze: vor dem Skorpion zwischen den Scheren, in Angriffshöhe
+target_ahead = 0.45       # Anteil der Körperlänge vor der Körpermitte: zwischen den Scherenhänden (Beute wird dort gehalten; Scherenspitzen ≈ 0,53)
+target_height = 2.0       # × Rumpfhöhe über dem Boden (≈ Oberkante der erhobenen Scheren)
+strike_base_deg = 105     # Schwanzwurzel beim Stich fast senkrecht (Ruhe 136°) – der Rest streckt sich über den Kopf
+strike_aim_deg = -25      # Stachel trifft frontal, leicht von oben
+push = 0.02               # Nachdrücken im Halten (Anteil Körperlänge)
+body_back = 0.03          # Ausholen: Rumpf nach hinten (Anteil Körperlänge) …
+body_back_pitch_deg = 6   # … und vorn hoch
+body_fwd = 0.06           # Zustoßen: Gewicht nach vorn …
+body_fwd_pitch_deg = 4    # … Brust runter
+claw_open_deg = 14        # Scheren öffnen beim Ausholen …
+claw_open_raise_deg = 10
+claw_grab_deg = 14        # … und packen beim Stich zu
 
 [hit]
 frames = 10
 jolt = 0.03
 roll_deg = 6
+tail_recoil_deg = 15      # Schwanz zuckt nach hinten/oben weg (Stachel vom Körper weg), verzögert entlang der Kette
+tail_whip_deg = 6
+tail_lag = 0.06           # Verzögerung je Glied (Anteil Clip)
 
 [death]  # Beine knicken weg, Körper sackt auf den Boden, Schwanz fällt zur Seite
 max_stretch = 4.0   # Sichtprüfung ok: schlimmste Kanten am 5. (von Tripo zusätzlich erzeugten) Beinpaar am Schwanzansatz bzw. Scheren-Schulter

@@ -45,6 +45,45 @@ creatures/<name>/
 - **Kein Glühen ins Bild:** Leuchteffekte landen sonst fest in der Textur. Die kommen später als Emission-Map/Shader dazu.
 - **Ansichten left/right** meinen die eigene linke/rechte Körperseite der Kreatur. Falls Tripo mit vertauschten Seiten schlechte Modelle baut, ist das der erste Verdacht. *(Noch nicht verifiziert.)*
 
+## Prüfung von Referenzbild und Tripo-Modell (Pflicht, macht Claude – seit 2026-11-17)
+
+**Erkenntnis des Nutzers:** Viele Fehler, die erst in der Animation auffallen, stecken schon im Tripo-Modell und davor im ChatGPT-Referenzbild.
+Deshalb prüft Claude **gründlich vor jedem bezahlten Tripo-Lauf** die Bilder und **vor dem Riggen** das Modell. Die Ergebnisse kommen ins README der Kreatur.
+Bei einem Befund gilt: Bild neu machen lassen (kostet nichts) statt später im Rig reparieren.
+
+**A. Referenzbilder (vor Tripo), jedes Bild einzeln und alle vier im Vergleich:**
+1. Reihenfolge und Blickrichtung stimmen (1 vorn, 2 Kopf links, 3 Kopf rechts, 4 hinten), Kamera auf Augenhöhe, keine Draufsicht.
+2. **Gleiche Körperhaltung in allen vier Ansichten.** Waagerechter Körper in der Seitenansicht heißt waagerecht auch vorne und hinten. *(Dune Raptor: vorne aufrecht, seitlich waagerecht → Tripo hat einen Hautlappen gebaut.)*
+3. **Nichts hängt zwischen den Beinen**, zum Beispiel ein Schwanz, der in der Frontansicht zwischen den Beinen zu sehen ist. *(Raptor: „zweiter Schwanz“.)*
+4. **Beinstellung vorne und hinten gleich breit**, Beine gerade nach unten, nicht gespreizt. *(Hollow Stag: Hinterbeine 2,4× so breit wie vorne.)*
+5. **Gliedmaßen frei:** Beine, Arme, Scheren, Tentakel berühren sich nicht und berühren den Körper nicht, sonst baut Tripo Hautbrücken. *(Raptor-Beine, Skorpion-Gliedmaßen.)*
+6. **Neutrale, gerade Grundpose:** Schlangen und Schwänze gestreckt, nicht verdreht oder eingerollt; Maul zu oder nur leicht offen. *(Eel Stalker: feste Krümmung/Drehung im Modell, die Animation kommt dagegen nicht an.)*
+7. **Anzahl der Teile stimmt:** Beinpaare, Flügel, Tentakel wie im Concept und in jeder Ansicht gleich. *(Skorpion: Tripo hat 5 Beinpaare erfunden.)*
+8. **Dünne Teile mit Volumen** (Flügel, Flossen, Hautsegel) und klar vom Körper getrennt. *(Wespe: Flügel als einseitige Fläche → unsichtbar aus manchen Winkeln.)*
+9. Kein Glühen und keine Effekte im Bild, neutraler Hintergrund, keine Schrift.
+
+**B. Tripo-Modell (nach Tripo, vor dem Rig), Bilder ansehen und messen:**
+`blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/` (vorn, Seite, oben, ARPG). Prüfen:
+1. Hängende oder überzählige Teile unter dem Körper oder zwischen den Beinen (Front- und Unteransicht).
+2. Hufe/Füße: Abstand vorne gegen hinten (gleich breit?), Beine stehen auf dem Boden.
+3. Verschmolzene Gliedmaßen und Hautbrücken.
+4. Grundpose gerade (Wirbelsäule, Schwanz, Schlangenkörper).
+5. Einseitige, offene Flächen (Flügel, Segel) und ihre Anzahl.
+6. Beinzahl und Teile gegen das Concept.
+7. Textur sauber, keine Bildreste.
+
+Ergebnis: Freigabe für das Rig **oder** neues Referenzbild bzw. neuer Tripo-Lauf (Credits: vorher den Nutzer fragen) **oder** eine bekannte Rig-Korrektur mit Begründung.
+
+## Zusammenarbeit (seit 2026-11-17)
+
+1. **Bewegung zuerst grob zeigen:** `python scripts/creature_pipeline.py creatures/<name> --stage motion` → Roh-GIFs in `rig/anim/raw/` (mit allen Dehnungen/Rissen, keine Prüfung bremst). Pro neuem Muster zuerst Walk + Attack, neben Standbildern aus dem Naturvideo. **Der Nutzer nimmt die Bewegung ab.**
+2. **Danach bereinigen** – nur am Mesh/Rig/Gewichten, nie durch kleinere Bewegung. Muss die Bewegung doch geändert werden, wird das vorher gezeigt.
+3. **Endfassung:** `--stage full` → GIFs in `rig/anim/final/`, FBX/GLB, Gegentest, Fingerabdruck. Die Roh-Fassung bleibt liegen.
+4. **Begrenzt iterieren:** Sieht ein Clip nach ~3 Versuchen nicht gut aus → aufhören und fragen.
+5. **Freigabe durch den Nutzer:** `python scripts/approve.py creatures/<name>` → gesperrt. Ab dann `python scripts/regression.py` (schnell) bzw. `--deep` vor jedem Commit an gemeinsamem Code.
+
+**Aufbau:** Die Ablaufsteuerung (`creature_pipeline.py`) ist für alle gleich und enthält kein Tierwissen. Pro Beinart gibt es ein eigenes Rig + einen eigenen Baukasten (`rigging/<skelett>_rig.py`, `motions/<skelett>/<skelett>_kit.py`), pro Muster eigenen Clip-Code. Gemeinsam sind nur Allzweck-Teile (UV-Prüfung, Lückenprüfung, Export, Gegentest, Fingerabdruck).
+
 ## Stand
 
 - 2026-11-17: Prompt-Generator und Tripo-Skript fertig. API-Kette (Upload, Task, Polling, Rig-Check) mit einem Testmodell geprüft, ohne Credit-Verbrauch.

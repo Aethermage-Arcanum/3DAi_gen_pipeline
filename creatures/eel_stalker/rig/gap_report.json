@@ -1,6 +1,6 @@
 {
   "pairs_checked": 0,
-  "threshold_m": 0.0141,
+  "threshold_m": 0.0161,
   "max_opening_m": 0.0,
   "joints_over_threshold": 0,
   "per_clip_max_m": {

@@ -9,7 +9,7 @@
     "Legless_Cobra_TurnRight": [],
     "Legless_Cobra_Attack1": [
       {
-        "frame": 14,
+        "frame": 13,
         "event": "hit"
       }
     ],

@@ -1,5 +1,5 @@
 """Bewegungsmuster flyer/wasp: Flug, Drehen (Kurvenlage), Schwebeflug, Drohen (Stachel nach vorn), Sturzflug-Stich,
-Treffer, Absturz. Rig = Schwebe-Rig (Kern + automatisch erkannte Ketten), Baukasten = ../../floater/floater_kit.py.
+Treffer, Absturz. Rig = Schwebe-Rig (Kern + automatisch erkannte Ketten), Baukasten = ../flyer_kit.py.
 
 Ketten werden nach Lage zugeordnet: Flügel (seitlich, |y| groß), Beine (unten), Fühler (vorn-oben),
 Hinterleib (hinten, längste Kette).
@@ -14,15 +14,16 @@ import bpy
 from mathutils import Quaternion, Vector
 
 HERE = pathlib.Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent.parent / "floater"))
-import floater_kit as K  # noqa: E402
+sys.path.insert(0, str(HERE.parent))
+import flyer_kit as K  # noqa: E402
 
 K.init(HERE)
-from floater_kit import FWD, LEFT, UP, R, ease, rot  # noqa: E402
+from flyer_kit import FWD, LEFT, UP, R, ease, rot  # noqa: E402
 
 ST, SIZE, DB = K.ST, K.SIZE, K.DB
 C0 = DB["Core"].head_local
 HOV = ST["hover"]
+CLEAR = HOV.get("min_clearance", 0.0) * SIZE          # Flug: Mindestabstand jedes Mesh-Punkts zum Boden
 
 
 def tip(ch):
@@ -102,7 +103,7 @@ def clip_ready(P):
         abdomen(curl_deg=P["curl_deg"] + 4 * math.sin(2 * math.pi * 2 * t))
         legs(-10, t)
         antennae(t)
-        K.ground_above()                                     # eingekrümmter Hinterleib nie im Boden
+        K.ground_above(CLEAR)                                # eingekrümmter Stachel nie am/im Boden
     return {"N": N, "loop": True, "kind": "stand", "pose": pose}
 
 
@@ -124,7 +125,7 @@ def clip_attack1(P):
         flap(f, 1.0 + 0.3 * k_s)
         abdomen(curl_deg=P["curl_deg"] * (0.4 * k_w + k_s))
         legs(-15 * k_s, 0)
-        K.ground_above()
+        K.ground_above(CLEAR)
     return {"N": N, "loop": False, "kind": "stand", "pose": pose,
             "events": [{"frame": P["hit_frame"], "event": "hit"}]}
 
@@ -139,7 +140,7 @@ def clip_hit(P):
         flap(f, 1 - 0.7 * k)
         abdomen(curl_deg=20 * k)
         legs(20 * k, 0)
-        K.ground_above()
+        K.ground_above(CLEAR)
     return {"N": N, "loop": False, "kind": "stand_return", "pose": pose}
 
 

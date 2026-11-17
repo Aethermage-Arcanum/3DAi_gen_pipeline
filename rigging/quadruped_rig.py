@@ -85,18 +85,45 @@ print(f"RIG_INFO Teile {len(ids)}, Hauptteil {main.sum()}/{N} Vertices, Höhe {H
 
 
 # ------------------------------------------------------------------ Füße + Beine
-foot_band = M[M[:, 2] < GROUND + D["foot_band"] * H]
-cx = np.array([foot_band[:, 0].min(), foot_band[:, 0].max()])
-for _ in range(20):                                   # 1D-k-means: vorne/hinten
-    lab = np.abs(foot_band[:, 0:1] - cx[None]).argmin(1)
-    cx = np.array([foot_band[lab == k, 0].mean() for k in (0, 1)])
-FEET = {}
-for k, fb in ((1, "F"), (0, "B")):
-    for side, sn in ((1, "L"), (-1, "R")):
-        sel = foot_band[(lab == k) & ((foot_band[:, 1] - Y_MID) * side > 0)]
-        if len(sel) < 3:
-            raise SystemExit(f"Fuß {fb}{sn} nicht gefunden")
-        FEET[f"{fb}{sn}"] = sel
+def detect_feet():
+    foot_band = M[M[:, 2] < GROUND + D["foot_band"] * H]
+    cx = np.array([foot_band[:, 0].min(), foot_band[:, 0].max()])
+    for _ in range(20):                                   # 1D-k-means: vorne/hinten
+        lab = np.abs(foot_band[:, 0:1] - cx[None]).argmin(1)
+        cx = np.array([foot_band[lab == k, 0].mean() for k in (0, 1)])
+    feet = {}
+    for k, fb in ((1, "F"), (0, "B")):
+        for side, sn in ((1, "L"), (-1, "R")):
+            sel = foot_band[(lab == k) & ((foot_band[:, 1] - Y_MID) * side > 0)]
+            if len(sel) < 3:
+                raise SystemExit(f"Fuß {fb}{sn} nicht gefunden")
+            feet[f"{fb}{sn}"] = sel
+    return feet, cx
+
+
+FEET, CX = detect_feet()
+
+# Tripo setzt die Hinterbeine manchmal viel breiter als die Vorderbeine (Hollow Stag: 2,4×). Mesh-Korrektur:
+# Hinterbeine unterhalb der Bauchlinie zur Mitte schieben, linear zunehmend bis zum Huf (Oberschenkel bleibt).
+# narrow_hind_legs = Anteil der Breiten-Differenz, der ausgeglichen wird (1 = Hinterhufe so breit wie vorne).
+if RIG.get("narrow_hind_legs", 0):
+    off = lambda k: float(np.abs(FEET[k][:, 1] - Y_MID).mean())  # noqa: E731
+    front_w, back_w = (off("FL") + off("FR")) / 2, (off("BL") + off("BR")) / 2
+    delta = RIG["narrow_hind_legs"] * max(0.0, back_w - front_w)
+    x_split = CX.mean()
+    hind_x = (FEET["BL"][:, 0].mean() + FEET["BR"][:, 0].mean()) / 2
+    s = M[(np.abs(M[:, 0] - hind_x) < D["slice"] * L) & (np.abs(M[:, 1] - Y_MID) < 0.5 * front_w)]
+    z_b = float(np.percentile(s[s[:, 2] > GROUND + D["min_belly"] * H][:, 2], 5))   # Bauchlinie über den Hinterbeinen
+    sel = (V[:, 0] < x_split) & (V[:, 2] < z_b)
+    w = np.clip((z_b - V[:, 2]) / max(1e-6, z_b - GROUND), 0, 1)
+    V[sel, 1] -= np.sign(V[sel, 1] - Y_MID) * delta * w[sel]
+    for i in np.where(sel)[0]:
+        me.vertices[i].co.y = V[i, 1]
+    me.update()
+    M = V[main]
+    FEET, CX = detect_feet()
+    print(f"RIG_INFO Hinterbeine schmaler: Hufe {back_w:.3f} → {back_w - delta:.3f} (vorne {front_w:.3f}), "
+          f"{int(sel.sum())} Vertices unter der Bauchlinie {z_b - GROUND:.3f}")
 
 
 def midline_profile(x, half_width):
@@ -113,7 +140,10 @@ for name, fv in FEET.items():
     side = 1 if name[1] == "L" else -1
     c = fv[:, :2].mean(0)
     pts = [np.array([c[0], c[1], GROUND])]
-    belly = midline_profile(c[0], D["mid_half_width"] * H)
+    hw = D["mid_half_width"] * H
+    if RIG.get("adaptive_belly_strip", False):        # eng stehende Beine (Hirsch) liegen sonst IM Bauch-Streifen
+        hw = min(hw, 0.5 * abs(c[1] - Y_MID))           # → Beine würden als Bauch gelesen, Gelenke viel zu tief
+    belly = midline_profile(c[0], hw)
     z_top = belly[0] if belly else GROUND + 0.55 * H
     z = GROUND + D["track_step"] * H
     while z < z_top:
@@ -361,6 +391,14 @@ for _ in range(RIG["smooth_iterations"]):
     W = np.where(smooth_mask, (1 - RIG["smooth_factor"]) * W + RIG["smooth_factor"] * sm, W)
     W = np.where(allow | ~smooth_mask, W, 0.0)
     W = W / np.maximum(W.sum(1, keepdims=True), 1e-12)
+# Geweih/Hörner starr am Kopf: alles oberhalb des Kopf-Knochens (vor den Schultern) nur an "Head".
+# Sonst liegen die Geweihspitzen näher am Hals-Knochen und verbiegen sich bei jedem Schritt mit dem Hals.
+if RIG.get("rigid_head_above") is not None:
+    hb_top = max(BONES["Head"][0][2], BONES["Head"][1][2])
+    rh = (V[:, 2] > hb_top + RIG["rigid_head_above"] * H) & (V[:, 0] > x_sh)
+    W[rh] = 0.0
+    W[rh, names.index("Head")] = 1.0
+    print(f"RIG_INFO Kopf-Aufbau starr am Kopf: {int(rh.sum())} Vertices")
 for g in WELD:
     W[g] = W[g].mean(0)
 top = np.argsort(-W, 1)[:, :4]

@@ -1,5 +1,5 @@
 {
-  "style": "crawler/crab",
+  "style": "octopod/crab",
   "variant": null,
   "walking_legs": [
     "L2",
@@ -14,7 +14,7 @@
     "R1"
   ],
   "clips": {
-    "Crawler_Crab_Walk": {
+    "Octopod_Crab_Walk": {
       "frames": 24,
       "seconds": 0.8,
       "loop": true,
@@ -31,7 +31,7 @@
       "move_axis": "y",
       "ok": true
     },
-    "Crawler_Crab_WalkLeft": {
+    "Octopod_Crab_WalkLeft": {
       "frames": 24,
       "seconds": 0.8,
       "loop": true,
@@ -48,7 +48,7 @@
       "move_axis": "y",
       "ok": true
     },
-    "Crawler_Crab_Run": {
+    "Octopod_Crab_Run": {
       "frames": 14,
       "seconds": 0.467,
       "loop": true,
@@ -65,7 +65,7 @@
       "move_axis": "y",
       "ok": true
     },
-    "Crawler_Crab_Idle": {
+    "Octopod_Crab_Idle": {
       "frames": 60,
       "seconds": 2.0,
       "loop": true,
@@ -75,7 +75,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Crab_Ready": {
+    "Octopod_Crab_Ready": {
       "frames": 30,
       "seconds": 1.0,
       "loop": true,
@@ -85,7 +85,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Crab_TurnLeft": {
+    "Octopod_Crab_TurnLeft": {
       "frames": 22,
       "seconds": 0.733,
       "loop": true,
@@ -101,7 +101,7 @@
       "turn_speed_deg_s": 25.7,
       "ok": true
     },
-    "Crawler_Crab_TurnRight": {
+    "Octopod_Crab_TurnRight": {
       "frames": 22,
       "seconds": 0.733,
       "loop": true,
@@ -117,7 +117,7 @@
       "turn_speed_deg_s": 25.7,
       "ok": true
     },
-    "Crawler_Crab_Attack1": {
+    "Octopod_Crab_Attack1": {
       "frames": 22,
       "seconds": 0.733,
       "loop": false,
@@ -131,7 +131,7 @@
       "feet_planted_ok": true,
       "ok": true
     },
-    "Crawler_Crab_Hit": {
+    "Octopod_Crab_Hit": {
       "frames": 9,
       "seconds": 0.3,
       "loop": false,
@@ -140,7 +140,7 @@
       "returns_to_rest": true,
       "ok": true
     },
-    "Crawler_Crab_Death": {
+    "Octopod_Crab_Death": {
       "frames": 36,
       "seconds": 1.2,
       "loop": false,

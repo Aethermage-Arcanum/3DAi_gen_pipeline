@@ -1,22 +1,50 @@
 # Bewegungsmuster biped_raptor/raptor
 
-Generator `raptor_clips.py`, Werte `style.toml`. Erstes Modell: **Dune Raptor** (2026-11-17), alle 9 Clips grün.
+Generator `raptor_clips.py`, Werte `style.toml`, Baukasten `../biped_kit.py`. Erstes Modell: **Dune Raptor** (2026-11-17).
 
 | Clip | Dauer | Inhalt | Vorbild |
 |---|---|---|---|
-| Biped_Raptor_Walk | 1,0 s | Beine im Gegentakt, Rumpf rollt zum Standbein, Kopf bleibt im Raum stehen | Strauß/Emu-Schritt, Huhn-Kopfstabilisierung |
-| Biped_Raptor_Run | 0,53 s | kurze Bodenphase, Flugphase, Rumpf nach vorn, Schwanz hoch als Gegengewicht | Laufvogel-Rennen |
-| Biped_Raptor_TurnLeft/Right | 0,87 s | auf der Stelle drehen | – |
-| Biped_Raptor_Idle | 3,0 s | ruckartige Kopfwendungen mit Halten (vogeltypisch), Atmen | Huhn/Strauß |
-| Biped_Raptor_Ready | 1,0 s | tief geduckt, Kopf vor, Maul auf (Fauchen), Krallen hoch, Schwanz steif | – |
-| Biped_Raptor_Attack1 | 0,87 s | **Stampf-Tritt**: Gewicht aufs linke Bein, rechter Fuß hoch → in 2 Frames nach vorn-unten stampfen (Event `hit` Frame 12) | Sekretärvogel |
-| Biped_Raptor_Hit | 0,33 s | Ruck zurück, Kopf weg | – |
-| Biped_Raptor_Death | 1,33 s | knickt ein, kippt zur Seite, Beine erschlaffen ab ¼ des Kippens | – |
+| Biped_Raptor_Walk | 0,93 s | weicher Schritt (Fuß hebt/setzt ohne Ruck), Becken giert + verlagert Gewicht übers Standbein, Brust dreht verzögert dagegen, Rumpf federt, Kopf hält Höhe + Blick im Raum, Schwanz pendelt als verzögerte Welle gegen das Becken, Arme baumeln nach | Strauß/Emu-Schritt, Huhn/Wachtel-Kopfstabilisierung, Theropoden-Schwanz (Bishop 2021) |
+| Biped_Raptor_Run | 0,53 s | Flugphase (Standanteil 36 %), Rumpf 12° vorgeneigt, federt (tiefster Punkt Standmitte), lange Schritte, Zehen rollen im Schwung ein | Laufvogel-Rennen |
+| Biped_Raptor_TurnLeft/Right | 0,87 s | auf der Stelle drehen, Körper biegt sich in die Kurve, Kopf führt, Schwanz folgt der Kurve | Regel „Drehen = Körper biegt sich, Kopf führt“ |
+| Biped_Raptor_Idle | 3,0 s | ruckartige Kopfwendungen mit Halten + Schiefhalten (vogeltypisch), Gewicht wandert langsam von Bein zu Bein, Atem läuft von der Brust in den Hals | Huhn/Strauß |
+| Biped_Raptor_Ready | 1,0 s | tief geduckt, Gewicht pendelt, Brust pumpt, Hals als S, Kopf bleibt aufs Ziel gerichtet, Schwanz peitscht langsam, Fauch-Stöße, Krallen hoch | Drohhaltung Laufvögel/Raubtiere |
+| Biped_Raptor_Attack1 | 0,87 s | **Stampf-Tritt mit dem ganzen Körper**: Gewicht aufs Standbein, Rumpf lehnt zurück, Hals zieht zurück, Arme spreizen zur Balance, Fuß hoch vor die Brust → in 2 Frames vor-unten stampfen (Event `hit` Frame 12), Rumpf stößt vor und sackt ein, Hals schnellt vor, Schwanz bleibt zurück und peitscht nach | Sekretärvogel |
+| Biped_Raptor_Hit | 0,33 s | Ruck zurück; Brust, Hals, Kopf, Schwanz laufen zeitversetzt nach | – |
+| Biped_Raptor_Death | 1,33 s | (unverändert, vom Nutzer gesperrt) knickt ein, kippt zur Seite | – |
 
 ## Naturreferenzen
-- **Sekretärvogel-Tritt**: Kontakt nur ~15 ms, Kraft ≈ 5× Körpergewicht – Portugal et al. 2016, *Current Biology* 26(2): [Royal Holloway](https://pure.royalholloway.ac.uk/en/publications/the-fast-and-forceful-kicking-strike-of-the-secretary-bird/) · [PDF](https://pure.royalholloway.ac.uk/files/26253728/Portugal_et_al_Curr_Biol_Author_Accepted_Copy.pdf) · [Sci.News](https://www.sci.news/biology/secretary-birds-their-prey-force-5-times-their-weight-03589.html)
-- Laufvögel (Strauß/Emu): Videos „ostrich running slow motion“, „emu walking side view“; Kopfstabilisierung: „chicken head stabilization“.
+- **Laufvogel-Gang (Strauß):** Daley, Channon, Nolan & Hall 2016, *Preferred gait and walk–run transition speeds in ostriches measured using GPS-IMU sensors*, J Exp Biol 219: [JEB](https://cob.silverchair.com/jeb/article/219/20/3301/15422/Preferred-gait-and-walk-run-transition-speeds-in) · [Daten (Dryad)](https://datadryad.org/dataset/doi:10.5061/dryad.h846r). Strauße gehen langsam (umgekehrtes Pendel), Gehen = Standanteil > 0,5; dazwischen „grounded running“ (Standanteil > 0,5 ohne Flugphase), Rennen mit Flugphase < 0,5.
+- **Standanteil skaliert nicht mit der Größe** (Wachtel bis Strauß, 21 Arten): Daley & Birn-Jeffery 2018, *Scaling of avian bipedal locomotion*, J Exp Biol – [RVC-Repository](https://rvc-repository.worktribe.com/OutputFile/1395214) → dieselben Anteile passen für einen 1-m-Raptor.
+- **Strauß-Lauf, Schrittlänge/Frequenz:** [Science in School – „Birds on the run“](https://scienceinschool.org/?p=97574) (Schrittlänge bis 5 m, hohe Schrittfrequenz durch leichtes Unterbein).
+- **Kopfstabilisierung:** Necker 2007, *Head-bobbing of walking birds*, J Comp Physiol A 193 – [Übersicht](https://reinhold-necker.de/seite10.html) (Halte-Phase: Kopf steht im Raum, Stoß-Phase: schnell vor; 1 Kopfzyklus pro Schritt). Wachtel: Kopfnicken + Gang halten auch die **Kopfhöhe** konstant – [Kress et al. 2014, Frontiers in Zoology](https://frontiersinzoology.biomedcentral.com/articles/10.1186/1742-9994-11-27). Video-Beispiel „chicken head tracking“ (Smarter Every Day), [Audubon-Artikel zum Werbespot](https://audubon.org/news/in-new-car-commercial-chicken-shows-special-avian-talent).
+- **Theropoden-Schwanz:** Bishop et al. 2021 (RVC, Coelophysis-Simulation): Der Schwanz pendelt seitlich und regelt den Drehimpuls gegen die Beine – nicht nur starres Gegengewicht ([RVC-Meldung](https://www.rvc.ac.uk/research/research-centres-and-facilities/structure-and-motion/news/computer-simulations-reveal-dinosaurs-wagged-their-tails-when-running)).
+- **Animations-Praxis (Overlap/Follow-Through):** [Game Developer – Animating four-legged beasts](https://gamedeveloper.com/art/animating-four-legged-beasts) (Kopf als eigener, gegen Hüfte/Brust versetzter „Ball“), Blender-Artists-Raptor-Kritik ([Thread](https://blenderartists.org/t/raptor/668018)): Schwanz braucht langsames Fließen mit viel Follow-Through, sonst wirkt er roboterhaft.
+- **Sekretärvogel-Tritt:** Kontakt nur ~15 ms, Kraft ≈ 5× Körpergewicht, Kopf richtet sich vor jedem Tritt aufs Ziel aus (visuelles Zielen) – Portugal et al. 2016, *Current Biology* 26(2): [Royal Holloway](https://pure.royalholloway.ac.uk/en/publications/the-fast-and-forceful-kicking-strike-of-the-secretary-bird/) · [PDF](https://pure.royalholloway.ac.uk/files/26253728/Portugal_et_al_Curr_Biol_Author_Accepted_Copy.pdf) · [RVC mit Zeitlupen-Video](https://rvc.ac.uk/research/research-centres-and-facilities/structure-and-motion/news/secretary-birds-can-kick-a-snake-to-death-in-the-blink-of-an-eye).
+
+## Daraus abgeleitete Werte (style.toml)
+Dune Raptor: Länge 1,0 m, Hüfthöhe ≈ 0,42 m (Strauß ≈ 1,1 m).
+| Wert | Vorher | Jetzt | Herleitung |
+|---|---|---|---|
+| Walk Standanteil `duty` | 0,60 | 0,62 | Gehen > 0,5 (Daley 2016), kurze Doppelstütze; skaliert nicht mit der Größe (Daley & Birn-Jeffery 2018) |
+| Walk Zyklus | 30 Frames | 28 Frames (1,07 Hz) | dynamisch ähnlich: Frequenz ∝ √(g/Beinlänge) → kleiner Raptor schneller als Strauß; bewusst etwas langsamer für Lesbarkeit |
+| Walk Schrittlänge pro Zyklus | 0,32 m (0,8 × Hüfthöhe) | 0,48 m (1,15 × Hüfthöhe), 0,51 m/s | Laufvögel gehen mit ≈ 1–1,5 Hüfthöhen pro Zyklus; vorher wirkte es trippelnd |
+| Walk Rumpf-Federn | tiefster Punkt beim Aufsetzen | tiefster Punkt Doppelstütze (`bob_phase` 0,05) | umgekehrtes Pendel beim Gehen |
+| Run Standanteil | 0,36 | 0,36 | Rennen mit Flugphase < 0,5 |
+| Run Schrittlänge pro Zyklus | 0,72 m | 1,05 m (≈ 2,5 Hüfthöhen), 1,7 m/s | Laufvögel: lange Schritte durch leichtes Unterbein; Rumpf sinkt dabei automatisch bis 3,5 cm (IK-Reichweite) |
+| Run Rumpf-Federn | wie Walk | tiefster Punkt Standmitte (`bob_phase` = duty/2) | Feder-Masse-Lauf |
+| Run Vorlage | 8° | 12°, Schwanz im Raum ≈ 8° hoch | Laufvogel/Theropode: Rumpf vor, Schwanz als Gegengewicht |
+| Kopf | nur Nicken ausgeglichen (0,9) | ganze Ausrichtung im Raum (Nicken, Gieren, Rollen) zu 85–90 %, Hals gleicht das Federn aus (`neck_level_deg`) | Huhn/Wachtel: Blick + Kopfhöhe stabil |
+| Schwanz | gleicher Takt, 6° Pendeln | Welle: Glied für Glied 7 % Zyklus verzögert, Ausschlag wächst zur Spitze, pendelt gegen das Becken | Bishop 2021 (Drehimpuls-Ausgleich), Follow-Through |
+| Becken | nur Rollen | Gieren 7° (Schwungbein-Hüfte geht vor), Gewicht 1,6 cm seitlich übers Standbein, Brust dreht 70 % dagegen, verzögert | Laufvögel watscheln übers Standbein |
+| Schwungbein | ease() + sin-Hub → Ruck | Hermite-Kurve mit Bodengeschwindigkeit 0 beim Ab-/Aufsetzen, Hub mit Steigung 0 an beiden Enden, Maximum früh (38 %), Zehen rollen ein (40°) und folgen dem Mittelfuß (60 %) | Laufvögel ziehen den Fuß schnell hoch, strecken ihn weit vor und setzen sanft auf |
+| Tritt | Fuß 0,55 × Rumpfhöhe, nur Bein | Fuß 0,6 × Rumpfhöhe hoch **vor die Brust**, 2 Frames vor-unten; Gewicht aufs Standbein, Rumpf lehnt 14° zurück → stößt 10° vor + 5 cm vor + sackt ein, Kopf zielt aufs Ziel, Arme spreizen 25°, Schwanz träge (Federkette) | Sekretärvogel (Zielen mit dem Kopf, 15 ms Kontakt) |
 
 ## Erkenntnisse
+- **Roboterhaft – Ursachen (am Bild + Messung bestätigt, 2026-11-17):** (1) Fuß-Ruck: alter Schwung startete mit `ease()` aus Geschwindigkeit 0 relativ zum Körper → im Raum sprang der Fuß beim Abheben in einem Frame von 0 auf 1,4 cm/Frame, die Hubkurve `sin(pi*s)` hob ihn im ersten Frame 3,3 cm an und ließ ihn im letzten Frame 3,3 cm fallen. Jetzt: 2,2 cm im ersten Schwung-Frame, Aufsetzen mit 0,6 cm. (2) Alles im selben Takt: Rumpf, Hals, Schwanz hatten keine Verzögerung. Jetzt laufen Becken → Brust → Hals → Kopf und Schwanzglied 1 → 4 zeitversetzt (Overlap). (3) Zu kleine Ausschläge (Schrittlänge 0,8 Hüfthöhen, Tritt nur mit dem Bein) – jetzt nach Naturwerten (Tabelle oben).
+- **Bodenkontakt (Unity: −1,9 cm im Walk):** Ursache war nicht die Zehenkralle vorn, sondern die **hintere Kralle (Hallux)** ~11 cm hinter dem Ballen, 1,9 cm über dem Boden. Sie hing zu 52 % am Mittelfuß (Leg_3) und 19 % am Schienbein (Leg_2) und kippte beim Ausgreifen mit dem Mittelfuß 3,8 cm nach unten. Fix im Rig (`foot_rigid_height` / `foot_blend` in `rigging/biped_raptor_defaults.toml`): alles bis 0,05 × Höhe gehört ganz zum Fuß-Knochen Leg_X_4 (beim Vogel sitzen alle Zehen am Ballen-Gelenk), darüber weicher Übergang. Ergebnis: tiefster Punkt in allen Clips ≥ −0,01 cm.
+- Dadurch knickt der Fuß am Ballen stärker (Zehen bleiben waagerecht, Mittelfuß kippt) → Dehnung am Ballen bis ~4 (nur Info). Gegenmittel in der Bewegung: Zehen folgen im Schwung dem Mittelfuß (`toe_follow`), Sichtprüfung Nahaufnahme ohne sichtbare Risse. Offen/Idee: Abrollen über die Zehen am Ende der Standphase (Ferse hebt zuerst).
+- Schwanz-Winkel in style.toml sind **pro Glied** und wachsen zur Spitze → Gesamtausschlag an der Spitze ≈ 6× so groß. Erst 5° Pendeln/2,5° Wippen sah aus wie ein wedelnder Hund → 3,5° / 1°.
+- Tritt: Ein fester „Schwanz hoch“-Wert zusätzlich zur Vorlage ließ den Schwanz skorpionartig hochstehen. Jetzt ist der Schwanz eine träge Federkette, die der Rumpf-Neigung verzögert folgt: bei schnellen Wechseln bleibt die Spitze zurück und peitscht danach über.
 - Oberschenkel-IK-Steifigkeit (`[rig] thigh_stiffness`) brachte hier nichts Messbares – die Dehnung kam von der Hautbrücke, nicht vom Oberschenkel.
-- Dehnungs-Grenzen pro Clip erhöht (bis 6): schlimmste Dreiecke innen am Oberschenkel an der entfernten Brücke, Sichtprüfung seitlich + schräg ohne sichtbare Risse.
+- Neue Bausteine im Baukasten (`biped_kit.py`, alte Funktionen unverändert, weil Death sie nutzt): `gait_smooth` (über `swing = "smooth"`), `bump`, `hermite`, `foot_toes`/`apply_toes`, `rot_world`, `head_stabilize`, `tail_wave`, `spring_curve`.

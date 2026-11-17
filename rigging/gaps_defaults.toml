@@ -1,0 +1,4 @@
+# Lückenprüfung (rigging/check_gaps.py) – gilt für alle Skelette, pro Kreatur überschreibbar unter [gaps] in creature.toml.
+# (Bis 2026-11-17 lag das im Krabbler-Rig-Konfig; herausgelöst, damit kein Skelett an der Konfig eines anderen hängt.)
+pair_eps = 0.015           # Teile gelten als "aneinanderliegend", wenn < 1,5 % der Größe
+max_opening = 0.015        # max. erlaubtes Aufklaffen (1,5 % der Größe ≈ 1,5 cm bei 1 m)

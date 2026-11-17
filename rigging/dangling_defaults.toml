@@ -1,0 +1,15 @@
+# Frei hängende Teile (rigging/dangling.py) – Standardwerte. Pro Kreatur überschreibbar in creature.toml unter [dangling].
+# Ohne [dangling] in der creature.toml passiert gar nichts (kein Farbkanal im Mesh, normales Material in Unity).
+# Längen sind Anteile der Kreaturgröße (längste Kante des Mesh-Rahmens), damit die Werte für jede Größe passen.
+
+# --- Markierung (Blender, wird ins Mesh geschrieben) ---
+thin_max = 0.03       # nur DÜNNE Teile schwingen (Dicke unter diesem Anteil) – Rumpf/Kopf/Kiefer selbst bleiben starr
+min_length = 0.035    # Teile kürzer als das bleiben starr (Zähne, Noppen, Augen, kurze Zacken)
+full_length = 0.08    # ab dieser Länge schwingt ein Teil voll; dazwischen anteilig
+exponent = 1.2        # Verlauf Ansatz → Spitze: 1 = linear, > 1 = Ansatz bleibt länger ruhig (kein Abreißen)
+
+# --- Schwingen (Unity-Shader, landen als Material-Startwerte in <Name>_dangling.json) ---
+amplitude = 0.02      # Ausschlag an der Spitze (Anteil Größe; wird beim Export in Meter umgerechnet)
+frequency = 0.7       # Schwingungen pro Sekunde
+lag = 1.5             # Verzögerung Ansatz → Spitze (Bogenmaß) – die Welle läuft zur Spitze hin
+vertical = 0.3        # Anteil der Auf-ab-Bewegung (0 = nur waagrecht pendeln)

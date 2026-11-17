@@ -2,7 +2,7 @@
   "skeleton": "biped_raptor",
   "file": "DuneRaptor.glb",
   "meshes": 1,
-  "triangles": 4249,
+  "triangles": 4184,
   "bones": 26,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,

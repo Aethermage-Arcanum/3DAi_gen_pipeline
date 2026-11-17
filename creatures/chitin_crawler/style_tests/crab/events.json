@@ -1,7 +1,7 @@
 {
   "fps": 30,
   "clips": {
-    "Crawler_Crab_Walk": [
+    "Octopod_Crab_Walk": [
       {
         "frame": 5,
         "event": "footstep",
@@ -28,7 +28,7 @@
         "leg": "L4"
       }
     ],
-    "Crawler_Crab_WalkLeft": [
+    "Octopod_Crab_WalkLeft": [
       {
         "frame": 5,
         "event": "footstep",
@@ -55,7 +55,7 @@
         "leg": "R4"
       }
     ],
-    "Crawler_Crab_Run": [
+    "Octopod_Crab_Run": [
       {
         "frame": 3,
         "event": "footstep",
@@ -82,9 +82,9 @@
         "leg": "L4"
       }
     ],
-    "Crawler_Crab_Idle": [],
-    "Crawler_Crab_Ready": [],
-    "Crawler_Crab_TurnLeft": [
+    "Octopod_Crab_Idle": [],
+    "Octopod_Crab_Ready": [],
+    "Octopod_Crab_TurnLeft": [
       {
         "frame": 10,
         "event": "footstep",
@@ -106,7 +106,7 @@
         "leg": "R4"
       }
     ],
-    "Crawler_Crab_TurnRight": [
+    "Octopod_Crab_TurnRight": [
       {
         "frame": 10,
         "event": "footstep",
@@ -128,14 +128,14 @@
         "leg": "R4"
       }
     ],
-    "Crawler_Crab_Attack1": [
+    "Octopod_Crab_Attack1": [
       {
         "frame": 12,
         "event": "hit"
       }
     ],
-    "Crawler_Crab_Hit": [],
-    "Crawler_Crab_Death": [
+    "Octopod_Crab_Hit": [],
+    "Octopod_Crab_Death": [
       {
         "frame": 36,
         "event": "dead"

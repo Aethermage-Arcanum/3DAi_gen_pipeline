@@ -194,7 +194,10 @@ def tail(t, amp_deg, speed=1.0, lift_deg=0.0, phase0=0.0):
 
 def gait(t, P, offsets, direction=FWD, turn=0.0):
     """Gangzyklus: Füße bewegen sich im Stand rückwärts (Körper läuft "in place" vorwärts), im Schwung
-    vor + angehoben. turn (rad pro Zyklus) = auf der Stelle drehen statt laufen."""
+    vor + angehoben. turn (rad pro Zyklus) = auf der Stelle drehen statt laufen.
+    P["foot_profile"] = "smooth" (optional, sonst altes Verhalten): weiche Fußbahn ohne Ruck – siehe smooth_foot()."""
+    if P.get("foot_profile") == "smooth":
+        return gait_smooth(t, P, offsets, direction, turn)
     S = P["stride"] * SIZE
     for leg in LEGS:
         swing, s = phase(t, offsets[leg], P["duty"])
@@ -210,18 +213,147 @@ def gait(t, P, offsets, direction=FWD, turn=0.0):
         set_foot(leg, off + Vector((0, 0, lift)), curl)
 
 
+# ---------------------------------------------------------------- Weiche Bewegung (2026-11-17, Nutzer: "Roboter-Wolf")
+# Alles hier ist OPTIONAL und wird nur von Clips benutzt, die es ausdrücklich aufrufen. Bestehende Funktionen oben
+# behalten ihr Verhalten (Death-Clips u. a. bleiben Frame für Frame identisch).
+def clamp01(x):
+    return max(0.0, min(1.0, x))
+
+
+def hermite(s, p0, p1, m0, m1):
+    """Kubische Kurve von p0 nach p1 mit Anfangs-/Endsteigung m0/m1 (pro Einheit s)."""
+    s2, s3 = s * s, s * s * s
+    return (2 * s3 - 3 * s2 + 1) * p0 + (s3 - 2 * s2 + s) * m0 + (-2 * s3 + 3 * s2) * p1 + (s3 - s2) * m1
+
+
+def bump(s, peak=0.5):
+    """0 → 1 → 0 mit Steigung 0 an beiden Enden (weiches Abheben/Aufsetzen); Maximum bei `peak` (0..1)."""
+    if s <= 0.0 or s >= 1.0:
+        return 0.0
+    g = math.log(0.5) / math.log(min(0.9, max(0.1, peak)))
+    return math.sin(math.pi * s ** g) ** 2
+
+
+def keys(x, pts, loop=False):
+    """Weiche Kurve durch Schlüsselwerte [(x, wert), …] wie Blenders "Auto Clamped"-Keyframes: an Extremwerten
+    flach (Bewegung bremst weich ab), zwischen gleichgerichteten Keys fließt sie ohne Halt durch, kein Überschwingen.
+    loop=True: erster und letzter Key gleich, Steigung dort aus den Nachbarn (nahtlose Schleife)."""
+    xs, vs = [p[0] for p in pts], [p[1] for p in pts]
+    n = len(pts)
+    if loop:
+        x = xs[0] + (x - xs[0]) % (xs[-1] - xs[0])
+    if x <= xs[0]:
+        return vs[0]
+    if x >= xs[-1]:
+        return vs[-1]
+
+    def slope(i):
+        if i in (0, n - 1):
+            if not loop:
+                return 0.0
+            dl = (vs[-1] - vs[-2]) / (xs[-1] - xs[-2])
+            dr = (vs[1] - vs[0]) / (xs[1] - xs[0])
+        else:
+            dl = (vs[i] - vs[i - 1]) / (xs[i] - xs[i - 1])
+            dr = (vs[i + 1] - vs[i]) / (xs[i + 1] - xs[i])
+        if dl * dr <= 0:
+            return 0.0                                   # Umkehrpunkt → flach
+        m = (dl + dr) / 2
+        return math.copysign(min(abs(m), 3 * abs(dl), 3 * abs(dr)), m)   # Fritsch-Carlson: nie überschwingen
+    i = max(k for k in range(n - 1) if xs[k] <= x)
+    h = xs[i + 1] - xs[i]
+    return hermite((x - xs[i]) / h, vs[i], vs[i + 1], slope(i) * h, slope(i + 1) * h)
+
+
+def wave(t, cycles=1.0, ph=0.0):
+    """sin über den Zyklus: t 0..1, ph in Zyklus-Anteilen."""
+    return math.sin(2 * math.pi * (cycles * t + ph))
+
+
+def bend(names, axis, angles):
+    """Jedem Knochen der Kette seinen eigenen Winkel geben (rad, um die Welt-Achse axis)."""
+    for n, a in zip(names, angles):
+        if a:
+            rot(n, axis, a)
+
+
+def follow(fn, x, n, lag, gain=1.0):
+    """Nachziehen/Überlappen entlang einer Kette (Follow-Through): Glied i hat den Welt-Winkel
+    gain^i · fn(x − i·lag), d. h. jedes Glied macht die Bewegung des vorherigen verzögert nach (gain > 1 = peitscht auf,
+    z. B. Schwanz; gain < 1 = beruhigt, z. B. Kopf). fn(x) = Welt-Winkel des Elternknochens der Kette.
+    Liefert die n LOKALEN Winkel (Differenz zum Vorgänger) – direkt für bend()."""
+    w = [fn(x)] + [gain ** i * fn(x - i * lag) for i in range(1, n + 1)]
+    return [w[i] - w[i - 1] for i in range(1, n + 1)]
+
+
+SPINE = ("Hips", "Spine_1", "Chest")
+NECK = ("Neck_1", "Neck_2", "Head")
+TAIL = ("Tail_1", "Tail_2", "Tail_3", "Tail_4")
+
+
+def gait_smooth(t, P, offsets, direction=FWD, turn=0.0):
+    """Wie gait(), aber ohne Ruck an den Fußwechseln:
+    - Schwung startet/endet mit genau der Geschwindigkeit des Standbeins (Fuß steht beim Aufsetzen relativ zum Boden still,
+      statt aus Geschwindigkeit 0 zu beschleunigen) – swing_match 0..1 (1 = voll angeglichen).
+    - Hubkurve bump(): Fuß verlässt den Boden/setzt auf mit vertikaler Geschwindigkeit 0, höchster Punkt bei lift_peak.
+    - Zehen rollen weich ein (curl_peak) und strecken sich vor dem Aufsetzen.
+    - reach_front/reach_back (Anteil Länge): Stand-Bereich der Vorder-/Hinterbeine nach vorn (+) / hinten (−) schieben."""
+    S = P["stride"] * SIZE
+    d = P["duty"]
+    m = -(1 - d) / d * P.get("swing_match", 1.0)
+    for leg in LEGS:
+        swing, s = phase(t, offsets[leg], d)
+        front = leg[0] == "F"
+        shift = P.get("reach_front" if front else "reach_back", 0.0) * SIZE
+        if swing:
+            u = hermite(s, -0.5, 0.5, m, m)
+            lift = P["lift_front" if front else "lift_back"] * HGT * bump(s, P.get("lift_peak", 0.4))
+            curl = R(P.get("toe_curl_deg", 30)) * bump(s, P.get("curl_peak", 0.3))
+            # Ausgreifen in der Luft (Galopp): nach dem Abdruck weit nach hinten strecken, vor dem Aufsetzen weit nach
+            # vorn greifen und zum Aufsetzpunkt zurückziehen. Ein Bein in der Luft darf "zu kurz" sein (Bein gestreckt).
+            ext = P.get("swing_ext_front" if front else "swing_ext_back", 0.0) * SIZE
+            shift += ext * (bump(s, 0.75) - bump(s, 0.2))
+        else:
+            u, lift, curl = 0.5 - s, 0.0, 0.0
+        if turn:
+            r = REST[leg]["ball"] - DB["Root"].head_local
+            r = Vector((r.x, r.y, 0))
+            off = Quaternion(UP, -turn * u).to_matrix() @ r - r
+        else:
+            off = direction * (S * u + shift)
+        set_foot(leg, off + Vector((0, 0, lift)), curl)
+
+
+def _smooth_envelope(need, radius, loop):
+    """Glatte Kurve ≥ need: erst Maximum über ±radius, dann Hann-gewichtetes Mittel über ±radius."""
+    n = len(need)
+    if radius <= 0 or n < 3:
+        return list(need)
+    core = need[:-1] if loop else need                   # Schleife: letzter Frame = erster
+    m = len(core)
+
+    def at(a, i):
+        return a[i % m] if loop else a[max(0, min(m - 1, i))]
+    dil = [max(at(core, i + k) for k in range(-radius, radius + 1)) for i in range(m)]
+    w = [0.5 + 0.5 * math.cos(math.pi * k / (radius + 1)) for k in range(-radius, radius + 1)]
+    out = [sum(wk * at(dil, i + k) for wk, k in zip(w, range(-radius, radius + 1))) / sum(w) for i in range(m)]
+    return out + [out[0]] if loop else out
+
+
 def chain_len(leg):
     return sum(DB[f"Leg_{leg}_{k}"].length for k in (1, 2, 3))   # Schulterblatt nicht mitgezählt (steif)
 
 
-def reach_fix(margin=0.97, iters=4):
+def reach_fix(margin=0.97, iters=4, legs=None):
     """Kann ein Bein sein Ziel nicht erreichen (überstreckt), sinkt der ganze Rumpf genau so weit ab, bis
-    alle Ziele erreichbar sind – wie ein Tier, das beim weiten Ausgreifen tiefer geht. Liefert die Absenkung."""
+    alle Ziele erreichbar sind – wie ein Tier, das beim weiten Ausgreifen tiefer geht. Liefert die Absenkung.
+    legs (optional): nur diese Beine berücksichtigen (z. B. nur Standbeine – ein Bein in der Luft muss den Boden
+    nicht erreichen, sonst zieht es den Rumpf in der Schwebephase nach unten)."""
     total = 0.0
     for _ in range(iters):
         bpy.context.view_layer.update()
         need = 0.0
-        for leg in LEGS:
+        for leg in (LEGS if legs is None else legs):
             root = PB[f"Leg_{leg}_1"].head
             tgt = arm.matrix_world.inverted() @ IK[leg].matrix_world.translation
             d = tgt - root
@@ -295,10 +427,37 @@ def bake(clips):
         N, kind = spec["N"], spec["kind"]
         frames, feet, stretch, ev = [], {l: [] for l in LEGS}, 1.0, list(spec.get("events", []))
         prev, lowered, where = {}, 0.0, ""
+        # Optional "reach_smooth": <Frames> – die nötige Rumpf-Absenkung (überstreckte Beine) wird vorab für alle Frames
+        # gemessen und als glatte Kurve angewandt. Ohne das sackt der Rumpf an jedem Fußwechsel mit einem Knick ab
+        # (Maximum über 4 Beine) – eine Hauptursache für "kantig/abrupt".
+        pre = None
+        stance_only = spec.get("reach_smooth") and kind == "locomotion"
+
+        def reach_legs(f):                               # bei weichen Gangarten: nur Standbeine bestimmen die Höhe
+            return [l for l in LEGS if not spec["swing"](l, f)] if stance_only else None
+        if spec.get("reach_smooth") and kind != "death":
+            need = []
+            for f in range(N + 1):
+                reset()
+                spec["pose"](f)
+                need.append(reach_fix(legs=reach_legs(f)))
+            if __import__("os").environ.get("QUAD_DEBUG"):
+                print("NEED", cname, [round(v, 3) for v in need], [reach_legs(f) for f in range(N + 1)])
+            pre = _smooth_envelope(need, int(spec["reach_smooth"]), spec.get("loop", False))
+            fl = spec.get("reach_flat", 0.0)               # 0..1: Anteil konstanter Absenkung (kein Auf/Ab durch Reichweite)
+            if fl:
+                top = max(pre)
+                pre = [fl * top + (1 - fl) * v for v in pre]
+            if kind == "stand_return":                   # Endpose = Ruhe (Rumpf nicht abgesenkt)
+                pre = [v * (1 - ease((f - (N - spec["reach_smooth"])) / spec["reach_smooth"])) if need[-1] < 1e-5 else v
+                       for f, v in enumerate(pre)]
         for f in range(N + 1):
             reset()
             spec["pose"](f)
-            if kind != "death":
+            if pre is not None:
+                move("Root", Vector((0, 0, -pre[f])))
+                lowered = max(lowered, pre[f] + reach_fix(legs=reach_legs(f)))
+            elif kind != "death":
                 lowered = max(lowered, reach_fix())
             bpy.context.view_layer.update()
             frames.append({pb.name: arm.convert_space(pose_bone=pb, matrix=pb.matrix, from_space="POSE",
@@ -358,7 +517,8 @@ def bake(clips):
         r["max_stretch"] = round(stretch, 2)
         r["stretch_at"] = where if stretch > 1.0 else ""
         r["stretch_ok"] = round(stretch, 2) <= (spec.get("max_stretch") or C["max_stretch"])
-        oks = [v for k, v in r.items() if k.endswith("_ok") or k in ("returns_to_rest", "no_ground_penetration")]
+        oks = [v for k, v in r.items() if (k.endswith("_ok") and k != "stretch_ok")   # Dehnung = nur Info, bremst nie
+               or k in ("returns_to_rest", "no_ground_penetration")]
         r["ok"] = all(oks)
         report[f"{PREFIX}_{cname}"] = r
         events[f"{PREFIX}_{cname}"] = ev

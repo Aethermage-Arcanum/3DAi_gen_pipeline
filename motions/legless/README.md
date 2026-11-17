@@ -14,5 +14,13 @@ Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
 - `keep_centered()` – Blickrichtung + Körpermitte bleiben fest (Clips „in place“)
 - `ground("contact"|"above")` – tiefster Punkt auf dem Boden bzw. nur nicht einsinken
 
+**Absolute Körperform (seit 2026-11-17, für alle neuen Clips verwenden):** Tripo liefert Schlangen oft schon verbogen
+(Eel Stalker: S-Kurve ±45°, Vorderkörper +54°). Die Bausteine oben addieren auf diese Ruhepose.
+- `shape(yaw[], pitch[], head_yaw, head_pitch, neck=2)` – Richtung jedes Wirbels absolut (Grad, gegenüber gerader
+  waagerechter Linie entlang +X); Kopfneigung relativ zur modellierten Kopfhaltung; Kopf-Knick auf Hals verteilt
+- `seg_s()` Bogenlänge je Wirbel · `interp([[s, wert], …], s)` glatte Profile · `place(punkt, lo, hi)` Schwerpunkt
+  eines Körperbereichs festhalten · `centroid()`, `head_tip()` für Messungen
+- `bake`: optional `returns_to_start` (Clip endet in seiner Anfangspose, z. B. Attack/Hit → Ready) und `measure`
+
 ## Selbstprüfung pro Clip
 Bodenkontakt / kein Einsinken (tiefster Mesh-Punkt jedes Frames) · Schleife nahtlos · Rückkehr zur Ruhe · Mesh-Dehnung (Ort + Frame) · Lückenprüfung · Export-Gegentest.

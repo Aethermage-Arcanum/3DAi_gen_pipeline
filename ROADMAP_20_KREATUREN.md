@@ -1,5 +1,7 @@
 # Roadmap: MVP für alle 20 Kreaturen (Planung, noch nicht umgesetzt)
 
+> **Stand 2026-11-17:** Das Krabbler-Skelett (`crawler`) ist aufgeteilt in **hexapod** (Ameise, Käfer, Mantis) und **octopod** (Krabbe, Spinne → Broodling). Skorpion = `multileg`, Wespe = `flyer`. Die Tabellen unten sind der ursprüngliche Plan.
+
 Stand 2026-11-17. Grundlage: `_concept/monster_progression_A_vs_B.webp`. Design nach **Artist A**, Stil nach **Artist B (Low-Poly)**, so wie beim Chitin Crawler. Der B-Name steht jeweils in Klammern.
 
 **MVP-Umfang pro Kreatur = exakt wie Ant:** Walk, Run, Idle, Ready, TurnLeft, TurnRight, Attack1, Hit, Death. Dazu kommen jeweils UV-Prüfung, eigenes Standard-Rig, Selbstprüfung, FBX/GLB und Events.

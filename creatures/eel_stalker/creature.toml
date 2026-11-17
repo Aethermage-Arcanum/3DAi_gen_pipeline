@@ -25,3 +25,12 @@ vorbild = ["Muräne – Vorschnellen aus der S-Kurve", "Kobra – aufgerichtete 
 # ist gröber – das bestraft die Formel zu stark (Dichte-Ausreißer). → Tripo-UV festlegen.
 [uv]
 mode = "tripo"
+
+# Frei hängende Teile (rigging/dangling.py, Backlog C7): die Hautlappen/Fühler UNTER Kopf und Hals schwingen in Unity
+# per Shader frei (ohne Knochen). Kamm und Hörner oben bleiben starr (liegen über der Knochenlinie → nicht im Bereich),
+# Zähne/kurze Zacken bleiben starr (kürzer als min_length). Prüfbild: rig/dangling_preview.png
+[dangling]
+amplitude = 0.025     # Ausschlag an der Spitze: 2,5 % der Länge ≈ 2,5 cm bei 1 m
+[[dangling.region]]
+bones = ["Head", "Jaw", "Spine_11", "Spine_12", "Spine_13", "Spine_14"]   # Kopf + vorderer Hals
+below = 0.0           # nur unterhalb der Knochenlinie

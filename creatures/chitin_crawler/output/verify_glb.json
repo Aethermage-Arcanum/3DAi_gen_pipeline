@@ -1,4 +1,5 @@
 {
+  "skeleton": "crawler",
   "file": "ChitinCrawler.glb",
   "meshes": 1,
   "triangles": 3122,
@@ -34,63 +35,63 @@
   ],
   "actions": [
     [
-      "Crawler_Ant_Attack1",
+      "Hexapod_Ant_Attack1",
       [
         0,
         19
       ]
     ],
     [
-      "Crawler_Ant_Death",
+      "Hexapod_Ant_Death",
       [
         0,
         28
       ]
     ],
     [
-      "Crawler_Ant_Hit",
+      "Hexapod_Ant_Hit",
       [
         0,
         6
       ]
     ],
     [
-      "Crawler_Ant_Idle",
+      "Hexapod_Ant_Idle",
       [
         0,
         48
       ]
     ],
     [
-      "Crawler_Ant_Ready",
+      "Hexapod_Ant_Ready",
       [
         0,
         24
       ]
     ],
     [
-      "Crawler_Ant_Run",
+      "Hexapod_Ant_Run",
       [
         0,
         7
       ]
     ],
     [
-      "Crawler_Ant_TurnLeft",
+      "Hexapod_Ant_TurnLeft",
       [
         0,
         16
       ]
     ],
     [
-      "Crawler_Ant_TurnRight",
+      "Hexapod_Ant_TurnRight",
       [
         0,
         16
       ]
     ],
     [
-      "Crawler_Ant_Walk",
+      "Hexapod_Ant_Walk",
       [
         0,
         16

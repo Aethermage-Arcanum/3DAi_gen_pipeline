@@ -6,8 +6,8 @@
       "frames": 32,
       "seconds": 1.067,
       "loop": true,
-      "ik_reach_error_m": 0.0001,
-      "body_lowered_max_m": 0.0161,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0195,
       "foot_contact_max_m": 0.0,
       "foot_contact_ok": true,
       "stride_m": [
@@ -17,8 +17,8 @@
       "moves_ok": true,
       "move_speed_mps": 0.237,
       "loop_ok": true,
-      "max_stretch": 3.06,
-      "stretch_at": "Shoulder_FL @ Frame 3",
+      "max_stretch": 2.8,
+      "stretch_at": "Head @ Frame 18",
       "stretch_ok": true,
       "ok": true
     },
@@ -27,7 +27,7 @@
       "seconds": 0.533,
       "loop": true,
       "ik_reach_error_m": 0.0,
-      "body_lowered_max_m": 0.0104,
+      "body_lowered_max_m": 0.0064,
       "foot_contact_max_m": 0.0,
       "foot_contact_ok": true,
       "stride_m": [
@@ -37,8 +37,8 @@
       "moves_ok": true,
       "move_speed_mps": 0.821,
       "loop_ok": true,
-      "max_stretch": 2.84,
-      "stretch_at": "Shoulder_FR @ Frame 3",
+      "max_stretch": 2.96,
+      "stretch_at": "Head @ Frame 0",
       "stretch_ok": true,
       "ok": true
     },
@@ -51,9 +51,9 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.85,
-      "stretch_at": "Neck_2 @ Frame 72",
-      "stretch_ok": true,
+      "max_stretch": 3.34,
+      "stretch_at": "Head @ Frame 30",
+      "stretch_ok": false,
       "ok": true
     },
     "Quadruped_Deer_Ready": {
@@ -65,9 +65,9 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 3.47,
-      "stretch_at": "Shoulder_FL @ Frame 9",
-      "stretch_ok": true,
+      "max_stretch": 4.7,
+      "stretch_at": "Head @ Frame 9",
+      "stretch_ok": false,
       "ok": true
     },
     "Quadruped_Deer_TurnLeft": {
@@ -75,18 +75,18 @@
       "seconds": 0.933,
       "loop": true,
       "ik_reach_error_m": 0.0,
-      "body_lowered_max_m": 0.008,
+      "body_lowered_max_m": 0.0092,
       "foot_contact_max_m": 0.0,
       "foot_contact_ok": true,
       "stride_m": [
-        0.087,
-        0.149
+        0.089,
+        0.134
       ],
       "moves_ok": true,
       "turn_speed_deg_s": 32.1,
       "loop_ok": true,
-      "max_stretch": 2.83,
-      "stretch_at": "Shoulder_FL @ Frame 0",
+      "max_stretch": 2.81,
+      "stretch_at": "Head @ Frame 15",
       "stretch_ok": true,
       "ok": true
     },
@@ -95,18 +95,18 @@
       "seconds": 0.933,
       "loop": true,
       "ik_reach_error_m": 0.0,
-      "body_lowered_max_m": 0.0052,
+      "body_lowered_max_m": 0.0096,
       "foot_contact_max_m": 0.0,
       "foot_contact_ok": true,
       "stride_m": [
-        0.087,
-        0.149
+        0.089,
+        0.134
       ],
       "moves_ok": true,
       "turn_speed_deg_s": -32.1,
       "loop_ok": true,
-      "max_stretch": 2.79,
-      "stretch_at": "Shoulder_FL @ Frame 0",
+      "max_stretch": 2.83,
+      "stretch_at": "Neck_2 @ Frame 0",
       "stretch_ok": true,
       "ok": true
     },
@@ -115,12 +115,12 @@
       "seconds": 0.8,
       "loop": false,
       "ik_reach_error_m": 0.0002,
-      "body_lowered_max_m": 0.0172,
+      "body_lowered_max_m": 0.0246,
       "feet_moved_max_m": 0.0002,
       "feet_planted_ok": true,
-      "max_stretch": 4.35,
-      "stretch_at": "Neck_2 @ Frame 15",
-      "stretch_ok": true,
+      "max_stretch": 9.31,
+      "stretch_at": "Head @ Frame 15",
+      "stretch_ok": false,
       "ok": true
     },
     "Quadruped_Deer_Hit": {
@@ -128,13 +128,13 @@
       "seconds": 0.333,
       "loop": false,
       "ik_reach_error_m": 0.0,
-      "body_lowered_max_m": 0.0011,
+      "body_lowered_max_m": 0.0063,
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "returns_to_rest": true,
-      "max_stretch": 1.32,
-      "stretch_at": "Neck_2 @ Frame 3",
-      "stretch_ok": true,
+      "max_stretch": 2.04,
+      "stretch_at": "Head @ Frame 3",
+      "stretch_ok": false,
       "ok": true
     },
     "Quadruped_Deer_Death": {
@@ -143,11 +143,11 @@
       "loop": false,
       "ik_reach_error_m": 0.0,
       "body_lowered_max_m": 0.0,
-      "final_min_z_vs_ground_m": 0.0,
+      "final_min_z_vs_ground_m": -0.0,
       "no_ground_penetration": true,
-      "max_stretch": 2.01,
-      "stretch_at": "Leg_BL_1 @ Frame 24",
-      "stretch_ok": true,
+      "max_stretch": 3.53,
+      "stretch_at": "Leg_BR_2 @ Frame 24",
+      "stretch_ok": false,
       "ok": true
     }
   },

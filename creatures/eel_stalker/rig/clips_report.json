@@ -13,9 +13,9 @@
       "no_ground_penetration": true,
       "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.11,
-      "stretch_at": "Spine_08 @ Frame 18",
-      "stretch_ok": true,
+      "max_stretch": 2.56,
+      "stretch_at": "Spine_14 @ Frame 24",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Run": {
@@ -29,25 +29,25 @@
       "no_ground_penetration": true,
       "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.15,
-      "stretch_at": "Spine_08 @ Frame 9",
-      "stretch_ok": true,
+      "max_stretch": 2.87,
+      "stretch_at": "Spine_14 @ Frame 15",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Idle": {
-      "frames": 90,
-      "seconds": 3.0,
+      "frames": 120,
+      "seconds": 4.0,
       "loop": true,
       "lowest_point_m": [
-        0.0,
+        -0.0,
         0.0
       ],
       "no_ground_penetration": true,
       "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.73,
-      "stretch_at": "Spine_14 @ Frame 24",
-      "stretch_ok": true,
+      "max_stretch": 2.06,
+      "stretch_at": "Spine_09 @ Frame 102",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Ready": {
@@ -55,14 +55,15 @@
       "seconds": 1.333,
       "loop": true,
       "lowest_point_m": [
-        0.0,
+        -0.0,
         0.0
       ],
       "no_ground_penetration": true,
+      "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.69,
-      "stretch_at": "Spine_12 @ Frame 30",
-      "stretch_ok": true,
+      "max_stretch": 2.04,
+      "stretch_at": "Spine_14 @ Frame 30",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_TurnLeft": {
@@ -76,9 +77,9 @@
       "no_ground_penetration": true,
       "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.21,
-      "stretch_at": "Spine_12 @ Frame 9",
-      "stretch_ok": true,
+      "max_stretch": 3.42,
+      "stretch_at": "Spine_14 @ Frame 24",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_TurnRight": {
@@ -86,45 +87,50 @@
       "seconds": 1.2,
       "loop": true,
       "lowest_point_m": [
-        0.0,
+        -0.0,
         0.0
       ],
       "no_ground_penetration": true,
       "ground_contact_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.17,
-      "stretch_at": "Spine_07 @ Frame 3",
-      "stretch_ok": true,
+      "max_stretch": 2.61,
+      "stretch_at": "Spine_14 @ Frame 3",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Attack1": {
-      "frames": 26,
-      "seconds": 0.867,
+      "frames": 30,
+      "seconds": 1.0,
       "loop": false,
       "lowest_point_m": [
         -0.0,
         0.0
       ],
       "no_ground_penetration": true,
-      "max_stretch": 1.78,
-      "stretch_at": "Jaw @ Frame 12",
-      "stretch_ok": true,
+      "ground_contact_ok": true,
+      "returns_to_start_ok": true,
+      "strike_reach_m": 0.356,
+      "strike_reach_body_frac": 0.36,
+      "strike_head_drop_m": 0.313,
+      "max_stretch": 2.01,
+      "stretch_at": "Spine_13 @ Frame 9",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Hit": {
-      "frames": 12,
-      "seconds": 0.4,
+      "frames": 18,
+      "seconds": 0.6,
       "loop": false,
       "lowest_point_m": [
-        0.0,
+        -0.0,
         0.0
       ],
       "no_ground_penetration": true,
       "ground_contact_ok": true,
-      "returns_to_rest": true,
-      "max_stretch": 1.27,
-      "stretch_at": "Jaw @ Frame 3",
-      "stretch_ok": true,
+      "returns_to_start_ok": true,
+      "max_stretch": 2.02,
+      "stretch_at": "Spine_13 @ Frame 3",
+      "stretch_ok": false,
       "ok": true
     },
     "Legless_Cobra_Death": {

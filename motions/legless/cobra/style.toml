@@ -1,5 +1,9 @@
 # Bewegungsmuster legless/cobra – Schlangen mit aufrichtbarem Vorderkörper (Eel Stalker).
-# Winkel in Grad. Bereiche (lo/hi) als Anteil der Körperlänge: 0 = Schwanzspitze, 1 = Kopfansatz.
+# Winkel in Grad. s (Bogenlänge) als Anteil der Körperlänge: 0 = Schwanzspitze, 1 = Kopfansatz.
+# Seit 2026-11-17: Körperform ABSOLUT (Richtung jedes Wirbels gegenüber gerader, waagerechter Grundlinie) –
+# die feste S-Kurve der Tripo-Ruhepose spielt keine Rolle mehr. pitch = [[s, Neigung°], …] (+ = nach oben),
+# glatt interpoliert. Kopf: head_pitch relativ zur modellierten Kopfhaltung (0 = Blick geradeaus).
+# Naturwerte + Quellen: README.md
 
 [meta]
 skeleton = "legless"
@@ -9,51 +13,81 @@ fps = 30
 clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
 inherit = { run = "walk", turn = "walk" }
 
-[walk]   # laterale Undulation: Krümmungswelle läuft vom Kopf zum Schwanz
+[walk]   # laterale Undulation (Serpenoid): Gierwinkel sinusförmig, Welle läuft Kopf → Schwanz
 cycle_frames = 36
-amp_deg = 22          # Ausschlag (Summe pro ~6 Wirbel)
-waves = 1.3           # sichtbare Wellen über die Körperlänge
-head_level = 0.8      # Kopf bleibt waagerecht + ruhig
-front_raise_deg = 8   # Kopfpartie leicht erhoben
+amp_deg = 40          # max. Gierwinkel des Körpers gegen die Laufrichtung (Schlangen ~35–50°)
+waves = 1.4           # Wellen auf der Körperlänge (Schlangen an Land ~1–2)
+envelope = [[0.0, 1.15], [0.3, 1.0], [0.8, 0.9], [1.0, 0.6]]   # Schwanz etwas weiter, Hals ruhiger
+head_follow = 0.4     # Kopf-Gieren = 40 % des Körper-Ausschlags: bewegt sich mit, bleibt aber auf Kurs
+head_lag_deg = -25    # negativ = Kopf ist der Welle voraus (führt)
+head_bob_deg = 2
+pitch = [[0.0, 0], [0.70, 0], [0.80, 20], [0.90, 12], [1.0, -4]]   # Kopfpartie leicht erhoben, Rest liegt flach
 
 [run]
 cycle_frames = 20
-amp_deg = 30
+amp_deg = 50
+waves = 1.25
+pitch = [[0.0, 0], [0.72, 0], [0.82, 12], [0.92, 6], [1.0, -4]]
 
-[turn]
+[turn]   # Körper liegt auf der Kurvenbahn (gleichmäßige Krümmung), Kopf/Hals führen in die Kurve; Unity dreht das Objekt
 cycle_frames = 36
-bias_deg = 50         # Körper krümmt sich zur Drehseite (Unity dreht das Objekt)
+turn_amp_scale = 0.7  # Welle in der Kurve etwas kleiner
+arc_deg = 90          # Richtungsänderung Schwanz → Kopfansatz durch die Kurvenkrümmung
+lead_deg = 25         # zusätzliche Krümmung im Hals (Kopf führt)
+head_lead_deg = 10    # Kopf schaut noch weiter in die Kurve
 
-[idle]
-frames = 90
-amp_deg = 5
-look_deg = 25
-front_raise_deg = 12
+[idle]   # entspannt: lockere S-Schlinge am Boden, Vorderkörper leicht erhoben, atmet, Kopf tastet umher
+frames = 120
+coil_end = 0.66       # bis hier liegt der Körper als Schlinge, davor hebt sich der Hals
+coil_amp_deg = 40
+coil_waves = 1.1
+pitch = [[0.0, 0], [0.64, 0], [0.76, 28], [0.88, 22], [0.96, 4], [1.0, -4]]
+ripple_deg = 5        # langsame Welle läuft durch die Schlinge
+breaths = 2           # Atemzüge pro Loop
+breath_coil = 0.06
+breath_raise = 0.10
+look_deg = 22         # Kopf schaut umher
+neck_follow = 0.45    # Hals dreht mit
+taste_at = [0.3, 0.72]   # Zeitpunkte (Anteil Loop) für kurzes Tasten/Züngeln
+taste_dip_deg = 8
+taste_jaw_deg = 8
 
-[ready]  # Kobra-Drohhaltung: Vorderkörper aufgerichtet, S-Kurve, Kopf schaut nach vorn, Maul leicht offen
+[ready]  # Kobra-Drohhaltung: S-Schlinge unter Spannung, Vorderkörper steil erhoben, Hals-S, Kopf fixiert nach vorn
 frames = 40
-raise_lo = 0.75       # ab hier richtet sich der Körper auf (Naja: 13–22 % der Länge, Nasoori et al. 2016)
-raise_deg = 70
-s_curve_deg = 25      # Hals zurück in S-Form (Schlagbereitschaft)
-sway_deg = 8
-jaw_deg = 12
+anchor_hi = 0.4       # hinterer Körperteil (s < 0.4) bleibt in allen Stand-Clips liegen (Anker)
+coil_end = 0.6        # Naja: vorderes 13–22 % aufgerichtet (+ Hals) – hier ab 60 % Bogenlänge
+coil_amp_deg = 65
+coil_waves = 1.25
+pitch = [[0.0, 0], [0.56, 0], [0.64, 45], [0.72, 78], [0.82, 78], [0.90, 35], [0.97, 0], [1.0, -5]]
+head_pitch_deg = 0
+jaw_deg = 10
+sway_deg = 14         # Pendeln des aufgerichteten Teils, Kopf bleibt aufs Ziel gerichtet
+tension = 0.08        # Schlinge "pumpt" (Spannung halten)
+ripple_deg = 4        # langsame Welle läuft durch die Schlinge
+bob_deg = 5
 
-[attack1] # Zustoßen aus der S-Kurve nach vorn-unten, Maul weit auf → zuschnappen (hit) → zurück
-frames = 26
-windup_end = 10
-strike_end = 14
-hold_end = 18
-raise_deg = 70
-strike_lunge = 0.18   # Vorstoß nach vorn (Anteil Länge)
-strike_drop = 0.55    # beim Stoß gibt der Körper so viel der Aufrichtung ab
-strike_down_deg = 35  # Vorderkörper kippt beim Zustoßen nach vorn
-jaw_open_deg = 20
-hit_frame = 14
+[attack1] # Ausholen → Stoß aus dem ganzen Körper (S-Kurve entlädt sich) → Biss → zurück in die Spannung
+frames = 30
+windup_end = 9
+strike_end = 13       # 4 Frames = 133 ms (Vipern 20–100 ms bis zur Beute; für die Lesbarkeit etwas langsamer)
+hold_end = 17
+hit_frame = 13
+windup_slide = 0.03   # Körper rutscht beim Ausholen zurück (Anteil Länge)
+lunge_slide = 0.06    # … und beim Stoß nach vorn
+windup = { coil_amp_deg = 78, coil_waves = 1.35, head_pitch_deg = 8, jaw_deg = 6, pitch = [[0.0, 0], [0.56, 0], [0.64, 55], [0.72, 88], [0.82, 92], [0.90, 45], [0.97, 5], [1.0, -5]] }
+strike = { coil_amp_deg = 24, coil_waves = 1.0, head_pitch_deg = -10, jaw_deg = 20, pitch = [[0.0, 0], [0.56, 0], [0.64, 14], [0.72, 8], [0.82, 2], [0.90, -2], [0.97, -4], [1.0, -4]] }
 
-[hit]
-frames = 12
-recoil_deg = 30
-jolt_deg = 20
+[hit]    # Ganzkörper-Reaktion aus der Ready-Haltung, endet wieder in Ready
+frames = 18
+peak = 0.18           # Anteil des Clips bis zum stärksten Ausschlag
+ripple_end = 0.8      # bis hier ist der Knick vom Hals bis zum Schwanz gelaufen
+recoil_deg = 25       # Vorderkörper kippt zurück
+head_snap_deg = 25
+head_jolt_deg = 15
+jolt_deg = 12
+kink_deg = 30         # seitlicher Knick, der durch den Körper läuft
+slide = 0.05
+jaw_deg = 10
 
 [death]
 frames = 40

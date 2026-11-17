@@ -6,6 +6,8 @@ Ergebnis: <ausgabe>/floater_rigged.blend, rig_report.json, rig_debug.json
 Erkennung: Kern-Mittelpunkt (dichtester Bereich) + Kernradius; alle Vertices außerhalb der Kernkugel zerfallen
 über Mesh-Kanten in zusammenhängende Stücke = Tentakel/Stacheln. Jedes Stück bekommt eine Kette aus bis zu
 `max_bones` Knochen vom Ansatz (nah am Kern) zur Spitze, entlang der Querschnitte nach Abstand zum Kern.
+Wurzel-Verlängerung (root_depth < 1): jedes Stück wächst innerhalb der Kernkugel bis zur echten Wurzel weiter,
+damit Tentakel bis zum Ansatz beweglich sind (sonst sind ihre oberen ~30 % starr am Kern).
 Skelett: Root (Boden) → Core → Tent_<NN>_<k>. Tentakel sind nach Größe sortiert (Tent_01 = längster).
 Blickrichtung: [floater] facing = "+x" | "-y" | … – Modell wird so gedreht, dass vorn = +X.
 """
@@ -77,15 +79,89 @@ ids, counts = np.unique(comp[comp >= 0], return_counts=True)
 B = {"Root": (np.array([c[0], c[1], GROUND]), np.array([c[0], c[1], GROUND + 0.1 * size]), None),
      "Core": (c, c + np.array([CFG["core_bone"] * size, 0, 0]), "Root")}
 order = ["Root", "Core"]
-TENT = []
+PIECES = []
 for cid in ids[np.argsort(-counts)]:
     idx = np.where(comp == cid)[0]
     if len(idx) < CFG["min_verts"]:
         continue
+    if d[idx].max() - d[idx].min() < CFG["min_length"] * size:
+        continue
+    PIECES.append(idx)
+N_MAIN = len(PIECES)
+if CFG["root_depth"] < 1.0:          # kurze Tentakel, die kaum aus der Kernkugel ragen: erst nach dem Wachsen beurteilen
+    for cid in ids[np.argsort(-counts)]:
+        idx = np.where(comp == cid)[0]
+        if CFG["seed_min_verts"] <= len(idx) and not any(np.array_equal(idx, p) for p in PIECES[:N_MAIN]):
+            PIECES.append(idx)
+
+# Wurzel-Verlängerung (2026-11-17, Nutzer: "Tentakel sind bis an die Wurzel wabbelig"): die große Kernkugel trennt die
+# Tentakel sauber, schneidet aber ihre oberen ~30 % ab (starr am Kern). Jedes Stück wächst darum über Mesh-Kanten nach
+# innen bis zur echten Wurzel: nur Vertices mit fallendem Abstand zur Mitte (kein Seitwärts-Kriechen über den Kern),
+# innerhalb einer Röhre um die nach innen verlängerte Tentakel-Achse, nicht tiefer als root_depth × Kernradius.
+r_root = r_core * CFG["root_depth"]
+SEG = []
+for idx in PIECES:
+    band = idx[d[idx] < d[idx].min() + 0.04 * size]
+    cen = V[band].mean(0)
+    rad = max(CFG["root_min_radius"] * size, float(np.linalg.norm(V[band] - cen, axis=1).mean()))
+    # Achse nach innen verlängern: Tangente am Ansatz (hängende Tentakel kommen nicht radial aus dem Kern),
+    # gemischt mit der Richtung zur Mitte; so weit, bis die Achse root_depth erreicht (max. Kernradius lang)
+    nxt = idx[(d[idx] >= d[idx].min() + 0.04 * size) & (d[idx] < d[idx].min() + 0.10 * size)]
+    tang = cen - V[nxt].mean(0) if len(nxt) else c - cen
+    tang /= max(1e-9, np.linalg.norm(tang))
+    toc = (c - cen) / max(1e-9, np.linalg.norm(c - cen))
+    u = tang * (1 - CFG["root_bend_to_core"]) + toc * CFG["root_bend_to_core"]
+    u /= max(1e-9, np.linalg.norm(u))
+    end = cen
+    for s in np.linspace(0, r_core, 60):
+        end = cen + u * s
+        if np.linalg.norm(end - c) <= r_root:
+            break
+    SEG.append((end, cen, rad * CFG["root_radius"]))
+lab = np.full(len(V), -1)
+for t, idx in enumerate(PIECES):
+    lab[idx] = t
+if CFG["root_depth"] < 1.0 and PIECES:
+    import heapq
+    adj = [[] for _ in range(len(V))]
+    for x, y in E:
+        adj[x].append(y)
+        adj[y].append(x)
+    for g in groups.values():
+        for x in g:
+            adj[x].extend(y for y in g if y != x)
+    tol = 0.003 * size
+    segd = [lambda p, S=S: float(RC.seg_dist(p[None], S[0], S[1])[0]) for S in SEG]
+    dist = np.where(lab >= 0, 0.0, np.inf)
+    pq = [(0.0, int(i)) for i in np.where(lab >= 0)[0]]
+    heapq.heapify(pq)
+    while pq:
+        g, x = heapq.heappop(pq)
+        if g > dist[x]:
+            continue
+        L = lab[x]
+        for y in adj[x]:
+            if outside[y] or d[y] < r_root or d[y] > d[x] + tol or segd[L](V[y]) > SEG[L][2]:
+                continue
+            ng = g + float(np.linalg.norm(V[y] - V[x]))
+            if ng < dist[y]:
+                dist[y], lab[y] = ng, L
+                heapq.heappush(pq, (ng, y))
+    for g in groups.values():                                         # UV-Naht-Duplikate gleich behandeln
+        ls = lab[g]
+        if (ls >= 0).any():
+            lab[g] = ls[ls >= 0][0]
+    print(f"RIG_INFO Wurzel-Verlängerung bis {r_root:.3f}: {int(((lab >= 0) & ~outside).sum())} Kern-Vertices "
+          f"gehören jetzt zu Tentakeln")
+
+TENT = []
+for pi in range(len(PIECES)):
+    idx = np.where(lab == pi)[0]
     P = V[idx]
     dd = d[idx]
     length = dd.max() - dd.min()
-    if length < CFG["min_length"] * size:
+    if pi >= N_MAIN and (len(idx) < CFG["min_verts"] or length < CFG["min_length"] * size):
+        lab[idx] = -1                                                  # bleibt am Kern
         continue
     nb = int(np.clip(round(length / (CFG["bone_length"] * size)), 1, CFG["max_bones"]))
     qs = np.linspace(dd.min(), dd.max(), nb + 1)
@@ -95,13 +171,14 @@ for cid in ids[np.argsort(-counts)]:
         pts.append(band.mean(0) if len(band) else P[np.argmin(np.abs(dd - q))])
     pts[-1] = P[np.argmax(dd)]                                         # Spitze
     base_dir = pts[0] - c
-    pts[0] = c + base_dir / max(1e-9, np.linalg.norm(base_dir)) * r_core * 0.9   # Ansatz auf der Kernkugel
+    root_d = r_core * 0.9 if CFG["root_depth"] >= 1.0 else dd.min()             # Ansatz: Kernkugel bzw. echte Wurzel
+    pts[0] = c + base_dir / max(1e-9, np.linalg.norm(base_dir)) * root_d
     t = len(TENT) + 1
     for k in range(nb):
         n = f"Tent_{t:02d}_{k + 1}"
         B[n] = (pts[k], pts[k + 1], "Core" if k == 0 else f"Tent_{t:02d}_{k}")
         order.append(n)
-    TENT.append({"name": f"Tent_{t:02d}", "verts": idx, "bones": nb, "length": float(length),
+    TENT.append({"name": f"Tent_{t:02d}", "verts": idx, "bones": nb, "length": float(length), "root_d": float(root_d),
                  "dir": (P.mean(0) - c).tolist()})
 arm = RC.build_armature("Floater_Rig", B, order, size)
 
@@ -109,13 +186,61 @@ arm = RC.build_armature("Floater_Rig", B, order, size)
 names = order[1:]
 allow = np.zeros((len(V), len(names)), bool)
 allow[:, names.index("Core")] = True
+RING = {}                                                             # Kern-Vertex → (Anteil, Tentakel-Knochen)
 for T in TENT:
     cols = [names.index(f"{T['name']}_{k + 1}") for k in range(T["bones"])]
     for j in cols:
         allow[T["verts"], j] = True
     allow[T["verts"], names.index("Core")] = d[T["verts"]] < r_core * CFG["core_blend"]
-RC.skin(obj, V, part, MAIN, B, names, allow, CFG)
+    if CFG["root_depth"] < 1.0 and CFG["ring_fade"]:
+        # Saum: Kern-Vertices direkt neben dem Tentakel gehen abgeschwächt mit (ring_fade je Kanten-Ring), sonst springt
+        # das Gewicht an der Grenze von 1 auf 0 → die Wurzel reißt, sobald sie sich bewegt
+        mine = set(int(i) for i in T["verts"])
+        front, seen = set(mine), set(mine)
+        for hop, fade in enumerate(CFG["ring_fade"]):
+            front = {y for x in front for y in adj[x] if lab[y] < 0} - seen
+            seen |= front
+            for y in front:
+                if fade > RING.get(y, (0, None))[0]:
+                    RING[y] = (fade, cols)
+Wt = RC.skin(obj, V, part, MAIN, B, names, allow, CFG)
+if RING:
+    ci = names.index("Core")
+    tw = 1.0 / (np.stack([RC.seg_dist(V, B[n][0], B[n][1]) for n in names], 1) + 1e-4) ** CFG["falloff"]
+    for g in groups.values():                                         # UV-Naht-Duplikate: gleicher Saum-Anteil
+        r = [RING[i] for i in g if i in RING]
+        if r:
+            for i in g:
+                RING[i] = max(r, key=lambda x: x[0])
+    for i, (fade, cols) in RING.items():
+        w = tw[i, cols] / max(1e-12, tw[i, cols].sum()) * fade
+        for gname in [names[j] for j in cols] + ["Core"]:
+            obj.vertex_groups[gname].remove([int(i)])
+        obj.vertex_groups["Core"].add([int(i)], float(1 - fade), "REPLACE")
+        for j, wj in zip(cols, w):
+            if wj > 1e-3:
+                obj.vertex_groups[names[j]].add([int(i)], float(wj), "REPLACE")
+if CFG["root_depth"] < 1.0:
+    # Wo zwei Tentakel an der Wurzel verwachsen sind, mitteln die Grenz-Vertices beide Ketten (sonst reißt die Naht)
+    TL = np.full(len(V), -1)
+    for k, T in enumerate(TENT):
+        TL[T["verts"]] = k
+    newW = {}
+    for i in np.where(TL >= 0)[0]:
+        nb = [y for y in adj[i] if TL[y] >= 0 and TL[y] != TL[i]]
+        if nb:
+            newW[int(i)] = 0.5 * Wt[i] + 0.5 * Wt[nb].mean(0)
+    for i, w in newW.items():
+        top = np.argsort(-w)[:4]
+        w4 = w[top] / w[top].sum()
+        for g in obj.vertex_groups:
+            g.remove([i])
+        for j, wj in zip(top, w4):
+            if wj > 1e-3:
+                obj.vertex_groups[names[j]].add([i], float(wj), "REPLACE")
+    print(f"RIG_INFO Saum: {len(RING)} Kern-Vertices weich, {len(newW)} Tentakel-Nähte gemittelt")
 report = {"vertices": int(len(V)), "size_m": round(size, 3), "core_radius_m": round(r_core, 3),
+          "root_radius_m": round(r_root, 3), "root_verts": int(((lab >= 0) & ~outside).sum()),
           "tentacles": [{"name": T["name"], "bones": T["bones"], "length_m": round(T["length"], 3)} for T in TENT],
           "bones": len(order)}
 RC.finish(obj, arm, OUT, "floater_rigged.blend", report, B, order, V)

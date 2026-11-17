@@ -1,0 +1,120 @@
+# Schwellenwerte der Modellprüfung (scripts/model_check.py) – rohes Tripo-Modell vor dem Rig.
+#
+# !!! Automatische Messung = nur Frühwarnsystem. Eine individuelle Sichtprüfung des Modells (Bilder ansehen,
+# !!! gegen Concept und Referenzbilder vergleichen) durch den Agenten ist IMMER zusätzlich notwendig.
+#
+# Reihenfolge der Werte: diese Datei → [skelett.<skelett>] unten → creature.toml [model_check] (gewinnt).
+# Längen sind Anteile: "Größe" = längste Kante des Modells, "Höhe" = Z-Ausdehnung, "Länge" = X-Ausdehnung (vorn = +X).
+#
+# Pro Kreatur in creature.toml, zum Beispiel:
+#   [model_check]
+#   facing = "-y"                       # Blickrichtung des rohen Modells, falls Tripo es gedreht liefert
+#   [model_check.fussgruppen]
+#   erwartet = 10                       # Zahl oder [min, max]
+#   [model_check.freigabe]              # Befund als GEWOLLT freigeben – nur mit Begründung (Text, nicht true)
+#   haengende_teile = "Tentakel hängen gewollt unter dem Körper (Concept)"
+# Freigegebene Befunde bleiben im Bericht sichtbar (orange), zählen aber nicht als Auffälligkeit.
+
+[bild]
+aufloesung = 560              # Pixel je Ansicht (4 Ansichten → 2×2)
+
+# 1. Einseitige/offene Flächen: Strahl von der Fläche nach hinten trifft nichts → Rückseite fehlt
+#    (Erkennung aus rigging/double_sided.py). Kleine Splitter in Körperfalten zählen nicht.
+[offene_flaechen]
+aktiv = true
+min_bereich = 0.002           # Bereich wird gelistet ab dieser Fläche (Anteil Größe²) – gleicher Wert wie double_sided.py
+warn_bereich = 0.01           # Bereich ab dieser Fläche = Warnung (Wespenflügel: 0,018–0,054; Chitin-Taille 0,006 = Info)
+max_bereiche = 0              # Warnung, wenn mehr große Bereiche
+
+# 4. Fuß-Gruppen am Boden (Vertices nahe dem tiefsten Punkt, über das Mesh zu Füßen zusammengefasst)
+[fussgruppen]
+aktiv = true
+erwartet = 0                  # kommt aus [skelett.*]; 0 = keine Erwartung (nicht geprüft)
+boden_band = 0.03             # Vertex gilt als Bodenkontakt bis zu dieser Höhe (Anteil Höhe)
+bein_band = 0.10              # bis zu dieser Höhe werden Kontakte über das Mesh zu einem Fuß verbunden (Zehen, Krallen)
+verschmelzen = 0.01           # getrennte Mesh-Teile (Krallen) näher als das gehören zum selben Fuß (Anteil Größe)
+mitte = 0.03                  # Bodenkontakt näher als das an der Mittellinie = Mitte (verdächtig, Anteil Größe)
+
+# 2. Fußabstand vorne vs. hinten: seitlicher Abstand des vordersten und des hintersten Fußpaars
+[fussbreite]
+aktiv = false                 # nur bei Vierbeinern eingeschaltet (Insekten/Spinnen sind natürlich ungleich)
+max_verhaeltnis = 1.4         # hinten/vorne darüber → Warnung (Hollow Stag: 2,4)
+min_verhaeltnis = 0.5         # darunter → Warnung (Wolf ≈ 0,67 ist normal)
+
+# 3. Hängende Teile unter der Bauchlinie nahe der Körpermitte (zwischen den Beinen)
+[haengende_teile]
+aktiv = false
+korridor = 0.5                # halbe Breite des Prüfstreifens = Anteil der halben Spurbreite des schmalsten Fußpaars
+zweibeiner_rand = 0.15        # nur ein Fußpaar: Streifen = Fuß-X ± so viel (Anteil Länge)
+abschnitte = 12               # Bauchlinie = Median der tiefsten Punkte je Abschnitt entlang X
+max_absenkung = 0.15          # tiefer als Bauchlinie minus das (Anteil Höhe) → hängt (Dune Raptor: 0,47)
+
+# 5. Krümmung/Verdrehung der Mittellinie (Querschnitte entlang X: Mitte seitlich verschoben?)
+[mittellinie]
+aktiv = true
+abschnitte = 24
+max_versatz = 0.03            # seitliche Abweichung der Mittellinie von der Symmetrieebene (Anteil Länge)
+drehung_pruefen = false       # Querschnitt-Drehung (nur Schlangen: Körper hochkant, sonst unbestimmt)
+max_drehung = 25              # Grad – Rollwinkel des Querschnitts gegen senkrecht
+kopf_auslassen = 0.15         # vorderster Anteil (Kopf) zählt bei der Drehung nicht
+
+# 5b. Links/rechts spiegelgleich? Referenzbilder sind symmetrisch → ein verbogenes/verdrehtes Modell nicht.
+[symmetrie]
+aktiv = true
+toleranz = 0.02               # Vertex ohne Spiegel-Partner näher als das (Anteil Größe) = unsymmetrisch
+max_anteil = 0.10             # Warnung, wenn mehr Vertices unsymmetrisch
+
+# 6. Boden: Schwerpunkt (Oberflächen-Mittelpunkt) über der Standfläche der Füße?
+[boden]
+aktiv = true
+rand = 0.05                   # Schwerpunkt darf so weit außerhalb liegen (Anteil Länge)
+
+# 6. Dreiecke gegen das Tripo-Budget ([tripo] face_limit aus pipeline.toml/creature.toml)
+[dreiecke]
+aktiv = true
+max_faktor = 1.25
+
+# 6. Mesh-Teile: lose schwebende Teile (berühren nichts) sind verdächtig
+[mesh_teile]
+aktiv = true
+lose_abstand = 0.03           # Teil gilt als lose, wenn es weiter als das von allem anderen entfernt ist (Anteil Größe)
+
+# ---------------------------------------------------------------------------------------------------------
+# Erwartungen pro Skelett (aus creature.toml [motion] style = "<skelett>/<muster>")
+# ---------------------------------------------------------------------------------------------------------
+[skelett.quadruped]
+fussgruppen = { erwartet = 4 }
+fussbreite = { aktiv = true }
+haengende_teile = { aktiv = true }
+
+[skelett.biped_raptor]
+fussgruppen = { erwartet = 2 }
+haengende_teile = { aktiv = true }
+
+[skelett.hexapod]
+# erwartet = 2 × Anzahl [motion.legs] walking_slots (Taster erreichen den Boden nicht), sonst 6
+fussgruppen = { erwartet = 6 }
+haengende_teile = { aktiv = true }
+
+[skelett.octopod]
+fussgruppen = { erwartet = 8 }
+haengende_teile = { aktiv = true }
+
+[skelett.multileg]
+# Skorpion: 8 Laufbeine, die Scheren dürfen aufliegen → 8 bis 10 Bodenkontakte
+fussgruppen = { erwartet = [8, 10] }
+haengende_teile = { aktiv = true }
+
+[skelett.legless]
+mittellinie = { drehung_pruefen = true }
+boden = { aktiv = false }
+
+[skelett.floater]
+# schwebt, Tentakel sind unregelmäßig → keine Füße, keine Symmetrie-/Mittellinien-Erwartung
+mittellinie = { aktiv = false }
+symmetrie = { aktiv = false }
+boden = { aktiv = false }
+
+[skelett.flyer]
+# schwebt, Beine hängen frei
+boden = { aktiv = false }

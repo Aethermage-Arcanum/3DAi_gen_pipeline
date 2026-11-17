@@ -1,7 +1,7 @@
-# Bewegungsmuster quadruped/lizard – Echse/Krokodil (Reef Snapper): diagonaler Trab mit seitlicher Wirbelsäulenwelle (Waran),
-# Schwanz schwingt gegen, Drohen mit aufgerissenem Maul, Schnappbiss mit Kopfschlag zur Seite. Generator: ../wolf/wolf_clips.py Winkel in Grad,
-# Längen als Anteil der Körperlänge (stride) bzw. Rumpfhöhe (lift, Höhen).
-
+# Bewegungsmuster quadruped/lizard – Echse/Waran (Reef Snapper): Diagonal-Trab mit stehender S-Welle des Rumpfes
+# (Schulter- und Beckengürtel gieren gegenläufig), Schwanz setzt die Welle fort, Drohen im Seitenprofil mit weit offenem
+# Maul, Schnappbiss mit Kopfschwung. Generator: lizard_clips.py. Winkel in Grad, Längen als Anteil der Körperlänge
+# (stride) bzw. Rumpfhöhe (lift, Höhen). Herleitung der Werte: README.md "Abgeleitete Werte".
 [meta]
 skeleton = "quadruped"
 style = "lizard"
@@ -10,76 +10,105 @@ fps = 30
 clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
 inherit = { turn = "walk" }
 
-[walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt)
+[walk]   # Diagonal-Trab (Waran gehen): HL+VR, dann HR+VL
 cycle_frames = 32
 duty = 0.62
-order = { BL = 0.0, FR = 0.0, BR = 0.5, FL = 0.5 }   # Trab: Diagonalpaare
-stride = 0.16
-spine_side_deg = 10    # seitliche Welle (Waran-Gang)
-lift_front = 0.14
-lift_back = 0.11
-toe_curl_deg = 18
-bob = 0.012           # Rumpf auf/ab (Anteil Rumpfhöhe), 2× pro Zyklus
-roll_deg = 2.0
-head_bob_deg = 3.0
-head_stabilize = 0.6
-tail_deg = 14
-tail_lift_deg = 0    # Wolf trägt den Schwanz beim Gehen leicht hängend
-
-[run]    # rotierender Galopp: HL, HR knapp danach, dann VR, VL – Rücken beugt/streckt sich
-cycle_frames = 16
-duty = 0.36
-order = { BL = 0.0, BR = 0.9, FR = 0.55, FL = 0.45 }
-stride = 0.21
-lift_front = 0.17
-lift_back = 0.17
+order = { BL = 0.0, FR = 0.0, BR = 0.5, FL = 0.5 }
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.4
+curl_peak = 0.3
+stride = 0.18         # war 0,16
+lift_front = 0.15
+lift_back = 0.12
 toe_curl_deg = 25
-bob = 0.03
-pitch_deg = 3
-spine_flex_deg = 5
-head_stabilize = 0.0
-tail_deg = 4
-tail_lift_deg = 6
-max_stretch = 2.4     # Sichtprüfung: Haut hinten am Oberschenkel zieht sich beim Vorschwingen lang (wie beim echten Tier), keine Risse
+shoulder_yaw_deg = 9  # stehende S-Welle: Schultergürtel ±9°, Becken ±8° gegenläufig (Varanus: deutlich sichtbare Rumpfbiegung)
+hip_yaw_deg = 8       # (vorher: spine_side 10° auf alle 3 Wirbel gleich verteilt = Körper drehte als Block um die Hüfte)
+wave_lag = 0.05       # Welle läuft leicht nach hinten (Ritter 1992: bei höherem Tempo laufende Welle)
+roll_deg = 2.5
+bob = 0.012
+sway = 0.006
+head_gain = 0.5       # Kopf zeigt ruhiger nach vorn als die Schultern
+neck_lag = 0.05
+tail_lag = 0.08
+tail_gain = 1.3
+tail_lift_deg = 0
+reach_smooth = 4
+reach_flat = 0.3
 
-[turn]
+[run]    # schneller Trab (Warane rennen im Trab, nicht im Galopp) mit größerer Welle
+cycle_frames = 18
+duty = 0.5
+order = { BL = 0.0, FR = 0.0, BR = 0.5, FL = 0.5 }
+foot_profile = "smooth"
+swing_match = 0.6
+lift_peak = 0.4
+curl_peak = 0.3
+stride = 0.22
+lift_front = 0.18
+lift_back = 0.15
+toe_curl_deg = 30
+shoulder_yaw_deg = 13
+hip_yaw_deg = 12
+wave_lag = 0.07
+roll_deg = 3
+bob = 0.015
+sway = 0.008
+head_gain = 0.5
+neck_lag = 0.05
+tail_lag = 0.08
+tail_gain = 1.35
+tail_lift_deg = 4     # Schwanz im Lauf leicht angehoben
+reach_smooth = 3
+reach_flat = 0.4
+
+[turn]   # Körper biegt sich stark in die Kurve (Echsen drehen über die Wirbelsäule), Kopf führt, Schwanz folgt dem Bogen
 cycle_frames = 28
 duty = 0.6
-turn_deg = 30         # Drehung pro Zyklus
+turn_deg = 30
 stride = 0.0
+turn_bend_deg = 24
+turn_head_deg = 24
+turn_tail_deg = 20
 
-[idle]   # stehen, atmen, umschauen, Schwanz pendelt ruhig
+[idle]   # tiefe Atmung, Kopf blickt in kurzen Rucken (weich abgebremst) umher, Schwanzspitze schlängelt träge
 frames = 90
-breathe_deg = 1.5
-look_deg = 22
-tail_deg = 5
+breathe_deg = 2.0
+look_deg = 26
+tail_deg = 6
+reach_smooth = 3
 
-[ready]  # Drohhaltung: geduckt, Kopf tief + nach vorn, Lefzen hoch (Kiefer leicht offen), Schwanz steif
+[ready]  # Drohen: Seitenprofil (Rumpf gebogen), Hals hoch, Maul weit auf + Fauch-Stöße, Schwanz gespannt und peitschend
+frames = 48
+crouch = 0.0
+arc_deg = 14          # Rumpfbogen zum Gegner
+lean_deg = 4
+pitch_deg = 3         # Brust leicht hoch
+head_up_deg = 18
+jaw_deg = 30          # war 13 (wegen Mundwinkel-Dehnung verkleinert) – Dehnung ist nur Info
+hiss_jaw_deg = 8
+tail_lash_deg = 10
+tail_lift_deg = 6
+reach_smooth = 4
+
+[attack1] # Schnappbiss: Kopf/Hals holen zur Seite aus → Vorschnellen, Kopf schwingt zur Mitte, zuschnappen → zurückreißen
 frames = 30
-crouch = 0.0          # Rumpf absenken (Anteil Rumpfhöhe)
-head_down_deg = -8
-jaw_deg = 13
-tremble_deg = 1.2
-tail_lift_deg = 10
-
-[attack1] # Anspringen + Biss: zurücksetzen/ducken → nach vorn schnellen, Maul auf → zuschnappen (hit)
-frames = 24
-windup_end = 9
-strike_end = 13
-hold_end = 16
-crouch = 0.15
-lunge = 0.08          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
-lunge_up = 0.05
-neck_reach_deg = 20
-snap_yaw_deg = 18
-jaw_open_deg = 40
-hit_frame = 13
+windup_end = 10
+strike_end = 14
+hit_frame = 14
+crouch = 0.12
+lunge = 0.10          # war 0,08
+snap_yaw_deg = 26     # Kopfschwung von der Seite (war 18, nur am Kopf)
+neck_reach_deg = 22
+jaw_open_deg = 45
+reach_smooth = 3
 
 [hit]
-frames = 10
+frames = 15
 jolt = 0.05
-roll_deg = 6
-head_deg = 26
+roll_deg = 7
+head_deg = 28
+reach_smooth = 2
 
 [death]  # zur Seite kippen, Beine erschlaffen
 max_stretch = 2.8      # Sichtprüfung ok: Unterarm beim Abrollen über die Seite, kein sichtbarer Riss

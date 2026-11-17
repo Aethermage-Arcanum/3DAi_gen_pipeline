@@ -9,9 +9,34 @@ python scripts/creature_pipeline.py creatures/needle_wasp             # kostenlo
 
 | Kennzahl | Wert |
 |---|---|
-| Dreiecke | 4.172 |
+| Dreiecke | 4.296 (Tripo 4.172 + 124 Flügel-Rückseiten, siehe unten) |
 | Materialien / Draw Calls | 1 |
 | Texturen | Farbe, Normal, ORM je 1024² |
-| Knochen | Root + Core + 13 Ketten (6 Flügelstücke, 4 Beine, 2 Fühler, Hinterleib mit 5 Gliedern) |
+| Knochen | 51: Root + Core + 13 Ketten (6 Flügelstücke, 4 Beine, 2 Fühler, Hinterleib mit 5 Gliedern) |
 | UV | Tripo-UV |
 | Clips | 9, alle grün (Dehnung ≤ 1,28, nie im Boden, Tod liegt am Boden) |
+
+## Flügel doppelseitig (2026-11-17, Nutzer-Meldung aus Unity)
+**Problem:** In Unity waren die Flügel aus manchen Winkeln (z. B. schräg von oben = ARPG-Kamera) unsichtbar oder halb weg,
+ihr Schatten aber immer da. **Ursache (gemessen):** Tripo baut die Flügel als offene Platten aus einer einzigen Lage
+Dreiecke. Von allen 4.172 Flächen haben genau 124 eine „freie Rückseite“ (Strahl nach hinten trifft nichts) – das sind
+die 6 Flügelstücke (je 15–17 Flächen, 100 %) plus 26 Flächen an den Flügelansätzen; der Körper ist geschlossen.
+Jede Engine zeichnet Standard-Materialien nur von vorn (Backface Culling) → Flügel von hinten unsichtbar.
+
+**Lösung (in der Pipeline, kein Handgriff):** `rigging/double_sided.py`, aufgerufen vom Flieger-Rig nach dem Gewichten:
+diese Flächen werden kopiert, umgedreht und 1 mm nach hinten versetzt; die Kopien erben Gewichte und UVs (UV-Naht-Duplikate
+bekommen denselben Versatz → keine Risse). Ergebnis: 0 einseitige Flächen in FBX und GLB, weiter **1 Material, Standard-Shader**,
++124 Dreiecke (+3 %). Animation unverändert (alle Knochen identisch; nur im Tod liegt die Wespe 0,8 mm anders, weil die
+Flügel-Rückseite jetzt den Boden berührt). Schalter: `[double_sided]` in `rigging/flyer_defaults.toml`, pro Kreatur
+`[flyer.double_sided] enabled = false`.
+Vorher/Nachher in Unity: `temp/wings_before_after.png` (Prüfbilder `arpg`, `arpg_rest`, `top`, `side`, `back`).
+
+**Wie machen das andere Spiele?** Üblich sind zwei Wege: (1) nur die dünnen Teile mit umgedrehten Normalen doppeln –
+funktioniert mit jedem Standard-Shader, Licht und Schatten stimmen, kostet nur ein paar Dreiecke; oder (2) ein eigenes
+Flügel-Material mit „Cull Off“ (oft zusammen mit Alpha-Cutout/Transparenz für durchscheinende Adern) – spart Geometrie,
+braucht aber ein zweites Material/Shader und beleuchtet die Rückseite ohne „Two-Sided Lighting“ falsch. Wir nehmen (1),
+weil es engine-unabhängig mit einem Material bleibt; durchscheinende/flirrende Flügel wären später ein Shader-Thema
+(„Fake it“), nicht ein Geometrie-Thema.
+
+Hinweis: Die Tripo-Flügel stehen in Ruhe steil nach oben (V-Form). Von oben und schräg von vorn sieht man sie deshalb
+teils fast von der Kante – das ist die Form, nicht mehr das Culling.

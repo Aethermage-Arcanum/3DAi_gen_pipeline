@@ -11,6 +11,7 @@
         0.1851
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.16,
       "stretch_at": "Tent_07_1 @ Frame 8",
@@ -26,6 +27,7 @@
         0.1813
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.28,
       "stretch_at": "Tent_07_1 @ Frame 6",
@@ -41,6 +43,7 @@
         0.2072
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.14,
       "stretch_at": "Tent_03_1 @ Frame 22",
@@ -52,10 +55,11 @@
       "seconds": 0.8,
       "loop": true,
       "lowest_point_m": [
-        0.0,
-        0.0
+        0.03,
+        0.03
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.15,
       "stretch_at": "Tent_01_3 @ Frame 2",
@@ -71,6 +75,7 @@
         0.1566
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.16,
       "stretch_at": "Tent_07_1 @ Frame 8",
@@ -86,6 +91,7 @@
         0.1546
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "loop_ok": true,
       "max_stretch": 1.16,
       "stretch_at": "Tent_07_1 @ Frame 8",
@@ -97,10 +103,11 @@
       "seconds": 0.8,
       "loop": false,
       "lowest_point_m": [
-        0.0,
+        0.03,
         0.1789
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "max_stretch": 1.18,
       "stretch_at": "Tent_01_3 @ Frame 12",
       "stretch_ok": true,
@@ -111,10 +118,11 @@
       "seconds": 0.4,
       "loop": false,
       "lowest_point_m": [
-        -0.0,
+        0.03,
         0.1761
       ],
       "no_ground_penetration": true,
+      "clearance_ok": true,
       "returns_to_rest": true,
       "max_stretch": 1.13,
       "stretch_at": "Tent_07_1 @ Frame 2",

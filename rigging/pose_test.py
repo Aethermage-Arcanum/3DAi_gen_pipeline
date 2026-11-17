@@ -1,6 +1,6 @@
 """Selbstprüfung des Rigs: Skelett-Overlay + Testpose (Beine heben, Kopf drehen) aus mehreren Blickwinkeln.
 
-& "D:\\Blender\\blender.exe" -b <crawler_rigged.blend> -P rigging/pose_test.py -- <ausgabeordner>
+& "D:\\Blender\\blender.exe" -b <hexapod_rigged.blend> -P rigging/pose_test.py -- <ausgabeordner>
 """
 import colorsys
 import math
@@ -13,7 +13,7 @@ from mathutils import Euler, Vector
 
 OUT = pathlib.Path(sys.argv[sys.argv.index("--") + 1]).resolve()
 OUT.mkdir(parents=True, exist_ok=True)
-arm = bpy.data.objects["Crawler_Rig"]
+arm = bpy.data.objects["Hexapod_Rig"]
 body = bpy.data.objects["Body_Mesh"]
 sc = bpy.context.scene
 

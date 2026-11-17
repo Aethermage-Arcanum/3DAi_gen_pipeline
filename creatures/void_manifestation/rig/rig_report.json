@@ -2,102 +2,114 @@
   "vertices": 3274,
   "size_m": 1.0,
   "core_radius_m": 0.308,
+  "root_radius_m": 0.185,
+  "root_verts": 695,
   "tentacles": [
     {
       "name": "Tent_01",
-      "bones": 3,
-      "length_m": 0.25
+      "bones": 5,
+      "length_m": 0.368
     },
     {
       "name": "Tent_02",
       "bones": 5,
-      "length_m": 0.398
+      "length_m": 0.52
     },
     {
       "name": "Tent_03",
       "bones": 5,
-      "length_m": 0.365
+      "length_m": 0.49
     },
     {
       "name": "Tent_04",
-      "bones": 2,
-      "length_m": 0.171
+      "bones": 4,
+      "length_m": 0.296
     },
     {
       "name": "Tent_05",
-      "bones": 2,
-      "length_m": 0.178
+      "bones": 4,
+      "length_m": 0.285
     },
     {
       "name": "Tent_06",
-      "bones": 2,
-      "length_m": 0.126
-    },
-    {
-      "name": "Tent_07",
-      "bones": 3,
-      "length_m": 0.273
-    },
-    {
-      "name": "Tent_08",
-      "bones": 2,
-      "length_m": 0.154
-    },
-    {
-      "name": "Tent_09",
-      "bones": 3,
-      "length_m": 0.245
-    },
-    {
-      "name": "Tent_10",
       "bones": 3,
       "length_m": 0.24
     },
     {
+      "name": "Tent_07",
+      "bones": 5,
+      "length_m": 0.4
+    },
+    {
+      "name": "Tent_08",
+      "bones": 3,
+      "length_m": 0.273
+    },
+    {
+      "name": "Tent_09",
+      "bones": 5,
+      "length_m": 0.366
+    },
+    {
+      "name": "Tent_10",
+      "bones": 4,
+      "length_m": 0.347
+    },
+    {
       "name": "Tent_11",
-      "bones": 2,
-      "length_m": 0.162
+      "bones": 3,
+      "length_m": 0.27
     },
     {
       "name": "Tent_12",
-      "bones": 2,
-      "length_m": 0.161
+      "bones": 3,
+      "length_m": 0.26
     },
     {
       "name": "Tent_13",
-      "bones": 2,
-      "length_m": 0.165
+      "bones": 4,
+      "length_m": 0.305
     },
     {
       "name": "Tent_14",
-      "bones": 2,
-      "length_m": 0.159
+      "bones": 3,
+      "length_m": 0.277
     },
     {
       "name": "Tent_15",
-      "bones": 2,
-      "length_m": 0.136
+      "bones": 3,
+      "length_m": 0.238
     },
     {
       "name": "Tent_16",
-      "bones": 1,
-      "length_m": 0.119
+      "bones": 3,
+      "length_m": 0.25
     },
     {
       "name": "Tent_17",
-      "bones": 1,
-      "length_m": 0.051
+      "bones": 2,
+      "length_m": 0.158
     },
     {
       "name": "Tent_18",
-      "bones": 1,
-      "length_m": 0.045
+      "bones": 2,
+      "length_m": 0.156
     },
     {
       "name": "Tent_19",
-      "bones": 1,
-      "length_m": 0.049
+      "bones": 2,
+      "length_m": 0.172
+    },
+    {
+      "name": "Tent_20",
+      "bones": 2,
+      "length_m": 0.126
+    },
+    {
+      "name": "Tent_21",
+      "bones": 2,
+      "length_m": 0.127
     }
   ],
-  "bones": 46
+  "bones": 74
 }

@@ -19,10 +19,10 @@ role = "design"
 file = "input/concept/2_style_lowpoly_insects_B.png"
 role = "style"
 
-# Skelett + Bewegungsmuster (motions/crawler/ant). Das vorderste Paar sind erhobene Taster
+# Skelett + Bewegungsmuster (motions/hexapod/ant). Das vorderste Paar sind erhobene Taster
 # (erreichen den Boden nicht), gelaufen wird auf den Paaren 2-4 → Ameisen-Dreifuß-Gang.
 [motion]
-style = "crawler/ant"
+style = "hexapod/ant"
 vorbild = ["Ameise (Formica) – Dreifuß-Gang", "Crematogaster – Drohhaltung mit erhobenem Hinterleib", "Ameise – Mandibel-Biss/Alarmverhalten"]
 # variant = "spider"     # Beispiel: Varianten aus style.toml
 

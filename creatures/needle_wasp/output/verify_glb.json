@@ -2,7 +2,7 @@
   "skeleton": "floater",
   "file": "NeedleWasp.glb",
   "meshes": 1,
-  "triangles": 4172,
+  "triangles": 4296,
   "bones": 51,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,
@@ -101,7 +101,7 @@
   "head_direction_blender": null,
   "foot_moves_m": null,
   "dimensions_m": [
-    0.958,
+    0.96,
     0.988,
     0.709
   ],

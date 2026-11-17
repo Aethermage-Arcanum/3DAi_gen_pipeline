@@ -12,35 +12,56 @@ inherit = { run = "walk", turn = "walk" }
 [hover]
 height = 0.06          # Schwebehöhe über der Ruhelage (Anteil Größe) – Tentakelspitzen berühren den Boden nie
 
-[walk]   # schweben: Kern wippt, neigt sich nach vorn, Tentakel schleppen nach + wellen
+[wobble]  # Tentakel bis zur Wurzel wabbelig (alle Clips außer Death) – Herleitung: tentacle/README.md "Naturreferenzen"
+root_weight = 0.75     # Biegung am Ansatz relativ zur Spitze. Oktopus: proximal ~0,5× so oft gebogen wie distal (41 % vs. 78 %) – bewusst höher, weil die Wurzel sichtbar wabbeln soll (Nutzer)
+phase_step = 0.7       # Phasenverzug pro Knochen (rad): Welle läuft von der Wurzel zur Spitze (Oktopus-Biegewelle)
+swirl = 0.6            # 2. Biegeachse mit eigener Phase/Frequenz → Ellipsen/Achten statt Pendeln (Anemone in Strömung)
+period_s = 0.75        # Eigenperiode des Nachschwingens bei ref_length; längere Tentakel schwingen langsamer (√L)
+ref_length = 0.35      # Bezugslänge (Anteil Größe)
+damping = 0.3          # Dämpfung: 2–3 sichtbare Nachschwinger (Qualle: Tentakel schwingen nach jedem Puls aus)
+lag_frames = 2.0       # Verzug pro Knochen beim Nachschwingen (Peitsche: Wurzel zuerst, Spitze zuletzt)
+drag_gain = 3.0        # Übertreibung des Nachschwingens („Fake it“: aus der ARPG-Kamera muss man es sehen)
+drag_max_deg = 50      # Obergrenze Gesamtbiegung durch Nachschwingen (weich begrenzt)
+
+[walk]   # schweben: Kern wippt + schiebt (Qualle: Schub nach dem Hub), neigt sich nach vorn, Tentakel schleppen nach + wellen
 cycle_frames = 40
 bob = 0.02
+surge = 0.015          # Vor-/Zurück-Schub pro Zyklus (Anteil Größe) – regt das Nachschleppen an
+surge_lag = 0.6
 pitch_deg = 8
-amp_deg = 22
+pitch_osc_deg = 3
+amp_deg = 30
 speed = 1
 trail_deg = 26
 
 [run]
 cycle_frames = 24
+surge = 0.02
 pitch_deg = 14
-amp_deg = 28
+amp_deg = 34
 trail_deg = 32
 
 [turn]
 cycle_frames = 40
 roll_deg = 10          # neigt sich in die Kurve
+turn_trail_deg = 14    # Tentakel bleiben außen in der Kurve zurück
+yaw_osc_deg = 6
 
 [idle]   # Quallen-Pulsieren: Tentakel ziehen sich rhythmisch zusammen und spreizen
 frames = 80
 bob = 0.025
-amp_deg = 14
+amp_deg = 24
+speed = 1
 pulse_deg = 16
+pulse_lag = 0.9        # Tentakel ziehen sich verzögert nach dem Hub zusammen
 
 [ready]  # Drohen: Tentakel weit gespreizt, Kern hebt sich, zittert
 frames = 30
 lift = 0.05
+bob = 0.01
 spread_deg = 50
-amp_deg = 10
+amp_deg = 18
+speed = 2
 tremble_deg = 2
 
 [attack1] # Tentakelschlag: ausholen (Tentakel nach hinten, Kern zurück) → nach vorn schnellen (hit) → zurück
@@ -53,6 +74,8 @@ lunge = 0.10
 windup_deg = 35
 strike_deg = 55
 hit_frame = 14
+amp_deg = 8
+settle_frames = 5      # letzte Frames: Wellen/Nachschwingen klingen aus (sauberer Übergang zu Idle)
 
 [hit]
 frames = 12

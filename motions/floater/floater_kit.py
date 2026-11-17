@@ -25,7 +25,8 @@ def merge(a, b):
 
 
 def init(style_dir):
-    global OUT, ST, FPS, PREFIX, arm, body_obj, PB, DB, TENT, SIZE, GROUND, sc
+    global OUT, ST, FPS, PREFIX, arm, body_obj, PB, DB, TENT, SIZE, GROUND, sc, _TINFO
+    _TINFO = None
     a = sys.argv[sys.argv.index("--") + 1:]
     OUT = pathlib.Path(a[0]).resolve()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -116,6 +117,137 @@ def tentacles(t, amp_deg, speed=1.0, phase_step=0.9, trail_deg=0.0, spread_deg=0
                 rot(b, side_ax, R(curl_deg) / n)
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Wabbel-Tentakel (2026-11-17, Nutzer: "Tentakel sind bis an die Wurzel wabbelig"). Neu, optional – tentacles() oben
+# bleibt unverändert (Death benutzt es weiter). Zwei Schichten, beide über die GANZE Kette ab der Wurzel:
+#   1. freie Welle: läuft von der Wurzel zur Spitze (Phasenverzug pro Knochen), Wurzel biegt sich root_weight × so
+#      stark wie die Spitze, 2. Achse mit eigener Phase/Frequenz → Ellipsen/Achten statt Pendel; Phase je Tentakel anders.
+#   2. Nachschwingen (drive): jeder Tentakel-Ansatz ist eine gedämpfte Feder, angeregt von der Beschleunigung des
+#      Kerns an genau dieser Stelle (Wippen, Vorschnellen, Rückstoß, Drehen). Die Antwort läuft mit lag_frames
+#      Verzug pro Knochen zur Spitze → Peitschen-/Schleppwelle. Loops: exakt periodische Lösung (FFT), sonst Zeitschritte.
+# Werte: [wobble] in style.toml.
+
+def _wcfg():
+    return ST.get("wobble", {})
+
+
+def tent_info():
+    """Pro Tentakel (Name): Ansatz (Ruhe, Armatur-Raum), Richtung Wurzel→Spitze, Länge, Phase."""
+    global _TINFO
+    if _TINFO is None:
+        _TINFO = {}
+        for i, (name, bones) in enumerate(TENT.items()):
+            h, tl = DB[bones[0]].head_local, DB[bones[-1]].tail_local
+            L = sum((DB[b].tail_local - DB[b].head_local).length for b in bones)
+            gold = (i * 0.6180339887) % 1.0
+            _TINFO[name] = {"root": h.copy(), "dir": (tl - h).normalized(), "L": max(L, 1e-4),
+                            "phase": 2 * math.pi * gold, "phase2": 2 * math.pi * ((i * 0.7548776662) % 1.0),
+                            "f2": 1 + (i % 2), "i": i}
+    return _TINFO
+
+
+_TINFO = None
+
+
+def drive(state_fn, N, loop):
+    """Nachschwingen vorberechnen. state_fn(f) → dict für core(). Ergebnis: {tentakel: [Vector (Frame 0..N)]} =
+    Auslenkung der Feder (m, im Kern-Raum), daraus winkelt wobble() die Kette ab."""
+    W = _wcfg()
+    TI = tent_info()
+    rest_c = DB["Core"].matrix_local
+    pad = 0 if loop else 8
+    frames = list(range(-pad, N + pad + 1))
+    mats = {}
+    for f in frames:
+        reset()
+        core(**state_fn(min(max(f, 0), N) if not loop else f % N))
+        bpy.context.view_layer.update()
+        mats[f] = PB["Core"].matrix @ rest_c.inverted()
+    reset()
+    dt = 1.0 / FPS
+    out = {}
+    for name, ti in TI.items():
+        P = {f: (mats[f] @ ti["root"]) for f in frames}
+        Rinv = {f: mats[f].to_3x3().inverted() for f in frames}
+        T0 = W.get("period_s", 0.75) * math.sqrt(ti["L"] / (W.get("ref_length", 0.35) * SIZE))
+        w0, z = 2 * math.pi / T0, W.get("damping", 0.3)
+        if loop:
+            import numpy as np
+            acc = np.array([list(Rinv[f] @ ((P[(f + 1) % N] - 2 * P[f] + P[(f - 1) % N]) / dt ** 2)) for f in range(N)])
+            w = 2 * math.pi * np.fft.fftfreq(N, dt)
+            H = 1.0 / (w0 ** 2 - w ** 2 + 2j * z * w0 * w)
+            X = np.fft.fft(-acc, axis=0) * H[:, None]
+            out[name] = {"X": X, "w": w, "N": N}
+        else:
+            x, v, xs = Vector(), Vector(), {}
+            sub = 8
+            for f in frames:
+                fa, fb = max(f - 1, frames[0]), min(f + 1, frames[-1])
+                a = Rinv[f] @ ((P[fb] - 2 * P[f] + P[fa]) / dt ** 2) if fb - fa == 2 else Vector()
+                for _ in range(sub):
+                    h = dt / sub
+                    v += (-a - w0 * w0 * x - 2 * z * w0 * v) * h
+                    x += v * h
+                xs[f] = x.copy()
+            out[name] = {"xs": xs, "N": N}
+    return out
+
+
+def _drive_at(D, f):
+    """Federauslenkung zum (evtl. gebrochenen) Frame f."""
+    if "X" in D:
+        import numpy as np
+        N = D["N"]
+        ph = np.exp(1j * D["w"] * (f / FPS))                # periodisch, auch für gebrochene f
+        x = (D["X"] * ph[:, None]).sum(0).real / N
+        return Vector(x)
+    xs = D["xs"]
+    lo = math.floor(f)
+    if lo < min(xs):
+        return Vector()
+    a, b = xs.get(lo, Vector()), xs.get(lo + 1, xs.get(lo, Vector()))
+    return a.lerp(b, f - lo)
+
+
+def wobble(t, amp_deg, speed=1, trail_deg=0.0, spread_deg=0.0, curl_deg=0.0, turn_deg=0.0,
+           drv=None, f=0, env=1.0):
+    """Tentakel über die ganze Länge bewegen (siehe Kommentar oben). t = Anteil des Loops (0..1),
+    speed = ganze Wellen pro Loop, turn_deg = Kurven-Schleppen (+ = Tentakel bleiben rechts zurück bei Linkskurve),
+    drv/f = Nachschwingen aus drive(), env = Hüllkurve (0 = Ruhe) für Nicht-Loops."""
+    W = _wcfg()
+    rw, step, swirl = W.get("root_weight", 0.55), W.get("phase_step", 0.7), W.get("swirl", 0.6)
+    lag, gain, dmax = W.get("lag_frames", 2.0), W.get("drag_gain", 3.0), R(W.get("drag_max_deg", 45))
+    TI = tent_info()
+    for name, bones in TENT.items():
+        ti = TI[name]
+        r = radial(name)
+        side_ax = UP.cross(r).normalized()
+        n = len(bones)
+        g = [rw + (1 - rw) * (k / (n - 1) if n > 1 else 1.0) for k in range(n)]
+        gs = sum(g)
+        for k, b in enumerate(bones):
+            share = g[k] / gs                                   # Anteil an der Gesamtbiegung (Wurzel hat auch was)
+            ph = 2 * math.pi * speed * t - k * step + ti["phase"]
+            ph2 = 2 * math.pi * speed * ti["f2"] * t - k * step * 1.3 + ti["phase2"]
+            rot(b, side_ax, env * R(amp_deg) * share * math.sin(ph))
+            rot(b, r, env * R(amp_deg) * swirl * share * math.sin(ph2))
+            if trail_deg:
+                rot(b, LEFT, -R(trail_deg) * share)
+            if turn_deg:
+                rot(b, UP, -R(turn_deg) * share)
+            if spread_deg:
+                rot(b, side_ax, -R(spread_deg) * share)
+            if curl_deg:
+                rot(b, side_ax, R(curl_deg) * share)
+            if drv is not None:
+                x = _drive_at(drv[name], f - (k + 1) * lag)
+                bd = (DB[b].tail_local - DB[b].head_local).normalized()
+                xp = x - bd * x.dot(bd)
+                if xp.length > 1e-7:
+                    ang = dmax * math.tanh(gain * xp.length / ti["L"] / dmax)
+                    rot(b, bd.cross(xp.normalized()), env * ang / n)
+
+
 def ground_above():
     """Falls irgendein Teil in den Boden ragt: ganzen Körper genau so weit anheben."""
     bpy.context.view_layer.update()
@@ -199,7 +331,8 @@ def bake(clips):
         r["max_stretch"] = round(stretch, 2)
         r["stretch_at"] = where
         r["stretch_ok"] = round(stretch, 2) <= (spec.get("max_stretch") or C["max_stretch"])
-        oks = [v for k, v in r.items() if k.endswith("_ok") or k in ("returns_to_rest", "no_ground_penetration")]
+        oks = [v for k, v in r.items() if (k.endswith("_ok") and k != "stretch_ok")   # Dehnung = nur Info, bremst nie
+               or k in ("returns_to_rest", "no_ground_penetration")]
         r["ok"] = all(oks)
         report[f"{PREFIX}_{cname}"] = r
         events[f"{PREFIX}_{cname}"] = list(spec.get("events", []))

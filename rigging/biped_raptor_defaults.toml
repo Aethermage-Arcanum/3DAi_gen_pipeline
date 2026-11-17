@@ -33,3 +33,12 @@ cut_between_legs = true   # Tripo-Hautbrücke zwischen den Beinen löschen (rei�
 web_tolerance = 0.04      # „gleich weit von beiden Beinen“ (Anteil H)
 web_half_width = 0.05     # nur so nah an der Mittellinie (Anteil H)
 bridge_half_width = 0.12  # Flächen mit Ecken an beiden Beinen werden nur so nah an der Mittellinie gelöscht
+cut_belly_flap = false    # hängenden Haut-Lappen unter dem Bauch löschen (Tripo baut ihn, wenn das Frontbild den Schwanz zwischen den Beinen zeigt)
+flap_half_width = 0.04    # Band um die Mittellinie (Anteil H)
+flap_x_back = 0.15        # von so weit hinter der Hüfte … (Anteil H)
+flap_x_front = 0.03       # … bis so weit davor (Anteil H)
+flap_max_height = 0.42    # nur unterhalb dieser Höhe über dem Boden (Anteil H) = unter der Bauchlinie
+flap_min_height = 0.03
+foot_rigid_height = 0.05  # Bodenkontakt: alles bis zu dieser Höhe (Anteil H) gehört ganz zum Fuß/Zehen-Knochen Leg_X_4 –
+                          # sonst kippt die hintere Kralle mit dem Mittelfuß in den Boden (Dune Raptor: −1,9 cm). 0 = aus
+foot_blend = 0.05         # … darüber weicher Übergang zu den bisherigen Gewichten (Anteil H)

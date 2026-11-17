@@ -16,6 +16,6 @@ role = "style"
 # Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
 # Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
 [motion]
-style = "crawler/ant"
+style = "hexapod/ant"
 variant = "beetle"
 vorbild = ["Käfer (z. B. Mistkäfer) – schwerer, langsamer Dreifuß-Gang", "Pilze/Stäublinge auf dem Rücken - Sporen-angriff"]

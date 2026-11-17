@@ -179,6 +179,111 @@ def mesh_min_z():
     return z
 
 
+# ---------------------------------------------------------------- Absolute Körperform (seit 2026-11-17)
+# Das Tripo-Modell liegt in fester S-Kurve (seitlich bis ±45°, Vorderkörper bis +54° erhoben). Die alten Bausteine
+# (wave/bend/head) ADDIEREN auf diese Ruhepose. shape() gibt dagegen die Richtung jedes Wirbels ABSOLUT vor
+# (Gieren/Neigen gegenüber einer geraden, waagerechten Grundlinie entlang +X) – die Ruhepose spielt keine Rolle mehr.
+# Rollen (Drehung um die Körperachse) bleibt wie modelliert: zuerst Neigung um die waagerechte Querachse, dann Gieren.
+_ABS = None
+
+
+def abs_info():
+    """Ruhe-Richtungen (Gieren/Neigen, rad), Längen und Bogenlängen-Anteil s (0 Schwanz … 1 Kopfansatz) der Kette."""
+    global _ABS
+    if _ABS is None:
+        lens, yp = [], {}
+        for n in SPINE + ["Head"]:
+            d = DB[n].tail_local - DB[n].head_local
+            lens.append(d.length)
+            d = d.normalized()
+            yp[n] = (math.atan2(d.y, d.x), math.asin(max(-1.0, min(1.0, d.z))))
+        tot = sum(lens[:NSEG])
+        s, acc = [], 0.0
+        for l in lens[:NSEG]:
+            s.append((acc + l / 2) / tot)
+            acc += l
+        _ABS = {"yp": yp, "s": s, "len": lens, "spine_len": tot}
+    return _ABS
+
+
+def seg_s():
+    """Bogenlängen-Anteil der Wirbelmitten (0 = Schwanzspitze … 1 = Kopfansatz)."""
+    return abs_info()["s"]
+
+
+def _world_rot(n, yaw, pitch):
+    """Rotation (Armature-Raum), die den Ruheknochen n auf Gieren yaw / Neigen pitch (rad) dreht, ohne Rollen."""
+    yr, pr = abs_info()["yp"][n]
+    h = Vector((-math.sin(yr), math.cos(yr), 0.0))                  # waagerechte Querachse des Ruheknochens
+    return Quaternion(UP, yaw - yr) @ Quaternion(h, -(pitch - pr))
+
+
+def shape(yaw_deg, pitch_deg, head_yaw_deg=0.0, head_pitch_deg=0.0, neck=2):
+    """Absolute Körperform. yaw_deg/pitch_deg: Listen (je Wirbel Spine_01…Spine_n) in Grad, 0/0 = gerade nach vorn
+    (+X), waagerecht; + Gieren = nach links, + Neigen = nach oben. Kopf: head_yaw absolut, head_pitch relativ zur
+    modellierten Kopfneigung (0 = Blick wie im Modell geradeaus). Vorher reset(); Root bleibt unberührt.
+    neck: die Abweichung Kopf ↔ letzter Wirbel wird gleichmäßig auf so viele Hals-Wirbel + Kopf verteilt
+    (ein einzelnes Kopfgelenk reißt Kamm/Hautlappen am Halsansatz – gleiche Regel wie head())."""
+    yp = abs_info()["yp"]
+    yaw, pitch = [R(v) for v in yaw_deg], [R(v) for v in pitch_deg]
+    hy, hp = R(head_yaw_deg), yp["Head"][1] + R(head_pitch_deg)
+    if neck:
+        rel_y = hy - yaw[-1]
+        rel_p = (hp - yp["Head"][1]) - (pitch[-1] - yp[SPINE[-1]][1])     # Kopf-Knick gegenüber der Ruhe-Beziehung
+        for j in range(neck):                                               # j = 0 → letzter Wirbel
+            w = (neck - j) / (neck + 1)
+            yaw[-1 - j] += w * rel_y
+            pitch[-1 - j] += w * rel_p
+    targets = [(n, yaw[i], pitch[i]) for i, n in enumerate(SPINE)]
+    targets.append(("Head", hy, hp))
+    w_par = Quaternion()
+    for n, y, p in targets:
+        w = _world_rot(n, y, p)
+        a = DB[n].matrix_local.to_quaternion()
+        PB[n].rotation_quaternion = a.inverted() @ (w_par.inverted() @ w) @ a
+        w_par = w
+
+
+def chain_points():
+    """Weltpositionen der Wirbel-Anfänge (Spine_01 … Spine_n) + Kopfansatz."""
+    bpy.context.view_layer.update()
+    return [arm.matrix_world @ PB[n].head for n in SPINE] + [arm.matrix_world @ PB["Head"].head]
+
+
+def centroid(lo=0.0, hi=1.0):
+    """Waagerechter Schwerpunkt der Wirbel im Bereich [lo, hi] (Bogenlänge)."""
+    s = seg_s()
+    pts = [p for p, si in zip(chain_points()[:NSEG], s) if lo <= si <= hi]
+    c = sum(pts, Vector()) / len(pts)
+    return Vector((c.x, c.y, 0.0))
+
+
+def place(target, lo=0.0, hi=1.0):
+    """Root so verschieben, dass der Schwerpunkt des Bereichs [lo, hi] waagerecht auf target liegt."""
+    off = Vector((target.x, target.y, 0.0)) - centroid(lo, hi)
+    move("Root", Vector((off.x, off.y, 0.0)))
+
+
+def interp(points, s):
+    """Stückweise glatte Interpolation (Kosinus) durch [(s, wert), …]."""
+    if s <= points[0][0]:
+        return points[0][1]
+    for (s0, v0), (s1, v1) in zip(points, points[1:]):
+        if s <= s1:
+            return v0 + (v1 - v0) * ease((s - s0) / max(1e-9, s1 - s0))
+    return points[-1][1]
+
+
+def mix(a, b, k):
+    return a + (b - a) * k
+
+
+def head_tip():
+    """Weltposition der Nasenspitze."""
+    bpy.context.view_layer.update()
+    return arm.matrix_world @ PB["Head"].tail
+
+
 _REST_EDGES = None
 
 
@@ -242,10 +347,15 @@ def bake(clips):
             r["loop_ok"] = jump < 1e-3
         if kind == "stand_return":
             r["returns_to_rest"] = all((last[n].translation - DB[n].matrix_local.translation).length < 1e-3 for n in last)
+        if spec.get("returns_to_start"):                      # optional: endet in seiner Anfangs-Pose (z. B. Ready)
+            r["returns_to_start_ok"] = all((last[n].translation - first[n].translation).length < 1e-3 for n in last)
+        if spec.get("measure"):                               # optional: Messwerte des Musters (nur Info)
+            r.update(spec["measure"]())
         r["max_stretch"] = round(stretch, 2)
         r["stretch_at"] = where
         r["stretch_ok"] = round(stretch, 2) <= (spec.get("max_stretch") or C["max_stretch"])
-        oks = [v for k, v in r.items() if k.endswith("_ok") or k in ("returns_to_rest", "no_ground_penetration")]
+        oks = [v for k, v in r.items() if (k.endswith("_ok") and k != "stretch_ok")   # Dehnung = nur Info, bremst nie
+               or k in ("returns_to_rest", "no_ground_penetration")]
         r["ok"] = all(oks)
         report[f"{PREFIX}_{cname}"] = r
         events[f"{PREFIX}_{cname}"] = list(spec.get("events", []))

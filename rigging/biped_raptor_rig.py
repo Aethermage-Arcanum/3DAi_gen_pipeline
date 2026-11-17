@@ -190,6 +190,23 @@ if CFG.get("cut_between_legs", True):
         main = part == MAIN
     print(f"RIG_INFO Hautbrücke zwischen den Beinen: {n_cut} Flächen entfernt")
 
+# ------------------------------------------------------------------ Hängender Lappen unter dem Bauch (Tripo-Fehlinterpretation)
+# Zeigt das Front-Referenzbild den Schwanz zwischen den Beinen, baut Tripo dort einen Hautstreifen, der an den
+# Schienbeinen hängt und wie ein zweiter Schwanz mitschwingt (Dune Raptor). Schmales Band an der Mittellinie,
+# knapp hinter der Hüfte, unterhalb der Bauchlinie → löschen. Unterseite ist aus der Spielkamera nicht sichtbar.
+if CFG.get("cut_belly_flap", False):
+    hx = B["Hips"][0][0]
+    fv = (np.abs(V[:, 1] - Y_MID) < CFG["flap_half_width"] * H) & (V[:, 0] > hx - CFG["flap_x_back"] * H) \
+        & (V[:, 0] < hx + CFG["flap_x_front"] * H) & (V[:, 2] < GROUND + CFG["flap_max_height"] * H) \
+        & (V[:, 2] > GROUND + CFG["flap_min_height"] * H)
+    fmask = [any(fv[v] for v in poly.vertices) for poly in obj.data.polygons]
+    n_flap = sum(fmask)
+    if n_flap:
+        RC.delete_faces(obj, fmask)
+        V, part, MAIN = RC.arrays(obj)
+        main = part == MAIN
+    print(f"RIG_INFO Bauch-Lappen: {int(fv.sum())} Vertices, {n_flap} Flächen entfernt")
+
 # ------------------------------------------------------------------ Gewichte mit anatomischen Masken
 names = order[1:]
 allow = np.ones((len(V), len(names)), bool)
@@ -241,7 +258,38 @@ for sn, tr in ARMS.items():                                   # Arm unterhalb de
         (V[:, 2] < tr[-1][2] - 0.05 * H)
     allow[np.ix_(near, body_cols + [j for j, n in enumerate(names) if n.startswith("Leg_")])] = False
 RC.skin(obj, V, part, MAIN, B, names, allow, CFG)
-report = {"vertices": int(len(V)), "parts": int(len(np.unique(part))), "height_m": round(float(H), 3),
+
+# ------------------------------------------------------------------ Fußsohle starr am Fuß (Bodenkontakt)
+# Vogelfuß: alle Zehen (auch die nach hinten zeigende Hallux-Kralle) sitzen am Ballen-Gelenk = Leg_X_4. Hingen
+# bodennahe Vertices teils am Mittelfuß (Leg_3) oder sogar am Schienbein (Leg_2), kippten sie beim Ausgreifen mit
+# dem Mittelfuß mit – die hintere Kralle sank im Walk 1,9 cm in den Boden (Unity-Messung 2026-11-17).
+# Fix: alles unterhalb foot_rigid_height gehört ganz zu Leg_X_4, darüber weicher Übergang bis + foot_blend.
+n_sole = 0
+if CFG.get("foot_rigid_height", 0) > 0:
+    za = GROUND + CFG["foot_rigid_height"] * H
+    zb = za + CFG.get("foot_blend", 0.05) * H
+    gname = {g.index: g.name for g in obj.vertex_groups}
+    for i, v in enumerate(obj.data.vertices):
+        z = V[i, 2]
+        if z >= zb or not len(v.groups):
+            continue
+        ws = {gname[g.group]: g.weight for g in v.groups}
+        side = {sd: sum(w for n, w in ws.items() if n.startswith(f"Leg_{sd}_")) for sd in LEGS}
+        sd = max(side, key=side.get)
+        if side[sd] < 0.5:                                   # Rumpf/Schwanz, kein Fuß
+            continue
+        t = 1.0 if z <= za else (zb - z) / (zb - za)
+        b = t * t * (3 - 2 * t)
+        new = {n: w * (1 - b) for n, w in ws.items()}
+        new[f"Leg_{sd}_4"] = new.get(f"Leg_{sd}_4", 0.0) + b
+        for n in ws:
+            obj.vertex_groups[n].remove([i])
+        for n, w in new.items():
+            if w > 1e-3:
+                obj.vertex_groups[n].add([i], float(w), "REPLACE")
+        n_sole += 1
+    print(f"RIG_INFO Fußsohle starr am Fuß: {n_sole} Vertices (bis {CFG['foot_rigid_height']:.2f}·H, Übergang {CFG.get('foot_blend', 0.05):.2f}·H)")
+report ={"vertices": int(len(V)), "parts": int(len(np.unique(part))), "height_m": round(float(H), 3),
           "length_m": round(float(L), 3), "bones": len(order), "arms": sorted(ARMS)}
 RC.finish(obj, arm, OUT, "biped_raptor_rigged.blend", report, B, order, V,
           tracks={**{k: np.round(v["track"], 4).tolist() for k, v in LEGS.items()},

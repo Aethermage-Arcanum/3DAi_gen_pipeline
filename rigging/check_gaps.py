@@ -3,7 +3,7 @@
 Misst Vertex-Paare aus VERSCHIEDENEN Teilen, die in Ruhe aneinanderliegen (< eps) und an
 unterschiedlichen Knochen hängen. Für jedes Frame: wie weit gehen sie auseinander?
 
-& "D:\\Blender\\blender.exe" -b <crawler_walk.blend> -P rigging/check_gaps.py -- <report.json> [eps] [threshold]
+& "D:\\Blender\\blender.exe" -b <clips.blend> -P rigging/check_gaps.py -- <report.json> [eps] [threshold]
 """
 import json
 import sys
