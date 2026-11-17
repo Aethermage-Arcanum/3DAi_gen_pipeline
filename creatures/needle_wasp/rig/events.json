@@ -1,0 +1,24 @@
+{
+  "fps": 30,
+  "clips": {
+    "Flyer_Wasp_Walk": [],
+    "Flyer_Wasp_Run": [],
+    "Flyer_Wasp_Idle": [],
+    "Flyer_Wasp_Ready": [],
+    "Flyer_Wasp_TurnLeft": [],
+    "Flyer_Wasp_TurnRight": [],
+    "Flyer_Wasp_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Flyer_Wasp_Hit": [],
+    "Flyer_Wasp_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

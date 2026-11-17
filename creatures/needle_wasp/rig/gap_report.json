@@ -1,0 +1,19 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0161,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Flyer_Wasp_Attack1": 0.0,
+    "Flyer_Wasp_Death": 0.0,
+    "Flyer_Wasp_Hit": 0.0,
+    "Flyer_Wasp_Idle": 0.0,
+    "Flyer_Wasp_Ready": 0.0,
+    "Flyer_Wasp_Run": 0.0,
+    "Flyer_Wasp_TurnLeft": 0.0,
+    "Flyer_Wasp_TurnRight": 0.0,
+    "Flyer_Wasp_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

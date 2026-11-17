@@ -24,6 +24,6 @@ role = "style"
 # Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
 # Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
 [motion]
-style = "crawler/wasp"
+style = "flyer/wasp"   # fliegt: Schwebe-Rig (rigging/floater_rig.py) + Flügelschlag-Muster
 variant = ""
 vorbild = ["Wespe/Hornisse im Schwebeflug (Zeitlupe)", "Wespe beim Stechen – Hinterleib schnellt vor"]

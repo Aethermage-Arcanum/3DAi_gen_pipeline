@@ -1,0 +1,67 @@
+# Bewegungsmuster flyer/wasp – fliegendes Insekt (Needle Wasp). Rig: rigging/floater_rig.py, Baukasten
+# motions/floater/floater_kit.py. Flügelschlag stark verlangsamt (echte Wespe ~200 Hz) – die Unschärfe macht später
+# ein Shader ("Fake it"). Winkel in Grad, Höhen Anteil Größe.
+
+[meta]
+skeleton = "flyer"
+style = "wasp"
+clip_prefix = "Flyer_Wasp"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }
+
+[hover]
+height = 0.18          # Flughöhe über dem Boden (Anteil Größe)
+flap_frames = 4        # ein Flügelschlag = 4 Frames (alle Clip-Längen sind Vielfache)
+flap_deg = 38
+
+[walk]   # Vorwärtsflug: Körper neigt sich nach vorn, Beine hängen nach hinten, Hinterleib pumpt
+cycle_frames = 32
+pitch_deg = 12
+bob = 0.02
+pump_deg = 6
+legs_trail_deg = 15
+
+[run]
+cycle_frames = 24
+pitch_deg = 20
+legs_trail_deg = 28
+
+[turn]
+cycle_frames = 32
+roll_deg = 18
+
+[idle]   # Schwebeflug auf der Stelle, Hinterleib pumpt, Fühler tasten
+frames = 48
+bob = 0.025
+pump_deg = 8
+
+[ready]  # Drohen: Hinterleib unter dem Körper nach vorn gekrümmt (Stachel zeigt nach vorn), etwas höher
+frames = 24
+lift = 0.05
+curl_deg = 70
+
+[attack1] # Sturzflug-Stich: hochziehen → nach vorn-unten stoßen, Hinterleib schnellt nach vorn (hit) → zurück
+frames = 24
+windup_end = 9
+strike_end = 12
+hold_end = 16
+rise = 0.05
+dive = 0.10
+lunge = 0.10
+curl_deg = 85
+hit_frame = 12
+
+[hit]
+frames = 12
+knock = 0.06
+tumble_deg = 25
+
+[death]  # Flügel stoppen, fällt, landet auf dem Rücken
+frames = 40
+fall_end = 20
+
+[checks]
+ground_tolerance = 0.01
+max_stretch = 1.9
+stretch_every = 2

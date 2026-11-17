@@ -29,8 +29,8 @@
 | 3 | Dune Raptor | ✅ | ✅ Tripo-UV | ✅ biped_raptor (26 Kn.) | ✅ 9/9 raptor | ✅ | ✅ | 110 |
 | 4 | Void Manifestation | ✅ | ✅ Tripo-UV | ✅ floater (19 Tentakel) | ✅ 9/9 tentacle | ✅ | ✅ | 110 |
 | 5 | Scorpion Matriarch | ✅ | ✅ Tripo-UV | ✅ multileg (59 Kn., 5 Beinpaare) | ✅ 9/9 scorpion | ✅ | ✅ | 110 |
-| 6 | Needle Wasp | | | | | | | |
+| 6 | Needle Wasp | ✅ | ✅ Tripo-UV | ✅ flyer (13 Ketten) | ✅ 9/9 wasp | ✅ | ✅ | 110 |
 | 8 | Reef Snapper | | | | | | | |
 | 9 | Hollow Stag | | | | | | | |
 
-Ausgegebene Credits gesamt: 550 / 1.500 (Guthaben 1.805)
+Ausgegebene Credits gesamt: 660 / 1.500 (Guthaben 1.695)

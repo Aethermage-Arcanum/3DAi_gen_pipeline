@@ -1,0 +1,141 @@
+{
+  "style": "flyer/wasp",
+  "variant": null,
+  "clips": {
+    "Flyer_Wasp_Walk": {
+      "frames": 32,
+      "seconds": 1.067,
+      "loop": true,
+      "lowest_point_m": [
+        0.1386,
+        0.1851
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.16,
+      "stretch_at": "Tent_07_1 @ Frame 8",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Run": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "lowest_point_m": [
+        0.1342,
+        0.1813
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.28,
+      "stretch_at": "Tent_07_1 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Idle": {
+      "frames": 48,
+      "seconds": 1.6,
+      "loop": true,
+      "lowest_point_m": [
+        0.1387,
+        0.2072
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.14,
+      "stretch_at": "Tent_03_1 @ Frame 22",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Ready": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.15,
+      "stretch_at": "Tent_01_3 @ Frame 2",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_TurnLeft": {
+      "frames": 32,
+      "seconds": 1.067,
+      "loop": true,
+      "lowest_point_m": [
+        0.1085,
+        0.1566
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.16,
+      "stretch_at": "Tent_07_1 @ Frame 8",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_TurnRight": {
+      "frames": 32,
+      "seconds": 1.067,
+      "loop": true,
+      "lowest_point_m": [
+        0.1105,
+        0.1546
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.16,
+      "stretch_at": "Tent_07_1 @ Frame 8",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Attack1": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.1789
+      ],
+      "no_ground_penetration": true,
+      "max_stretch": 1.18,
+      "stretch_at": "Tent_01_3 @ Frame 12",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Hit": {
+      "frames": 12,
+      "seconds": 0.4,
+      "loop": false,
+      "lowest_point_m": [
+        -0.0,
+        0.1761
+      ],
+      "no_ground_penetration": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.13,
+      "stretch_at": "Tent_07_1 @ Frame 2",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Flyer_Wasp_Death": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": false,
+      "lowest_point_m": [
+        -0.0,
+        0.1799
+      ],
+      "no_ground_penetration": true,
+      "lies_on_ground_ok": true,
+      "max_stretch": 1.26,
+      "stretch_at": "Tent_07_2 @ Frame 20",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

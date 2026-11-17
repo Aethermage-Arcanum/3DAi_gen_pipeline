@@ -1,0 +1,102 @@
+{
+  "skeleton": "floater",
+  "file": "NeedleWasp.fbx",
+  "meshes": 1,
+  "triangles": 4172,
+  "bones": 51,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_b3824bdc-98db-487f-b55d-6e591645336c"
+  ],
+  "textures": [
+    [
+      "Color_b3824bdc-98db-487f-b55d-6e591645336c",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_b3824bdc-98db-487f-b55d-6e591645336c",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Attack1",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Hit",
+      [
+        1,
+        13
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Idle",
+      [
+        1,
+        49
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Ready",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Run",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_TurnLeft",
+      [
+        1,
+        33
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_TurnRight",
+      [
+        1,
+        33
+      ]
+    ],
+    [
+      "NeedleWasp|NeedleWasp|Flyer_Wasp_Walk",
+      [
+        1,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": null,
+  "foot_moves_m": null,
+  "dimensions_m": [
+    1.0,
+    1.0,
+    0.568
+  ],
+  "ok": true
+}
