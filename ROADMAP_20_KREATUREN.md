@@ -183,3 +183,24 @@ Kurzform je Kreatur: **Walk / Run · Idle / Ready · Turn · Attack1 · Hit · D
    - #15 Glassback Colossus
 2. **Humanoid-Abkürzung** für zweibeinige Brutalos (Unity Humanoid + fertige Animationen) erlaubt als Vorlage auch für Tiel-strukturen. auch Animationen als Vorlage, aber die meisten Mosnter haben wenig menschlich-weiche bewegungen
 3. **Bosse und Elite-Varianten** (Broodmother, Tide Aberration, …) gehören nicht zu den 20 und bekommen später eine eigene Roadmap.
+
+## 7. Top 10 für die Pipeline (Stand 2026-11-17, alle Referenzbilder vorhanden)
+Ranking-Regel: **jede Kreatur testet ein anderes Bewegungsmuster.** Vorne stehen neue Skelette, die viele weitere Kreaturen freischalten. Danach kommen Erweiterungen bestehender Skelette, zuletzt stark abweichende Muster auf einem schon gebauten Skelett. Varianten (fast nur Konfiguration) kommen danach.
+
+| Rang | Kreatur | Skelett / Muster | Was es Neues testet | schaltet frei |
+|---|---|---|---|---|
+| 1 | **Ravine Stalker** | quadruped / wolf | erstes Vierbeiner-Skelett, Trab + Galopp, Wirbelsäule biegt sich | 9 Vierbeiner, Variante Rock Hyena |
+| 2 | **Eel Stalker** | legless / cobra | erstes beinloses Skelett: Welle entlang der Wirbelsäule, aufgerichteter Vorderkörper | Sand Leviathan |
+| 3 | **Dune Raptor** | biped_raptor / raptor | Zweibeiner mit Schwanz als Gegengewicht, Kopfstabilisierung (Huhn) | spätere Raptor-/Vogel-Monster |
+| 4 | **Void Manifestation** | floater / tentacle | **kein Bodenkontakt**: Schweben + Tentakelwellen, prozedural pur | Void Harbinger, Schwebe-Bosse |
+| 5 | **Scorpion Matriarch** | crawler + Schwanz / scorpion | Krabbler-Skelett + Schwanzkette, Stich über den Rücken, Scheren | Schwanz-Kette für Chimären |
+| 6 | **Needle Wasp** | crawler + Flügel / wasp | Schwebeflug, Flügel (Bewegungsunschärfe per Shader), Sturzflug-Stich | alle Flieger-Insekten |
+| 7 | **Flesh Titan** | biped_brute / titan | Test der **Unity-Humanoid-Abkürzung** (fertige Clips als Vorlage) | Brutalos, Void Harbinger (falls humanoid) |
+| 8 | **Reef Snapper** | quadruped / lizard | gleiches Skelett wie #1, aber **gespreizte Beine** + Körperschwingen (Waran) | Shore Lurker, Shellback-Basis |
+| 9 | **Hollow Stag** | quadruped / deer | lange Beine, Prell-Sprünge, Geweihstoß | – |
+| 10 | **Frost Colossus** | quadruped / gorilla | Knöchelgang: Vorderbeine werden im Angriff zu Armen | Glassback (behemoth) als Schwester-Muster |
+
+**Top 5 = Rang 1–5**: deckt alle 5 Grund-Skelette ab (Vierbeiner, beinlos, Zweibeiner, Schweber, Krabbler-Erweiterung).
+**Danach** (fast nur Konfiguration, billig): Broodling (ant/spider), Spore Drone (ant/beetle), Rock Hyena (wolf/hyena), Shore Lurker (lizard/lurker). Dann Stone Boar, Shellback, Glassback Colossus, Sand Leviathan, Reality Ripper, Void Harbinger.
+**Kosten:** ca. 110 Credits pro Modell → Top 5 ≈ 550, Top 10 ≈ 1.100 Credits.
+**Risiken:** Bei Rang 4 und 6 können dünne Flügel bzw. Tentakel von Tripo als Klumpen oder Löcher kommen. Vor dem Riggen deshalb die UV-/Mesh-Prüfung genau ansehen, notfalls Flügel/Tentakel als eigene, einfache Flächen nachbauen (Fake it).
