@@ -65,6 +65,19 @@
   },
   "suggested_move_speed_mps": 0.28,
   "loop_ok": true,
+  "loop_max_jump_m": 0.0,
   "foot_contact_ok": true,
+  "antenna": {
+    "L": {
+      "range_world_m": 0.042,
+      "range_vs_head_m": 0.044,
+      "max_speed_mps": 0.26
+    },
+    "R": {
+      "range_world_m": 0.051,
+      "range_vs_head_m": 0.043,
+      "max_speed_mps": 0.26
+    }
+  },
   "contact_tolerance_m": 0.012
 }

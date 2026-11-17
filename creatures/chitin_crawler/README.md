@@ -46,6 +46,17 @@ Concept: `_concept/monster_progression_A_vs_B.webp` (Design Artist A, Stil Artis
 - Export: `output/ChitinCrawler.fbx` (3.122 Dreiecke, 1 Material, Texturen 1024², Clip „ChitinCrawler|Walk“) + `.glb`
 - Iterationen bis dahin: Beine nicht erkannt (Lücken) → Spannbaum. Untere Segmente als Füße → nur Spitzen. Taille falsch (zu wenige Vertices) → Oberflächen-Sampling. Lose Segmente/Panzerrisse → Zuordnung + weiche Rumpfgewichte. Füße hoben sich nicht/sanken ein → Achsen aus der Geometrie. Ungleiche Schritte → Schwenkwinkel pro Bein.
 
+### Refinement 1: Fühler zu unruhig (Feedback Nutzer)
+| | Ausschlag Spitze (Welt) | Ausschlag ggü. Kopf | max. Geschwindigkeit |
+|---|---|---|---|
+| vorher | 14 cm | 11,5 cm | 1,27 m/s (4,5× Lauftempo) |
+| nachher | 4–5 cm | 4 cm | 0,26 m/s (< Lauftempo 0,28) |
+
+- Ausschlag 12° → 4°, Frequenz 2 → 1 pro Zyklus, Spitzenglied 0,8 → 0,4, Kopfwackeln reduziert
+- Neu: **Fühler-Stabilisierung** (`antenna_stabilize = 0.8`): Die Fühler gleichen die Kopfdrehung aus, wie bei echten Insekten
+- **Fehler dabei gefunden:** Die Seitwärtsbewegung von Fühlern und Tastern lief mit halber Frequenz → Sprung bei jedem Loop-Übergang. Behoben. Die Schleifenprüfung umfasst jetzt **alle** Knochen statt nur der Füße (max. Sprung 0,0 mm).
+- Alle Werte gelten als neue Standardwerte für alle Krabbler (`rigging/crawler_defaults.toml`).
+
 ## Nächste Entscheidung
 - **A) 8 Beine akzeptieren:** nur Animation `octopod:walk` neu (≈10 Credits)
 - **B) 6 Beine wie geplant:** Bilder mit eindeutig 6 Beinen neu machen, dann Modell + Rig + Animation neu (≈145 Credits)

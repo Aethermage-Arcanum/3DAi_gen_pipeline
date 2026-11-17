@@ -40,10 +40,14 @@ body_sway_deg = 2.5
 abdomen_bob_deg = 3
 abdomen_sway_deg = 4
 abdomen_lag = 0.6          # Hinterleib folgt verzögert (Radiant)
-head_nod_deg = 2
-head_sway_deg = 3
-antenna_deg = 12
-antenna_speed = 2          # Fühler-Schwingungen pro Zyklus
+head_nod_deg = 1           # Kopfbewegung überträgt sich auf die Fühler → klein halten
+head_sway_deg = 2
+# Fühler: Ameisen halten sie beim Laufen eher ruhig nach vorne und tasten langsam.
+# Ziel (Selbstprüfung walk_report.json → antenna): Spitze ~3–4 cm Ausschlag, langsamer als das Lauftempo.
+antenna_deg = 4            # Ausschlag Grundglied (war 12 → zu zappelig)
+antenna_speed = 1          # Schwingungen pro Zyklus (war 2)
+antenna_tip_factor = 0.4   # Spitzenglied relativ zum Grundglied (war 0.8 → peitschte)
+antenna_stabilize = 0.8    # 0..1: wie stark die Fühler Kopf-/Körperdrehung ausgleichen (Insekten halten sie ruhig)
 feeler_deg = 10
 feeler_speed = 1
 contact_tolerance = 0.012  # Selbstprüfung: Fuß darf in der Standphase max. 1,2 % der Größe schweben/einsinken

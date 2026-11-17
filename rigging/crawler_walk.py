@@ -107,6 +107,8 @@ size = max(arm.dimensions)  # grobe Größe für Wipp-Amplitude
 
 # Vorlauf: Wie weit wandert die Fußspitze pro Standphase? → Laufgeschwindigkeit für Unity
 stride_samples = {}
+antenna_samples = {}
+loop_samples = {}
 
 for f in range(N + 1):
     t = (f % N) / N
@@ -133,7 +135,7 @@ for f in range(N + 1):
         ax = leg_axes[leg]
         arm.pose.bones[f"Leg_{leg}_Coxa"].rotation_quaternion = Quaternion(ax["coxa_yaw"], R(W["feeler_deg"]) * math.sin(ph))
         arm.pose.bones[f"Leg_{leg}_Femur"].rotation_quaternion = Quaternion(
-            ax["femur_lift"], R(W["feeler_deg"]) * 0.6 * (0.5 + 0.5 * math.sin(ph * 0.5 + 1)))
+            ax["femur_lift"], R(W["feeler_deg"]) * 0.6 * (0.5 + 0.5 * math.cos(ph + 1)))
     # ---- Rumpf ----
     two = 2 * math.pi * 2 * t  # doppelte Frequenz: ein Wipper pro Schritt
     one = 2 * math.pi * t
@@ -145,11 +147,19 @@ for f in range(N + 1):
     arm.pose.bones["Abdomen_2"].rotation_euler = Euler((0, 0, -R(W["abdomen_sway_deg"]) * 0.6 * math.sin(one - 2 * W["abdomen_lag"])))
     arm.pose.bones["Head"].rotation_euler = Euler((R(W["head_nod_deg"]) * math.sin(two + 0.5), 0,
                                                   -R(W["head_sway_deg"]) * math.sin(one + 0.3)))
+    # Fühler stabilisieren: Kopf-/Körperdrehung (Armature-Raum) zum Großteil ausgleichen
+    bpy.context.view_layer.update()
+    q_head = arm.pose.bones["Head"].matrix.to_quaternion() @ arm.data.bones["Head"].matrix_local.to_quaternion().inverted()
+    cancel = Quaternion().slerp(q_head.inverted(), W["antenna_stabilize"])
     for side, sign in (("L", 1), ("R", -1)):
         ph = 2 * math.pi * (t * W["antenna_speed"]) + (0 if sign > 0 else 1.7)
-        arm.pose.bones[f"Antenna_{side}_1"].rotation_euler = Euler((R(W["antenna_deg"]) * math.sin(ph), 0,
-                                                                     sign * R(W["antenna_deg"]) * 0.7 * math.sin(ph * 0.5 + 0.8)))
-        arm.pose.bones[f"Antenna_{side}_2"].rotation_euler = Euler((R(W["antenna_deg"]) * 0.8 * math.sin(ph - 0.9), 0, 0))
+        own = Euler((R(W["antenna_deg"]) * math.sin(ph), 0,
+                     sign * R(W["antenna_deg"]) * 0.7 * math.cos(ph + 0.8))).to_quaternion()  # ganzzahlige Frequenz = nahtlose Schleife
+        bl = arm.data.bones[f"Antenna_{side}_1"].matrix_local.to_quaternion()
+        pb = arm.pose.bones[f"Antenna_{side}_1"]
+        pb.rotation_mode = "QUATERNION"
+        pb.rotation_quaternion = (bl.inverted() @ cancel @ bl) @ own
+        arm.pose.bones[f"Antenna_{side}_2"].rotation_euler = Euler((R(W["antenna_deg"]) * W["antenna_tip_factor"] * math.sin(ph - 0.9), 0, 0))
     # ---- Keyframes ----
     for pb in arm.pose.bones:
         pb.keyframe_insert("rotation_quaternion" if pb.rotation_mode == "QUATERNION" else "rotation_euler", frame=f)
@@ -158,6 +168,14 @@ for f in range(N + 1):
 
     # Fußspitzen-Position (Welt) mitschreiben + Phase merken
     bpy.context.view_layer.update()
+    # Alle Knochenenden mitschreiben (Schleifenprüfung: Frame 0 == Frame N für JEDEN Knochen)
+    if f in (0, N):
+        loop_samples[f] = {pb.name: (arm.matrix_world @ pb.tail).copy() for pb in arm.pose.bones}
+    # Fühlerspitzen relativ zum Kopf (Eigenbewegung) und in Welt (inkl. Kopf-/Körperbewegung)
+    head_m = arm.matrix_world @ arm.pose.bones["Head"].matrix
+    for side in ("L", "R"):
+        tip_w = arm.matrix_world @ arm.pose.bones[f"Antenna_{side}_2"].tail
+        antenna_samples.setdefault(side, []).append((tip_w.copy(), head_m.inverted() @ tip_w))
     for leg in walking:
         tip = arm.matrix_world @ arm.pose.bones[f"Leg_{leg}_Tarsus"].tail
         offset = (0.0 if leg in group_a else 0.5) + W["wave_offset"] * (int(leg[1]) - 2)
@@ -201,8 +219,15 @@ report = {
     "group_A": sorted(group_a), "group_B": sorted(set(walking) - group_a),
     "legs": checks,
     "suggested_move_speed_mps": round(sum(speeds) / len(speeds), 3) if speeds else 0,
-    "loop_ok": all((samples[0][1] - samples[-1][1]).length < 1e-4 for samples in stride_samples.values()),
+    "loop_ok": max((loop_samples[0][n] - loop_samples[N][n]).length for n in loop_samples[0]) < 1e-4,
+    "loop_max_jump_m": round(max((loop_samples[0][n] - loop_samples[N][n]).length for n in loop_samples[0]), 5),
     "foot_contact_ok": contact_ok,
+    # Fühler: max. Auslenkung der Spitze (Durchmesser der Bahn) und max. Geschwindigkeit
+    "antenna": {side: {
+        "range_world_m": round(max((a - b).length for a, _ in s for b, _ in s), 3),
+        "range_vs_head_m": round(max((a - b).length for _, a in s for _, b in s), 3),
+        "max_speed_mps": round(max((s[i + 1][0] - s[i][0]).length for i in range(len(s) - 1)) * W["fps"], 2),
+    } for side, s in antenna_samples.items()},
     "contact_tolerance_m": round(tol, 4),
 }
 (OUT / "walk_report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
