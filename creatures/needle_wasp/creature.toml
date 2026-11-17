@@ -11,10 +11,10 @@ and highlighted in every view. TWO PAIRS of LARGE translucent wings, each wing a
 whole body, spread out to the sides in a flight-ready pose, clearly separated from the body and visible \
 in every view. Six SHORT, THIN, delicate legs, much thinner than the abdomen, tucked slightly under \
 the body like a hovering wasp. Large compound eyes, short antennae, small mandibles."""
-design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
+design_pick = "Image 1 is a concept sheet of this wasp: the big creature is the design, the small panels show details (head, stinger, wings, eggs) and views."
 
 [[concept]]
-file = "input/concept/design_A.png"
+file = "input/concept/neelde_wasp.png"   # dein Concept-Blatt (scharf, mit Detail-Nahaufnahmen)
 role = "design"
 
 [[concept]]
