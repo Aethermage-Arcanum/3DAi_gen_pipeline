@@ -18,3 +18,7 @@ procedural/demo_output/
 
 # Vorschau-Renders aus inspect_model.py (reproduzierbar)
 creatures/*/review/
+
+# Rig-Ausgaben (reproduzierbar mit rigging/crawler_rig.py)
+creatures/*/rig/test/
+creatures/*/rig/*.blend1

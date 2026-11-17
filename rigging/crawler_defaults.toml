@@ -1,0 +1,22 @@
+# Standardwerte für das Krabbler-Rig. Jede Kreatur kann in creature.toml unter
+# [crawler.detect] / [crawler.rig] / [crawler.walk] einzelne Werte überschreiben.
+
+[detect]
+contact_eps = 0.012     # Kontaktpunkte zwischen Teilen: Abstand < 1,2 % der Modellgröße
+neighbors = 24          # Nachbar-Suche pro Vertex (für den Spannbaum zwischen Teilen)
+midline_tol = 0.02      # Teile, die die Mittellinie (y≈0) berühren, gehören zum Rumpf
+ground_tol = 0.06       # Teile in den unteren 6 % der Höhe = Füße
+head_fraction = 0.22    # vorderste 22 % der Länge = Kopfbereich (Fühler/Mandibeln)
+
+[rig]
+coxa_fraction = 0.25          # Coxa-Ende bei 25 % des Wegs Wurzel → Knie
+ankle_fraction = 0.7          # Knöchel bei 70 % des Wegs Knie → Fußspitze
+profile_bins = 40             # Auflösung des Rumpf-Profils (Einschnürungen = Petiolus/Hals)
+profile_samples = 30000       # Oberflächenpunkte für das Profil
+petiole_search_ahead = 0.1    # Petiolus darf bis 10 % der Länge vor den hintersten Beinwurzeln liegen
+antenna_mid_highest = true    # Fühler-Mittelgelenk = höchster Punkt (geknickte Fühler)
+spine_blend = 0.06            # weiche Übergangszone zwischen Rumpfknochen (Anteil der Größe)
+rigid_island_max_verts = 120  # Rumpf-Teile kleiner als das hängen starr an einem Knochen
+leg_blend = 0.015             # weiche Zone an Beingelenken (nur bei sehr langen Bein-Teilen)
+split_long_leg_islands = true # Bein-Teile, die über 3+ Knochen reichen, pro Vertex aufteilen
+leg_capture_ratio = 0.6       # loses Teil gehört zum Bein, wenn es < 60 % so weit vom Bein wie vom Rumpf ist
