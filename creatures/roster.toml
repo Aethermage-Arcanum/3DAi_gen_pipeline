@@ -29,7 +29,7 @@ vorbild = ["Wespe/Hornisse im Schwebeflug (Zeitlupe)", "Wespe beim Stechen – H
 design = "Needle Wasp"
 artist = "A"
 bodyplan = "hexapod"
-hint = "forest wasp with a needle stinger and clearly separated wings, six legs"
+hint = "slender wasp (not an ant): huge wings, thin short legs, long needle stinger as key feature"
 [[c]]
 id = "broodling"
 cell = "A r1c4"

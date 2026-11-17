@@ -4,7 +4,7 @@
 
 ## 2. Spore Drone (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -35,14 +35,14 @@ Requirements for a 3D-model reference image:
 
 ## 3. Needle Wasp (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\style_B_stalk_wasp.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
 Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
-Creature: Needle Wasp: forest wasp with a needle stinger and clearly separated wings, six legs
+Creature: Needle Wasp: a slender, aggressive forest WASP (clearly a wasp, NOT an ant). Proportions: narrow wasp waist (thin petiole) between thorax and a long pointed abdomen; the abdomen ends in a very long, sharp NEEDLE STINGER that is a key feature - big, clearly visible and highlighted in every view. TWO PAIRS of LARGE translucent wings, each wing about as long as the whole body, spread out to the sides in a flight-ready pose, clearly separated from the body and visible in every view. Six SHORT, THIN, delicate legs, much thinner than the abdomen, tucked slightly under the body like a hovering wasp. Large compound eyes, short antennae, small mandibles.
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
 
@@ -66,7 +66,7 @@ Requirements for a 3D-model reference image:
 
 ## 4. Broodling (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -97,7 +97,7 @@ Requirements for a 3D-model reference image:
 
 ## 5. Reef Snapper (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -128,7 +128,7 @@ Requirements for a 3D-model reference image:
 
 ## 6. Shore Lurker (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -159,7 +159,7 @@ Requirements for a 3D-model reference image:
 
 ## 7. Shellback (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -190,7 +190,7 @@ Requirements for a 3D-model reference image:
 
 ## 8. Eel Stalker (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -221,7 +221,7 @@ Requirements for a 3D-model reference image:
 
 ## 9. Ravine Stalker (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -252,7 +252,7 @@ Requirements for a 3D-model reference image:
 
 ## 10. Stone Boar (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -283,7 +283,7 @@ Requirements for a 3D-model reference image:
 
 ## 11. Hollow Stag (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -314,7 +314,7 @@ Requirements for a 3D-model reference image:
 
 ## 12. Rock Hyena (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -345,7 +345,7 @@ Requirements for a 3D-model reference image:
 
 ## 13. Sand Leviathan (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -376,7 +376,7 @@ Requirements for a 3D-model reference image:
 
 ## 14. Dune Raptor (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -407,7 +407,7 @@ Requirements for a 3D-model reference image:
 
 ## 15. Glassback Colossus (Artist B) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input\concept\design_B.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -438,7 +438,7 @@ Requirements for a 3D-model reference image:
 
 ## 16. Scorpion Matriarch (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -469,7 +469,7 @@ Requirements for a 3D-model reference image:
 
 ## 17. Frost Colossus (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -500,7 +500,7 @@ Requirements for a 3D-model reference image:
 
 ## 18. Flesh Titan (Artist B) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input\concept\design_B.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -531,7 +531,7 @@ Requirements for a 3D-model reference image:
 
 ## 19. Void Manifestation (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -562,7 +562,7 @@ Requirements for a 3D-model reference image:
 
 ## 20. Void Harbinger (Artist B) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input\concept\design_B.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
@@ -593,7 +593,7 @@ Requirements for a 3D-model reference image:
 
 ## 21. Reality Ripper (Artist A) → `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input\concept\design_A.png` 2. Stil-Bild
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.

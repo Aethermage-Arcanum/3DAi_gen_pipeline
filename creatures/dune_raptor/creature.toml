@@ -18,4 +18,4 @@ role = "style"
 [motion]
 style = "biped_raptor/raptor"
 variant = ""
-vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff", "Huhn – Kopfstabilisierung"]
+vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff","echter Raptor - Sprungangriff mit Maul/Zähnen", "Huhn – Kopfstabilisierung"]

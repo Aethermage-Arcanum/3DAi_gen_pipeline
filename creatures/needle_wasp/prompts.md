@@ -11,7 +11,7 @@ Gefällt Bild 1 nicht: einfach neu generieren lassen oder die Beschreibung in `c
 **Anhängen in ChatGPT, in dieser Reihenfolge:**
 
 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\design_A.png`
-2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\style_B_stalk_wasp.png`
 
 ## Ein Prompt für alle 4 Ansichten
 
@@ -22,7 +22,7 @@ I attached reference images. Image 1 shows the creature DESIGN to recreate: keep
 
 Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
-Creature: Needle Wasp: forest wasp with a needle stinger and clearly separated wings, six legs
+Creature: Needle Wasp: a slender, aggressive forest WASP (clearly a wasp, NOT an ant). Proportions: narrow wasp waist (thin petiole) between thorax and a long pointed abdomen; the abdomen ends in a very long, sharp NEEDLE STINGER that is a key feature - big, clearly visible and highlighted in every view. TWO PAIRS of LARGE translucent wings, each wing about as long as the whole body, spread out to the sides in a flight-ready pose, clearly separated from the body and visible in every view. Six SHORT, THIN, delicate legs, much thinner than the abdomen, tucked slightly under the body like a hovering wasp. Large compound eyes, short antennae, small mandibles.
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
 

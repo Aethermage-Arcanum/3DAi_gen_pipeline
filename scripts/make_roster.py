@@ -41,6 +41,7 @@ for i, c in enumerate(R["c"], 2):
     txt = (d / "prompts.md").read_text(encoding="utf-8")
     prompt = txt.split("```text\n", 1)[1].split("```", 1)[0]
     out += [f"## {i}. {c['design']} (Artist {c['artist']}) → `{d / 'input'}`", "",
-            f"Anhängen: 1. `{d / 'input' / 'concept' / ('design_' + c['artist'] + '.png')}` 2. Stil-Bild", "", "```text", prompt.rstrip(), "```", ""]
+            "Anhängen: " + "  ".join(f"{k}. `{(d / x['file']).resolve()}`" for k, x in
+                                     enumerate(tomllib.loads(toml.read_text(encoding='utf-8'))['concept'], 1)), "", "```text", prompt.rstrip(), "```", ""]
 (PIPE / "PROMPTS_ALLE.md").write_text("\n".join(out), encoding="utf-8")
 print("PROMPTS_ALLE.md:", len(R["c"]), "Kreaturen")
