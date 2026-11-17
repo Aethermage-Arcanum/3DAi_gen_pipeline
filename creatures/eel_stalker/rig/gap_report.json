@@ -1,0 +1,19 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0141,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Legless_Cobra_Attack1": 0.0,
+    "Legless_Cobra_Death": 0.0,
+    "Legless_Cobra_Hit": 0.0,
+    "Legless_Cobra_Idle": 0.0,
+    "Legless_Cobra_Ready": 0.0,
+    "Legless_Cobra_Run": 0.0,
+    "Legless_Cobra_TurnLeft": 0.0,
+    "Legless_Cobra_TurnRight": 0.0,
+    "Legless_Cobra_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

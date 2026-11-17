@@ -32,6 +32,8 @@ SKELETONS = {
     "quadruped": {"marker": "Leg_FL_1", "body": "Chest", "foot": "Leg_FL_4",
                   "std": {"Root", "Hips", "Spine_1", "Chest", "Neck_1", "Neck_2", "Head", "Jaw",
                           "Tail_1", "Tail_2", "Tail_3", "Tail_4", "Shoulder_FL", "Shoulder_FR"} | set(QL)},
+    "legless": {"marker": "Spine_01", "body": "Spine_01", "foot": None,
+                "std": {"Root", "Spine_01", "Head", "Jaw"}},
 }
 SK_NAME = next((k for k, v in SKELETONS.items() if v["marker"] in bones), None)
 SK = SKELETONS.get(SK_NAME, {"std": set(), "body": None, "foot": None})
@@ -75,7 +77,7 @@ r = {"skeleton": SK_NAME, "file": path.split("\\")[-1].split("/")[-1], "meshes":
      "textures": [[i.name, list(i.size)] for i in bpy.data.images if i.size[0]],
      "actions": [[x.name, [int(v) for v in x.frame_range]] for x in bpy.data.actions],
      "head_direction_blender": facing, "foot_moves_m": moved, "dimensions_m": dims}
-r["ok"] = (not missing and unweighted == 0 and bool(r["actions"]) and (moved or 0) > 0.001)
+r["ok"] = (not missing and unweighted == 0 and bool(r["actions"]) and (moved is None and SK_NAME == "legless" or (moved or 0) > 0.001))
 print("VERIFY", json.dumps(r, ensure_ascii=False))
 if len(a) > 1:
     open(a[1], "w", encoding="utf-8").write(json.dumps(r, indent=2, ensure_ascii=False))

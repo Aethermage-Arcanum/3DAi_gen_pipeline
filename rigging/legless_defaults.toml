@@ -1,0 +1,7 @@
+# Beinlos-Rig (rigging/legless_rig.py). Pro Kreatur überschreibbar in creature.toml unter [legless].
+segments = 14          # Wirbel-Knochen von Schwanzspitze bis Kopfansatz (mehr = weichere Wellen)
+head_length = 0.08     # Kopf = vorderster Anteil der Körperlänge
+slab = 0.025           # Querschnitt-Dicke für die Mittellinie (Anteil Länge)
+falloff = 4
+smooth_iterations = 4
+smooth_factor = 0.5

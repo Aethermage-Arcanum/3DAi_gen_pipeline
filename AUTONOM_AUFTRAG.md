@@ -25,7 +25,7 @@
 | # | Kreatur | Tripo | UV | Rig | Clips | Export | Push | Credits |
 |---|---|---|---|---|---|---|---|---|
 | 1 | Ravine Stalker | ✅ | ✅ Tripo-UV | ✅ quadruped (30 Kn.) | ✅ 9/9 wolf | ✅ | ✅ | 110 |
-| 2 | Eel Stalker | ✅ | | | | | | 110 |
+| 2 | Eel Stalker | ✅ | ✅ Tripo-UV (manuell) | ✅ legless (17 Kn.) | ✅ 9/9 cobra | ✅ | ✅ | 110 |
 | 3 | Dune Raptor | | | | | | | |
 | 4 | Void Manifestation | | | | | | | |
 | 5 | Scorpion Matriarch | | | | | | | |

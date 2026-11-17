@@ -1,0 +1,106 @@
+{
+  "skeleton": "legless",
+  "file": "EelStalker.fbx",
+  "meshes": 1,
+  "triangles": 3998,
+  "bones": 17,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_52453b12-4acb-4d05-83b6-b0b5fb923798"
+  ],
+  "textures": [
+    [
+      "Color_52453b12-4acb-4d05-83b6-b0b5fb923798",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_52453b12-4acb-4d05-83b6-b0b5fb923798",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Attack1",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Hit",
+      [
+        1,
+        13
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Idle",
+      [
+        1,
+        91
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Ready",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Run",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_TurnLeft",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_TurnRight",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "EelStalker|EelStalker|Legless_Cobra_Walk",
+      [
+        1,
+        37
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.03,
+    -0.99,
+    0.13
+  ],
+  "foot_moves_m": null,
+  "dimensions_m": [
+    0.225,
+    1.0,
+    0.308
+  ],
+  "ok": true
+}

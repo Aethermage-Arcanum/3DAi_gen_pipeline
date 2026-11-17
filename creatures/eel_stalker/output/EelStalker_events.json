@@ -1,0 +1,24 @@
+{
+  "fps": 30,
+  "clips": {
+    "Legless_Cobra_Walk": [],
+    "Legless_Cobra_Run": [],
+    "Legless_Cobra_Idle": [],
+    "Legless_Cobra_Ready": [],
+    "Legless_Cobra_TurnLeft": [],
+    "Legless_Cobra_TurnRight": [],
+    "Legless_Cobra_Attack1": [
+      {
+        "frame": 14,
+        "event": "hit"
+      }
+    ],
+    "Legless_Cobra_Hit": [],
+    "Legless_Cobra_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

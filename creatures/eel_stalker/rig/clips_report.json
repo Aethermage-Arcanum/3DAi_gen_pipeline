@@ -1,0 +1,147 @@
+{
+  "style": "legless/cobra",
+  "variant": "eel",
+  "clips": {
+    "Legless_Cobra_Walk": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.11,
+      "stretch_at": "Spine_08 @ Frame 18",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Run": {
+      "frames": 20,
+      "seconds": 0.667,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.15,
+      "stretch_at": "Spine_08 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Idle": {
+      "frames": 90,
+      "seconds": 3.0,
+      "loop": true,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.73,
+      "stretch_at": "Spine_14 @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Ready": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": true,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.69,
+      "stretch_at": "Spine_12 @ Frame 30",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_TurnLeft": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.21,
+      "stretch_at": "Spine_12 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_TurnRight": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.17,
+      "stretch_at": "Spine_07 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Attack1": {
+      "frames": 26,
+      "seconds": 0.867,
+      "loop": false,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "max_stretch": 1.78,
+      "stretch_at": "Jaw @ Frame 12",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Hit": {
+      "frames": 12,
+      "seconds": 0.4,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.27,
+      "stretch_at": "Jaw @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Cobra_Death": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "max_stretch": 1.55,
+      "stretch_at": "Jaw @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}
