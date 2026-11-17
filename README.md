@@ -8,13 +8,14 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 |---|---|---|---|
 | 1 | `creature.toml` schreiben (Bauplan, Stil, Beschreibung) | du | – |
 | 2 | `python scripts/make_prompts.py creatures/<name>` → `prompts.md` | Skript | – |
-| 3 | Prompts in ChatGPT kopieren, Bilder als `front/left/back/right.png` in `input/` speichern | du | ChatGPT-Abo |
+| 3 | **Ein** Prompt pro Kreatur in ChatGPT → 4 Einzelbilder, als `front/left/right/back.png` in `input/` speichern | du | ChatGPT-Abo |
 | 4 | `python scripts/tripo_run.py creatures/<name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
 | 5 | `python scripts/crawler_pipeline.py creatures/<name>` → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
+**Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md).
 **Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md).
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
 

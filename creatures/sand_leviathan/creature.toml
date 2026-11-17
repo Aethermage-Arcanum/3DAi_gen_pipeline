@@ -1,0 +1,14 @@
+# Sand Leviathan – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "sand_leviathan"
+bodyplan = "serpentine"
+style = "lowpoly_b"
+description = "the creature labeled \"Sand Leviathan\" (Artist A version) in the design image: huge legless desert worm with a wide round maw, front part raised out of the sand"
+design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Sand Leviathan\", Artist A version, and ignore all others."
+
+[[concept]]
+file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"

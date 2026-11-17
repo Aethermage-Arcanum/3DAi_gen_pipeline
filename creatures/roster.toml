@@ -1,0 +1,129 @@
+# Alle Kreaturen aus der Concept Art (_concept/monster_categories_A_vs_B.webp) mit den Entscheidungen
+# aus ROADMAP_20_KREATUREN.md §6. scripts/make_roster.py legt daraus Ordner + creature.toml + prompts.md an
+# (bestehende creature.toml werden NIE überschrieben) und schreibt PROMPTS_ALLE.md.
+# design = Name auf dem Concept-Sheet, artist = welche Version (A/B) als Design-Vorlage dient.
+# hint = kurze Stütze für ChatGPT – das Concept-Sheet hat immer Vorrang.
+
+sheet = "../_concept/monster_categories_A_vs_B.webp"
+style_ref = "creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+
+[[c]]
+id = "spore_drone"
+    design = "Spore Drone"
+    artist = "A"
+bodyplan = "hexapod"
+hint = "forest beetle-like insect carrying spore growths, six legs"
+[[c]]
+id = "needle_wasp"
+    design = "Needle Wasp"
+    artist = "A"
+bodyplan = "hexapod"
+hint = "forest wasp with a needle stinger and clearly separated wings, six legs"
+[[c]]
+id = "broodling"
+     design = "Broodling"
+     artist = "A"
+bodyplan = "octopod"
+hint = "small spider-like forest brood creature, eight legs"
+[[c]]
+id = "reef_snapper"
+   design = "Reef Snapper"
+   artist = "A"
+bodyplan = "quadruped"
+hint = "coastal lizard-like reptile predator with snapping jaws, four legs"
+[[c]]
+id = "shore_lurker"
+   design = "Shore Lurker"
+   artist = "A"
+bodyplan = "quadruped"
+hint = "low, flat coastal ambush reptile, four legs"
+[[c]]
+id = "shellback"
+     design = "Shellback"
+     artist = "A"
+bodyplan = "quadruped"
+hint = "coastal tortoise-like beast with a heavy shell, four legs"
+[[c]]
+id = "eel_stalker"
+    design = "Eel Stalker"
+    artist = "A"
+bodyplan = "serpentine"
+hint = "legless eel-like serpent from the coast, long body, head raised"
+[[c]]
+id = "ravine_stalker"
+  design = "Ravine Stalker"
+  artist = "A"
+bodyplan = "quadruped"
+hint = "lean wolf-like highland predator, four legs"
+[[c]]
+id = "stone_boar"
+    design = "Stone Boar"
+    artist = "A"
+bodyplan = "quadruped"
+hint = "stocky boar with stone-like armor plates and tusks, four legs"
+[[c]]
+id = "hollow_stag"
+    design = "Hollow Stag"
+    artist = "A"
+bodyplan = "quadruped"
+hint = "gaunt stag with large antlers, four long legs"
+[[c]]
+id = "rock_hyena"
+    design = "Rock Hyena"
+    artist = "A"
+bodyplan = "quadruped"
+hint = "hunched hyena-like highland scavenger, four legs"
+[[c]]
+id = "sand_leviathan"
+  design = "Sand Leviathan"
+  artist = "A"
+bodyplan = "serpentine"
+hint = "huge legless desert worm with a wide round maw, front part raised out of the sand"
+[[c]]
+id = "dune_raptor"
+    design = "Dune Raptor"
+    artist = "A"
+bodyplan = "biped"
+hint = "two-legged desert raptor WITHOUT wings, long tail for balance, body leaning forward"
+[[c]]
+id = "glassback_colossus"
+design = "Glassback Colossus"
+artist = "B"
+bodyplan = "quadruped"
+hint = "massive four-legged desert beast with glass-like crystal formations on its back"
+[[c]]
+id = "scorpion_matriarch"
+design = "Scorpion Matriarch"
+artist = "A"
+bodyplan = "octopod"
+hint = "giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back"
+[[c]]
+id = "frost_colossus"
+  design = "Frost Colossus"
+  artist = "A"
+bodyplan = "quadruped"
+hint = "huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor"
+[[c]]
+id = "flesh_titan"
+    design = "Flesh Titan"
+    artist = "B"
+bodyplan = "biped"
+hint = "hulking two-legged abyssal flesh monster with a partly humanoid upper body"
+[[c]]
+id = "void_manifestation"
+design = "Void Manifestation"
+artist = "A"
+bodyplan = "aquatic"
+hint = "floating void orb with squid-like tentacles hanging below it, hovering above the ground"
+[[c]]
+id = "void_harbinger"
+  design = "Void Harbinger"
+  artist = "B"
+bodyplan = "biped"
+hint = "partly humanoid two-legged void creature with wings, wings clearly separated from the body"
+[[c]]
+id = "reality_ripper"
+  design = "Reality Ripper"
+  artist = "A"
+bodyplan = "hexapod"
+hint = "mantis-like abyssal predator with large raptorial blade forelegs, walking on four legs"

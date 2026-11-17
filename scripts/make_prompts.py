@@ -43,9 +43,8 @@ def build(creature_dir):
         "",
         f"Bauplan: **{bp['label']}** · Stil: **{st['label']}**",
         "",
-        "**So geht's:** Neuen ChatGPT-Chat öffnen. Prompt 1 einfügen. Wenn dir das Bild gefällt, "
-        "die weiteren Prompts **im selben Chat** nacheinander einfügen, damit es dieselbe Kreatur bleibt. "
-        "Jedes Bild als PNG unter dem angegebenen Namen speichern in:",
+        "**So geht's:** Neuen ChatGPT-Chat öffnen, Bilder anhängen, den einen Prompt einfügen. "
+        "Die Bilder als PNG unter den angegebenen Namen speichern in:",
         "",
         f"`{creature_dir / 'input'}`",
         "",
@@ -69,24 +68,28 @@ def build(creature_dir):
                              f"not the creatures shown in it.")
         intro = ("I attached reference images. " + " ".join(lines) +
                  " Ignore any text, labels, scenery and background in the attached images.\n\n"
-                 "Create a clean reference image of the creature from the design image for 3D modeling.")
+                 "Create clean reference images of the creature from the design image for 3D modeling." +
+                 (f" {cfg['design_pick']}" if cfg.get("design_pick") else ""))
         parts += ["**Anhängen in ChatGPT, in dieser Reihenfolge:**", ""] + attach + [""]
     else:
-        intro = "Create a reference image of this creature for 3D modeling."
-    front = (f"{intro}\n\n"
-             f"Creature: {cfg['description']}\n\n"
-             f"Style: {st['text']}\n\n"
-             f"View: {VIEWS['front']}\n\n{rules}")
-    parts += [f"## {n}. Vorderansicht → speichern als `front.png`", "", "```text", front, "```", ""]
-
-    for v in views:
-        if v == "front":
-            continue
-        n += 1
-        p = (f"Now show EXACTLY the same creature from the previous image - identical design, "
-             f"proportions, colors, materials, pose and lighting. Only the camera angle changes.\n\n"
-             f"View: {VIEWS[v]}\n\n{rules}")
-        parts += [f"## {n}. Ansicht `{v}` → speichern als `{v}.png`", "", "```text", p, "```", ""]
+        intro = "Create reference images of this creature for 3D modeling."
+    order = ["front", "left", "right", "back"]
+    views = [v for v in order if v in views] + [v for v in views if v not in order]
+    vlist = "\n".join(f"{i}. `{v}.png` - {VIEWS[v]}" for i, v in enumerate(views, 1))
+    prompt = (f"{intro}\n\n"
+              f"Creature: {cfg['description']}\n\n"
+              f"Style: {st['text']}\n\n"
+              f"Please generate {len(views)} SEPARATE images, one after another (NOT a grid, NOT a collage, "
+              f"NOT one sheet with several views). All images show EXACTLY the same creature - identical "
+              f"design, proportions, number of legs, colors, materials, pose and lighting. Only the camera "
+              f"angle changes:\n{vlist}\n\n"
+              f"Keep the exact number of legs, wings, tails and claws of the design and keep all of them "
+              f"clearly visible and separated in every view.\n\n{rules}")
+    parts += [f"## Ein Prompt für alle {len(views)} Ansichten", "",
+              "ChatGPT erzeugt die Bilder nacheinander. Speichern als " +
+              ", ".join(f"`{v}.png`" for v in views) + ". Falls es doch ein Raster macht: "
+              "„Bitte jede Ansicht als eigenes Bild“ nachschieben.", "", "```text", prompt, "```", ""]
+    n = len(views)
 
     parts += [
         "## Kontrolle vor dem Tripo-Schritt",

@@ -1,0 +1,14 @@
+# Void Harbinger – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "void_harbinger"
+bodyplan = "biped"
+style = "lowpoly_b"
+description = "the creature labeled \"Void Harbinger\" (Artist B version) in the design image: partly humanoid two-legged void creature with wings, wings clearly separated from the body"
+design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Void Harbinger\", Artist B version, and ignore all others."
+
+[[concept]]
+file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"

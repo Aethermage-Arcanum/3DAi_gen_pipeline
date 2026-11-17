@@ -1,0 +1,14 @@
+# Frost Colossus – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "frost_colossus"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "the creature labeled \"Frost Colossus\" (Artist A version) in the design image: huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor"
+design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Frost Colossus\", Artist A version, and ignore all others."
+
+[[concept]]
+file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"

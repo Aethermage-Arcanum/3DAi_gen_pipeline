@@ -167,18 +167,19 @@ Kurzform je Kreatur: **Walk / Run · Idle / Ready · Turn · Attack1 · Hit · D
 
 ## 5. Aufwand & Kosten (Schätzung)
 - **Tripo-Credits:** ca. 110 pro Modell (P2, Multiview, Standard-Textur). 19 neue Kreaturen ≈ **2.100 Credits**, Guthaben ca. 2.355. Das reicht knapp, Nachgenerierungen (z. B. falsche Beinzahl) und Rig-Tests (25 pro Stück) kommen dazu → **Nachkaufen einplanen**.
+- (ich dachte Rig machen wir jetzt selber?)
 - **Bilder (ChatGPT):** 4 Ansichten pro Kreatur. Lehre aus Lauf 1: In jedem Prompt die **genaue Beinzahl** nennen und in allen Ansichten sichtbar halten.
+   Und bilder auch prüfen: ursache bei der Ant war, dass das letzte bild (das 4.) plötzlich 8 beine hatte und da aht sich Tripo drauf gestützt.
 - **Varianten** (beetle, spider, hyena, lurker, colossus, eel) sind fast nur Konfiguration.
 - **Neue Muster** auf vorhandenem Skelett (wasp, scorpion, mantis, tortoise, boar, deer, behemoth) sind mittlerer Aufwand.
 - **Neue Skelette** (quadruped, legless, biped_raptor, floater) sind großer Aufwand, quadruped zuerst.
 
 ## 6. Offene Entscheidungen für dich
 1. **A- oder B-Design, wo sie sich im Körperbau unterscheiden:**
-   - #17 Frost Colossus (Gorilla) vs. Glacial Horror (Vierbeiner)
-   - #18 Abyssal Chimera (Vierbeiner) vs. Flesh Titan (Zweibeiner)
-   - #19 Void Manifestation (Schwebe-Orb) vs. Void Harbinger (mit Beinen)
-   - #14 Dune Raptor mit oder ohne Flügel
-   - #15 Oasis Behemoth vs. Glassback Colossus
-2. **Humanoid-Abkürzung** für zweibeinige Brutalos (Unity Humanoid + fertige Animationen) erlaubt, oder alles im eigenen System?
-3. **Reihenfolge:** Phase 1 (Krabbler) zuerst wie vorgeschlagen, oder gleich das Vierbeiner-Skelett?
-4. **Bosse** (Broodmother, Tide Aberration, …) gehören nicht zu den 20 und bekommen später eine eigene Roadmap.
+   - #17 Frost Colossus (Gorilla) -> Gorilla hat ein sehr eigenes bewegungsmuster, laufen eher vierbienig, im angriff eher humanoid.
+   - Flesh Titan (Zweibeiner) - humanoide Skelette erlaubt auch als Teil-Sturkutr (z.b. nur Oberkörper)
+   - #19 Void Manifestation (Schwebe-Orb + tentakel (squid-like) ) UND Void Harbinger (mit Beinen - teilweise humanoid aber mit Flügeln) 
+   - #14 Dune Raptor ohne flügel (später als elite-Variante mit flügel)
+   - #15 Glassback Colossus
+2. **Humanoid-Abkürzung** für zweibeinige Brutalos (Unity Humanoid + fertige Animationen) erlaubt als Vorlage auch für Tiel-strukturen. auch Animationen als Vorlage, aber die meisten Mosnter haben wenig menschlich-weiche bewegungen
+3. **Bosse und Elite-Varianten** (Broodmother, Tide Aberration, …) gehören nicht zu den 20 und bekommen später eine eigene Roadmap.
