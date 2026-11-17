@@ -67,7 +67,20 @@ def leg_points(joints, cfg):
     if not inner:
         return [root, polyline_point(joints, 0.15), polyline_point(joints, 0.4),
                 polyline_point(joints, 0.75), tip]
-    k = max(range(1, len(joints) - 1), key=lambda i: joints[i].z)   # Knie = höchster Übergang
+    # Knie = höchster Übergang, aber nur in plausiblem Bereich der Beinlänge (sonst entartete Glieder:
+    # beim Chitin Crawler lag das Knie von L2 bei 6 % → Oberschenkel fast null → IK unbrauchbar)
+    seg = [(b - a).length for a, b in zip(joints, joints[1:])]
+    total = sum(seg) or 1e-9
+    pos = [sum(seg[:i]) / total for i in range(len(joints))]
+    lo, hi = cfg["knee_min_fraction"], cfg["knee_max_fraction"]
+    cand = [i for i in range(1, len(joints) - 1) if lo <= pos[i] <= hi]
+    if cand:
+        k = max(cand, key=lambda i: joints[i].z)
+    else:   # kein echter Übergang im Bereich → Knie-Punkt in die Kette einfügen
+        knee_pt = polyline_point(joints, (lo + hi) / 2)
+        i_ins = next(i for i in range(1, len(joints)) if pos[i] > (lo + hi) / 2)
+        joints = joints[:i_ins] + [knee_pt] + joints[i_ins:]
+        k = i_ins
     knee = joints[k]
 
     def pick(cands, target):
@@ -82,6 +95,10 @@ def leg_points(joints, cfg):
         tgt = (knee - root).length + (tip - knee).length * cfg["ankle_fraction"]
         ankle = min(after, key=lambda p: abs((p - root).length - tgt))
     ankle = ankle or polyline_point(joints[k:], cfg["ankle_fraction"])
+    # Fuß (Tarsus) nicht übermäßig lang: sonst Knöchel auf max. Anteil zur Spitze hin verschieben
+    leg_len = sum((b - a).length for a, b in zip(joints, joints[1:]))
+    if (tip - ankle).length > cfg["tarsus_max_fraction"] * leg_len:
+        ankle = tip + (ankle - tip).normalized() * cfg["tarsus_max_fraction"] * leg_len
     return [root, coxa_end, knee, ankle, tip]
 
 

@@ -21,11 +21,11 @@ motions/
 - **Eigenes Muster**: Das Grundverhalten ist anders, also Laufrichtung, Bein-Koordination, Haltung oder vor allem **Angriffsmechanik**. Dann reicht eine Variable nicht.
   Beispiel: **Crab** läuft seitwärts. Die Beine der führenden und der nachziehenden Seite haben verschiedene Schrittfolgen (Winkerkrabbe: führend 2-4-3-5, nachziehend 2-5-3-4, im Mittel ≈ alternierender Vierfuß). Die Scheren werden beim Laufen vom Boden gehalten, und Angriffe kommen aus den Scheren statt aus dem Maul. → eigenes Muster `crawler/crab`.
 
-## Geplante Muster (Beispiele, nichts davon ist schon gebaut außer Ant)
+## Geplante Muster (Beispiele; gebaut: ant, crab)
 | Skelett | Muster | Kern-Unterschied |
 |---|---|---|
 | crawler | **ant** ✅ | Dreifuß/Vierfuß vorwärts, Biss mit Mandibeln, Hinterleib für Stich/Säure. Varianten: spider, beetle, scorpion (?) |
-| crawler | crab | Seitwärtsgang, unabhängigere Beinfolgen, Scheren-Angriffe, Scheren beim Laufen erhoben |
+| crawler | **crab** ✅ (validiert) | Seitwärtsgang per Fuß-IK, eigene Schrittfolge je Seite, Scheren-Angriffe, Scheren beim Laufen erhoben |
 | quadruped | wolf | Trab/Galopp, Biss nach Anlauf, Rudel-Haltung |
 | quadruped | leopard | Schleichen, geduckt, Sprung-Angriff (Pounce), Prankenhieb |
 | quadruped | deer | Passgang/Sprünge, Geweih-Stoß, Fluchtverhalten |
@@ -38,3 +38,6 @@ motions/
 1. **Naturbeobachtung zuerst:** Pro Muster und pro Clip Referenzen suchen und im README des Musters verlinken.
 2. **Fake it:** Es muss aus der Top-down-Kamera gut aussehen, nicht biologisch exakt sein.
 3. **Selbstprüfung pro Clip:** Füße rutschen/schweben nicht (wo sie stehen sollen), Schleife nahtlos, keine Gelenk-Lücken, Gegentest nach Export.
+
+## Baukasten
+`crawler/crawler_kit.py` enthält alles, was die Krabbler-Muster gemeinsam nutzen: Bein-Achsen, Gieren/Heben/Falten, Planar- und Fuß-IK, Fühler-Stabilisierung, Boden-Begrenzung, gemeinsamer Tod, Backen + Selbstprüfung. Ein neues Muster definiert nur noch seine Clips.

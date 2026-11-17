@@ -8,6 +8,7 @@ style = "ant"
 clip_prefix = "Crawler_Ant"
 fps = 30
 clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }   # diese Abschnitte erben alle Werte von [walk]
 
 [legs]
 walking_slots = [1, 2, 3, 4]   # welche Beinpaare laufen (1 = vorne). Ameise mit Tastern: [2,3,4]

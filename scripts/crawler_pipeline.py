@@ -43,14 +43,22 @@ def main():
     ap.add_argument("creature_dir")
     ap.add_argument("--name", default=None, help="Exportname (Standard: aus Ordnername)")
     ap.add_argument("--no-preview", action="store_true")
+    ap.add_argument("--style", default=None,
+                    help="anderes Bewegungsmuster testen, z. B. crawler/crab → Ausgabe in style_tests/<muster>/")
     a = ap.parse_args()
     c = pathlib.Path(a.creature_dir).resolve()
     name = a.name or "".join(p.capitalize() for p in c.name.split("_"))
     toml = str(c / "creature.toml")
-    style = tomllib.loads((c / "creature.toml").read_text(encoding="utf-8")).get("motion", {}).get("style", "crawler/ant")
+    own_style = tomllib.loads((c / "creature.toml").read_text(encoding="utf-8")).get("motion", {}).get("style", "crawler/ant")
+    style = a.style or own_style
     skel, muster = style.split("/")
     clips_script = ROOT / "motions" / skel / muster / f"{muster}_clips.py"
     rig, out = c / "rig", c / "output"
+    clips_dir = rig
+    if style != own_style:                       # Test eines fremden Musters: eigene Ausgabeordner
+        clips_dir = c / "style_tests" / muster
+        out = clips_dir / "output"
+        name = f"{name}_{muster.capitalize()}"
     src = c / "raw" / "generate_model.glb"
     if not src.exists():
         raise SystemExit(f"{src} fehlt – erst scripts/tripo_run.py --steps generate laufen lassen.")
@@ -69,14 +77,14 @@ def main():
         "s.save(f'{d}/uv_preview.png')"), str(uvdir)] + [r.split("_")[1] for r in uvrep["renders"][::2]], check=True)
     src = uvdir / "model_uv.glb"
     blender(["--factory-startup", "-P", str(R / "crawler_rig.py"), "--", str(src), str(rig), toml], "Rig")
-    blender([str(rig / "crawler_rigged.blend"), "-P", str(clips_script), "--", str(rig), toml], f"Clips ({style})")
-    clips_blend = rig / "crawler_clips.blend"
+    blender([str(rig / "crawler_rigged.blend"), "-P", str(clips_script), "--", str(clips_dir), toml], f"Clips ({style})")
+    clips_blend = clips_dir / "crawler_clips.blend"
     gcfg = tomllib.loads((R / "crawler_defaults.toml").read_text(encoding="utf-8")).get("gaps", {})
-    blender([str(clips_blend), "-P", str(R / "check_gaps.py"), "--", str(rig / "gap_report.json"),
+    blender([str(clips_blend), "-P", str(R / "check_gaps.py"), "--", str(clips_dir / "gap_report.json"),
              str(gcfg.get("pair_eps", 0.015)), str(gcfg.get("max_opening", 0.015))], "Lückenprüfung (alle Clips)")
-    report = json.loads((rig / "clips_report.json").read_text(encoding="utf-8"))
+    report = json.loads((clips_dir / "clips_report.json").read_text(encoding="utf-8"))
     if not a.no_preview:
-        anim = rig / "anim"
+        anim = clips_dir / "anim"
         shutil.rmtree(anim, ignore_errors=True)
         for clip in report["clips"]:
             d = anim / clip
@@ -87,7 +95,7 @@ def main():
             shutil.copy(d / f"{clip}.gif", anim / f"{clip}.gif")
             shutil.rmtree(d)
     blender([str(clips_blend), "-P", str(R / "export_unity.py"), "--", str(out), name, toml], "Export")
-    shutil.copy(rig / "events.json", out / f"{name}_events.json")
+    shutil.copy(clips_dir / "events.json", out / f"{name}_events.json")
     ok = report["all_ok"]
     for ext in ("fbx", "glb"):
         f = out / f"{name}.{ext}"
@@ -95,7 +103,7 @@ def main():
                 f"Gegentest {ext.upper()}")
         v = json.loads((out / f"verify_{ext}.json").read_text(encoding="utf-8"))
         ok &= v["ok"] and len(v["actions"]) >= len(report["clips"])
-    gaps = json.loads((rig / "gap_report.json").read_text(encoding="utf-8"))
+    gaps = json.loads((clips_dir / "gap_report.json").read_text(encoding="utf-8"))
     ok &= gaps["ok"]
     print("\nClip-Übersicht:")
     for clip, r in report["clips"].items():

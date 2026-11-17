@@ -32,3 +32,5 @@ creatures/*/uv/uv_*_arpg.png
 creatures/*/uv/uv_*_side.png
 uv/textures/biome_*.png
 uv/textures/uv_checker.png
+creatures/*/style_tests/*/*.blend
+creatures/*/style_tests/*/output/*.blend*

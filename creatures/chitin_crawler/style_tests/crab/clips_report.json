@@ -1,0 +1,147 @@
+{
+  "style": "crawler/crab",
+  "variant": null,
+  "walking_legs": [
+    "L2",
+    "R2",
+    "L3",
+    "R3",
+    "L4",
+    "R4"
+  ],
+  "feelers": [
+    "L1",
+    "R1"
+  ],
+  "clips": {
+    "Crawler_Crab_Walk": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.087,
+        0.094
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.187,
+      "move_axis": "y",
+      "ok": true
+    },
+    "Crawler_Crab_WalkLeft": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.087,
+        0.094
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.187,
+      "move_axis": "y",
+      "ok": true
+    },
+    "Crawler_Crab_Run": {
+      "frames": 14,
+      "seconds": 0.467,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.12,
+        0.12
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.414,
+      "move_axis": "y",
+      "ok": true
+    },
+    "Crawler_Crab_Idle": {
+      "frames": 60,
+      "seconds": 2.0,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "ok": true
+    },
+    "Crawler_Crab_Ready": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "ok": true
+    },
+    "Crawler_Crab_TurnLeft": {
+      "frames": 22,
+      "seconds": 0.733,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.064,
+        0.115
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 25.7,
+      "ok": true
+    },
+    "Crawler_Crab_TurnRight": {
+      "frames": 22,
+      "seconds": 0.733,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.064,
+        0.115
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 25.7,
+      "ok": true
+    },
+    "Crawler_Crab_Attack1": {
+      "frames": 22,
+      "seconds": 0.733,
+      "loop": false,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "ok": true
+    },
+    "Crawler_Crab_Hit": {
+      "frames": 9,
+      "seconds": 0.3,
+      "loop": false,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "ok": true
+    },
+    "Crawler_Crab_Death": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": false,
+      "final_min_z_vs_ground_m": 0.0296,
+      "no_ground_penetration": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

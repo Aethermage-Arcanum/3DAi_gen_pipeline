@@ -11,6 +11,9 @@ head_fraction = 0.22    # vorderste 22 % der Länge = Kopfbereich (Fühler/Mandi
 [rig]
 coxa_fraction = 0.25          # Coxa-Ende bei 25 % des Wegs Wurzel → Knie
 ankle_fraction = 0.7          # Knöchel bei 70 % des Wegs Knie → Fußspitze
+knee_min_fraction = 0.25      # Knie liegt zwischen 25 % …
+knee_max_fraction = 0.6       # … und 60 % der Beinlänge (sonst entartete Glieder)
+tarsus_max_fraction = 0.3     # Fußglied max. 30 % der Beinlänge
 profile_bins = 40             # Auflösung des Rumpf-Profils (Einschnürungen = Petiolus/Hals)
 profile_samples = 30000       # Oberflächenpunkte für das Profil
 petiole_search_ahead = 0.1    # Petiolus darf bis 10 % der Länge vor den hintersten Beinwurzeln liegen

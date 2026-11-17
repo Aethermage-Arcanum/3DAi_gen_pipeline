@@ -13,16 +13,6 @@
     "L1",
     "R1"
   ],
-  "group_A": [
-    "L3",
-    "R2",
-    "R4"
-  ],
-  "group_B": [
-    "L2",
-    "L4",
-    "R3"
-  ],
   "clips": {
     "Crawler_Ant_Walk": {
       "frames": 20,
@@ -36,7 +26,9 @@
         0.084,
         0.105
       ],
+      "moves_ok": true,
       "move_speed_mps": 0.281,
+      "move_axis": "x",
       "ok": true
     },
     "Crawler_Ant_Run": {
@@ -51,7 +43,9 @@
         0.08,
         0.12
       ],
+      "moves_ok": true,
       "move_speed_mps": 0.651,
+      "move_axis": "x",
       "ok": true
     },
     "Crawler_Ant_Idle": {
@@ -86,6 +80,7 @@
         0.07,
         0.122
       ],
+      "moves_ok": true,
       "turn_speed_deg_s": 33.9,
       "ok": true
     },
@@ -101,6 +96,7 @@
         0.07,
         0.123
       ],
+      "moves_ok": true,
       "turn_speed_deg_s": 33.9,
       "ok": true
     },

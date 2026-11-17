@@ -1,0 +1,93 @@
+# Bewegungsmuster crawler/crab – eigenes Muster (nicht nur Variablen): Seitwärtsgang mit Planar-IK,
+# Scheren erhoben, Angriffe aus den Scheren. Winkel in Grad, Längen als Anteil der Körpergröße.
+
+[meta]
+skeleton = "crawler"
+style = "crab"
+clip_prefix = "Crawler_Crab"
+fps = 30
+clips = ["Walk", "WalkLeft", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }
+
+[legs]
+walking_slots = [2, 3, 4]      # Krabbe: Laufbeine (echte Krabbe hat 4 Paare: 2-5)
+feeler_slots = [1]             # vorderstes Paar = Scheren (Chelipeden), beim Laufen vom Boden gehalten
+
+[walk]   # Seitwärts. Referenz Winkerkrabbe (Barnes 1975): führende Seite Folge 2-4-3-5, nachziehende 2-5-3-4
+cycle_frames = 24
+duty = 0.62                    # mehr Beine am Boden als bei der Ameise
+leading_order = [2, 4, 3, 5]
+trailing_order = [2, 5, 3, 4]
+stride = 0.10                  # seitliche Schrittlänge (Anteil Größe), für alle Füße gleich
+reach_max = 0.12               # max. Reichweitenänderung pro Bein (Anteil Größe)
+lift = 0.05                    # Fußhöhe im Schwung (Anteil Größe)
+claw_raise_deg = 22            # Scheren beim Laufen erhoben
+claw_sway_deg = 4
+body_roll_deg = 0.0            # Rollen wird NICHT per IK ausgeglichen → Füße heben ab. Krabben laufen flach.
+body_bob = 0.002               # (wird per IK an den Füßen ausgeglichen)
+antenna_deg = 3
+antenna_speed = 2
+antenna_stabilize = 0.7
+# für den Dreh-Gang (Hüft-Gieren, erbt hierher)
+wave_offset = 0.04
+stride_max_deg = 30
+lift_deg = 10
+tibia_fold_deg = 6
+
+[run]
+cycle_frames = 14
+stride = 0.13
+lift = 0.06
+
+[turn]
+cycle_frames = 22
+duty = 0.55
+stride = 0.07
+
+[idle]   # Referenz: Krabbe frisst – Scheren abwechselnd zum Mund, Fühler zucken
+frames = 60
+claw_feed_deg = 18
+claw_raise_deg = 14
+body_bob = 0.004
+antenna_deg = 6
+antenna_speed = 3
+
+[ready]  # Referenz: Drohhaltung – hoch auf den Beinen, Scheren hoch und weit gespreizt (meral spread)
+frames = 30
+body_raise = 0.06              # Körper heben (Füße bleiben per IK stehen)
+claw_raise_deg = 45
+claw_spread_deg = 28
+tremble_deg = 2
+tremble_speed = 3
+
+[attack1] # Referenz: Schlag nur aus der Drohhaltung, blitzschnelles Zuschnappen (30-60 ms ≈ 1-2 Frames)
+frames = 22
+windup_end = 10
+strike_end = 12                # 2 Frames Schlag
+hold_end = 15
+body_raise = 0.06
+claw_raise_deg = 55
+claw_back_deg = 25
+strike_forward_deg = 30
+strike_down_deg = 15
+hit_frame = 12
+
+[hit]
+frames = 9
+body_drop = 0.03
+claw_tuck_deg = 20
+
+[death]  # gemeinsamer Tod aus dem Baukasten: auf den Rücken kippen
+frames = 36
+collapse_start = 4
+collapse_end = 18
+flip_side = 1
+flip_hop = 0.12
+femur_curl_deg = 0
+tibia_curl_deg = 55
+twitch_frame = 27
+twitch_deg = 10
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012

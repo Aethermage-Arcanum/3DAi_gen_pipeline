@@ -1,11 +1,11 @@
 {
-  "pairs_checked": 100,
+  "pairs_checked": 102,
   "threshold_m": 0.015,
   "max_opening_m": 0.0149,
   "joints_over_threshold": 0,
   "per_clip_max_m": {
     "Crawler_Ant_Attack1": 0.0069,
-    "Crawler_Ant_Death": 0.0119,
+    "Crawler_Ant_Death": 0.0015,
     "Crawler_Ant_Hit": 0.0018,
     "Crawler_Ant_Idle": 0.0012,
     "Crawler_Ant_Ready": 0.003,
@@ -26,17 +26,12 @@
       10
     ],
     [
-      "Crawler_Ant_Death: Leg_L2_Femur / Thorax",
-      0.0119,
-      22
-    ],
-    [
-      "Crawler_Ant_Run: Leg_L2_Femur / Thorax",
-      0.0118,
+      "Crawler_Ant_Run: Leg_L2_Coxa / Thorax",
+      0.0125,
       4
     ],
     [
-      "Crawler_Ant_Walk: Leg_L2_Femur / Thorax",
+      "Crawler_Ant_Walk: Leg_L2_Coxa / Thorax",
       0.0103,
       10
     ],
@@ -51,7 +46,7 @@
       10
     ],
     [
-      "Crawler_Ant_TurnLeft: Leg_L2_Femur / Thorax",
+      "Crawler_Ant_TurnLeft: Leg_L2_Coxa / Thorax",
       0.0073,
       0
     ],
@@ -66,13 +61,18 @@
       13
     ],
     [
-      "Crawler_Ant_TurnRight: Leg_L2_Femur / Thorax",
+      "Crawler_Ant_TurnRight: Leg_L2_Coxa / Thorax",
       0.0067,
       10
     ],
     [
       "Crawler_Ant_Ready: Leg_L3_Coxa / Thorax",
       0.003,
+      7
+    ],
+    [
+      "Crawler_Ant_Ready: Leg_R4_Coxa / Thorax",
+      0.0029,
       7
     ]
   ],

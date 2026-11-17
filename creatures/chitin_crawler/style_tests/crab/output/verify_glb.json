@@ -1,0 +1,119 @@
+{
+  "file": "ChitinCrawler_Crab.glb",
+  "meshes": 1,
+  "triangles": 3122,
+  "bones": 43,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2"
+  ],
+  "textures": [
+    [
+      "Color_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_53a3fd80-fff4-4e31-b1d9-43c51b0ebdd2",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Crawler_Crab_Attack1",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Crawler_Crab_Death",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Crawler_Crab_Hit",
+      [
+        0,
+        7
+      ]
+    ],
+    [
+      "Crawler_Crab_Idle",
+      [
+        0,
+        48
+      ]
+    ],
+    [
+      "Crawler_Crab_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Crawler_Crab_Run",
+      [
+        0,
+        11
+      ]
+    ],
+    [
+      "Crawler_Crab_TurnLeft",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Crawler_Crab_TurnRight",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Crawler_Crab_Walk",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Crawler_Crab_WalkLeft",
+      [
+        0,
+        19
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    -0.0
+  ],
+  "foot_moves_m": 0.0495,
+  "dimensions_m": [
+    0.913,
+    1.002,
+    0.574
+  ],
+  "ok": true
+}
