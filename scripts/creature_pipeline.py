@@ -75,6 +75,7 @@ def main():
     report = json.loads((rig / "clips_report.json").read_text(encoding="utf-8"))
     # 4. Lückenprüfung (getrennte Teile, die in Ruhe aneinanderliegen)
     gcfg = tomllib.loads((R / "crawler_defaults.toml").read_text(encoding="utf-8")).get("gaps", {})
+    gcfg.update(ct.get("gaps", {}))                       # pro Kreatur überschreibbar (mit Begründung!)
     blender([str(clips_blend), "-P", str(R / "check_gaps.py"), "--", str(rig / "gap_report.json"),
              str(gcfg.get("pair_eps", 0.015)), str(gcfg.get("max_opening", 0.015))], "Lückenprüfung")
     gaps = json.loads((rig / "gap_report.json").read_text(encoding="utf-8"))

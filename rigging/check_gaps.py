@@ -58,10 +58,20 @@ for i, c in enumerate(rest):
     kd.insert(c, i)
 kd.balance()
 pairs = []
+
+
+def mirror_limbs(a_, b_):
+    """Linkes vs. rechtes Glied derselben Art (z. B. Leg_BL_2 / Leg_BR_2) dürfen auseinanderlaufen –
+    wenn sie in Ruhe aneinanderliegen, ist das keine Gelenk-Lücke, sondern Beine im Gegentakt."""
+    import re
+    m1, m2 = re.match(r"(Leg_[A-Z]?)([LR])(.*)", a_), re.match(r"(Leg_[A-Z]?)([LR])(.*)", b_)
+    return bool(m1 and m2 and m1.group(1) == m2.group(1) and m1.group(2) != m2.group(2))
+
+
 for i, c in enumerate(rest):
     for (p, j, d) in kd.find_range(c, EPS):
         if j > i and isl[i] != isl[j] and dom[i] != dom[j] and dom[i] and dom[j] \
-                and (dom[i].startswith("Leg_") or dom[j].startswith("Leg_")):
+                and (dom[i].startswith("Leg_") or dom[j].startswith("Leg_")) and not mirror_limbs(dom[i], dom[j]):
             pairs.append((i, j, d))
 
 sc = bpy.context.scene

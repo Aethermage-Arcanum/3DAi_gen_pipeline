@@ -1,0 +1,48 @@
+{
+  "fps": 30,
+  "clips": {
+    "Biped_Raptor_Walk": [
+      {
+        "frame": 15,
+        "event": "footstep",
+        "leg": "BR"
+      }
+    ],
+    "Biped_Raptor_Run": [
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "BR"
+      }
+    ],
+    "Biped_Raptor_Idle": [],
+    "Biped_Raptor_Ready": [],
+    "Biped_Raptor_TurnLeft": [
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "BR"
+      }
+    ],
+    "Biped_Raptor_TurnRight": [
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "BR"
+      }
+    ],
+    "Biped_Raptor_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Biped_Raptor_Hit": [],
+    "Biped_Raptor_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

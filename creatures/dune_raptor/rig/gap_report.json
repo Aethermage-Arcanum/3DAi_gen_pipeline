@@ -1,0 +1,80 @@
+{
+  "pairs_checked": 199,
+  "threshold_m": 0.0247,
+  "max_opening_m": 0.0223,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Biped_Raptor_Attack1": 0.0158,
+    "Biped_Raptor_Death": 0.0132,
+    "Biped_Raptor_Hit": 0.003,
+    "Biped_Raptor_Idle": 0.0003,
+    "Biped_Raptor_Ready": 0.0024,
+    "Biped_Raptor_Run": 0.0223,
+    "Biped_Raptor_TurnLeft": 0.0126,
+    "Biped_Raptor_TurnRight": 0.0118,
+    "Biped_Raptor_Walk": 0.0141
+  },
+  "worst": [
+    [
+      "Biped_Raptor_Run: Hips / Leg_BR_2",
+      0.0223,
+      2
+    ],
+    [
+      "Biped_Raptor_Attack1: Hips / Leg_BR_2",
+      0.0158,
+      12
+    ],
+    [
+      "Biped_Raptor_Walk: Hips / Leg_BR_2",
+      0.0141,
+      8
+    ],
+    [
+      "Biped_Raptor_Death: Leg_BL_1 / Leg_BL_2",
+      0.0132,
+      10
+    ],
+    [
+      "Biped_Raptor_TurnLeft: Hips / Leg_BR_2",
+      0.0126,
+      9
+    ],
+    [
+      "Biped_Raptor_TurnRight: Hips / Leg_BR_2",
+      0.0118,
+      7
+    ],
+    [
+      "Biped_Raptor_Death: Hips / Leg_BR_1",
+      0.011,
+      22
+    ],
+    [
+      "Biped_Raptor_Death: Hips / Leg_BL_1",
+      0.0103,
+      22
+    ],
+    [
+      "Biped_Raptor_Attack1: Leg_BR_1 / Leg_BR_2",
+      0.0094,
+      12
+    ],
+    [
+      "Biped_Raptor_Death: Hips / Leg_BR_2",
+      0.0091,
+      22
+    ],
+    [
+      "Biped_Raptor_Run: Leg_BL_1 / Leg_BL_2",
+      0.0091,
+      0
+    ],
+    [
+      "Biped_Raptor_Run: Leg_BR_1 / Leg_BR_2",
+      0.0085,
+      8
+    ]
+  ],
+  "ok": true
+}

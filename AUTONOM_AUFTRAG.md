@@ -26,11 +26,11 @@
 |---|---|---|---|---|---|---|---|---|
 | 1 | Ravine Stalker | ✅ | ✅ Tripo-UV | ✅ quadruped (30 Kn.) | ✅ 9/9 wolf | ✅ | ✅ | 110 |
 | 2 | Eel Stalker | ✅ | ✅ Tripo-UV (manuell) | ✅ legless (17 Kn.) | ✅ 9/9 cobra | ✅ | ✅ | 110 |
-| 3 | Dune Raptor | | | | | | | |
+| 3 | Dune Raptor | ✅ | ✅ Tripo-UV | ✅ biped_raptor (26 Kn.) | ✅ 9/9 raptor | ✅ | ✅ | 110 |
 | 4 | Void Manifestation | | | | | | | |
 | 5 | Scorpion Matriarch | | | | | | | |
 | 6 | Needle Wasp | | | | | | | |
 | 8 | Reef Snapper | | | | | | | |
 | 9 | Hollow Stag | | | | | | | |
 
-Ausgegebene Credits gesamt: 220 / 1.500 (Guthaben 2.135)
+Ausgegebene Credits gesamt: 330 / 1.500 (Guthaben 2.025)

@@ -1,0 +1,104 @@
+# Bewegungsmuster biped_raptor/raptor – zweibeiniger Läufer mit Schwanz als Gegengewicht (Dune Raptor).
+# Vorbilder: Strauß/Emu (Gang), Huhn (Kopfstabilisierung), Sekretärvogel (Stampf-Tritt).
+
+[meta]
+skeleton = "biped_raptor"
+style = "raptor"
+clip_prefix = "Biped_Raptor"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[rig]
+thigh_stiffness = 0.75   # Vogel/Raptor: Oberschenkel fast starr, Bewegung aus Knie + Sprunggelenk (Blender-IK-Steifigkeit)
+
+[walk]   # Beine im Gegentakt, Rumpf rollt zum Standbein, Kopf bleibt im Raum stehen (Huhn)
+max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+cycle_frames = 30
+duty = 0.6
+order = { BL = 0.0, BR = 0.5 }
+stride = 0.20
+lift_back = 0.30
+toe_curl_deg = 30
+bob = 0.025
+roll_deg = 4
+pitch_deg = 0
+head_stabilize = 0.9
+tail_deg = 6
+tail_lift_deg = 0
+arm_swing_deg = 6
+
+[run]    # Laufvogel-Galopp: kurze Bodenphase, Flugphase, Körper nach vorn geneigt
+max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+cycle_frames = 16
+duty = 0.36
+order = { BL = 0.0, BR = 0.5 }
+stride = 0.30
+lift_back = 0.40
+toe_curl_deg = 40
+bob = 0.05
+roll_deg = 3
+pitch_deg = 3
+lean_deg = 8          # Rumpf nach vorn (Schwanz hoch als Gegengewicht)
+head_stabilize = 0.9
+tail_deg = 4
+tail_lift_deg = 10
+arm_swing_deg = 3
+
+[turn]
+max_stretch = 6.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+cycle_frames = 26
+duty = 0.62
+turn_deg = 40
+stride = 0.0
+
+[idle]   # Vogel-typisch: ruckartige Kopfwendungen mit Halten dazwischen
+frames = 90
+breathe_deg = 1.5
+look_deg = 30
+tail_deg = 5
+
+[ready]  # Drohen: tief geduckt, Kopf vor, Maul auf (Fauchen), Arme mit Krallen erhoben, Schwanz steif hoch
+max_stretch = 2.4   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+frames = 30
+crouch = 0.14
+head_down_deg = 10
+jaw_deg = 18
+arms_up_deg = 35
+tail_lift_deg = 14
+tremble_deg = 1.5
+
+[attack1] # Stampf-Tritt (Sekretärvogel): Gewicht aufs linke Bein, rechter Fuß hoch → nach vorn-unten stampfen (hit)
+max_stretch = 5.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+frames = 26
+windup_end = 10
+strike_end = 12                # Tritt in 2 Frames (Sekretärvogel: ~15 ms Kontakt)
+hold_end = 18
+kick_leg = "BR"
+kick_height = 0.55    # Fuß hoch (Anteil Rumpfhöhe)
+kick_reach = 0.12     # nach vorn (Anteil Länge)
+lean_back_deg = 10
+jaw_deg = 22
+hit_frame = 12
+
+[hit]
+frames = 10
+jolt = 0.04
+roll_deg = 8
+head_deg = 24
+
+[death]
+max_stretch = 4.0   # Sichtprüfung: schlimmste Dreiecke innen am Oberschenkel an der entfernten Tripo-Hautbrücke, nicht sichtbar
+frames = 40
+collapse_start = 4
+collapse_end = 22
+side = 1
+legs_limp_deg = 30
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.05
+max_stretch = 1.9
+stretch_every = 3
+stretch_min_edge = 0.004

@@ -1,4 +1,5 @@
-"""Gemeinsamer Baukasten aller Vierbeiner-Muster (motions/quadruped/<muster>/<muster>_clips.py).
+"""Gemeinsamer Baukasten aller Muster mit IK-Beinen: Vierbeiner (motions/quadruped/*) und Zweibeiner
+(motions/biped_raptor/*). Beine werden aus dem Rig gelesen (Leg_<XX>_1..4).
 
 Prinzip ("Aufwand nach Blender"): Die Beine rechnet Blenders eigene IK. Pro Bein ein Ziel-Empty am Fußballen
 (trägt auch die Zehen-Ausrichtung), IK-Kette Oberarm/Oberschenkel → Mittelhand/-fuß. Ein Clip setzt pro Frame
@@ -50,9 +51,11 @@ def init(style_dir):
     FPS, PREFIX = ST["meta"]["fps"], ST["meta"]["clip_prefix"]
     sc = bpy.context.scene
     sc.render.fps = FPS
-    arm = bpy.data.objects["Quadruped_Rig"]
+    arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")      # Quadruped_Rig, Biped_Rig …
     body_obj = bpy.data.objects["Body_Mesh"]
     PB, DB = arm.pose.bones, arm.data.bones
+    global LEGS                                        # Beine aus dem Rig: Vierbeiner FL/FR/BL/BR, Zweibeiner BL/BR
+    LEGS = sorted({b.name[4:6] for b in DB if b.name.startswith("Leg_") and b.name.endswith("_1")})
     for pb in PB:
         pb.rotation_mode = "QUATERNION"
     xs = [b.head_local.x for b in DB] + [b.tail_local.x for b in DB]
@@ -74,6 +77,10 @@ def init(style_dir):
         if shoulder:                                   # Schulterblatt gleitet teilweise mit (IK-Steifigkeit)
             sp = PB[f"Shoulder_{leg}"]
             sp.ik_stiffness_x = sp.ik_stiffness_y = sp.ik_stiffness_z = ST.get("rig", {}).get("scapula_stiffness", 0.6)
+        thigh = ST.get("rig", {}).get("thigh_stiffness", 0.0)   # Vogel: Oberschenkel steckt im Körper, bewegt sich kaum
+        if thigh:
+            tp = PB[f"Leg_{leg}_1"]
+            tp.ik_stiffness_x = tp.ik_stiffness_y = tp.ik_stiffness_z = thigh
         cr = PB[f"Leg_{leg}_4"].constraints.new("COPY_ROTATION")
         cr.target = e
     global REST_RATIO

@@ -1,0 +1,113 @@
+{
+  "skeleton": "biped_raptor",
+  "file": "DuneRaptor.glb",
+  "meshes": 1,
+  "triangles": 4249,
+  "bones": 26,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_792084f5-fdd3-4060-bf8c-6d61aa8aa40f"
+  ],
+  "textures": [
+    [
+      "Color_792084f5-fdd3-4060-bf8c-6d61aa8aa40f",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_792084f5-fdd3-4060-bf8c-6d61aa8aa40f",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_792084f5-fdd3-4060-bf8c-6d61aa8aa40f",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Biped_Raptor_Attack1",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Biped_Raptor_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Biped_Raptor_Hit",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Biped_Raptor_Idle",
+      [
+        0,
+        72
+      ]
+    ],
+    [
+      "Biped_Raptor_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Biped_Raptor_Run",
+      [
+        0,
+        12
+      ]
+    ],
+    [
+      "Biped_Raptor_TurnLeft",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Biped_Raptor_TurnRight",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Biped_Raptor_Walk",
+      [
+        0,
+        24
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.94,
+    0.34
+  ],
+  "foot_moves_m": 0.1666,
+  "dimensions_m": [
+    0.405,
+    0.988,
+    0.579
+  ],
+  "ok": true
+}

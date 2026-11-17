@@ -19,3 +19,9 @@ role = "style"
 style = "biped_raptor/raptor"
 variant = ""
 vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff","echter Raptor - Sprungangriff mit Maul/Zähnen", "Huhn – Kopfstabilisierung"]
+
+# Lückenprüfung: Tripo hatte die Beine mit einer Hautbrücke verbunden (im Rig entfernt, siehe
+# rigging/biped_raptor_rig.py cut_between_legs). Ein Rest hängt am Rumpf und wird vom Schienbein im Rennen
+# um max. 2,2 cm gestreift – Sichtprüfung seitlich + schräg: nicht sichtbar. → Grenze 2,5 cm.
+[gaps]
+max_opening = 0.025

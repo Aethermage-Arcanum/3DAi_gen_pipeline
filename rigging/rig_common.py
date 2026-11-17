@@ -27,6 +27,25 @@ def load_mesh(src):
     obj = bpy.context.active_object
     obj.name = "Body_Mesh"
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+    return (obj,) + arrays(obj)
+
+
+def delete_faces(obj, face_mask):
+    """Flächen löschen (z. B. Tripo-Hautbrücken zwischen Beinen), lose Vertices mit entfernen."""
+    import bmesh
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    bm.faces.ensure_lookup_table()
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if face_mask[f.index]], context="FACES")
+    loose = [v for v in bm.verts if not v.link_faces]
+    bmesh.ops.delete(bm, geom=loose, context="VERTS")
+    bm.to_mesh(obj.data)
+    bm.free()
+    obj.data.update()
+
+
+def arrays(obj):
+    """(V, part, MAIN) für das aktuelle Mesh: Positionen, Teil-Nummer je Vertex, größtes Teil."""
     me = obj.data
     V = np.array([v.co[:] for v in me.vertices])
     N = len(V)
@@ -46,7 +65,7 @@ def load_mesh(src):
         parent[find(e.vertices[0])] = find(e.vertices[1])
     part = np.array([find(i) for i in range(N)])
     ids, counts = np.unique(part, return_counts=True)
-    return obj, V, part, ids[np.argmax(counts)]
+    return V, part, ids[np.argmax(counts)]
 
 
 def seg_dist(P, a, b):

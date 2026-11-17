@@ -1,0 +1,11 @@
+{
+  "vertices": 3420,
+  "parts": 24,
+  "height_m": 0.571,
+  "length_m": 1.0,
+  "bones": 26,
+  "arms": [
+    "L",
+    "R"
+  ]
+}
