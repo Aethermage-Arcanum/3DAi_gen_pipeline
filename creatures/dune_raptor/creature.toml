@@ -2,11 +2,11 @@
 name = "dune_raptor"
 bodyplan = "biped"
 style = "lowpoly_b"
-description = "the creature labeled \"Dune Raptor\" (Artist A version) in the design image: two-legged desert raptor WITHOUT wings, long tail for balance, body leaning forward"
-design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Dune Raptor\", Artist A version, and ignore all others."
+description = "Dune Raptor: two-legged desert raptor WITHOUT wings, long tail for balance, body leaning forward"
+design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
 
 [[concept]]
-file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+file = "input/concept/design_A.png"
 role = "design"
 
 [[concept]]

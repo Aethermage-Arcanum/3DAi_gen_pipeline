@@ -15,7 +15,7 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
-**Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md).
+**Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
 **Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md).
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
 

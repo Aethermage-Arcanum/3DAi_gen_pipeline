@@ -2,11 +2,11 @@
 name = "glassback_colossus"
 bodyplan = "quadruped"
 style = "lowpoly_b"
-description = "the creature labeled \"Glassback Colossus\" (Artist B version) in the design image: massive four-legged desert beast with glass-like crystal formations on its back"
-design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Glassback Colossus\", Artist B version, and ignore all others."
+description = "Glassback Colossus: massive four-legged desert beast with glass-like crystal formations on its back"
+design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
 
 [[concept]]
-file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+file = "input/concept/design_B.png"
 role = "design"
 
 [[concept]]

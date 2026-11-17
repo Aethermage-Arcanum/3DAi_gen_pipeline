@@ -10,7 +10,7 @@ Gefällt Bild 1 nicht: einfach neu generieren lassen oder die Beschreibung in `c
 
 **Anhängen in ChatGPT, in dieser Reihenfolge:**
 
-1. `H:\AIProjects\3D AI\_concept\monster_categories_A_vs_B.webp`
+1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input\concept\design_B.png`
 2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ## Ein Prompt für alle 4 Ansichten
@@ -20,9 +20,9 @@ ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a concept sheet with many creatures: use ONLY the creature labeled "Void Harbinger", Artist B version, and ignore all others.
+Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
-Creature: the creature labeled "Void Harbinger" (Artist B version) in the design image: partly humanoid two-legged void creature with wings, wings clearly separated from the body
+Creature: Void Harbinger: partly humanoid two-legged void creature with wings, wings clearly separated from the body
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
 

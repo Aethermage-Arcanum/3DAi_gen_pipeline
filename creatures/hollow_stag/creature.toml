@@ -2,11 +2,11 @@
 name = "hollow_stag"
 bodyplan = "quadruped"
 style = "lowpoly_b"
-description = "the creature labeled \"Hollow Stag\" (Artist A version) in the design image: gaunt stag with large antlers, four long legs"
-design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Hollow Stag\", Artist A version, and ignore all others."
+description = "Hollow Stag: gaunt stag with large antlers, four long legs"
+design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
 
 [[concept]]
-file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+file = "input/concept/design_A.png"
 role = "design"
 
 [[concept]]

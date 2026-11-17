@@ -2,11 +2,11 @@
 name = "scorpion_matriarch"
 bodyplan = "octopod"
 style = "lowpoly_b"
-description = "the creature labeled \"Scorpion Matriarch\" (Artist A version) in the design image: giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back"
-design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Scorpion Matriarch\", Artist A version, and ignore all others."
+description = "Scorpion Matriarch: giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back"
+design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
 
 [[concept]]
-file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+file = "input/concept/design_A.png"
 role = "design"
 
 [[concept]]

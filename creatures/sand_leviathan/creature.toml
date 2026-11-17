@@ -2,11 +2,11 @@
 name = "sand_leviathan"
 bodyplan = "serpentine"
 style = "lowpoly_b"
-description = "the creature labeled \"Sand Leviathan\" (Artist A version) in the design image: huge legless desert worm with a wide round maw, front part raised out of the sand"
-design_pick = "Image 1 is a concept sheet with many creatures: use ONLY the creature labeled \"Sand Leviathan\", Artist A version, and ignore all others."
+description = "Sand Leviathan: huge legless desert worm with a wide round maw, front part raised out of the sand"
+design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
 
 [[concept]]
-file = "H:/AIProjects/3D AI/_concept/monster_categories_A_vs_B.webp"
+file = "input/concept/design_A.png"
 role = "design"
 
 [[concept]]
