@@ -10,7 +10,7 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 | 2 | `python scripts/make_prompts.py creatures/<name>` → `prompts.md` | Skript | – |
 | 3 | **Ein** Prompt pro Kreatur in ChatGPT → 4 Einzelbilder, als `front/left/right/back.png` in `input/` speichern | du | ChatGPT-Abo |
 | 4 | `python scripts/tripo_run.py creatures/<name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
-| 5 | `python scripts/crawler_pipeline.py creatures/<name>` → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
+| 5 | `python scripts/creature_pipeline.py creatures/<name>` (jedes Skelett) → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
