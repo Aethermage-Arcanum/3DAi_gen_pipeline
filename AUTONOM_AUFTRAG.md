@@ -19,12 +19,13 @@
 - Naturbeobachtung zuerst: Videos/Referenzen zum Vorbild (`[motion] vorbild` in creature.toml) suchen und im README des Musters verlinken.
 - Struktur Skelett → Bewegungsmuster → Clips beibehalten (motions/<skelett>/<muster>/), MVP-Umfang wie Ant (9 Clips).
 - Alle 20 Minuten Wecker: bei Stillstand weitermachen.
+- **Zum Abschluss jeder Kreatur ein GIF (Walk oder Attack) per SendUserFile an den Nutzer schicken.**
 
 ## Fortschritt (wird laufend aktualisiert)
 | # | Kreatur | Tripo | UV | Rig | Clips | Export | Push | Credits |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Ravine Stalker | | | | | | | |
-| 2 | Eel Stalker | | | | | | | |
+| 1 | Ravine Stalker | ✅ | ✅ Tripo-UV | ✅ quadruped (30 Kn.) | ✅ 9/9 wolf | ✅ | ✅ | 110 |
+| 2 | Eel Stalker | ✅ | | | | | | 110 |
 | 3 | Dune Raptor | | | | | | | |
 | 4 | Void Manifestation | | | | | | | |
 | 5 | Scorpion Matriarch | | | | | | | |
@@ -32,4 +33,4 @@
 | 8 | Reef Snapper | | | | | | | |
 | 9 | Hollow Stag | | | | | | | |
 
-Ausgegebene Credits gesamt: 0 / 1.500
+Ausgegebene Credits gesamt: 220 / 1.500 (Guthaben 2.135)

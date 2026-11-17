@@ -1,0 +1,36 @@
+# Vierbeiner-Rig (rigging/quadruped_rig.py). Pro Kreatur überschreibbar in creature.toml unter [quadruped.*].
+# Längen als Anteil der Höhe (H) bzw. Länge (L) des Hauptkörpers.
+
+[detect]
+foot_band = 0.05        # Vertices bis zu dieser Höhe über dem Boden gehören zu den Füßen
+slice = 0.03            # Dicke der Querschnitte (Anteil L)
+min_belly = 0.12        # Querschnitte unterhalb dieser Höhe ignorieren (Beine/Boden)
+mid_half_width = 0.08   # halbe Breite des Mittellinien-Streifens (Anteil H)
+track_step = 0.03       # Schrittweite beim Verfolgen der Beine nach oben (Anteil H)
+leg_radius = 0.12       # Suchradius um die Beinachse (Anteil H)
+ball_height = 0.04      # Höhe des Fußballens über dem Boden (Anteil H)
+
+[rig]
+joint_inset = 0.6       # Schulter/Hüfte: Anteil des Abstands Mittellinie → Bein (kleiner = weiter innen)
+joint_depth = 0.35      # Schulter/Hüfte: Höhe zwischen Bauch (0) und Rücken (1)
+front_wrist = 0.22      # Handgelenk vorne (Anteil der Beinhöhe), falls keine Biegung gefunden
+front_elbow = 0.85
+back_hock = 0.32        # Sprunggelenk hinten
+back_knee = 0.75
+head_length = 0.42      # Kopflänge: Anteil des Abstands Schulter → Nasenspitze
+tail_base = 0.12        # Schwanzansatz hinter der Hüfte (Anteil Hüfte→Schulter)
+falloff = 4             # Gewichtsabfall 1/d^falloff (höher = härtere Übergänge)
+leg_cross = 0.02        # Bein-Gewichte dürfen so weit über die Mittellinie reichen
+leg_x_reach = 0.18      # Bein-Gewichte nur in diesem X-Bereich um Schulter/Hüfte (Anteil L)
+leg_top_margin = 0.14   # Bein-Gewichte bis so weit über das Schulter-/Hüftgelenk
+leg_capture = 0.10      # unterhalb des Bauchs: Vertices in diesem Radius ums Bein nur ans Bein
+below_belly = 0.05
+smooth_iterations = 6
+smooth_factor = 0.5
+neck_min_height = 0.45  # Hals-Gewichte erst ab dieser Höhe zwischen Bauch (0) und Rücken (1) …
+neck_free_ahead = 0.35  # … oder weiter vorn als dieser Anteil Schulter → Kopfansatz
+neck_center_width = 1.0  # seitlich davon (Schulter) keine Hals-Gewichte hinter neck_free_ahead
+scapula_back = 0.05      # Schulterblatt-Oberkante liegt so weit hinter dem Schultergelenk (Anteil L)
+scapula_height = 0.8     # … und so hoch zwischen Gelenk (0) und Rücken (1)
+leg_top_margin_back = 0.22 # hinten weicher in die Hüfte überblenden (Oberschenkel schwingt weit)
+rigid_parts = false      # true = Nebenteile starr an einem Knochen (harte Platten), false = weich überblenden

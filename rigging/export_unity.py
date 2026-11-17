@@ -1,4 +1,4 @@
-"""Exportiert ein gerigtes + animiertes Krabbler-Blend für Unity (FBX) und Web/Blender (GLB).
+"""Exportiert ein gerigtes + animiertes Blend (jedes Skelett) für Unity (FBX) und Web/Blender (GLB).
 
 & "D:\\Blender\\blender.exe" -b <crawler_walk.blend> -P rigging/export_unity.py -- <ausgabeordner> <name> [<creature.toml>]
 
@@ -13,17 +13,19 @@ import sys
 
 import bpy
 
-HERE = pathlib.Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-from crawler_rig import load_cfg  # noqa: E402
+import tomllib
 
+HERE = pathlib.Path(__file__).resolve().parent
 a = sys.argv[sys.argv.index("--") + 1:]
 OUT, NAME = pathlib.Path(a[0]).resolve(), a[1]
-cfg = load_cfg(a[2] if len(a) > 2 else None)
-E = cfg.get("export", {})
+E = {"texture_size": 1024}
+if len(a) > 2:                                       # creature.toml: [export] oder (alt) [crawler.export]
+    ct = tomllib.loads(pathlib.Path(a[2]).read_text(encoding="utf-8"))
+    E.update(ct.get("crawler", {}).get("export", {}))
+    E.update(ct.get("export", {}))
 OUT.mkdir(parents=True, exist_ok=True)
 
-arm = bpy.data.objects["Crawler_Rig"]
+arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 body = bpy.data.objects["Body_Mesh"]
 
 # Hilfsobjekte aus Prüf-Renders entfernen

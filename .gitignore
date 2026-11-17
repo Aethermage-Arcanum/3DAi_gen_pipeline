@@ -35,3 +35,4 @@ uv/textures/uv_checker.png
 creatures/*/style_tests/*/*.blend
 creatures/*/style_tests/*/output/*.blend*
 creatures/*/uv/insp_*.png
+creatures/*/output/*.blend1

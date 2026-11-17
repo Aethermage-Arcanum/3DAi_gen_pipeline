@@ -1,0 +1,106 @@
+{
+  "skeleton": "quadruped",
+  "file": "RavineStalker.fbx",
+  "meshes": 1,
+  "triangles": 4258,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_d1cfb01e-5f01-4033-a61c-c7f3edc3326a"
+  ],
+  "textures": [
+    [
+      "Color_d1cfb01e-5f01-4033-a61c-c7f3edc3326a",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_d1cfb01e-5f01-4033-a61c-c7f3edc3326a",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Attack1",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Hit",
+      [
+        1,
+        11
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Idle",
+      [
+        1,
+        91
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Ready",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Run",
+      [
+        1,
+        17
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_TurnLeft",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_TurnRight",
+      [
+        1,
+        29
+      ]
+    ],
+    [
+      "RavineStalker|RavineStalker|Quadruped_Wolf_Walk",
+      [
+        1,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    0.05
+  ],
+  "foot_moves_m": 0.0741,
+  "dimensions_m": [
+    0.221,
+    1.0,
+    0.476
+  ],
+  "ok": true
+}

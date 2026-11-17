@@ -1,0 +1,93 @@
+# Bewegungsmuster quadruped/wolf – Referenz-Vierbeiner (Ravine Stalker). Winkel in Grad,
+# Längen als Anteil der Körperlänge (stride) bzw. Rumpfhöhe (lift, Höhen).
+
+[meta]
+skeleton = "quadruped"
+style = "wolf"
+clip_prefix = "Quadruped_Wolf"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt)
+cycle_frames = 32
+duty = 0.62
+order = { BL = 0.0, FL = 0.75, BR = 0.5, FR = 0.25 }
+stride = 0.18
+lift_front = 0.14
+lift_back = 0.11
+toe_curl_deg = 18
+bob = 0.012           # Rumpf auf/ab (Anteil Rumpfhöhe), 2× pro Zyklus
+roll_deg = 2.0
+head_bob_deg = 3.0
+head_stabilize = 0.6
+tail_deg = 6
+tail_lift_deg = -8    # Wolf trägt den Schwanz beim Gehen leicht hängend
+
+[run]    # rotierender Galopp: HL, HR knapp danach, dann VR, VL – Rücken beugt/streckt sich
+cycle_frames = 16
+duty = 0.36
+order = { BL = 0.0, BR = 0.9, FR = 0.55, FL = 0.45 }
+stride = 0.21
+lift_front = 0.17
+lift_back = 0.17
+toe_curl_deg = 25
+bob = 0.03
+pitch_deg = 3
+spine_flex_deg = 5
+head_stabilize = 0.0
+tail_deg = 4
+tail_lift_deg = 6
+max_stretch = 2.4     # Sichtprüfung: Haut hinten am Oberschenkel zieht sich beim Vorschwingen lang (wie beim echten Tier), keine Risse
+
+[turn]
+cycle_frames = 28
+duty = 0.6
+turn_deg = 30         # Drehung pro Zyklus
+stride = 0.0
+
+[idle]   # stehen, atmen, umschauen, Schwanz pendelt ruhig
+frames = 90
+breathe_deg = 1.5
+look_deg = 22
+tail_deg = 5
+
+[ready]  # Drohhaltung: geduckt, Kopf tief + nach vorn, Lefzen hoch (Kiefer leicht offen), Schwanz steif
+frames = 30
+crouch = 0.18         # Rumpf absenken (Anteil Rumpfhöhe)
+head_down_deg = 26
+jaw_deg = 16
+tremble_deg = 1.2
+tail_lift_deg = 10
+
+[attack1] # Anspringen + Biss: zurücksetzen/ducken → nach vorn schnellen, Maul auf → zuschnappen (hit)
+frames = 24
+windup_end = 9
+strike_end = 13
+hold_end = 16
+crouch = 0.15
+lunge = 0.08          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
+lunge_up = 0.05
+neck_reach_deg = 28
+jaw_open_deg = 40
+hit_frame = 13
+
+[hit]
+frames = 10
+jolt = 0.05
+roll_deg = 6
+head_deg = 26
+
+[death]  # zur Seite kippen, Beine erschlaffen
+frames = 40
+collapse_start = 4
+collapse_end = 22
+side = 1              # 1 = auf die rechte Seite
+legs_limp_deg = 25
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.05
+max_stretch = 1.9          # 1,8 → 1,9 nach Sichtprüfung: schlimmste Kanten direkt an Hüft-/Schultergelenk, im Bild unsichtbar
+stretch_every = 3

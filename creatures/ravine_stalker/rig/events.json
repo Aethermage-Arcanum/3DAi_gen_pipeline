@@ -1,0 +1,88 @@
+{
+  "fps": 30,
+  "clips": {
+    "Quadruped_Wolf_Walk": [
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 16,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 24,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Wolf_Run": [
+      {
+        "frame": 2,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Wolf_Idle": [],
+    "Quadruped_Wolf_Ready": [],
+    "Quadruped_Wolf_TurnLeft": [
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 21,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Wolf_TurnRight": [
+      {
+        "frame": 7,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 21,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Wolf_Attack1": [
+      {
+        "frame": 13,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Wolf_Hit": [],
+    "Quadruped_Wolf_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

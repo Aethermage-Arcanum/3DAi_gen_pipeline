@@ -1,0 +1,113 @@
+{
+  "skeleton": "quadruped",
+  "file": "RavineStalker.glb",
+  "meshes": 1,
+  "triangles": 4258,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_d1cfb01e-5f01-4033-a61c-c7f3edc3326a"
+  ],
+  "textures": [
+    [
+      "Color_d1cfb01e-5f01-4033-a61c-c7f3edc3326a",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_d1cfb01e-5f01-4033-a61c-c7f3edc3326a",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_d1cfb01e-5f01-4033-a61c-c7f3edc3326a",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Quadruped_Wolf_Attack1",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Hit",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Idle",
+      [
+        0,
+        72
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Run",
+      [
+        0,
+        12
+      ]
+    ],
+    [
+      "Quadruped_Wolf_TurnLeft",
+      [
+        0,
+        22
+      ]
+    ],
+    [
+      "Quadruped_Wolf_TurnRight",
+      [
+        0,
+        22
+      ]
+    ],
+    [
+      "Quadruped_Wolf_Walk",
+      [
+        0,
+        25
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -1.0,
+    0.05
+  ],
+  "foot_moves_m": 0.0823,
+  "dimensions_m": [
+    0.222,
+    0.999,
+    0.483
+  ],
+  "ok": true
+}
