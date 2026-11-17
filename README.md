@@ -15,6 +15,7 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
+**Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md).
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
 
 ## Stellschrauben
