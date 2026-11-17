@@ -1,0 +1,109 @@
+{
+  "skeleton": "floater",
+  "file": "VoidManifestation.glb",
+  "meshes": 1,
+  "triangles": 4022,
+  "bones": 46,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_ca03b5a5-d619-4a4e-b2a7-44db54927eb6"
+  ],
+  "textures": [
+    [
+      "Color_ca03b5a5-d619-4a4e-b2a7-44db54927eb6",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_ca03b5a5-d619-4a4e-b2a7-44db54927eb6",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_ca03b5a5-d619-4a4e-b2a7-44db54927eb6",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Floater_Tentacle_Attack1",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Floater_Tentacle_Death",
+      [
+        0,
+        35
+      ]
+    ],
+    [
+      "Floater_Tentacle_Hit",
+      [
+        0,
+        9
+      ]
+    ],
+    [
+      "Floater_Tentacle_Idle",
+      [
+        0,
+        64
+      ]
+    ],
+    [
+      "Floater_Tentacle_Ready",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Floater_Tentacle_Run",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Floater_Tentacle_TurnLeft",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Floater_Tentacle_TurnRight",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Floater_Tentacle_Walk",
+      [
+        0,
+        32
+      ]
+    ]
+  ],
+  "head_direction_blender": null,
+  "foot_moves_m": null,
+  "dimensions_m": [
+    1.001,
+    0.67,
+    0.938
+  ],
+  "ok": true
+}

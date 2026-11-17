@@ -1,0 +1,70 @@
+# Bewegungsmuster floater/tentacle – schwebender Kern mit Tentakeln (Void Manifestation).
+# Vorbilder: Qualle (Pulsieren), Oktopus/Kalmar (Tentakelwellen, Schlag). Winkel in Grad, Höhen Anteil Größe.
+
+[meta]
+skeleton = "floater"
+style = "tentacle"
+clip_prefix = "Floater_Tentacle"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }
+
+[hover]
+height = 0.06          # Schwebehöhe über der Ruhelage (Anteil Größe) – Tentakelspitzen berühren den Boden nie
+
+[walk]   # schweben: Kern wippt, neigt sich nach vorn, Tentakel schleppen nach + wellen
+cycle_frames = 40
+bob = 0.02
+pitch_deg = 8
+amp_deg = 22
+speed = 1
+trail_deg = 26
+
+[run]
+cycle_frames = 24
+pitch_deg = 14
+amp_deg = 28
+trail_deg = 32
+
+[turn]
+cycle_frames = 40
+roll_deg = 10          # neigt sich in die Kurve
+
+[idle]   # Quallen-Pulsieren: Tentakel ziehen sich rhythmisch zusammen und spreizen
+frames = 80
+bob = 0.025
+amp_deg = 14
+pulse_deg = 16
+
+[ready]  # Drohen: Tentakel weit gespreizt, Kern hebt sich, zittert
+frames = 30
+lift = 0.05
+spread_deg = 50
+amp_deg = 10
+tremble_deg = 2
+
+[attack1] # Tentakelschlag: ausholen (Tentakel nach hinten, Kern zurück) → nach vorn schnellen (hit) → zurück
+frames = 26
+windup_end = 11
+strike_end = 14
+hold_end = 18
+pull_back = 0.05
+lunge = 0.10
+windup_deg = 35
+strike_deg = 55
+hit_frame = 14
+
+[hit]
+frames = 12
+recoil = 0.05
+flail_deg = 25
+
+[death]  # Tentakel erschlaffen, Kern sinkt zu Boden und kippt
+frames = 44
+collapse_end = 28
+tilt_deg = 50
+
+[checks]
+ground_tolerance = 0.01
+max_stretch = 1.9
+stretch_every = 3

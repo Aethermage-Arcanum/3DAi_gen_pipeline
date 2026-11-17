@@ -1,0 +1,13 @@
+# Schwebe-Rig (rigging/floater_rig.py). Pro Kreatur überschreibbar unter [floater].
+facing = "+x"          # Richtung, in die das Modell schaut (wird nach +X gedreht): "+x" | "-y" | "-x" | "+y"
+core_search = 0.3      # Kernradius wird innerhalb dieses Abstands gesucht (Anteil Größe)
+core_scale = 1.7      # Kernkugel etwas größer als die Dichte-Spitze (Ansätze gehören zum Kern)
+core_bone = 0.08
+core_blend = 2.0       # Tentakel-Vertices bis zu diesem Vielfachen des Kernradius mischen mit dem Kern
+min_verts = 12         # kleinere Stücke (Splitter) bleiben am Kern
+min_length = 0.04      # kürzere Stücke = Stacheln ohne eigene Kette (Anteil Größe)
+bone_length = 0.08     # Ziel-Knochenlänge in Tentakeln (Anteil Größe)
+max_bones = 5
+falloff = 4
+smooth_iterations = 6
+smooth_factor = 0.5

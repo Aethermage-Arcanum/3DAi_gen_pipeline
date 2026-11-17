@@ -1,0 +1,24 @@
+{
+  "fps": 30,
+  "clips": {
+    "Floater_Tentacle_Walk": [],
+    "Floater_Tentacle_Run": [],
+    "Floater_Tentacle_Idle": [],
+    "Floater_Tentacle_Ready": [],
+    "Floater_Tentacle_TurnLeft": [],
+    "Floater_Tentacle_TurnRight": [],
+    "Floater_Tentacle_Attack1": [
+      {
+        "frame": 14,
+        "event": "hit"
+      }
+    ],
+    "Floater_Tentacle_Hit": [],
+    "Floater_Tentacle_Death": [
+      {
+        "frame": 44,
+        "event": "dead"
+      }
+    ]
+  }
+}

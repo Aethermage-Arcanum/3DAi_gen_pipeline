@@ -1,0 +1,19 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0151,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Floater_Tentacle_Attack1": 0.0,
+    "Floater_Tentacle_Death": 0.0,
+    "Floater_Tentacle_Hit": 0.0,
+    "Floater_Tentacle_Idle": 0.0,
+    "Floater_Tentacle_Ready": 0.0,
+    "Floater_Tentacle_Run": 0.0,
+    "Floater_Tentacle_TurnLeft": 0.0,
+    "Floater_Tentacle_TurnRight": 0.0,
+    "Floater_Tentacle_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

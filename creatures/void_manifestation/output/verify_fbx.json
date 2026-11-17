@@ -1,0 +1,102 @@
+{
+  "skeleton": "floater",
+  "file": "VoidManifestation.fbx",
+  "meshes": 1,
+  "triangles": 4022,
+  "bones": 46,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_ca03b5a5-d619-4a4e-b2a7-44db54927eb6"
+  ],
+  "textures": [
+    [
+      "Color_ca03b5a5-d619-4a4e-b2a7-44db54927eb6",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_ca03b5a5-d619-4a4e-b2a7-44db54927eb6",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Attack1",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Death",
+      [
+        1,
+        45
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Hit",
+      [
+        1,
+        13
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Idle",
+      [
+        1,
+        81
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Ready",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Run",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_TurnLeft",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_TurnRight",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "VoidManifestation|VoidManifestation|Floater_Tentacle_Walk",
+      [
+        1,
+        41
+      ]
+    ]
+  ],
+  "head_direction_blender": null,
+  "foot_moves_m": null,
+  "dimensions_m": [
+    1.001,
+    0.666,
+    0.938
+  ],
+  "ok": true
+}

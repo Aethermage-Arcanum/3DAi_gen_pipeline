@@ -1,0 +1,141 @@
+{
+  "style": "floater/tentacle",
+  "variant": null,
+  "clips": {
+    "Floater_Tentacle_Walk": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": true,
+      "lowest_point_m": [
+        0.0669,
+        0.0761
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.56,
+      "stretch_at": "Tent_16_1 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Run": {
+      "frames": 24,
+      "seconds": 0.8,
+      "loop": true,
+      "lowest_point_m": [
+        0.0749,
+        0.0836
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.72,
+      "stretch_at": "Tent_16_1 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Idle": {
+      "frames": 80,
+      "seconds": 2.667,
+      "loop": true,
+      "lowest_point_m": [
+        0.0513,
+        0.0949
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.65,
+      "stretch_at": "Tent_16_1 @ Frame 9",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Ready": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": true,
+      "lowest_point_m": [
+        0.1914,
+        0.2325
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.72,
+      "stretch_at": "Tent_19_1 @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_TurnLeft": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": true,
+      "lowest_point_m": [
+        0.07,
+        0.0881
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.56,
+      "stretch_at": "Tent_16_1 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_TurnRight": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": true,
+      "lowest_point_m": [
+        0.0716,
+        0.0908
+      ],
+      "no_ground_penetration": true,
+      "loop_ok": true,
+      "max_stretch": 1.56,
+      "stretch_at": "Tent_16_1 @ Frame 6",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Attack1": {
+      "frames": 26,
+      "seconds": 0.867,
+      "loop": false,
+      "lowest_point_m": [
+        0.0586,
+        0.1896
+      ],
+      "no_ground_penetration": true,
+      "max_stretch": 1.34,
+      "stretch_at": "Tent_19_1 @ Frame 18",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Hit": {
+      "frames": 12,
+      "seconds": 0.4,
+      "loop": false,
+      "lowest_point_m": [
+        0.0585,
+        0.0886
+      ],
+      "no_ground_penetration": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.22,
+      "stretch_at": "Core @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Floater_Tentacle_Death": {
+      "frames": 44,
+      "seconds": 1.467,
+      "loop": false,
+      "lowest_point_m": [
+        -0.0,
+        0.0594
+      ],
+      "no_ground_penetration": true,
+      "lies_on_ground_ok": true,
+      "max_stretch": 1.42,
+      "stretch_at": "Tent_19_1 @ Frame 30",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

@@ -14,7 +14,8 @@ P = dbg["verts"]
 W, Hh = 900, 520
 xs = [p[0] for p in P]
 x0, x1 = min(xs), max(xs)
-s = (W - 40) / (x1 - x0)
+zs_, ys_ = [p[2] for p in P], [p[1] for p in P]
+s = min((W - 40) / (x1 - x0), (Hh - 60) / (max(zs_) - min(zs_)), (Hh - 60) / (max(ys_) - min(ys_)))  # beide Achsen einpassen
 COL = {"Leg_F": (230, 80, 60), "Leg_B": (60, 120, 230), "Tail": (60, 180, 80), "Neck": (200, 160, 30),
        "Head": (220, 40, 200), "Jaw": (255, 120, 220)}
 
@@ -27,7 +28,7 @@ img = Image.new("RGB", (W, Hh * 2), "white")
 dr = ImageDraw.Draw(img)
 zs = [p[2] for p in P]
 ys = [p[1] for p in P]
-for k, (ax, base, mn) in enumerate(((2, Hh - 20, min(zs)), (1, Hh + Hh // 2, sum(ys) / len(ys)))):
+for k, (ax, base, mn) in enumerate(((2, Hh - 20, min(zs)), (1, 2 * Hh - 30, min(ys)))):
     def pt(p):
         return 20 + (p[0] - x0) * s, (base - (p[ax] - mn) * s) if ax == 2 else (base - (p[ax] - mn) * s)
     for p in P:

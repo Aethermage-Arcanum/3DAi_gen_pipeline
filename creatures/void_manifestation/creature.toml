@@ -19,3 +19,7 @@ role = "style"
 style = "floater/tentacle"
 variant = ""
 vorbild = ["Oktopus – Tentakelwellen", "Qualle – Pulsieren beim Schweben", "Kalmar – Tentakel-Schlag"]
+
+# Tripo hat das Modell gedreht ausgegeben: das Auge schaut nach −Y (sonst +X) → Rig dreht es nach vorn.
+[floater]
+facing = "-y"
