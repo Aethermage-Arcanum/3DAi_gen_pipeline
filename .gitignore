@@ -25,3 +25,10 @@ creatures/*/rig/*.blend1
 creatures/*/rig/*.blend
 creatures/*/rig/anim/*.png
 creatures/*/rig/closeup/
+
+# UV-Prüfung: reproduzierbare Renders/Modelle (Bericht + Übersicht bleiben)
+creatures/*/uv/*.glb
+creatures/*/uv/uv_*_arpg.png
+creatures/*/uv/uv_*_side.png
+uv/textures/biome_*.png
+uv/textures/uv_checker.png

@@ -30,11 +30,10 @@ Root
 5. **Export** (`export_unity.py`): FBX mit Kopf → Unity +Z, Flat Shading, Texturen verkleinert. Dazu GLB.
 6. **Selbstprüfung**: Bodenkontakt der Füße, Schleife (alle Knochen), Fühler-Ausschlag, **Gelenk-Lücken** (`check_gaps.py`), Gegentest der Exporte (`verify_export.py`), Vorschau-GIF.
 
-## Stellschrauben (`crawler_defaults.toml`, pro Kreatur überschreibbar in `creature.toml` unter `[crawler.*]`)
-- `[walk] walking_slots` / `feeler_slots`: welche Beinpaare laufen bzw. nur tasten
-- `stride` (Schrittlänge), `lift_deg` (Schritthöhe), `cycle_frames` (Tempo), `duty` (Standanteil)
-- Körper: `body_sway_deg`, `abdomen_sway_deg`, `abdomen_lag`, `head_sway_deg`, `antenna_deg` …
-- `[export] texture_size`
+## Stellschrauben
+- **Rig** (`crawler_defaults.toml`, pro Kreatur `[crawler.*]`): Erkennung, Gelenkmanschetten, `[gaps]`, `[export] texture_size`
+- **Bewegung** (`motions/<skelett>/<muster>/style.toml`, pro Kreatur `[motion.*]`): Beinpaare, Schrittlänge, Tempo, Haltung, alle Clip-Parameter, Varianten
+- **UV** (`uv/uv_defaults.toml`, pro Kreatur `[uv]`)
 
 ## Werkzeuge zum Prüfen
 - `debug_detect.py`: Erkennung farbig (jedes Bein eigene Farbe, Gelenkpunkte)

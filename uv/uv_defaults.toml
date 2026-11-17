@@ -1,0 +1,23 @@
+# UV-Prüfung direkt nach Tripo (uv/uv_check.py). Pro Kreatur überschreibbar in creature.toml unter [uv].
+
+mode = "auto"              # "tripo" = Tripo-UV behalten · "smart" = immer Blender Smart UV · "auto" = bessere wählen
+switch_ratio = 0.8         # "auto": Smart UV nur nehmen, wenn ihr Fehlerwert < 80 % des Tripo-Werts ist
+raster = 512               # Auflösung für Abdeckungs-/Überlappungsmessung
+bake_size = 1024           # Texturgröße beim Übertragen auf eine neue UV
+
+[smart_uv]                 # Blender "Smart UV Project"
+angle_limit_deg = 66
+island_margin = 0.01
+area_weight = 0.0
+pack_margin = 0.004        # Abstand zwischen Inseln beim Packen (Anteil UV-Raum)
+
+[limits]                   # Ampel-Grenzen für den Bericht
+overlap_max = 0.02         # max. 2 % überlappende UV-Fläche (gespiegelte Inseln zählen nicht als Fehler)
+density_outlier_max = 0.10 # max. 10 % der Fläche mit Texturdichte außerhalb ×0,5 … ×2
+angle_distortion_max_deg = 8
+coverage_min = 0.45        # min. 45 % des UV-Raums genutzt (sonst verschenkte Texturauflösung)
+
+[preview]
+test_biomes = ["forest", "abyss"]   # nur 1-2 Beispieltexturen (verfügbar: forest, coast, highlands, desert, snow, abyss)
+tile_repeat = 3                     # Wiederholungen der kachelbaren Biom-Textur im UV-Raum
+resolution = 600

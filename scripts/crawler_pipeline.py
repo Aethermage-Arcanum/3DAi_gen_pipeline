@@ -3,6 +3,7 @@
   python scripts/crawler_pipeline.py creatures/chitin_crawler [--name ChitinCrawler] [--no-preview]
 
 Schritte (alle per Blender headless):
+  0. uv/uv_check.py                             UV-Prüfung, Biom-Testtexturen            → uv/model_uv.glb
   1. rigging/crawler_rig.py                     Anatomie erkennen, Standard-Skelett, Gewichte → rig/crawler_rigged.blend
   2. motions/<skelett>/<muster>/*_clips.py      alle Clips des Bewegungsmusters + Selbstprüfung → rig/crawler_clips.blend
   3. rigging/check_gaps.py                      Gelenk-Lücken in allen Clips                → rig/gap_report.json
@@ -54,6 +55,19 @@ def main():
     if not src.exists():
         raise SystemExit(f"{src} fehlt – erst scripts/tripo_run.py --steps generate laufen lassen.")
     R = ROOT / "rigging"
+    # 0. UV-Prüfung direkt nach Tripo (Tripo-UV vs. Smart UV, Biom-Testtexturen)
+    uvdir = c / "uv"
+    if not (ROOT / "uv" / "textures" / "uv_checker.png").exists():
+        subprocess.run([sys.executable, str(ROOT / "uv" / "biome_textures.py"), str(ROOT / "uv" / "textures")], check=True)
+    blender(["--factory-startup", "-P", str(ROOT / "uv" / "uv_check.py"), "--", str(src), str(uvdir), toml],
+            "UV-Prüfung", show=("UV_TRIPO", "UV_SMART", "UV_CHOSEN", "Traceback", "Error"))
+    uvrep = json.loads((uvdir / "uv_report.json").read_text(encoding="utf-8"))
+    subprocess.run([sys.executable, "-c", (
+        "import sys;from PIL import Image;d=sys.argv[1];L=sys.argv[2:];"
+        "I=[[Image.open(f'{d}/uv_{l}_{v}.png').convert('RGB').resize((360,360)) for v in ('arpg','side')] for l in L];"
+        "s=Image.new('RGB',(360*len(L),720));[ (s.paste(a,(i*360,0)),s.paste(b,(i*360,360))) for i,(a,b) in enumerate(I)];"
+        "s.save(f'{d}/uv_preview.png')"), str(uvdir)] + [r.split("_")[1] for r in uvrep["renders"][::2]], check=True)
+    src = uvdir / "model_uv.glb"
     blender(["--factory-startup", "-P", str(R / "crawler_rig.py"), "--", str(src), str(rig), toml], "Rig")
     blender([str(rig / "crawler_rigged.blend"), "-P", str(clips_script), "--", str(rig), toml], f"Clips ({style})")
     clips_blend = rig / "crawler_clips.blend"
@@ -89,6 +103,10 @@ def main():
             r.get("turn_speed_deg_s") and f"{r['turn_speed_deg_s']} °/s" or ""
         print(f"  {'✓' if r['ok'] else '✗'} {clip:24} {r['seconds']:>5} s  {'Loop' if r['loop'] else '    '}  {extra}")
     print(f"Gelenk-Lücken: max {gaps['max_opening_m'] * 100:.1f} cm (Grenze {gaps['threshold_m'] * 100:.1f} cm)")
+    u = uvrep[uvrep["chosen"].split("_")[0]]
+    print(f"UV: {uvrep['chosen']} · {u['islands']} Inseln · Abdeckung {u['coverage']:.0%} · Überlappung "
+          f"{u['overlap']:.1%} · Dichte-Ausreißer {u['density_outlier_fraction']:.1%} · Winkel {u['angle_distortion_deg']}°"
+          + (f" · ⚠ {', '.join(uvrep['warnings'])}" if uvrep["warnings"] else ""))
     print(f"\n{'✓ ALLES OK' if ok else '✗ PRÜFUNG FEHLGESCHLAGEN'}  ·  Ausgabe: {out}")
     if not ok:
         sys.exit(1)

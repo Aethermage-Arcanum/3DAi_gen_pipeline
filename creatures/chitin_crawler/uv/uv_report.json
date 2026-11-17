@@ -1,0 +1,57 @@
+{
+  "source": "generate_model.glb",
+  "mode": "auto",
+  "chosen": "tripo_uv",
+  "rebaked": [],
+  "tripo": {
+    "uv_map": "UVMap",
+    "islands": 78,
+    "coverage": 0.614,
+    "overlap": 0.0,
+    "density_outlier_fraction": 0.012,
+    "density_cv": 0.273,
+    "angle_distortion_deg": 6.76,
+    "mirrored_fraction": 0.0,
+    "out_of_bounds_tris": 0,
+    "checks": {
+      "overlap": true,
+      "density": true,
+      "angles": true,
+      "coverage": true
+    },
+    "error_score": 0.721
+  },
+  "smart": {
+    "uv_map": "UVSmart",
+    "islands": 595,
+    "coverage": 0.306,
+    "overlap": 0.0,
+    "density_outlier_fraction": 0.0,
+    "density_cv": 0.063,
+    "angle_distortion_deg": 5.47,
+    "mirrored_fraction": 0.0,
+    "out_of_bounds_tris": 0,
+    "checks": {
+      "overlap": true,
+      "density": true,
+      "angles": true,
+      "coverage": false
+    },
+    "error_score": 0.7305
+  },
+  "renders": [
+    "uv_original_arpg.png",
+    "uv_original_side.png",
+    "uv_checker_arpg.png",
+    "uv_checker_side.png",
+    "uv_forest_arpg.png",
+    "uv_forest_side.png",
+    "uv_abyss_arpg.png",
+    "uv_abyss_side.png"
+  ],
+  "warnings": [],
+  "export_vertices": {
+    "before": 2275,
+    "after": 2275
+  }
+}
