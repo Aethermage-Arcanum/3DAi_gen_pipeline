@@ -20,7 +20,7 @@ ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling.
 
 Creature: ant-like forest insect predator: small head with a glossy green carapace and short mandibles, reddish-brown segmented chitin armor plates on thorax and a large rounded abdomen, long thin jointed legs with dark tips, two short antennae
 

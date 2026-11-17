@@ -68,11 +68,12 @@ def build(creature_dir):
                              f"not the creatures shown in it.")
         intro = ("I attached reference images. " + " ".join(lines) +
                  " Ignore any text, labels, scenery and background in the attached images.\n\n"
-                 "Create clean reference images of the creature from the design image for 3D modeling." +
+                 f"Create {len(views)} separate clean reference images of the creature from the design image "
+                 f"for 3D modeling." +
                  (f" {cfg['design_pick']}" if cfg.get("design_pick") else ""))
         parts += ["**Anhängen in ChatGPT, in dieser Reihenfolge:**", ""] + attach + [""]
     else:
-        intro = "Create reference images of this creature for 3D modeling."
+        intro = f"Create {len(views)} separate clean reference images of this creature for 3D modeling."
     order = ["front", "left", "right", "back"]
     views = [v for v in order if v in views] + [v for v in views if v not in order]
     vlist = "\n".join(f"{i}. `{v}.png` - {VIEWS[v]}" for i, v in enumerate(views, 1))

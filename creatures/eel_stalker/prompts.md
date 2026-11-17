@@ -20,7 +20,7 @@ ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, 
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Eel Stalker: legless eel-like serpent from the coast, long body, head raised
 

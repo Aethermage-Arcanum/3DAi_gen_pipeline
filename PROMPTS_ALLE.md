@@ -9,7 +9,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Spore Drone: forest beetle-like insect carrying spore growths, six legs
 
@@ -40,7 +40,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Needle Wasp: forest wasp with a needle stinger and clearly separated wings, six legs
 
@@ -71,7 +71,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Broodling: small spider-like forest brood creature, eight legs
 
@@ -102,7 +102,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\in
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Reef Snapper: coastal lizard-like reptile predator with snapping jaws, four legs
 
@@ -133,7 +133,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\in
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Shore Lurker: low, flat coastal ambush reptile, four legs
 
@@ -164,7 +164,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Shellback: coastal tortoise-like beast with a heavy shell, four legs
 
@@ -195,7 +195,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Eel Stalker: legless eel-like serpent from the coast, long body, head raised
 
@@ -226,7 +226,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Ravine Stalker: lean wolf-like highland predator, four legs
 
@@ -257,7 +257,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\inpu
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Stone Boar: stocky boar with stone-like armor plates and tusks, four legs
 
@@ -288,7 +288,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Hollow Stag: gaunt stag with large antlers, four long legs
 
@@ -319,7 +319,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\inpu
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Rock Hyena: hunched hyena-like highland scavenger, four legs
 
@@ -350,7 +350,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Sand Leviathan: huge legless desert worm with a wide round maw, front part raised out of the sand
 
@@ -381,7 +381,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Dune Raptor: two-legged desert raptor WITHOUT wings, long tail for balance, body leaning forward
 
@@ -412,7 +412,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colos
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Glassback Colossus: massive four-legged desert beast with glass-like crystal formations on its back
 
@@ -443,7 +443,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matria
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Scorpion Matriarch: giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back
 
@@ -474,7 +474,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Frost Colossus: huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor
 
@@ -505,7 +505,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\inp
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Flesh Titan: hulking two-legged abyssal flesh monster with a partly humanoid upper body
 
@@ -536,7 +536,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestat
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Void Manifestation: floating void orb with squid-like tentacles hanging below it, hovering above the ground
 
@@ -567,7 +567,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Void Harbinger: partly humanoid two-legged void creature with wings, wings clearly separated from the body
 
@@ -598,7 +598,7 @@ Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\
 ```text
 I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
 
-Create clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
 
 Creature: Reality Ripper: mantis-like abyssal predator with large raptorial blade forelegs, walking on four legs
 
