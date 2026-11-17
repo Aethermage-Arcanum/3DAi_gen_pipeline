@@ -21,6 +21,12 @@ Concept: `_concept/monster_progression_A_vs_B.webp` (Design Artist A, Stil Artis
 - Look: Tripo liefert **weich schattierte** Normalen, der Facetten-Look geht verloren → in Blender auf Flat Shading stellen (kostenlos). Das Streifen-Muster ist schwächer als in den Bildern.
 - Texturen 3 × 2048² sind für einen kleinen Schwarmgegner zu viel → in Blender auf 512–1024 verkleinern.
 
+### Rig-Analyse (scripts/rig_report.py, scripts/render_rig.py)
+- **Tripos Octopod-Rig ist für dieses Modell unbrauchbar:** 30 Knochen in 19 Ketten, nur ca. 2 von 8 Beinen haben eine durchgehende Beinkette. Der Rest sind lose Einzelknochen, teils außerhalb des Körpers. Die Benennung ist größtenteils generisch (`bone_6..25`).
+- Zusätzlich liegt ein Fremdobjekt `Icosphere` (42 Vertices) in der Datei.
+- → Ein `octopod:walk` (10 Credits) würde nur dieses kaputte Rig bewegen. **Nicht gekauft.**
+- Konsequenz: eigenes **Standard-Krabbler-Skelett** (8 Beine, bei Sechsbeinern bleibt ein Paar ungenutzt) in Blender aufbauen und automatisch ans Mesh anpassen. Tripo nur noch für Mesh + Textur.
+
 ## Bewegungs-Referenz (Naturbeobachtung)
 - **Gangart Ameise = Dreifuß-Gang (tripod):** Abwechselnd stehen je drei Beine am Boden, und zwar Vorder- und Hinterbein der einen Seite plus Mittelbein der anderen Seite. Das Muster bleibt über viele Geschwindigkeiten gleich. Schneller wird die Ameise durch längere Schritte und höhere Schrittfrequenz, nicht durch eine andere Gangart.
   - [Stepping patterns in ants (J Exp Biol 1994)](https://cob.silverchair.com/jeb/article-pdf/192/1/95/2854548/jexbio_192_1_95.pdf)
