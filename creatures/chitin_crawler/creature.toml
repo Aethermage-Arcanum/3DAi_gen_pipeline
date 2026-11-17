@@ -1,0 +1,24 @@
+# Chitin Crawler – Insects / Forest / Early Game (Concept: _concept/monster_progression_A_vs_B.webp)
+# Drops laut Concept: Chitin, Ichor, Mandible
+
+name = "chitin_crawler"
+bodyplan = "hexapod"          # Insekt → 6 Beine. Falls er 8 Beine haben soll: "octopod"
+style = "lowpoly_b"
+
+# Ergänzt das Concept-Bild in Worten (hilft ChatGPT, das unscharfe Bild richtig zu deuten)
+description = """ant-like forest insect predator: small head with a glossy green carapace and \
+short mandibles, reddish-brown segmented chitin armor plates on thorax and a large rounded \
+abdomen, long thin jointed legs with dark tips, two short antennae"""
+
+# Concept-Bilder, die in ChatGPT angehängt werden (Reihenfolge zählt)
+[[concept]]
+file = "input/concept/1_design_chitin_crawler_A.png"
+role = "design"
+
+[[concept]]
+file = "input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Early-Game-Schwarmgegner: viele gleichzeitig auf dem Bildschirm → knappes Budget
+[tripo]
+face_limit = 3000

@@ -1,6 +1,13 @@
 # Stil-Vorlagen. Bewusst "3D-tauglich" formuliert: klare Formen, saubere Materialien,
 # keine Effekte, die Tripo als Geometrie missversteht (Rauch, Glühen, Partikel, Fell-Fransen).
 
+[lowpoly_b]
+label = "Artist B: Clean Low-Poly Stylized (Projekt-Standard)"
+text = """clean low-poly stylized game creature: faceted planar surfaces with crisp edges, \
+simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, \
+strong color blocking with simple painted gradients per facet, colorful yet dark palette, \
+gameplay-focused readability, rendered like a stylized low-poly 3D game asset"""
+
 [dark_fantasy]
 label = "Dark Fantasy, realistisch"
 text = """dark fantasy game creature, realistic detailed materials (chitin, scales, leathery \

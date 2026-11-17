@@ -55,7 +55,25 @@ def build(creature_dir):
     ]
 
     n = 1
-    front = (f"Create a reference image of this creature for 3D modeling.\n\n"
+    concepts = cfg.get("concept", [])
+    if concepts:
+        # Concept-Modus: Design (und optional Stil) kommen aus angehängten Bildern
+        lines, attach = [], []
+        for i, c in enumerate(concepts, 1):
+            attach.append(f"{i}. `{creature_dir / c['file']}`")
+            if c["role"] == "design":
+                lines.append(f"Image {i} shows the creature DESIGN to recreate: keep its anatomy, body "
+                             f"segments, number of legs, head shape, proportions and color scheme.")
+            elif c["role"] == "style":
+                lines.append(f"Image {i} is only an ART STYLE reference: copy its rendering style, "
+                             f"not the creatures shown in it.")
+        intro = ("I attached reference images. " + " ".join(lines) +
+                 " Ignore any text, labels, scenery and background in the attached images.\n\n"
+                 "Create a clean reference image of the creature from the design image for 3D modeling.")
+        parts += ["**Anhängen in ChatGPT, in dieser Reihenfolge:**", ""] + attach + [""]
+    else:
+        intro = "Create a reference image of this creature for 3D modeling."
+    front = (f"{intro}\n\n"
              f"Creature: {cfg['description']}\n\n"
              f"Style: {st['text']}\n\n"
              f"View: {VIEWS['front']}\n\n{rules}")

@@ -18,7 +18,8 @@ walk = "preset:octopod:walk"
 label = "Sechsbeiner (Insekt, Käfer, Ameise)"
 pose = """neutral rigging pose: body level and horizontal, all six legs spread out \
 symmetrically left/right, clearly separated, no legs crossing, leg tips on the ground, \
-antennae pointing forward and apart, mandibles closed, wings folded flat on the back"""
+antennae pointing forward and apart, mandibles closed, wings (only if the design has \
+any) folded flat on the back"""
 camera = "camera slightly elevated at about 20 degrees, orthographic-like, no perspective distortion"
 rig_type = "hexapod"
 walk = "preset:hexapod:walk"
