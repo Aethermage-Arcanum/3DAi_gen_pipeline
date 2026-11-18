@@ -1,7 +1,7 @@
 # Handover (Stand 2026-11-18 abends)
 
 Für die nächste Session lesen, in dieser Reihenfolge:
-1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer**, Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
+1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer** (Hauptchat erkundet/schreibt nichts selbst, alles über Subagenten, Kontext sparen), Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
 2. Diese Datei.
 3. **`BACKLOG.md`**: die Hauptliste aller Nutzer-Meldungen mit Status. Jede neue Meldung kommt zuerst dorthin.
 
