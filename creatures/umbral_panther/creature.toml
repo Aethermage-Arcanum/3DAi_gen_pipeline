@@ -1,0 +1,18 @@
+# Umbral Panther – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Dschungel (jungle) · Rolle: Nahkampf (Assassine, Sprung aus dem Hinterhalt) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "umbral_panther"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Umbral Panther: sleek blue-black jungle panther with sabre fangs and a ridge of leaf-shaped bone plates"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/leopard"
+variant = ""
+vorbild = ["Leopard/Jaguar auf der Pirsch – geducktes Schleichen", "Hauskatze springt (Zeitlupe)", "Jaguar – Prankenhieb, Biss in den Nacken"]

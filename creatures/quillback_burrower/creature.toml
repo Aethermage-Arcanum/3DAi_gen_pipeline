@@ -1,0 +1,18 @@
+# Quillback Burrower – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Stein (stone) · Rolle: Fernkampf (gräbt sich ein, Stachel-Salve) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "quillback_burrower"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Quillback Burrower: stocky badger-like burrower with a bristling mantle of stone-grey quills and digging claws"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/badger"
+variant = "porcupine"
+vorbild = ["Honigdachs – Gang und Graben", "Stachelschwein droht – Stacheln aufstellen, Rückwärtsstoß"]

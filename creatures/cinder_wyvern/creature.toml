@@ -1,0 +1,18 @@
+# Cinder Wyvern – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Vulkan (volcano) · Rolle: Elite (landet zum Kämpfen, Feueratem) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "cinder_wyvern"
+bodyplan = "winged"
+style = "lowpoly_b"
+description = "Cinder Wyvern: heavy volcanic wyvern with wing-arms, basalt scales and a spiked rock tail club"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "winged/drake"
+variant = ""
+vorbild = ["Adler/Pelikan – schwere Landung", "Komodowaran – Gang und Kopfschwingen am Boden", "Flughund – Flügelschlag (Zeitlupe)"]

@@ -5,6 +5,8 @@ und schreibt PROMPTS_ALLE.md (alle Prompts in einem Dokument zum Abarbeiten, je 
 Bestehende creature.toml werden nie überschrieben (eigene Anpassungen bleiben erhalten).
 Die Beschreibung (`look`) und Sonder-Posen (`pose`) stehen in creatures/roster.toml – make_prompts.py liest sie dort.
 Vorhandene Bilder (design.png, front/left/right/back.png) werden nie angefasst, nur die Prompts neu geschrieben.
+Kreaturen ohne Concept Art (kein `artist`/`cell` im Roster, seit 2026-11-18): creature.toml nur mit Stil-Referenz,
+Stufe 1 entwirft das Design aus der Beschreibung (make_prompts.py), `input/.gitkeep` hält den leeren Ordner im Git.
 """
 import pathlib
 import tomllib
@@ -13,6 +15,13 @@ import make_prompts
 
 PIPE = pathlib.Path(__file__).resolve().parent.parent
 R = tomllib.loads((PIPE / "creatures" / "roster.toml").read_text(encoding="utf-8"))
+BIOMES = tomllib.loads((PIPE / "templates" / "biomes.toml").read_text(encoding="utf-8"))
+
+
+def biome_label(key):
+    return BIOMES.get(key, {}).get("label", key or "?")
+
+
 style = (PIPE / R["style_ref"]).resolve()
 out = ["# Alle ChatGPT-Prompts – zwei Stufen pro Kreatur", "",
        "Seit 2026-11-18 (BACKLOG A10). Pro Kreatur:", "",
@@ -25,6 +34,9 @@ out = ["# Alle ChatGPT-Prompts – zwei Stufen pro Kreatur", "",
        "4 Einzelbilder als `front.png`, `left.png`, `right.png`, `back.png` in denselben `input`-Ordner speichern.",
        "3. **Claude prüft** die 4 Ansichten nach der Checkliste (`README.md`, Teil A), erst dann Tripo.", "",
        "Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau – ihre Bilder bleiben, wie sie sind.",
+       "**Ohne Concept** (markiert, Roster-Erweiterung 2026-11-18): Stufe 1 bekommt nur die Stil-Referenz und entwirft die "
+       "Kreatur aus der Beschreibung – **das Design-Bild ist der Design-Entwurf**, du prüfst es (gefällt es dir?) und "
+       "lässt es ggf. neu generieren.",
        "Übersicht aller Concept-Ausschnitte: `creatures/concept_crops.png`.", "",
        "| # | Kreatur | Tripo-Modell | design.png |", "|---|---|---|---|"]
 body = []
@@ -32,7 +44,17 @@ for i, c in enumerate(R["c"], 2):
     d = PIPE / "creatures" / c["id"]
     (d / "input").mkdir(parents=True, exist_ok=True)
     toml = d / "creature.toml"
-    if not toml.exists():
+    if not toml.exists() and not c.get("artist"):          # ohne Concept: nur Stil-Referenz
+        (d / "input" / ".gitkeep").touch()
+        toml.write_text(
+            f'# {c["design"]} – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:\n'
+            f'# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).\n'
+            f'# Heimat-Biom: {biome_label(c.get("biome"))} ({c.get("biome", "?")}) · Rolle: {c.get("role", "?")} · Beschreibung (look), Pose und '
+            f'Varianten: creatures/roster.toml · Biome: templates/biomes.toml\n'
+            f'name = "{c["id"]}"\nbodyplan = "{c["bodyplan"]}"\nstyle = "lowpoly_b"\n'
+            f'description = "{c["design"]}: {c["hint"]}"   # Fallback – die Beschreibung steht in roster.toml (look)\n\n'
+            f'[[concept]]\nfile = "{style.as_posix()}"\nrole = "style"\n', encoding="utf-8")
+    elif not toml.exists():
         toml.write_text(
             f'# {c["design"]} – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)\n'
             f'name = "{c["id"]}"\nbodyplan = "{c["bodyplan"]}"\nstyle = "lowpoly_b"\n'
@@ -54,7 +76,8 @@ for i, c in enumerate(R["c"], 2):
                f"{'✅ vorhanden' if model else '–'} | {'✅' if p['design'].exists() else '–'} |")
     names = ", ".join(f"`{v}.png`" for v in p["views"])
     body += [f"## {i}. {c['design']}", "",
-             f"Artist {c['artist']} · Ordner `{p['input']}`" +
+             (f"Artist {c['artist']}" if c.get("artist") else "**Ohne Concept** – Design-Entwurf aus der Beschreibung, "
+              f"Heimat-Biom {biome_label(c.get('biome'))}, Rolle {c.get('role', '?')}") + f" · Ordner `{p['input']}`" +
              (" · **Tripo-Modell vorhanden – nur bei Neubau nötig**" if model else ""), "",
              "### Stufe 1 – Design-Bild → `input/design.png`", "",
              "Anhängen: " + "  ".join(f"{k}. `{x}`" for k, x in enumerate(p["attach1"], 1)), "",

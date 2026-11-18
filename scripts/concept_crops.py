@@ -36,6 +36,8 @@ def main():
     img = Image.open(SHEET).convert("RGB")
     tiles = []
     for c in R["c"]:
+        if not c.get("cell"):          # Roster-Erweiterung ohne Concept Art
+            continue
         im = crop(img, c["cell"])
         out = PIPE / "creatures" / c["id"] / "input" / "concept" / f"design_{c['artist']}.png"
         out.parent.mkdir(parents=True, exist_ok=True)

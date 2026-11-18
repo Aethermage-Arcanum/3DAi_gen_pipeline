@@ -11,6 +11,8 @@
 #   Körperbereich, Material. KEINE Zahlen/Maße/Verhältnisse (der KI Kreativität lassen). Nur, was im Concept zu sehen
 #   ist bzw. dazu passt. Steht vorn und dominant in beiden Prompt-Stufen (scripts/make_prompts.py).
 # pose = nur wenn die Neutralpose des Bauplans (templates/bodyplans.toml) nicht passt (z. B. Knöchelgang, Flügel).
+# biome = Heimat-Biom (Schlüssel aus templates/biomes.toml; bei den 20 aus ROADMAP_20_KREATUREN.md übernommen).
+# Die 16 Kreaturen OHNE Concept Art (Roster-Erweiterung 2026-11-18) stehen am Ende, mit eigenen Feldern (Kommentar dort).
 # Das Concept-Sheet hat immer Vorrang. Ein `look`/`pose` in der creature.toml überschreibt den Wert hier.
 
 sheet = "../_concept/monster_progression_A_vs_B.webp"
@@ -25,6 +27,7 @@ vorbild = ["Käfer (z. B. Mistkäfer) – schwerer, langsamer Dreifuß-Gang", "v
 design = "Spore Drone"
 artist = "A"
 bodyplan = "hexapod"
+biome = "forest"
 hint = "forest beetle-like insect carrying spore growths, six legs"
 look = """A creepy forest beetle that carries a huge fungal growth on its back - slow, heavy-laden, like a walking \
 mushroom colony. The body is a compact, rounded beetle with a glossy dark red-brown carapace marked with a few \
@@ -45,6 +48,7 @@ vorbild = ["Wespe/Hornisse im Schwebeflug (Zeitlupe)", "Wespe beim Stechen – H
 design = "Needle Wasp"
 artist = "A"
 bodyplan = "hexapod"
+biome = "forest"
 hint = "slender wasp (not an ant): huge wings, thin short legs, long needle stinger as key feature"
 look = """A slender, aggressive forest wasp - clearly a wasp, not an ant - fast, nervous and dangerous. Its armor is \
 dark indigo-violet with sharp, faceted plates on the head and thorax; the abdomen is banded in indigo and warm \
@@ -66,6 +70,7 @@ vorbild = ["Wolfsspinne mit Eikokon/Jungen auf dem Rücken", "Springspinne – S
  design = "Broodling"
  artist = "A"
 bodyplan = "octopod"
+biome = "forest"
 hint = "small spider-like forest brood creature, eight legs"
 look = """A small, unsettling forest spider that carries its own brood - a scuttling mother-creature bloated with eggs. \
 The body is low and compact, with a reddish-brown, flesh-toned carapace made of overlapping, swollen plates. \
@@ -84,6 +89,7 @@ vorbild = ["Waran (Komodowaran) – Gang mit seitlichem Körperschwingen", "Krok
    design = "Reef Snapper"
    artist = "A"
 bodyplan = "quadruped"
+biome = "coast"
 hint = "coastal lizard-like reptile predator with snapping jaws, four legs"
 look = """A low, long coastal lizard predator built for ambush and snapping - all jaws and spines. The body is long and \
 close to the ground like a crocodile or monitor lizard, with four sturdy legs set out to the sides and a long, \
@@ -102,6 +108,7 @@ vorbild = ["Krokodil im Hinterhalt – flach liegen, Vorschnellen", "Walross –
    design = "Shore Lurker"
    artist = "A"
 bodyplan = "quadruped"
+biome = "coast"
 hint = "low, flat coastal ambush reptile, four legs"
 look = """A hulking, low-slung coastal ambusher - heavy, brooding and patient, somewhere between a crocodile and a \
 walrus-like brute. The body is broad and bulky with a deep chest and a powerful front, crouched close to the \
@@ -120,6 +127,7 @@ vorbild = ["Schnappschildkröte – Biss", "Landschildkröte – langsamer Gang,
  design = "Shellback"
  artist = "A"
 bodyplan = "quadruped"
+biome = "coast"
 hint = "coastal tortoise-like beast with a heavy shell, four legs"
 look = """A heavy, armored coastal tortoise-beast - slow and stubborn, but with a snapping-turtle temper. Most of its \
 body is covered by a big domed shell of rough, dark charcoal plates, edged with bands of bronze and tan, with \
@@ -137,6 +145,7 @@ vorbild = ["Muräne – Vorschnellen aus der S-Kurve", "Kobra – aufgerichtete 
 design = "Eel Stalker"
 artist = "A"
 bodyplan = "serpentine"
+biome = "coast"
 hint = "legless eel-like serpent from the coast, long body, head raised"
 look = """A long, legless coastal eel-serpent - sinuous, slimy and predatory, always ready to strike. The body is long, \
 smooth and muscular like a moray eel: thick behind the head and tapering into a thin tail, with a solid, heavy \
@@ -154,6 +163,7 @@ vorbild = ["Wolf – Trab und Galopp (Muybridge-Sequenzen)", "Wolf – Drohhaltu
   design = "Ravine Stalker"
   artist = "A"
 bodyplan = "quadruped"
+biome = "highlands"
 hint = "lean wolf-like highland predator, four legs"
 look = """A lean, gaunt wolf-like highland predator - hungry, fast and menacing. The body is narrow and wiry with a deep \
 chest, a tucked-in waist, visible ribs and long, thin legs. The hide is charcoal black, marbled with pale \
@@ -170,6 +180,7 @@ vorbild = ["Wildschwein – Angriff/Rammen", "Wildschwein – Wühlen (Idle)"]
 design = "Stone Boar"
 artist = "A"
 bodyplan = "quadruped"
+biome = "highlands"
 hint = "stocky boar with stone-like armor plates and tusks, four legs"
 look = """A massive, hump-backed boar armored like a boulder - stubborn, heavy and built to charge. The body is bulky \
 and front-heavy, with a huge raised hump over the shoulders, thick muscular forelegs and shorter hind legs. \
@@ -187,6 +198,7 @@ vorbild = ["Hirsch – Galopp und Sprung", "Hirschkampf in der Brunft – Geweih
 design = "Hollow Stag"
 artist = "A"
 bodyplan = "quadruped"
+biome = "highlands"
 hint = "gaunt stag with large antlers, four long legs"
 look = """A gaunt, haunted stag - eerie, silent and noble, like a deer that has been hollowed out. The body is tall and \
 thin, with a long, slender neck, a narrow chest and long, thin legs ending in small dark hooves. Its hide is \
@@ -204,6 +216,7 @@ vorbild = ["Tüpfelhyäne – geduckter, schaukelnder Gang", "Tüpfelhyäne – 
 design = "Rock Hyena"
 artist = "A"
 bodyplan = "quadruped"
+biome = "highlands"
 hint = "hunched hyena-like highland scavenger, four legs"
 look = """A hunched, hyena-like scavenger of the highlands - crooked, sly and aggressive. The silhouette is classic \
 hyena: high, powerful shoulders and a back that slopes down clearly toward smaller hindquarters. The front \
@@ -221,6 +234,7 @@ vorbild = ["Regenwurm – Peristaltik", "Python – rectilineare (geradlinige) F
   design = "Sand Leviathan"
   artist = "A"
 bodyplan = "serpentine"
+biome = "desert"
 hint = "huge legless desert worm with a wide round maw, front part raised out of the sand"
 look = """A huge, legless desert worm - ancient, crushing and terrifying, bursting out of the dunes. The body is long \
 and thick and made of ribbed, ring-shaped segments, sandy beige and ochre with darker brown bands between the \
@@ -238,6 +252,7 @@ vorbild = ["Strauß/Emu – Laufvogel-Gang", "Sekretärvogel – Tritt-Angriff",
 design = "Dune Raptor"
 artist = "A"
 bodyplan = "biped"
+biome = "desert"
 hint = "two-legged desert raptor WITHOUT wings, long tail for balance, body leaning forward"
 look = """A fast, two-legged desert raptor - a lean, agile pack hunter that moves like a running bird. The body leans \
 forward and is balanced by a long, stiff tail; it has NO wings and no arms. The two legs are long, slender and \
@@ -256,6 +271,7 @@ vorbild = ["Elefant – schwerer Passgang", "Nashorn – Angriff/Rammen"]
 design = "Glassback Colossus"
 artist = "B"
 bodyplan = "quadruped"
+biome = "desert"
 hint = "massive four-legged desert beast with glass-like crystal formations on its back"
 look = """A massive desert colossus - a hulking, ape-like brute armored in rock and crystal, slow but overwhelming. It \
 stands on all fours on huge, long front arms and shorter, thick hind legs, with a broad, hunched upper body; \
@@ -274,6 +290,7 @@ vorbild = ["Skorpion – Gang, Scheren vorne", "Skorpion – Stich und Drohhaltu
 design = "Scorpion Matriarch"
 artist = "A"
 bodyplan = "octopod"
+biome = "desert"
 hint = "giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back"
 look = """A giant desert scorpion queen - huge, imperious and venomous. The body is low and wide, with a heavily \
 armored, segmented back. Its chitin is glossy black-red with molten orange and ember-red highlights along the \
@@ -291,6 +308,7 @@ vorbild = ["Gorilla – Knöchelgang (vierbeinig)", "Gorilla – Aufrichten, Bru
   design = "Frost Colossus"
   artist = "A"
 bodyplan = "quadruped"
+biome = "snow"
 hint = "huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor"
 look = """A huge gorilla-like ice beast - brutal, heavy and ancient, a walking glacier. It stands on all fours on its \
 knuckles, with massive, long front arms, a broad chest and shoulders, and shorter, thick hind legs; like a \
@@ -309,6 +327,7 @@ vorbild = ["Gorilla aufrecht / Bodybuilder-Gang", "Sumo-Ringer – schwerer Stam
 design = "Flesh Titan"
 artist = "B"
 bodyplan = "biped"
+biome = "abyss"
 hint = "hulking two-legged abyssal flesh monster with a partly humanoid upper body"
 look = """A hulking, two-legged abyssal flesh brute with a partly humanoid upper body - grotesque, enormous and \
 unstoppable. Its body is raw red muscle without skin, with clearly sculpted chest, belly and arm muscles. Pale \
@@ -325,6 +344,7 @@ vorbild = ["Oktopus – Tentakelwellen", "Qualle – Pulsieren beim Schweben", "
 design = "Void Manifestation"
 artist = "A"
 bodyplan = "aquatic"
+biome = "abyss"
 hint = "floating void orb with squid-like tentacles hanging below it, hovering above the ground"
 look = """A floating horror from the void - an alien, silent watcher that hovers above the ground. The core is a round \
 body built around one huge eye: a dark, glossy black sphere framed by a vivid violet ring. Around the eye the \
@@ -341,6 +361,7 @@ vorbild = ["Weberknecht – lange dünne Beine (laut Concept)", "Fledermaus/Flug
   design = "Void Harbinger"
   artist = "B"
 bodyplan = "biped"
+biome = "abyss"
 hint = "partly humanoid two-legged void creature with wings, wings clearly separated from the body"
 look = """A tall, partly humanoid void creature - a dark herald, spindly and unnatural. Instead of a head it has a \
 large, dark, glossy orb framed by a vivid violet ring, sitting on top of a thin, black, spiky torso. Two long, \
@@ -359,6 +380,7 @@ vorbild = ["Gottesanbeterin – Fangschlag (Zeitlupe)", "Gottesanbeterin – Wie
   design = "Reality Ripper"
   artist = "A"
 bodyplan = "hexapod"
+biome = "abyss"
 hint = "mantis-like abyssal predator with large raptorial blade forelegs, walking on four legs"
 look = """A mantis-like abyssal predator - a nightmare hunter that slices through reality. It walks on four long, \
 jointed, spidery legs, and its two front limbs are huge raptorial blade arms with long, curved, scythe-like \
@@ -367,3 +389,456 @@ is black-violet chitin with deep red highlights along the joints and plate edges
 sitting at the front, with a single large orange-red eye and a jagged mouth. A few thin, whip-like feelers \
 sweep back from the head. Materials: polished, sharp-edged chitin and metallic-looking blades."""
 pose = "body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and folded in front of the body, free from the legs and the head"
+
+# =============================================================================================================
+# ROSTER-ERWEITERUNG (Nutzer 2026-11-18) – 16 Kreaturen OHNE Concept Art, je eine aus jeder Zeile von
+# ROSTER_ERWEITERUNG_VORSCHLAG.md (Feld `row`). Kein `cell`/`artist`: Stufe 1 entwirft das Design nur aus `look` +
+# Stil-Referenz, der Nutzer prüft das Design-Bild (= Design-Entwurf). Zusätzliche Felder:
+#   biome      Heimat-Biom (Schlüssel aus templates/biomes.toml)
+#   role       Kampfrolle (Schwarm / Nahkampf / Fernkampf / Elite / Boss + Kurzmechanik)
+#   varianten  6er-Satz nach RECHERCHE_MONSTERARTEN.md §6.2: Grundform + 4 Biom-Varianten + Elite-Addon.
+#              tint = Tönung, addons = Anbauteile (Geometry Nodes), size = Skalierung, effect = Element/Fähigkeit.
+#              Gleicher Mesh, gleiches Rig, gleiche Clips – Varianten kosten keine Tripo-Credits.
+# motion = Skelett/Muster – Skelette upright, winged, amorph, static und viele Muster sind NOCH NICHT GEBAUT.
+# =============================================================================================================
+[[c]]
+id = "geode_golem"
+row = 1
+motion = "upright/golem"
+variant = ""
+vorbild = ["Elefant – Gewicht, Stampfen", "Gorilla aufrecht – Doppelfaust-Slam", "Stop-Motion-Golems (Harryhausen) – steifer, schwerer Gang"]
+design = "Geode Golem"
+bodyplan = "upright"
+biome = "crystal"
+role = "Nahkampf (Tank)"
+hint = "hulking stone golem cracked open like a geode, big crystal clusters on its back"
+look = """A massive, slow golem of split rock, hollow like a geode - ancient, heavy and unstoppable. Its body is a hunched \
+block of dark slate-grey stone with a broad, top-heavy chest and shoulders, a narrow waist and two short, thick, \
+pillar-like legs. The head is small and sunk low between the shoulders: a blunt stone wedge with a deep brow and \
+two narrow cyan crystal eyes. Its two arms are long and very heavy and end in huge, blocky stone fists. The back \
+and shoulders are cracked open, and from the cracks burst large clusters of sharp, faceted crystals in icy cyan \
+and pale violet - from above they form a jagged crystal crown that dominates the silhouette. Thin veins of the \
+same crystal run through cracks in the arms and chest. The stone has flat, chiseled facets and chipped edges. \
+Materials: rough matte rock and smooth, translucent-looking crystal. Palette: dark slate and charcoal stone with \
+the cold crystal colors as the bright eye-catcher."""
+varianten = [
+  { art = "grund", name = "Geode Golem", biome = "crystal", tint = "Schiefergrau, Kristalle Cyan/Violett", addons = "Kristallcluster auf Rücken und Schultern", size = 1.0, effect = "Arkan-Splitter beim Slam" },
+  { art = "biom", name = "Deepstone Golem", biome = "cave", tint = "Basaltdunkel, Kristalle tiefblau", addons = "Tropfsteine + Leuchtmoos statt Clustern", size = 0.9, effect = "Physisch, Steinschlag" },
+  { art = "biom", name = "Ember Golem", biome = "volcano", tint = "Obsidianschwarz, Fugen glühend orange (Emission)", addons = "Obsidian-Spitzen, Schlackebrocken", size = 1.0, effect = "Feuer, brennender Boden nach Slam" },
+  { art = "biom", name = "Rime Golem", biome = "ice", tint = "Frostweiß/Eisblau", addons = "Eisplatten, Eiszapfen an den Armen", size = 1.0, effect = "Kälte, Slam friert ein" },
+  { art = "biom", name = "Ruin Golem", biome = "temple", tint = "Sandstein-Ocker, Goldadern", addons = "behauene Blöcke, Runenplatten, Ranken", size = 1.05, effect = "Heilig, Runen-Schild" },
+  { art = "elite", name = "Geode Colossus", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Kristallkrone, Schulterplatten, doppelte Cluster-Dichte", size = 1.5, effect = "Aura Splitter-Rüstung; Spezial: Kristallring-Slam" },
+]
+[[c]]
+id = "tomb_shroud"
+row = 2
+motion = "floater/wraith"
+variant = ""
+vorbild = ["Schleierschwanz-Goldfisch – wehende Flossen wie Stoff", "Mantarochen – Flossenwelle", "Stoff unter Wasser (Zeitlupe) – Nachschwingen"]
+design = "Tomb Shroud"
+bodyplan = "floater"
+biome = "crypt"
+role = "Nahkampf (Assassine, Teleport)"
+hint = "hooded floating crypt wraith of heavy grave cloth, no legs, long bony clawed arms"
+look = """A silent crypt wraith - a hooded shroud that floats above the ground, mournful and menacing. It has no legs: the \
+hunched, hooded upper body is wrapped in heavy, tattered grave cloth that hangs down and narrows into a ragged, \
+pointed tail of cloth. Inside the deep hood there is only darkness and a pale, cracked bone mask with two hollow \
+eye holes. Two long, thin, bony arms reach out from the cloth, each ending in a hand with long, hooked, \
+bone-white claws. The cloth is thick and heavy, layered in folds, with torn edges and a few broad, dangling \
+strips, and old rusted chains are wrapped around the chest. Colors: faded ash-grey and dusty bone-white cloth \
+that darkens to deep charcoal at the hem, with a sickly pale green tint in the folds; mask and claws are old \
+ivory. Materials: heavy, coarse burial linen, dry bone and corroded iron."""
+pose = "floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground"
+varianten = [
+  { art = "grund", name = "Tomb Shroud", biome = "crypt", tint = "Aschgrau/Knochenweiß, fahlgrüne Falten", addons = "Ketten, Stoffstreifen (schwingen nach)", size = 1.0, effect = "Lebensentzug" },
+  { art = "biom", name = "Drowned Shroud", biome = "coast", tint = "nasses Blaugrün, dunkler Saum", addons = "Tang-Fetzen, Seepocken an den Ketten", size = 1.0, effect = "Wasser/Kälte, Verlangsamung" },
+  { art = "biom", name = "Ash Shroud", biome = "volcano", tint = "Rußschwarz, Saumkanten glimmend (Emission)", addons = "Ascheflocken (Partikel), verkohlte Ränder", size = 1.0, effect = "Feuer" },
+  { art = "biom", name = "Sand Shroud", biome = "desert", tint = "bleiches Ocker", addons = "Mumienbinden, Skarabäus-Amulette", size = 1.0, effect = "Sandsturm (Blendung)" },
+  { art = "biom", name = "Rime Shroud", biome = "ice", tint = "Eisblau/Weiß", addons = "Eiszapfen am Saum, Frostkruste", size = 1.0, effect = "Kälte, Einfrieren" },
+  { art = "elite", name = "Shroud Lord", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Knochenkrone auf der Kapuze, zweite Maske, längere Stoffbahnen", size = 1.4, effect = "Aura Furcht (Verlangsamung); Spezial: Teleport + Trugbild" },
+]
+[[c]]
+id = "idol_eye"
+row = 3
+motion = "floater/orb"
+variant = "eye"
+vorbild = ["Libelle/Kolibri – Schweben auf der Stelle", "Venusmuschel – Schale öffnen/schließen", "Kugelfisch – Aufblähen (Aufladen vor dem Strahl)"]
+design = "Idol Eye"
+bodyplan = "floater"
+biome = "temple"
+role = "Fernkampf (Strahl)"
+hint = "floating carved stone idol opened like a flower around one huge living eye"
+look = """A floating temple guardian - an ancient stone idol that has cracked open to reveal a living eye. Its core is one \
+huge, round eye with a gold-amber iris and a narrow dark pupil, wet and watchful. Around the eye a shell of \
+thick, carved stone plates is spread open like the petals of a flower, leaving the eye free at the front. The \
+plates are weathered sandstone with deep carved spiral patterns and inlaid bands of tarnished gold, and their \
+outer rims end in short, blunt stone spikes. Below the eye hangs a heavy stone pendant like the chin of a broken \
+idol. From above it reads as a round, ornamented stone disc with the eye looking out. Colors: warm ochre and \
+sand-colored stone, moss-green weathering in the grooves, dull gold ornaments and the bright amber eye as the \
+eye-catcher. Materials: carved, chipped stone, old gold and a glassy, wet eye."""
+pose = "floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate"
+varianten = [
+  { art = "grund", name = "Idol Eye", biome = "temple", tint = "Sandstein-Ocker, Altgold, Auge Bernstein", addons = "Spiral-Gravuren, Moos in den Fugen", size = 1.0, effect = "Lichtstrahl (Heilig)" },
+  { art = "biom", name = "Overgrown Idol", biome = "jungle", tint = "Moosgrün, Blüten-Akzente", addons = "Lianen + Blüten an den Plattenrändern", size = 1.0, effect = "Gift-Strahl" },
+  { art = "biom", name = "Prism Eye", biome = "crystal", tint = "Nachtblau, Kristall-Cyan", addons = "Kristallblätter statt Steinplatten", size = 1.0, effect = "Blitz-Strahl, springt über" },
+  { art = "biom", name = "Grave Eye", biome = "crypt", tint = "Krypta-Grau, Auge fahlgrün", addons = "Knochenplatten, Ketten am Anhänger", size = 1.0, effect = "Lebensentzug-Strahl" },
+  { art = "biom", name = "Void Idol", biome = "abyss", tint = "Violett, Emission im Auge", addons = "kurze Tentakel unter dem Anhänger, kleine Nebenaugen", size = 1.0, effect = "Chaos-Strahl" },
+  { art = "elite", name = "High Idol", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "zweiter, rotierender Plattenring, Goldkrone", size = 1.5, effect = "Strahl schwenkt (Sweep); Spezial: ruft 2 kleine Augen" },
+]
+[[c]]
+id = "bonepicker_vulture"
+row = 4
+motion = "winged/bird"
+variant = ""
+vorbild = ["Gänsegeier kreist in der Thermik", "Habicht/Adler – Sturzflug mit Krallen", "Geier – Landung, Hüpfen und Hacken am Aas"]
+design = "Bonepicker Vulture"
+bodyplan = "winged"
+biome = "steppe"
+role = "Schwarm (kreist, Sturzflug)"
+hint = "large ragged steppe vulture with bald red neck, bony beak and broad fingered wings"
+look = """A large, ragged steppe vulture - a patient scavenger that circles high and then dives. The body is heavy and \
+hunched with a bulky chest and a thick ruff of bristling feathers around the base of the neck. The neck is long, \
+bare and wrinkled, dull red, and carries a bald, bony head with a long, hooked, bone-white beak and small yellow \
+eyes. Two very broad, long wings with deeply fingered, ragged tips form its signature silhouette; their upper \
+side is dark umber brown with paler sand-colored edges and a row of stiff, sharp quill feathers along the front \
+edge. A short, wide, fan-shaped tail sits at the back. Two strong, scaly grey legs end in big hooked talons. \
+Materials: coarse, layered feathers shaped as clean faceted planes, leathery skin on head and neck, horn on beak \
+and talons. Palette: dusty browns and sand with the raw red neck as the accent."""
+varianten = [
+  { art = "grund", name = "Bonepicker Vulture", biome = "steppe", tint = "Umbra/Sand, Hals rot", addons = "Kielfedern an der Flügelvorderkante", size = 1.0, effect = "Blutung (Krallen)" },
+  { art = "biom", name = "Dune Vulture", biome = "desert", tint = "Ocker-Gold", addons = "Knochenplättchen am Hals", size = 1.0, effect = "Sand (Blendung beim Sturzflug)" },
+  { art = "biom", name = "Crag Vulture", biome = "highlands", tint = "Schiefergrau, rostige Flügelränder", addons = "Felsplättchen auf den Schultern", size = 1.0, effect = "Physisch, Steinwurf aus der Luft" },
+  { art = "biom", name = "Plague Vulture", biome = "swamp", tint = "fahles Grün, kahle Stellen", addons = "Pilzbefall auf den Flügeln", size = 1.0, effect = "Gift, Pestwolke beim Sturzflug" },
+  { art = "biom", name = "Snow Vulture", biome = "snow", tint = "Weiß/Grau", addons = "Raureif-Federspitzen", size = 1.0, effect = "Kälte" },
+  { art = "elite", name = "Kingpicker", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Halskrause aus Knochen, Krone aus Kielfedern", size = 1.4, effect = "Spezial: Federhagel (Projektil-Fächer), ruft den Schwarm" },
+]
+[[c]]
+id = "cinder_wyvern"
+row = 5
+motion = "winged/drake"
+variant = ""
+vorbild = ["Adler/Pelikan – schwere Landung", "Komodowaran – Gang und Kopfschwingen am Boden", "Flughund – Flügelschlag (Zeitlupe)"]
+design = "Cinder Wyvern"
+bodyplan = "winged"
+biome = "volcano"
+role = "Elite (landet zum Kämpfen, Feueratem)"
+hint = "heavy volcanic wyvern with wing-arms, basalt scales and a spiked rock tail club"
+look = """A fierce volcanic wyvern - a heavy, armored dragon-beast that lands to fight and breathes fire. It has two \
+powerful hind legs with thick clawed feet and no front legs; its two huge wings grow from the shoulders and \
+double as arms, with a hooked claw at each wing wrist. The wings are bat-like with thick, leathery membranes, \
+ash-grey on top with charcoal edges and ember-orange veins. The body is muscular and barrel-chested, covered \
+with overlapping basalt-black scales that break along the back into a ridge of jagged, rock-like plates. The \
+head is long and wedge-shaped with a heavy jaw, rows of teeth and two backward-sweeping horns. A long, thick \
+tail ends in a blunt, spiked club of volcanic rock. The cracks between the plates and the throat are painted in \
+hot orange and red, without any glow. Materials: rough basalt-like scales, leathery wing skin and sharp horn. \
+Palette: black and ash grey with molten orange accents."""
+varianten = [
+  { art = "grund", name = "Cinder Wyvern", biome = "volcano", tint = "Basaltschwarz, Risse glühend orange (Emission)", addons = "Lava-Rückenplatten, Obsidian-Hörner", size = 1.0, effect = "Feueratem (Strahl)" },
+  { art = "biom", name = "Frost Wyvern", biome = "ice", tint = "Eisblau/Weiß", addons = "Eiskamm statt Lavaplatten", size = 1.0, effect = "Frostatem, friert ein" },
+  { art = "biom", name = "Venom Wyvern", biome = "jungle", tint = "Jadegrün mit gelben Streifen", addons = "Giftblasen am Hals, Dornenkamm", size = 1.0, effect = "Giftwolke statt Feuer" },
+  { art = "biom", name = "Storm Wyvern", biome = "highlands", tint = "Schiefergrau, Blitz-Weiß", addons = "Kristallhörner, gezackte Flügelränder", size = 1.0, effect = "Blitzatem" },
+  { art = "biom", name = "Dune Wyvern", biome = "desert", tint = "Sandocker", addons = "Panzerplatten mit Sandkruste", size = 1.0, effect = "Sandstrahl (Blendung)" },
+  { art = "elite", name = "Elder Cinder Wyvern", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Doppel-Hornkrone, zusätzliche Rückenplatten", size = 1.6, effect = "Boss-Stufe; Aura Hitzeflimmern; Spezial: Sturzflug-Landung mit Flächenschaden" },
+]
+[[c]]
+id = "umbral_panther"
+row = 6
+motion = "quadruped/leopard"
+variant = ""
+vorbild = ["Leopard/Jaguar auf der Pirsch – geducktes Schleichen", "Hauskatze springt (Zeitlupe)", "Jaguar – Prankenhieb, Biss in den Nacken"]
+design = "Umbral Panther"
+bodyplan = "quadruped"
+biome = "jungle"
+role = "Nahkampf (Assassine, Sprung aus dem Hinterhalt)"
+hint = "sleek blue-black jungle panther with sabre fangs and a ridge of leaf-shaped bone plates"
+look = """A sleek jungle panther built for ambush - silent, lithe and deadly. The body is long and low with powerful \
+shoulders, a narrow waist and long legs with large, soft paws and hooked claws. The head is broad and flat with \
+a short muzzle, tufted pointed ears, long sabre-like upper fangs and narrow, bright jade-green eyes. A ridge of \
+dark, leaf-shaped bony plates runs down the spine from the neck to the base of the tail - from above it reads \
+like a jagged line along the back. The tail is very long and heavy and ends in a thick, flat tuft. The fur is \
+deep blue-black with darker rosette patterns and a teal sheen on top, lighter slate grey on the belly. \
+Materials: short, sleek fur shaped as clean planes and smooth bone plates. Palette: near-black blues and deep \
+teal, with the green eyes and the pale fangs as accents."""
+varianten = [
+  { art = "grund", name = "Umbral Panther", biome = "jungle", tint = "Blauschwarz/Petrol, Augen Jade", addons = "Knochenblätter-Kamm", size = 1.0, effect = "Tarnung (halbtransparent beim Schleichen)" },
+  { art = "biom", name = "Rime Panther", biome = "snow", tint = "Weiß-Grau gefleckt", addons = "Eiszacken statt Knochenblättern", size = 1.0, effect = "Kälte" },
+  { art = "biom", name = "Dune Panther", biome = "desert", tint = "Sandgold, dunkle Ohrspitzen", addons = "kurze Mähne, Sandkruste", size = 1.0, effect = "Sandsprung (Blendung)" },
+  { art = "biom", name = "Grave Panther", biome = "crypt", tint = "Knochenbleich/Grau", addons = "freiliegende Rippenplatten, Ketten-Halsband", size = 1.0, effect = "Lebensentzug" },
+  { art = "biom", name = "Void Panther", biome = "abyss", tint = "Violett, Emission in den Rosetten", addons = "kleine Augen auf den Schultern", size = 1.0, effect = "Chaos, Teleport-Sprung" },
+  { art = "elite", name = "Panther Matriarch", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Mähne aus Klingenblättern, längere Fänge", size = 1.35, effect = "Aura Schatten; Spezial: ruft 2 Jungtiere" },
+]
+[[c]]
+id = "rimehide_bear"
+row = 7
+motion = "quadruped/bear"
+variant = ""
+vorbild = ["Braunbär richtet sich auf", "Eisbär – schwerer Gang", "Grizzly-Angriff – Prankenhieb, Doppelschlag"]
+design = "Rimehide Bear"
+bodyplan = "quadruped"
+biome = "ice"
+role = "Elite (Tank, richtet sich auf)"
+hint = "colossal glacier bear with slabs of blue ice frozen onto its back like armor"
+look = """A colossal glacier bear - a hulking, armored beast that rises on its hind legs to smash its prey. The body is \
+massive and round-backed with a huge hump of muscle over the shoulders, a heavy head and four thick, pillar-like \
+legs with wide paws and long black claws. Its fur is shaggy pale blue-grey and white, falling in heavy, faceted \
+clumps on the shoulders, neck and legs. Thick slabs of clear blue glacier ice have frozen onto its back, \
+shoulders and forearms like rough armor plates, with a ridge of jagged ice shards along the spine - from above \
+the frozen armor dominates the silhouette. The head is broad with a short muzzle, small dark eyes under an icy \
+brow and a mouth with heavy fangs. A short stub of a tail sits at the back. Materials: coarse, heavy fur, smooth \
+translucent-looking ice and horn-black claws. Palette: cold whites and steel blues, with the dark mouth and \
+claws as contrast."""
+varianten = [
+  { art = "grund", name = "Rimehide Bear", biome = "ice", tint = "Weiß/Stahlblau", addons = "Eisplatten + Eissplitter-Kamm", size = 1.0, effect = "Kälte, Prankenhieb friert ein" },
+  { art = "biom", name = "Mossback Bear", biome = "forest", tint = "Dunkelbraun/Moosgrün", addons = "Moospolster + Pilze statt Eis", size = 1.0, effect = "Gift" },
+  { art = "biom", name = "Cave Bear", biome = "cave", tint = "Schwarzbraun", addons = "Tropfstein-Platten, kleine Kristalle", size = 1.0, effect = "Physisch, Betäubung" },
+  { art = "biom", name = "Slagback Bear", biome = "volcano", tint = "Rußschwarz, Glutrisse (Emission)", addons = "Basaltplatten, Schlackebrocken", size = 1.0, effect = "Feuer" },
+  { art = "biom", name = "Cragplate Bear", biome = "stone", tint = "Steingrau/Braun", addons = "Steinplatten, Felszacken", size = 1.05, effect = "Erde, Stampfer betäubt" },
+  { art = "elite", name = "Elder Rimehide", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Krone aus Eiszacken, Schulterdornen", size = 1.5, effect = "Aura Frost; Spezial: Brüllen (Stun) + Doppelschlag aufgerichtet" },
+]
+[[c]]
+id = "sporecap_mortar"
+row = 8
+motion = "static/turret"
+variant = "spore"
+vorbild = ["Bovist stäubt Sporen (Zeitlupe)", "Mörser – Rückstoß und Nachfedern", "Seeanemone – Pulsieren"]
+design = "Sporecap Mortar"
+bodyplan = "static"
+biome = "fungal"
+role = "Fernkampf (stationär, Bogenschuss)"
+hint = "rooted giant mushroom turret with a mortar opening in its cap, lobs spore bombs"
+look = """A giant living mushroom turret that lobs spore bombs - rooted, bloated and poisonous. It stands on a thick, \
+squat, fleshy stalk that spreads at the bottom into a wide base of gripping, root-like tendrils clamped to the \
+ground. On top sits a huge, wide mushroom cap facing up, with a round, puckered opening in its center like the \
+barrel of a mortar. The cap is deep violet with large pale lilac spots and a ring of short, thick, fleshy spikes \
+along its rim. Under the cap grow thick, soft gills in pale cream, and a cluster of round, swollen spore sacs \
+bulges from the side of the stalk like ripe fruit. The stalk is pale bone-white with violet veins. Materials: \
+soft, matte, spongy mushroom flesh and slightly wet, glossy spore sacs. Palette: dark violet and bone white with \
+sickly yellow-green tints on the sacs."""
+varianten = [
+  { art = "grund", name = "Sporecap Mortar", biome = "fungal", tint = "Violett/Knochenweiß, Säcke gelbgrün", addons = "Sporensäcke, Lamellen", size = 1.0, effect = "Gift-Sporenbombe, Giftpfütze" },
+  { art = "biom", name = "Bog Mortar", biome = "swamp", tint = "Olivbraun", addons = "Algen, Schlammblasen am Fuß", size = 1.0, effect = "Säure, verlangsamt" },
+  { art = "biom", name = "Glowcap Mortar", biome = "cave", tint = "Dunkelblau, Leuchtpunkte Türkis (Emission)", addons = "Leuchtmoos, kleine Kristalle", size = 1.0, effect = "Blend-Sporen" },
+  { art = "biom", name = "Grave Mortar", biome = "crypt", tint = "Grau-bleich", addons = "Knochen im Stiel, Spinnweben-Fetzen", size = 1.0, effect = "Lebensentzug" },
+  { art = "biom", name = "Bloom Mortar", biome = "jungle", tint = "Giftrot/Gelb", addons = "Blüten am Hutrand, breite Blätter am Fuß", size = 1.0, effect = "Gift + Verlangsamung" },
+  { art = "elite", name = "Mother Cap", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Hutkrone mit drei Mündungen, doppelte Sporensäcke", size = 1.5, effect = "Spezial: spawnt kleine Sporlinge (Schwarm)" },
+]
+[[c]]
+id = "bog_ooze"
+row = 9
+motion = "amorph/slime"
+variant = ""
+vorbild = ["Wassertropfen in Zeitlupe – Stauchen und Dehnen", "Wackelpudding", "Schleimpilz – Fließen"]
+design = "Bog Ooze"
+bodyplan = "amorph"
+biome = "swamp"
+role = "Schwarm (teilt sich beim Tod)"
+hint = "heaving blob of murky acidic swamp slime with half-dissolved bones inside"
+look = """A bubbling swamp ooze - a heaving blob of acidic sludge that splits apart when struck. Its body is a big, \
+rounded, lumpy mound of thick, murky green-brown slime, wider at the bottom where it spreads over the ground. \
+Inside the jelly the half-dissolved remains of its prey show as darker shapes: a few bones, a rusted helmet and \
+a skull. The top is crowned by a few large bubbles and short, thick, drooping lumps. Two small, dark, sunken eye \
+spots and a wide, toothless mouth slit sit at its front. Clumps of weed and pond scum cling to its surface. \
+Materials: glossy, wet, jelly-like slime with a clear skin and murky depths. Palette: dark olive and bog brown \
+with bright acid-green highlights on top."""
+varianten = [
+  { art = "grund", name = "Bog Ooze", biome = "swamp", tint = "Oliv/Säuregrün", addons = "Blasen, Algen-Klumpen", size = 1.0, effect = "Säure; teilt sich in 2" },
+  { art = "biom", name = "Cave Ooze", biome = "cave", tint = "Schwarzblau", addons = "Kristallsplitter im Inneren", size = 1.0, effect = "Physisch, Blendung" },
+  { art = "biom", name = "Magma Ooze", biome = "volcano", tint = "Lava-Orange (Emission), dunkle Kruste", addons = "Schlackebrocken", size = 1.0, effect = "Feuer, brennende Pfütze" },
+  { art = "biom", name = "Blood Ooze", biome = "crypt", tint = "Dunkelrot", addons = "Knochen und Schädel im Inneren", size = 1.0, effect = "Lebensentzug" },
+  { art = "biom", name = "Frost Ooze", biome = "ice", tint = "trübes Hellblau", addons = "Eisschollen auf der Oberseite", size = 1.0, effect = "Kälte, verlangsamt" },
+  { art = "elite", name = "Ooze Mother", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Krone aus Blasen, mehr Schädel im Inneren", size = 1.6, effect = "Spezial: teilt sich in 3, verschlingt (Greif-Angriff)" },
+]
+[[c]]
+id = "oasis_gulper"
+row = 10
+motion = "quadruped/frog"
+variant = ""
+vorbild = ["Ochsenfrosch springt", "Chamäleon-Zunge (Zeitlupe)", "Aga-Kröte – Gang und Hocken"]
+design = "Oasis Gulper"
+bodyplan = "quadruped"
+biome = "oasis"
+role = "Nahkampf/Kontrolle (Zungenschlag zieht heran)"
+hint = "huge bloated turquoise oasis toad with an enormous mouth and lily pads growing on its back"
+look = """A huge, bloated oasis toad - a lazy-looking ambusher that snaps prey from afar with its long tongue. The body is \
+broad, round and squat, sitting low, with a wide, flat head that merges into the body without a neck. The mouth \
+is enormous, a wide grinning slit across the whole front of the head, with a pale yellow throat pouch below. Two \
+big, bulging amber eyes sit on top of the head. The front legs are short and sturdy, the hind legs big and \
+powerful with long webbed feet. The back is covered with warty bumps, and a few small, flat lily pads and reeds \
+grow from the skin like a living pond. The skin is turquoise and teal on top with dark spots, sandy yellow on \
+the belly, with bold orange warning stripes along the sides. Materials: smooth, glossy, wet skin with rough \
+warts. Palette: turquoise water colors with warm sand and orange accents."""
+pose = "sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed"
+varianten = [
+  { art = "grund", name = "Oasis Gulper", biome = "oasis", tint = "Türkis/Sand, orange Warnstreifen", addons = "Seerosen-Blätter, Schilf", size = 1.0, effect = "Zungenschlag zieht heran" },
+  { art = "biom", name = "Mire Gulper", biome = "swamp", tint = "Olivbraun", addons = "Schlammkruste, Schilf", size = 1.0, effect = "Gift-Spucke" },
+  { art = "biom", name = "Venom Gulper", biome = "jungle", tint = "Giftgelb/Schwarz", addons = "Dornen-Warzen, Blüten", size = 1.0, effect = "Gift" },
+  { art = "biom", name = "Pale Gulper", biome = "cave", tint = "milchig-bleich", addons = "Kristall-Warzen", size = 1.0, effect = "Blendung" },
+  { art = "biom", name = "Ember Gulper", biome = "volcano", tint = "Schwarz, Warzen glühend (Emission)", addons = "Schlacke auf dem Rücken", size = 1.0, effect = "Feuer-Spucke" },
+  { art = "elite", name = "Great Gulper", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Panzerwarzen, Krone aus Lotusblättern", size = 1.5, effect = "Spezial: verschlingt den Spieler kurz (Greif-Angriff)" },
+]
+[[c]]
+id = "quillback_burrower"
+row = 11
+motion = "quadruped/badger"
+variant = "porcupine"
+vorbild = ["Honigdachs – Gang und Graben", "Stachelschwein droht – Stacheln aufstellen, Rückwärtsstoß"]
+design = "Quillback Burrower"
+bodyplan = "quadruped"
+biome = "stone"
+role = "Fernkampf (gräbt sich ein, Stachel-Salve)"
+hint = "stocky badger-like burrower with a bristling mantle of stone-grey quills and digging claws"
+look = """A stocky, armored burrowing beast of the rocky badlands - it digs in, hides and fires its quills. The body is \
+low, wide and muscular like a badger, with short, strong legs and huge, shovel-like front claws made for \
+digging. The head is long and wedge-shaped with a blunt snout, small black eyes and a mouth with short, sharp \
+teeth. Its back is covered by a dense mantle of long, thick, stone-grey quills that sweep backward from the neck \
+to the tail and stand up into a bristling crest - from above it reads as a spiked dome. Flat, cracked plates of \
+stone-colored hide protect the shoulders between the quills. The short tail bristles with quills as well. The \
+fur on face, belly and legs is coarse and dark brown-grey, with a pale stripe running from the nose over the \
+head. Materials: coarse fur, hard quills with pale tips and rough plated hide. Palette: dusty stone greys and \
+dark browns with bone-white quill tips."""
+varianten = [
+  { art = "grund", name = "Quillback Burrower", biome = "stone", tint = "Steingrau/Dunkelbraun, Spitzen knochenweiß", addons = "Stachelmantel, Steinplatten", size = 1.0, effect = "Stachel-Salve, Eingraben" },
+  { art = "biom", name = "Dune Burrower", biome = "desert", tint = "Sandgelb", addons = "Sandkruste, Dornen", size = 1.0, effect = "Sand (Blendung)" },
+  { art = "biom", name = "Frost Burrower", biome = "ice", tint = "Weiß/Eisblau", addons = "Eisstacheln", size = 1.0, effect = "Kälte" },
+  { art = "biom", name = "Shard Burrower", biome = "crystal", tint = "Nachtblau", addons = "Kristallstacheln statt Hornstacheln", size = 1.0, effect = "Arkan, Splitter springen ab" },
+  { art = "biom", name = "Thatch Burrower", biome = "steppe", tint = "Strohgelb/Braun", addons = "Grashalm-Büschel zwischen den Stacheln", size = 1.0, effect = "Blutung" },
+  { art = "elite", name = "Quill Alpha", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "doppelte Stacheldichte, Nackenschild", size = 1.4, effect = "Spezial: Rundum-Salve beim Auftauchen" },
+]
+[[c]]
+id = "ruin_howler"
+row = 12
+motion = "quadruped/monkey"
+variant = ""
+vorbild = ["Pavian-Trupp – Vierfüßergang, Drohgebärden", "Schimpanse wirft (Zeitlupe)", "Brüllaffe – Gebrüll"]
+design = "Ruin Howler"
+bodyplan = "quadruped"
+biome = "temple"
+role = "Schwarm/Fernkampf (Rudel, wirft Steine)"
+hint = "lanky savage temple ape with mandrill-like face, walks on its knuckles, hurls stones"
+look = """A lanky, savage temple ape that lives in overgrown ruins - loud, agile and hurling chunks of stone. It walks on \
+all fours on its long, powerful arms and shorter, bent legs, and has a long, thick tail. Its body is lean, with \
+a hunched back and a broad chest. The head has a long, dog-like snout, a jaw full of long canine fangs and \
+deep-set red eyes under a heavy brow; a mane of stiff, bristling hair frames the face and shoulders. Fragments \
+of carved temple stone and tarnished gold rings are grown into the skin of its shoulders and forearms like \
+trophies. The fur is dark rusty brown, lighter and sand-colored on the chest, and the bare face carries a vivid \
+crimson and blue mask like a mandrill. Materials: coarse fur shaped as clean faceted clumps, bare leathery face, \
+stone and old gold. Palette: rusty browns and sand with the vivid face as the eye-catcher."""
+pose = "standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back"
+varianten = [
+  { art = "grund", name = "Ruin Howler", biome = "temple", tint = "Rostbraun/Sand, Gesicht Rot-Blau", addons = "Tempelstein-Fragmente, Goldringe", size = 1.0, effect = "Steinwurf" },
+  { art = "biom", name = "Canopy Howler", biome = "jungle", tint = "Grünbraun", addons = "Lianen, breite Blätter im Fell", size = 1.0, effect = "wirft Giftfrüchte" },
+  { art = "biom", name = "Crag Howler", biome = "highlands", tint = "Grau/Rost", addons = "Felsplatten, Knochen-Trophäen", size = 1.0, effect = "Felsbrocken (Betäubung)" },
+  { art = "biom", name = "Snow Howler", biome = "snow", tint = "Weiß/Grau, Gesicht Blau", addons = "Raureif im Fell", size = 1.0, effect = "wirft Eisbrocken" },
+  { art = "biom", name = "Ash Howler", biome = "volcano", tint = "Rußschwarz, Gesicht Glut-Orange", addons = "Schlacke-Trophäen", size = 1.0, effect = "wirft Glutbrocken" },
+  { art = "elite", name = "Howler Chieftain", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Goldkrone, Halskette aus Knochen", size = 1.4, effect = "Spezial: Kriegsschrei (Rudel schneller)" },
+]
+[[c]]
+id = "tallgrass_viper"
+row = 13
+motion = "legless/viper"
+variant = ""
+vorbild = ["Klapperschlange schlägt (Zeitlupe)", "Seitenwinder – seitliches Schlängeln", "Hornviper gräbt sich in Sand ein"]
+design = "Tallgrass Viper"
+bodyplan = "serpentine"
+biome = "steppe"
+role = "Nahkampf (Hinterhalt, Schlag aus der S-Kurve)"
+hint = "long straw-yellow steppe viper with horned triangular head, zigzag back and a rattle tail"
+look = """A long, sleek steppe viper that hides in the tall grass and strikes from an S-curve - fast and deadly. The body \
+is long and muscular, thickest in the middle, and tapers to a thin tail that ends in a rattle of dry, horny \
+segments. The head is a broad, flat triangle with two short, pointed horns above the eyes, narrow golden eyes \
+with slit pupils and long fangs hidden in the closed mouth. Along the back runs a bold zigzag pattern of dark \
+olive and black over straw-yellow scales that blends in with dry grass; the belly is pale cream with broad \
+plate-like scales. A row of small, raised, keeled scales forms a low ridge along the spine. Materials: dry, \
+matte, keeled scales, smooth belly plates and a horny rattle. Palette: straw yellow, olive and ochre with black \
+zigzags."""
+varianten = [
+  { art = "grund", name = "Tallgrass Viper", biome = "steppe", tint = "Strohgelb/Oliv, schwarzes Zickzack", addons = "Rasselschwanz, Kielschuppen-Grat", size = 1.0, effect = "Gift" },
+  { art = "biom", name = "Dune Viper", biome = "desert", tint = "Sandocker", addons = "Sandkruste, größere Hörner", size = 1.0, effect = "gräbt sich ein, Sand (Blendung)" },
+  { art = "biom", name = "Marsh Viper", biome = "swamp", tint = "Oliv-Schwarz", addons = "Algen-Fetzen", size = 1.0, effect = "Säure-Biss" },
+  { art = "biom", name = "Emerald Viper", biome = "jungle", tint = "Smaragdgrün mit gelben Flecken", addons = "Dornen-Grat", size = 1.0, effect = "Gift + Verlangsamung" },
+  { art = "biom", name = "Ash Viper", biome = "volcano", tint = "Schwarz, Zickzack glühend (Emission)", addons = "Obsidian-Schuppen", size = 1.0, effect = "Feuer" },
+  { art = "elite", name = "Viper Queen", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Hornkrone, Nackenschild", size = 1.5, effect = "Spezial: Giftspucke im Fächer" },
+]
+[[c]]
+id = "mound_queen"
+row = 14
+motion = "hexapod/broodmother"
+variant = ""
+vorbild = ["Termitenkönigin – pulsierender Hinterleib, Eiablage", "Bienen-/Ameisenkönigin – langsamer Gang", "Raupe – Hinterleib nachziehen"]
+design = "Mound Queen"
+bodyplan = "hexapod"
+biome = "jungle"
+role = "Boss (legt Brut)"
+hint = "enormous termite-like hive queen with a small armored front body and a gigantic pale egg-laying abdomen"
+look = """An enormous termite-like queen of a jungle hive - a slow, bloated mother of the swarm that births her brood in \
+battle. At the front sits a comparatively small, armored insect body with a heavy, plated head, a pair of large \
+serrated mandibles and two thick, curved antennae. Six sturdy, jointed legs carry her, set wide to both sides of \
+the front body. Behind them stretches a gigantic, swollen, segmented abdomen like a pale sac, ribbed with darker \
+bands of chitin plates; it rests on the ground and drags behind her. Clusters of round, glossy eggs cling to the \
+sides of the abdomen, and short chitin spikes line the bands on top. Head and legs are glossy dark amber-brown, \
+the abdomen is pale ivory with a pinkish flesh tint and dark brown bands. Materials: polished chitin, soft \
+stretched membrane and wet eggs. Palette: dark amber and brown with the huge pale abdomen as the dominant shape."""
+pose = "body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed"
+varianten = [
+  { art = "grund", name = "Mound Queen", biome = "jungle", tint = "Bernstein/Elfenbein", addons = "Eier-Cluster, Chitin-Stacheln", size = 1.0, effect = "Brut rufen (Ameisen-Schwarm)" },
+  { art = "biom", name = "Deep Queen", biome = "cave", tint = "Schwarzbraun, Hinterleib grau", addons = "Kristalle auf den Bändern", size = 1.0, effect = "Brut + Erdstoß" },
+  { art = "biom", name = "Sand Queen", biome = "desert", tint = "Ocker", addons = "Sandkruste auf dem Hinterleib", size = 1.0, effect = "gräbt Brut aus dem Boden" },
+  { art = "biom", name = "Spore Queen", biome = "fungal", tint = "Violett, Hinterleib fahl-lila", addons = "Pilzbefall, Sporensäcke", size = 1.0, effect = "Sporen-Brut, Giftwolke" },
+  { art = "biom", name = "Void Queen", biome = "abyss", tint = "Violett, Emission in den Eiern", addons = "Augen am Hinterleib", size = 1.0, effect = "Chaos-Brut" },
+  { art = "elite", name = "Hive Empress", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Panzerkrone, zusätzliche Stachelreihen", size = 1.3, effect = "Spezial: Brutwelle + Schild aus Brut" },
+]
+[[c]]
+id = "bog_warden"
+row = 15
+motion = "upright/treant"
+variant = ""
+vorbild = ["Baum im Sturm – Äste schwingen", "Elefantenrüssel – Ast-Peitsche", "Elefant – schwerer, langsamer Schritt"]
+design = "Bog Warden"
+bodyplan = "upright"
+biome = "swamp"
+role = "Elite (Tank, Wurzel-Slam)"
+hint = "hulking walking swamp tree with root legs, branch arms, a hollow face and a moss-draped crown"
+look = """A hulking, ancient swamp tree that has torn itself from the mud - a slow, patient guardian that smashes the \
+ground with its roots. Its body is a thick, gnarled, hunched trunk of dark, wet bark, standing on two short, \
+massive legs of twisted roots that spread into claw-like root feet. Two very long, heavy arms of bent branches \
+hang from the shoulders and end in big hands of knotted root-fingers. Where a head should be, a hollow in the \
+trunk forms a face with a deep, dark mouth and two small eyes of pale amber fungus. Its crown is a broad, flat \
+canopy of dead, crooked branches draped with thick strands of grey-green moss - from above it reads as a wide, \
+ragged tree top. Shelf fungi, ivy and moss grow over the bark. Materials: rough, cracked bark, damp moss and \
+soft fungus. Palette: dark brown-black bark, grey-green moss and pale amber accents."""
+varianten = [
+  { art = "grund", name = "Bog Warden", biome = "swamp", tint = "Braunschwarz, Moos graugrün, Augen Bernstein", addons = "hängendes Moos (schwingt nach), Baumpilze", size = 1.0, effect = "Wurzel-Slam (Boden-AoE)" },
+  { art = "biom", name = "Thorn Warden", biome = "forest", tint = "Dunkelbraun, Blätter tiefgrün", addons = "Dornenranken, Blätter", size = 1.0, effect = "Blutung" },
+  { art = "biom", name = "Strangler Warden", biome = "jungle", tint = "Rinde grau, Lianen grün", addons = "Lianen (schwingen nach), Blüten", size = 1.0, effect = "Gift, Lianen-Peitsche" },
+  { art = "biom", name = "Frost Warden", biome = "snow", tint = "kahles Grau, Raureif", addons = "Eiszapfen an den Ästen, Schneekrusten", size = 1.0, effect = "Kälte" },
+  { art = "biom", name = "Charred Warden", biome = "volcano", tint = "verkohlt, Glutrisse (Emission)", addons = "Ascheflocken (Partikel), Schlacke", size = 1.0, effect = "Feuer" },
+  { art = "elite", name = "Elder Warden", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Krone aus Geweih-Ästen, dickere Rindenplatten", size = 1.5, effect = "Spezial: Wurzelkäfig (hält den Spieler fest)" },
+]
+[[c]]
+id = "gloomfang_centipede"
+row = 16
+motion = "legless/centipede"
+variant = ""
+vorbild = ["Riesenläufer (Scolopendra) – metachrone Beinwelle", "Skolopender-Biss (Zeitlupe)", "Tausendfüßer – Kopf hebt sich, Körper folgt"]
+design = "Gloomfang Centipede"
+bodyplan = "serpentine"
+biome = "cave"
+role = "Nahkampf (schnell, Giftklauen)"
+hint = "giant blood-red cave centipede with a fringe of amber legs and huge venom claws"
+look = """A giant cave centipede - a fast, writhing hunter of the deep tunnels with venomous claws. The body is a long, \
+flat chain of armored segments, each with a pair of long, jointed, sharp-tipped legs spread out to the sides, \
+giving it a dense fringe of legs along its whole length. The head is flat and shield-shaped, with a pair of \
+long, segmented antennae sweeping forward and a pair of huge, curved, pincer-like venom claws at the front. At \
+the rear end, two long trailing legs point backward like a second pair of antennae. The armor plates are glossy \
+dark maroon to black-red, each segment edged with a lighter rust-orange rim; the legs are pale amber with dark \
+tips. Materials: polished, hard, segmented chitin. Palette: deep blood red and black, with the amber legs as a \
+bright fringe."""
+pose = "body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed"
+varianten = [
+  { art = "grund", name = "Gloomfang Centipede", biome = "cave", tint = "Blutrot/Schwarz, Beine Bernstein", addons = "Rost-Ränder der Segmente", size = 1.0, effect = "Gift" },
+  { art = "biom", name = "Magma Centipede", biome = "volcano", tint = "Schwarz, Segmentränder glühend (Emission)", addons = "Obsidian-Spitzen", size = 1.0, effect = "Feuer" },
+  { art = "biom", name = "Dune Centipede", biome = "desert", tint = "Sandgelb/Braun", addons = "Sandkruste", size = 1.0, effect = "gräbt sich ein" },
+  { art = "biom", name = "Shard Centipede", biome = "crystal", tint = "Nachtblau, Beine Cyan", addons = "Kristallplatten auf den Segmenten", size = 1.0, effect = "Arkan" },
+  { art = "biom", name = "Jungle Centipede", biome = "jungle", tint = "Giftgrün/Gelb", addons = "Dornen an den Segmenten", size = 1.0, effect = "Gift + Verlangsamung" },
+  { art = "elite", name = "Gloomfang Matriarch", biome = "alle", tint = "Rim-Light in Biom-Akzentfarbe", addons = "Stachelplatten, längere Giftklauen", size = 1.5, effect = "Spezial: Eingraben und Auftauchen unter dem Spieler" },
+]

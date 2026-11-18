@@ -1,0 +1,218 @@
+# Zentrale Biom-Liste (seit 2026-11-18, Nutzer: „erweitere gern unsere Biome“).
+# Für ein düsteres Top-down-ARPG. Varianten entstehen NICHT durch neue Generierungen, sondern über
+# Tönung (Shader/Material-Instanz) + Anbauteile (Blender Geometry Nodes mit Slidern, starr am nächsten Knochen)
+# + ggf. Element-Effekt (VFX + Schadensart). Schema: RECHERCHE_MONSTERARTEN.md §6.2.
+#
+# Felder:
+#   label    deutscher Name (so heißt das Biom in Doku und Gesprächen)
+#   mood     Stimmung in einem Satz (für Level-/Textur-Gestaltung und Prompt-Ideen)
+#   palette  Tönung, dunkel → hell, Hex. Die Kreatur wird damit eingefärbt, Kontrast bleibt erhalten.
+#   accent   Akzentfarbe (Augen, Risse, Rim-Light der Elite für Lesbarkeit von oben)
+#   glow     Emissionsfarbe für glühende Risse/Punkte – "" = kein Glühen (Glühen nur im Shader, nie im Referenzbild)
+#   surface  Oberflächen-Charakter für den Shader (Rauheit, Nässe, Staub, Frost)
+#   addons   typische Anbauteile per Geometry Nodes (Slider: Dichte, Größe, Zufall)
+#   effect   typischer Element-Effekt der Biom-Variante
+#   texture  Schlüssel der Test-Textur in uv/biome_textures.py ("" = noch keine)
+# Heimat-Biom und Varianten jeder Kreatur: creatures/roster.toml (Felder `biome`, `varianten`).
+
+# --- bisherige Biome (aus der Concept Art bzw. der Recherche) -------------------------------
+
+[forest]
+label = "Wald"
+mood = "Dunkler, feuchter Urwald aus Moos und Wurzeln, wenig Licht, Nebel am Boden."
+palette = ["#0e120a", "#22301a", "#40542a", "#6e7a3a"]
+accent = "#9cb04a"
+glow = ""
+surface = "matt, feucht, organisch"
+addons = ["Moos-Polster", "Pilze", "Ranken", "Rindenplatten", "Blätter"]
+effect = "Gift"
+texture = "forest"
+
+[coast]
+label = "Küste"
+mood = "Graue, kalte Steilküste mit Gischt, Tang und Muschelbänken."
+palette = ["#0a1016", "#1a2a34", "#344c56", "#5c7478"]
+accent = "#c8c4b0"
+glow = ""
+surface = "nass, glänzend, salzverkrustet"
+addons = ["Seepocken", "Muscheln", "Korallenäste", "Tang-Fetzen (schwingen nach)"]
+effect = "Wasser/Kälte"
+texture = "coast"
+
+[highlands]
+label = "Highlands"
+mood = "Windige Schluchten und Felsgrate, ausgebleichtes Gras, rostiges Gestein."
+palette = ["#16120e", "#342a22", "#5c4c3c", "#887458"]
+accent = "#c8783c"
+glow = ""
+surface = "trocken, rau, verwittert"
+addons = ["Felsplatten", "Flechten", "Hornzacken", "Knochen-Trophäen"]
+effect = "Blutung/Physisch"
+texture = "highlands"
+
+[desert]
+label = "Wüste"
+mood = "Glühende Dünen, ausgedörrte Knochen, flimmernde Hitze."
+palette = ["#24140a", "#5c3618", "#966030", "#c48c4c"]
+accent = "#f0c88c"
+glow = ""
+surface = "staubig, matt, sandgestrahlt"
+addons = ["Sandkruste", "Knochenplättchen", "Dornen", "Mumienbinden"]
+effect = "Sand (Blendung) / Feuer"
+texture = "desert"
+
+[snow]
+label = "Schnee"
+mood = "Verschneiter Nadelwald und Tundra, fahles Licht, Raureif auf allem."
+palette = ["#121a28", "#324660", "#6484a0", "#a8c4d6"]
+accent = "#78c8ff"
+glow = ""
+surface = "matt, bereift, Schnee in Ritzen"
+addons = ["Raureif-Spitzen", "Schneekrusten", "Eiszapfen"]
+effect = "Kälte"
+texture = "snow"
+
+[abyss]
+label = "Abyss"
+mood = "Verzerrte Leere zwischen den Welten, violettes Zwielicht, nichts ist ganz fest."
+palette = ["#08040e", "#1a0c28", "#34184e", "#582c82"]
+accent = "#be6eff"
+glow = "#b45aff"
+surface = "glänzend, nass, organisch-fremd"
+addons = ["Augen", "kleine Tentakel", "Schlitzmäuler", "schwebende Splitter"]
+effect = "Chaos"
+texture = "abyss"
+
+[cave]
+label = "Höhle"
+mood = "Enge, tropfende Tunnel, nur vereinzelte Lichtquellen aus Pilzen und Erzadern."
+palette = ["#0a0a0c", "#1c1c22", "#34343c", "#585462"]
+accent = "#5ab4c8"
+glow = "#46c8dc"
+surface = "feucht, rau, Tropfspuren"
+addons = ["Tropfsteine", "Erzadern", "Leuchtmoos", "kleine Kristalle"]
+effect = "Physisch/Blendung"
+texture = ""
+
+[volcano]
+label = "Vulkan"
+mood = "Schwarzes Basaltgestein, Lavaströme, Ascheregen, alles brennt."
+palette = ["#0c0806", "#221612", "#3c2a22", "#5a4436"]
+accent = "#ff7a28"
+glow = "#ff5a14"
+surface = "rau, verkohlt, glühende Risse"
+addons = ["Basaltplatten", "Obsidian-Spitzen", "Glutrisse (Emission)", "Schlackebrocken"]
+effect = "Feuer"
+texture = ""
+
+[swamp]
+label = "Sumpf"
+mood = "Fauliges Moor voller Nebel, totes Holz, Blasen im Schlamm."
+palette = ["#0c0e08", "#22261a", "#3c4428", "#5c643a"]
+accent = "#a8d040"
+glow = ""
+surface = "nass, schleimig, schlammverkrustet"
+addons = ["Algen", "Schlamm-Blasen", "Schilf", "Pilze", "hängendes Moos (schwingt nach)"]
+effect = "Gift/Säure"
+texture = ""
+
+[crypt]
+label = "Krypta"
+mood = "Kalte Grabgewölbe, Staub, Knochen, flackerndes Kerzenlicht, uralte Flüche."
+palette = ["#0e0e10", "#24242a", "#44444c", "#6c6a6e"]
+accent = "#c8d8b4"
+glow = "#9cdca0"
+surface = "staubig, trocken, kalter Stein"
+addons = ["Knochen", "Ketten", "Grabstein-Splitter", "Spinnweben-Fetzen"]
+effect = "Lebensentzug/Kälte"
+texture = ""
+
+# --- neue Biome (Nutzer 2026-11-18) ----------------------------------------------------------
+
+[steppe]
+label = "Gras/Steppe"
+mood = "Weite, windgepeitschte Grasebene unter tiefem Himmel, hohes Gras verbirgt Jäger."
+palette = ["#1a160c", "#3c3418", "#6c5e2c", "#a08c48"]
+accent = "#d8c070"
+glow = ""
+surface = "trocken, faserig, staubig"
+addons = ["Grashalm-Büschel", "Strohfasern", "Knochen-Trophäen", "Dornen"]
+effect = "Physisch/Blutung"
+texture = ""
+
+[stone]
+label = "Stein"
+mood = "Kahles Felsland und Steinbrüche, zerklüftete Platten, Staub und Geröll."
+palette = ["#121212", "#2a2826", "#4a4642", "#6e6a64"]
+accent = "#b4a48c"
+glow = ""
+surface = "rau, rissig, staubig"
+addons = ["Steinplatten", "Geröll-Krusten", "Felszacken", "Flechten"]
+effect = "Erde/Betäubung"
+texture = ""
+
+[crystal]
+label = "Kristall"
+mood = "Höhlen und Schluchten voller Riesenkristalle, kaltes, gebrochenes Licht."
+palette = ["#0a0c14", "#1c2234", "#343e5c", "#566890"]
+accent = "#64e6ff"
+glow = "#5adcff"
+surface = "glatt, facettiert, glasartig"
+addons = ["Kristallcluster", "Kristallsplitter-Kamm", "Geoden-Platten"]
+effect = "Arkan/Blitz"
+texture = ""
+
+[temple]
+label = "Tempel/Ruinen"
+mood = "Überwucherte Ruinen einer vergessenen Kultur, verwitterter Sandstein, angelaufenes Gold."
+palette = ["#18120a", "#3a2c1a", "#6a5434", "#9c8258"]
+accent = "#d4aa48"
+glow = "#ffc85a"
+surface = "verwittert, behauen, Moos in Fugen"
+addons = ["behauene Steinblöcke", "Runenplatten", "Goldringe/Ornamente", "Ranken"]
+effect = "Heilig/Licht"
+texture = ""
+
+[oasis]
+label = "Oase"
+mood = "Grünes, schwüles Wasserloch mitten in der Wüste, Palmen, Schilf, trügerische Ruhe."
+palette = ["#0a1612", "#16362e", "#2c6052", "#4c8c74"]
+accent = "#f0a43c"
+glow = ""
+surface = "nass, glänzend, sandig an den Rändern"
+addons = ["Seerosen-Blätter", "Schilf", "Palmfasern", "Muscheln"]
+effect = "Wasser/Gift"
+texture = ""
+
+[jungle]
+label = "Dschungel"
+mood = "Dampfender, dichter Dschungel, giftige Farben, Lianen, Raubtiere im Schatten."
+palette = ["#06100a", "#12281a", "#22482c", "#3c6c3a"]
+accent = "#e6c828"
+glow = ""
+surface = "feucht, glänzend, üppig"
+addons = ["Lianen (schwingen nach)", "Blüten", "breite Blätter", "Dornen"]
+effect = "Gift"
+texture = ""
+
+[fungal]
+label = "Pilzwald"
+mood = "Unterirdischer Wald aus Riesenpilzen, Sporen in der Luft, fahles Biolicht."
+palette = ["#0e0a12", "#241a2e", "#42304e", "#6a5076"]
+accent = "#c8e05a"
+glow = "#a0f064"
+surface = "weich, schwammig, matt"
+addons = ["Pilzhüte", "Sporensäcke", "Lamellen", "Myzel-Fäden"]
+effect = "Gift/Verlangsamung"
+texture = ""
+
+[ice]
+label = "Eis"
+mood = "Gletscher und gefrorene Höhlen, blaues Eis, Kälte, die alles erstarren lässt."
+palette = ["#0a1220", "#1a3048", "#3a6484", "#78a8c8"]
+accent = "#b4f0ff"
+glow = ""
+surface = "glatt, glasig, bereift"
+addons = ["Eisplatten", "Eisspitzen-Kamm", "Eiszapfen", "Frostkruste"]
+effect = "Kälte/Einfrieren"
+texture = ""

@@ -9,6 +9,10 @@ Warum: Die Concept-Ausschnitte sind winzig und verpixelt (ChatGPT fantasierte), 
 die Kreatur in einem Satz, umgeben von vielen Technik-Anweisungen. Jetzt steht die Beschreibung vorn und dominant,
 die Technik kompakt am Ende.
 
+Ohne Concept Art (seit 2026-11-18, Roster-Erweiterung: kein [[concept]] mit role = "design"):
+  Stufe 1 entwirft die Kreatur nur aus Beschreibung + Stil-Referenz. Das Design-Bild IST dann der Design-Entwurf –
+  der Nutzer prüft ihn und lässt ihn ggf. neu generieren. Kreaturen mit Concept bekommen unverändert denselben Text.
+
 Woher die Texte kommen (erster Treffer gilt):
   Beschreibung  `look` in creature.toml → `look` in creatures/roster.toml → `description` in creature.toml
   Pose          `pose` in creature.toml → `pose` in creatures/roster.toml → Bauplan (templates/bodyplans.toml)
@@ -61,8 +65,13 @@ def _width(path):
         return 0
 
 
+def has_concept(cfg):
+    return any(c["role"] == "design" for c in cfg.get("concept", []))
+
+
 def prompt_design(title, look, style, pose, concepts, cdir, cfg):
-    """Stufe 1: ein sauberes Design-Bild aus dem (verpixelten) Concept + Beschreibung."""
+    """Stufe 1: ein sauberes Design-Bild aus dem (verpixelten) Concept + Beschreibung –
+    oder ohne Concept nur aus Beschreibung + Stil-Referenz (Design-Entwurf)."""
     roles = []
     for i, c in enumerate(concepts, 1):
         if c["role"] == "design":
@@ -78,9 +87,16 @@ def prompt_design(title, look, style, pose, concepts, cdir, cfg):
         elif c["role"] == "style":
             roles.append(f"Image {i} is only an art-style reference: copy its rendering style, not the creatures in it.")
     img = cfg["images"]
+    if any(c["role"] == "design" for c in concepts):
+        task = (f"Paint ONE clean, sharp, high-resolution design image of my creature \"{title}\". Stay true to the "
+                f"concept - same character, silhouette, body parts and colors - but redraw it cleanly with these "
+                f"details:")
+    else:
+        task = (f"There is no concept art for this creature yet: design it from the description below. Paint ONE "
+                f"clean, sharp, high-resolution design image of my creature \"{title}\" - an original design with a "
+                f"bold silhouette that reads well from a top-down game camera:")
     return (f"{' '.join(roles)}\n\n"
-            f"Paint ONE clean, sharp, high-resolution design image of my creature \"{title}\". Stay true to the "
-            f"concept - same character, silhouette, body parts and colors - but redraw it cleanly with these details:\n\n"
+            f"{task}\n\n"
             f"{look}\n\n"
             f"Style: {_clean(style)}.\n\n"
             f"Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at "
@@ -127,14 +143,29 @@ def build(creature_dir):
     p2 = prompt_views(title, look, pose, bp["camera"], views, cfg)
     names = ", ".join(f"`{v}.png`" for v in views)
     have = "✅ liegt schon vor" if design.exists() else "noch nicht vorhanden – erst Stufe 1"
+    concept = has_concept(cfg)
+    if concept:
+        intro = ("**Zwei Stufen:** Stufe 1 macht aus dem kleinen Concept-Ausschnitt EIN sauberes Design-Bild, das du "
+                 "gegen dein Concept prüfst. Stufe 2 macht daraus die 4 Ansichten für Tripo. Beschreibung ändern: "
+                 "`look` in `creatures/roster.toml` (oder `creature.toml`), dann `python scripts/make_prompts.py` "
+                 "erneut starten.")
+        check = ("**Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, "
+                 "Farben? Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter")
+    else:
+        intro = ("**Kein Concept – das Design-Bild ist der Design-Entwurf.** Stufe 1 entwirft die Kreatur nur aus der "
+                 "Beschreibung (`look`) und der Stil-Referenz. **Prüfe es (du = Nutzer)** und lass es ggf. neu "
+                 "generieren – erst wenn es dir gefällt, wird es als `input/design.png` verbindlich. Stufe 2 macht "
+                 "daraus die 4 Ansichten für Tripo. Beschreibung ändern: `look` in `creatures/roster.toml` (oder "
+                 "`creature.toml`), dann `python scripts/make_prompts.py` erneut starten.")
+        check = ("**Prüfen (du):** Ist das dein Monster? Charakter, Silhouette von schräg oben, Anzahl der Beine/Teile, "
+                 "Farben, Stil (clean Low-Poly). Wenn nicht: im selben Chat neu generieren lassen („nochmal, aber …“) "
+                 "oder `look` anpassen. Wenn ja: als PNG speichern unter")
     parts = [
         f"# Bildprompts: {title}",
         "",
         f"Bauplan: **{bp['label']}** · Stil: **{st['label']}** · Ordner: `{cdir / 'input'}`",
         "",
-        "**Zwei Stufen:** Stufe 1 macht aus dem kleinen Concept-Ausschnitt EIN sauberes Design-Bild, das du gegen "
-        "dein Concept prüfst. Stufe 2 macht daraus die 4 Ansichten für Tripo. Beschreibung ändern: `look` in "
-        "`creatures/roster.toml` (oder `creature.toml`), dann `python scripts/make_prompts.py` erneut starten.",
+        intro,
         "",
         "## Stufe 1 – Design-Bild → `input/design.png`",
         "",
@@ -144,8 +175,7 @@ def build(creature_dir):
         "",
         "```text", p1, "```",
         "",
-        "**Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? "
-        "Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter",
+        check,
         f"`{design}`",
         "",
         f"## Stufe 2 – 4 Ansichten → {names}",
@@ -169,7 +199,7 @@ def build(creature_dir):
     (cdir / "input").mkdir(exist_ok=True)
     print(f"Prompts geschrieben: {out}  (Stufe 1 + Stufe 2, {len(views)} Ansichten)")
     return {"title": title, "stage1": p1, "stage2": p2, "attach1": attach1, "design": design,
-            "views": views, "input": cdir / "input", "look": look}
+            "views": views, "input": cdir / "input", "look": look, "concept": concept}
 
 
 if __name__ == "__main__":

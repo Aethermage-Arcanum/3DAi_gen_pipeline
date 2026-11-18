@@ -6,7 +6,7 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 
 | # | Schritt | Wer | Kosten |
 |---|---|---|---|
-| 1 | Kreatur eintragen: `creatures/roster.toml` (Bauplan, Concept-Zelle, **`look`** = ausführliche Beschreibung, ggf. `pose`) bzw. `creature.toml` | du / Claude | – |
+| 1 | Kreatur eintragen: `creatures/roster.toml` (Bauplan, Concept-Zelle, **`look`** = ausführliche Beschreibung, ggf. `pose`, Heimat-`biome`, bei neuen auch `role` + `varianten`) bzw. `creature.toml` | du / Claude | – |
 | 2 | `python scripts/make_prompts.py creatures/<name>` (alle: `make_roster.py`) → `prompts.md` mit **zwei** Prompts | Skript | – |
 | 3a | **Stufe 1 – Design-Bild:** Concept-Ausschnitt + Stil-Referenz + Prompt 1 in ChatGPT → **ein** sauberes Bild. **Du prüfst es gegen dein Concept** und speicherst es als `input/design.png` | du | ChatGPT-Abo |
 | 3b | **Stufe 2 – 4 Ansichten:** `input/design.png` + Prompt 2 in einen neuen Chat → 4 Einzelbilder als `front/left/right/back.png` in `input/`. **Claude prüft** sie nach Checkliste Teil A | du, dann Claude | ChatGPT-Abo |
@@ -19,18 +19,21 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 - **Stufe 1** macht aus Ausschnitt + ausführlicher Beschreibung **ein** sauberes, hochauflösendes Design-Bild (Dreiviertel-Ansicht, Neutralpose, neutraler Hintergrund, ganze Kreatur). Du entscheidest, ob es dein Monster ist → `input/design.png`.
 - **Stufe 2** nimmt nur noch `input/design.png` als **verbindliche** Vorlage (nicht mehr den verpixelten Ausschnitt) und macht daraus die 4 Ansichten.
 - **Beschreibung (`look`)**: Englisch, ca. 6–12 Sätze, **qualitativ** – Charakter/Wirkung, Silhouette, Körperbau, Kopf, Gliedmaßen (Anzahl ja), Schwanz, markante Merkmale, Farben pro Körperbereich, Material. **Keine Zahlen, Maße oder Verhältnisse** – der KI Kreativität lassen. Nur, was im Concept zu sehen ist bzw. dazu passt. Steht vorn und dominant; Technik (Pose, Hintergrund, Licht, Ansichten, Checkliste A2–A9) kompakt am Ende.
+- **Ohne Concept Art** (Roster-Erweiterung 2026-11-18, 16 Kreaturen): Stufe 1 bekommt nur die Stil-Referenz und **entwirft** die Kreatur aus `look` – das Design-Bild ist dann der Design-Entwurf. Du prüfst, ob es dir gefällt, und lässt es ggf. neu generieren. Erkennung automatisch: kein `[[concept]]` mit `role = "design"`. Kreaturen mit Concept behalten exakt ihren Prompt-Text.
 - Quelle der Texte (erster Treffer gilt): `look`/`pose` in `creature.toml` → in `creatures/roster.toml` → `description` bzw. Bauplan-Pose (`templates/bodyplans.toml`). Vorhandene Bilder werden nie angefasst – fertige Kreaturen bleiben, wie sie sind; nur `prompts.md` wird neu geschrieben.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
 **Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
-**Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md).
+**Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md). **16 Ergänzungen** (ohne Concept, Claude hat ausgewählt): [ROSTER_ERWEITERUNG_VORSCHLAG.md](ROSTER_ERWEITERUNG_VORSCHLAG.md) → Abschnitt „Gewählt“.
+**Biome:** [templates/biomes.toml](templates/biomes.toml) – zentrale Liste mit 18 Biomen (Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta, Gras/Steppe, Stein, Kristall, Tempel/Ruinen, Oase, Dschungel, Pilzwald, Eis), je Stimmung, Tönungs-Palette, Akzent/Glühen, typische Anbauteile (Geometry Nodes) und Element-Effekt. Varianten pro Kreatur (Grundform + 4 Biome + Elite-Addon) stehen in `creatures/roster.toml` → `varianten`.
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
 
 ## Stellschrauben
 
 - `pipeline.toml`: globale Standardwerte, z. B. **`face_limit`** (Polygon-Obergrenze = wichtigster Performance-Regler), Texturqualität, Rig-Version, Animationen
 - `creatures/roster.toml`: alle Kreaturen aus der Concept Art, je mit **`look`** (Beschreibung für die Prompts) und optional `pose` (Sonder-Neutralpose, z. B. Knöchelgang, Flügel, Tentakel)
-- `templates/bodyplans.toml`: Neutralpose (kompakt) + Kamera + Rig-Typ pro Bauplan (octopod, hexapod, quadruped, serpentine, avian, aquatic, biped)
+- `templates/bodyplans.toml`: Neutralpose (kompakt) + Kamera + Rig-Typ pro Bauplan (octopod, hexapod, quadruped, serpentine, avian, aquatic, biped; seit 2026-11-18 auch upright, winged, floater, amorph, static)
+- `templates/biomes.toml`: alle Biome mit Tönung, Anbauteilen und Effekt für die Varianten
 - `templates/styles.toml`: Stil-Vorlagen (dark_fantasy, stylized, realistic)
 - `creatures/<name>/creature.toml`: eine Kreatur; kann jeden Wert aus `pipeline.toml` überschreiben
 

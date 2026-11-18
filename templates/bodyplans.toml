@@ -5,6 +5,7 @@
 # camera    → Kamerawinkel für die 4 Ansichten (Checkliste README Teil A1: Augenhöhe, keine Draufsicht)
 # rig_type  → Tripo-Rig-Typ
 # walk      → Tripo-Preset für den Laufzyklus
+# Biome (Tönung, Anbauteile, Effekte für Varianten): templates/biomes.toml.
 
 [octopod]
 label = "Achtbeiner (Spinne, Skorpion)"
@@ -60,3 +61,48 @@ from the body, head forward"""
 camera = "camera at chest height, orthographic-like, no perspective distortion"
 rig_type = "biped"
 walk = "preset:walk"
+
+# --- neue Skelette (seit 2026-11-18, Roster-Erweiterung) ------------------------------------
+# Tripo-Rig/Animation wird für diese Baupläne NICHT genutzt (eigenes Rig in Blender). rig_type steht nur
+# für den kostenlosen Rig-Check; "" = kein passender Tripo-Typ. walk = "" (kein Tripo-Preset nötig).
+
+[upright]
+label = "Aufrechter Zweibeiner, schwer (Golem, Treant, Brutalo)"
+pose = """standing upright on two legs, legs straight and slightly apart, both arms hanging down and \
+angled away from the body so they touch neither the body nor the legs, head forward, mouth closed"""
+camera = "camera at chest height, very slightly from above, orthographic-like, no perspective distortion"
+rig_type = "biped"
+walk = ""
+
+[winged]
+label = "Flügel statt Arme (Vogel, Fledermaus, Drache)"
+pose = """standing on its two legs, legs straight down and apart, body level, both wings spread out wide \
+and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth \
+closed, tail extended straight back"""
+camera = "camera at body height, very slightly from above, orthographic-like, no perspective distortion"
+rig_type = "avian"
+walk = ""
+
+[floater]
+label = "Schwebend (Geist, Auge, Kugel)"
+pose = """floating level in the air above the ground, upright and facing forward, nothing touches the \
+ground, hanging parts hang down straight, separate and only gently curved"""
+camera = "camera at body height, very slightly from above, orthographic-like, no perspective distortion"
+rig_type = ""
+walk = ""
+
+[amorph]
+label = "Amorph (Schleim, Fleischmasse)"
+pose = """resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or \
+squashed, any short appendages separate and apart from each other"""
+camera = "camera slightly above body height, orthographic-like, no perspective distortion"
+rig_type = ""
+walk = ""
+
+[static]
+label = "Stationär (Turm, Nest, Pflanze)"
+pose = """standing still and upright on its base, the base flat on the ground, the top facing up and \
+forward, all flaps, petals or tendrils open, symmetric and apart from each other"""
+camera = "camera slightly above the top, orthographic-like, no perspective distortion"
+rig_type = ""
+walk = ""

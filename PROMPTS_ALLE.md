@@ -7,6 +7,7 @@ Seit 2026-11-18 (BACKLOG A10). Pro Kreatur:
 3. **Claude prüft** die 4 Ansichten nach der Checkliste (`README.md`, Teil A), erst dann Tripo.
 
 Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau – ihre Bilder bleiben, wie sie sind.
+**Ohne Concept** (markiert, Roster-Erweiterung 2026-11-18): Stufe 1 bekommt nur die Stil-Referenz und entwirft die Kreatur aus der Beschreibung – **das Design-Bild ist der Design-Entwurf**, du prüfst es (gefällt es dir?) und lässt es ggf. neu generieren.
 Übersicht aller Concept-Ausschnitte: `creatures/concept_crops.png`.
 
 | # | Kreatur | Tripo-Modell | design.png |
@@ -31,6 +32,22 @@ Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau
 | 19 | [Void Manifestation](#19-void-manifestation) | ✅ vorhanden | – |
 | 20 | [Void Harbinger](#20-void-harbinger) | – | – |
 | 21 | [Reality Ripper](#21-reality-ripper) | – | – |
+| 22 | [Geode Golem](#22-geode-golem) | – | – |
+| 23 | [Tomb Shroud](#23-tomb-shroud) | – | – |
+| 24 | [Idol Eye](#24-idol-eye) | – | – |
+| 25 | [Bonepicker Vulture](#25-bonepicker-vulture) | – | – |
+| 26 | [Cinder Wyvern](#26-cinder-wyvern) | – | – |
+| 27 | [Umbral Panther](#27-umbral-panther) | – | – |
+| 28 | [Rimehide Bear](#28-rimehide-bear) | – | – |
+| 29 | [Sporecap Mortar](#29-sporecap-mortar) | – | – |
+| 30 | [Bog Ooze](#30-bog-ooze) | – | – |
+| 31 | [Oasis Gulper](#31-oasis-gulper) | – | – |
+| 32 | [Quillback Burrower](#32-quillback-burrower) | – | – |
+| 33 | [Ruin Howler](#33-ruin-howler) | – | – |
+| 34 | [Tallgrass Viper](#34-tallgrass-viper) | – | – |
+| 35 | [Mound Queen](#35-mound-queen) | – | – |
+| 36 | [Bog Warden](#36-bog-warden) | – | – |
+| 37 | [Gloomfang Centipede](#37-gloomfang-centipede) | – | – |
 
 ## 2. Spore Drone
 
@@ -870,4 +887,676 @@ Rules for the 3D model:
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 22. Geode Golem
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Kristall, Rolle Nahkampf (Tank) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\geode_golem\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Geode Golem" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A massive, slow golem of split rock, hollow like a geode - ancient, heavy and unstoppable. Its body is a hunched block of dark slate-grey stone with a broad, top-heavy chest and shoulders, a narrow waist and two short, thick, pillar-like legs. The head is small and sunk low between the shoulders: a blunt stone wedge with a deep brow and two narrow cyan crystal eyes. Its two arms are long and very heavy and end in huge, blocky stone fists. The back and shoulders are cracked open, and from the cracks burst large clusters of sharp, faceted crystals in icy cyan and pale violet - from above they form a jagged crystal crown that dominates the silhouette. Thin veins of the same crystal run through cracks in the arms and chest. The stone has flat, chiseled facets and chipped edges. Materials: rough matte rock and smooth, translucent-looking crystal. Palette: dark slate and charcoal stone with the cold crystal colors as the bright eye-catcher.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\geode_golem\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Geode Golem": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A massive, slow golem of split rock, hollow like a geode - ancient, heavy and unstoppable. Its body is a hunched block of dark slate-grey stone with a broad, top-heavy chest and shoulders, a narrow waist and two short, thick, pillar-like legs. The head is small and sunk low between the shoulders: a blunt stone wedge with a deep brow and two narrow cyan crystal eyes. Its two arms are long and very heavy and end in huge, blocky stone fists. The back and shoulders are cracked open, and from the cracks burst large clusters of sharp, faceted crystals in icy cyan and pale violet - from above they form a jagged crystal crown that dominates the silhouette. Thin veins of the same crystal run through cracks in the arms and chest. The stone has flat, chiseled facets and chipped edges. Materials: rough matte rock and smooth, translucent-looking crystal. Palette: dark slate and charcoal stone with the cold crystal colors as the bright eye-catcher.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at chest height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 23. Tomb Shroud
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Krypta, Rolle Nahkampf (Assassine, Teleport) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tomb_shroud\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Tomb Shroud" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A silent crypt wraith - a hooded shroud that floats above the ground, mournful and menacing. It has no legs: the hunched, hooded upper body is wrapped in heavy, tattered grave cloth that hangs down and narrows into a ragged, pointed tail of cloth. Inside the deep hood there is only darkness and a pale, cracked bone mask with two hollow eye holes. Two long, thin, bony arms reach out from the cloth, each ending in a hand with long, hooked, bone-white claws. The cloth is thick and heavy, layered in folds, with torn edges and a few broad, dangling strips, and old rusted chains are wrapped around the chest. Colors: faded ash-grey and dusty bone-white cloth that darkens to deep charcoal at the hem, with a sickly pale green tint in the folds; mask and claws are old ivory. Materials: heavy, coarse burial linen, dry bone and corroded iron.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tomb_shroud\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Tomb Shroud": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A silent crypt wraith - a hooded shroud that floats above the ground, mournful and menacing. It has no legs: the hunched, hooded upper body is wrapped in heavy, tattered grave cloth that hangs down and narrows into a ragged, pointed tail of cloth. Inside the deep hood there is only darkness and a pale, cracked bone mask with two hollow eye holes. Two long, thin, bony arms reach out from the cloth, each ending in a hand with long, hooked, bone-white claws. The cloth is thick and heavy, layered in folds, with torn edges and a few broad, dangling strips, and old rusted chains are wrapped around the chest. Colors: faded ash-grey and dusty bone-white cloth that darkens to deep charcoal at the hem, with a sickly pale green tint in the folds; mask and claws are old ivory. Materials: heavy, coarse burial linen, dry bone and corroded iron.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 24. Idol Eye
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Fernkampf (Strahl) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\idol_eye\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Idol Eye" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A floating temple guardian - an ancient stone idol that has cracked open to reveal a living eye. Its core is one huge, round eye with a gold-amber iris and a narrow dark pupil, wet and watchful. Around the eye a shell of thick, carved stone plates is spread open like the petals of a flower, leaving the eye free at the front. The plates are weathered sandstone with deep carved spiral patterns and inlaid bands of tarnished gold, and their outer rims end in short, blunt stone spikes. Below the eye hangs a heavy stone pendant like the chin of a broken idol. From above it reads as a round, ornamented stone disc with the eye looking out. Colors: warm ochre and sand-colored stone, moss-green weathering in the grooves, dull gold ornaments and the bright amber eye as the eye-catcher. Materials: carved, chipped stone, old gold and a glassy, wet eye.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\idol_eye\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Idol Eye": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A floating temple guardian - an ancient stone idol that has cracked open to reveal a living eye. Its core is one huge, round eye with a gold-amber iris and a narrow dark pupil, wet and watchful. Around the eye a shell of thick, carved stone plates is spread open like the petals of a flower, leaving the eye free at the front. The plates are weathered sandstone with deep carved spiral patterns and inlaid bands of tarnished gold, and their outer rims end in short, blunt stone spikes. Below the eye hangs a heavy stone pendant like the chin of a broken idol. From above it reads as a round, ornamented stone disc with the eye looking out. Colors: warm ochre and sand-colored stone, moss-green weathering in the grooves, dull gold ornaments and the bright amber eye as the eye-catcher. Materials: carved, chipped stone, old gold and a glassy, wet eye.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 25. Bonepicker Vulture
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Schwarm (kreist, Sturzflug) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bonepicker_vulture\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Bonepicker Vulture" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A large, ragged steppe vulture - a patient scavenger that circles high and then dives. The body is heavy and hunched with a bulky chest and a thick ruff of bristling feathers around the base of the neck. The neck is long, bare and wrinkled, dull red, and carries a bald, bony head with a long, hooked, bone-white beak and small yellow eyes. Two very broad, long wings with deeply fingered, ragged tips form its signature silhouette; their upper side is dark umber brown with paler sand-colored edges and a row of stiff, sharp quill feathers along the front edge. A short, wide, fan-shaped tail sits at the back. Two strong, scaly grey legs end in big hooked talons. Materials: coarse, layered feathers shaped as clean faceted planes, leathery skin on head and neck, horn on beak and talons. Palette: dusty browns and sand with the raw red neck as the accent.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bonepicker_vulture\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Bonepicker Vulture": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A large, ragged steppe vulture - a patient scavenger that circles high and then dives. The body is heavy and hunched with a bulky chest and a thick ruff of bristling feathers around the base of the neck. The neck is long, bare and wrinkled, dull red, and carries a bald, bony head with a long, hooked, bone-white beak and small yellow eyes. Two very broad, long wings with deeply fingered, ragged tips form its signature silhouette; their upper side is dark umber brown with paler sand-colored edges and a row of stiff, sharp quill feathers along the front edge. A short, wide, fan-shaped tail sits at the back. Two strong, scaly grey legs end in big hooked talons. Materials: coarse, layered feathers shaped as clean faceted planes, leathery skin on head and neck, horn on beak and talons. Palette: dusty browns and sand with the raw red neck as the accent.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 26. Cinder Wyvern
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Vulkan, Rolle Elite (landet zum Kämpfen, Feueratem) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Cinder Wyvern" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A fierce volcanic wyvern - a heavy, armored dragon-beast that lands to fight and breathes fire. It has two powerful hind legs with thick clawed feet and no front legs; its two huge wings grow from the shoulders and double as arms, with a hooked claw at each wing wrist. The wings are bat-like with thick, leathery membranes, ash-grey on top with charcoal edges and ember-orange veins. The body is muscular and barrel-chested, covered with overlapping basalt-black scales that break along the back into a ridge of jagged, rock-like plates. The head is long and wedge-shaped with a heavy jaw, rows of teeth and two backward-sweeping horns. A long, thick tail ends in a blunt, spiked club of volcanic rock. The cracks between the plates and the throat are painted in hot orange and red, without any glow. Materials: rough basalt-like scales, leathery wing skin and sharp horn. Palette: black and ash grey with molten orange accents.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Cinder Wyvern": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A fierce volcanic wyvern - a heavy, armored dragon-beast that lands to fight and breathes fire. It has two powerful hind legs with thick clawed feet and no front legs; its two huge wings grow from the shoulders and double as arms, with a hooked claw at each wing wrist. The wings are bat-like with thick, leathery membranes, ash-grey on top with charcoal edges and ember-orange veins. The body is muscular and barrel-chested, covered with overlapping basalt-black scales that break along the back into a ridge of jagged, rock-like plates. The head is long and wedge-shaped with a heavy jaw, rows of teeth and two backward-sweeping horns. A long, thick tail ends in a blunt, spiked club of volcanic rock. The cracks between the plates and the throat are painted in hot orange and red, without any glow. Materials: rough basalt-like scales, leathery wing skin and sharp horn. Palette: black and ash grey with molten orange accents.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 27. Umbral Panther
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Nahkampf (Assassine, Sprung aus dem Hinterhalt) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\umbral_panther\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Umbral Panther" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A sleek jungle panther built for ambush - silent, lithe and deadly. The body is long and low with powerful shoulders, a narrow waist and long legs with large, soft paws and hooked claws. The head is broad and flat with a short muzzle, tufted pointed ears, long sabre-like upper fangs and narrow, bright jade-green eyes. A ridge of dark, leaf-shaped bony plates runs down the spine from the neck to the base of the tail - from above it reads like a jagged line along the back. The tail is very long and heavy and ends in a thick, flat tuft. The fur is deep blue-black with darker rosette patterns and a teal sheen on top, lighter slate grey on the belly. Materials: short, sleek fur shaped as clean planes and smooth bone plates. Palette: near-black blues and deep teal, with the green eyes and the pale fangs as accents.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\umbral_panther\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Umbral Panther": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A sleek jungle panther built for ambush - silent, lithe and deadly. The body is long and low with powerful shoulders, a narrow waist and long legs with large, soft paws and hooked claws. The head is broad and flat with a short muzzle, tufted pointed ears, long sabre-like upper fangs and narrow, bright jade-green eyes. A ridge of dark, leaf-shaped bony plates runs down the spine from the neck to the base of the tail - from above it reads like a jagged line along the back. The tail is very long and heavy and ends in a thick, flat tuft. The fur is deep blue-black with darker rosette patterns and a teal sheen on top, lighter slate grey on the belly. Materials: short, sleek fur shaped as clean planes and smooth bone plates. Palette: near-black blues and deep teal, with the green eyes and the pale fangs as accents.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 28. Rimehide Bear
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Eis, Rolle Elite (Tank, richtet sich auf) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rimehide_bear\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Rimehide Bear" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A colossal glacier bear - a hulking, armored beast that rises on its hind legs to smash its prey. The body is massive and round-backed with a huge hump of muscle over the shoulders, a heavy head and four thick, pillar-like legs with wide paws and long black claws. Its fur is shaggy pale blue-grey and white, falling in heavy, faceted clumps on the shoulders, neck and legs. Thick slabs of clear blue glacier ice have frozen onto its back, shoulders and forearms like rough armor plates, with a ridge of jagged ice shards along the spine - from above the frozen armor dominates the silhouette. The head is broad with a short muzzle, small dark eyes under an icy brow and a mouth with heavy fangs. A short stub of a tail sits at the back. Materials: coarse, heavy fur, smooth translucent-looking ice and horn-black claws. Palette: cold whites and steel blues, with the dark mouth and claws as contrast.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rimehide_bear\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Rimehide Bear": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A colossal glacier bear - a hulking, armored beast that rises on its hind legs to smash its prey. The body is massive and round-backed with a huge hump of muscle over the shoulders, a heavy head and four thick, pillar-like legs with wide paws and long black claws. Its fur is shaggy pale blue-grey and white, falling in heavy, faceted clumps on the shoulders, neck and legs. Thick slabs of clear blue glacier ice have frozen onto its back, shoulders and forearms like rough armor plates, with a ridge of jagged ice shards along the spine - from above the frozen armor dominates the silhouette. The head is broad with a short muzzle, small dark eyes under an icy brow and a mouth with heavy fangs. A short stub of a tail sits at the back. Materials: coarse, heavy fur, smooth translucent-looking ice and horn-black claws. Palette: cold whites and steel blues, with the dark mouth and claws as contrast.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 29. Sporecap Mortar
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Pilzwald, Rolle Fernkampf (stationär, Bogenschuss) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sporecap_mortar\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Sporecap Mortar" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A giant living mushroom turret that lobs spore bombs - rooted, bloated and poisonous. It stands on a thick, squat, fleshy stalk that spreads at the bottom into a wide base of gripping, root-like tendrils clamped to the ground. On top sits a huge, wide mushroom cap facing up, with a round, puckered opening in its center like the barrel of a mortar. The cap is deep violet with large pale lilac spots and a ring of short, thick, fleshy spikes along its rim. Under the cap grow thick, soft gills in pale cream, and a cluster of round, swollen spore sacs bulges from the side of the stalk like ripe fruit. The stalk is pale bone-white with violet veins. Materials: soft, matte, spongy mushroom flesh and slightly wet, glossy spore sacs. Palette: dark violet and bone white with sickly yellow-green tints on the sacs.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still and upright on its base, the base flat on the ground, the top facing up and forward, all flaps, petals or tendrils open, symmetric and apart from each other. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sporecap_mortar\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Sporecap Mortar": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A giant living mushroom turret that lobs spore bombs - rooted, bloated and poisonous. It stands on a thick, squat, fleshy stalk that spreads at the bottom into a wide base of gripping, root-like tendrils clamped to the ground. On top sits a huge, wide mushroom cap facing up, with a round, puckered opening in its center like the barrel of a mortar. The cap is deep violet with large pale lilac spots and a ring of short, thick, fleshy spikes along its rim. Under the cap grow thick, soft gills in pale cream, and a cluster of round, swollen spore sacs bulges from the side of the stalk like ripe fruit. The stalk is pale bone-white with violet veins. Materials: soft, matte, spongy mushroom flesh and slightly wet, glossy spore sacs. Palette: dark violet and bone white with sickly yellow-green tints on the sacs.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing still and upright on its base, the base flat on the ground, the top facing up and forward, all flaps, petals or tendrils open, symmetric and apart from each other.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly above the top, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 30. Bog Ooze
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Schwarm (teilt sich beim Tod) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_ooze\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Bog Ooze" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A bubbling swamp ooze - a heaving blob of acidic sludge that splits apart when struck. Its body is a big, rounded, lumpy mound of thick, murky green-brown slime, wider at the bottom where it spreads over the ground. Inside the jelly the half-dissolved remains of its prey show as darker shapes: a few bones, a rusted helmet and a skull. The top is crowned by a few large bubbles and short, thick, drooping lumps. Two small, dark, sunken eye spots and a wide, toothless mouth slit sit at its front. Clumps of weed and pond scum cling to its surface. Materials: glossy, wet, jelly-like slime with a clear skin and murky depths. Palette: dark olive and bog brown with bright acid-green highlights on top.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or squashed, any short appendages separate and apart from each other. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_ooze\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Bog Ooze": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A bubbling swamp ooze - a heaving blob of acidic sludge that splits apart when struck. Its body is a big, rounded, lumpy mound of thick, murky green-brown slime, wider at the bottom where it spreads over the ground. Inside the jelly the half-dissolved remains of its prey show as darker shapes: a few bones, a rusted helmet and a skull. The top is crowned by a few large bubbles and short, thick, drooping lumps. Two small, dark, sunken eye spots and a wide, toothless mouth slit sit at its front. Clumps of weed and pond scum cling to its surface. Materials: glossy, wet, jelly-like slime with a clear skin and murky depths. Palette: dark olive and bog brown with bright acid-green highlights on top.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or squashed, any short appendages separate and apart from each other.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 31. Oasis Gulper
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Oase, Rolle Nahkampf/Kontrolle (Zungenschlag zieht heran) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\oasis_gulper\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Oasis Gulper" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A huge, bloated oasis toad - a lazy-looking ambusher that snaps prey from afar with its long tongue. The body is broad, round and squat, sitting low, with a wide, flat head that merges into the body without a neck. The mouth is enormous, a wide grinning slit across the whole front of the head, with a pale yellow throat pouch below. Two big, bulging amber eyes sit on top of the head. The front legs are short and sturdy, the hind legs big and powerful with long webbed feet. The back is covered with warty bumps, and a few small, flat lily pads and reeds grow from the skin like a living pond. The skin is turquoise and teal on top with dark spots, sandy yellow on the belly, with bold orange warning stripes along the sides. Materials: smooth, glossy, wet skin with rough warts. Palette: turquoise water colors with warm sand and orange accents.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\oasis_gulper\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Oasis Gulper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A huge, bloated oasis toad - a lazy-looking ambusher that snaps prey from afar with its long tongue. The body is broad, round and squat, sitting low, with a wide, flat head that merges into the body without a neck. The mouth is enormous, a wide grinning slit across the whole front of the head, with a pale yellow throat pouch below. Two big, bulging amber eyes sit on top of the head. The front legs are short and sturdy, the hind legs big and powerful with long webbed feet. The back is covered with warty bumps, and a few small, flat lily pads and reeds grow from the skin like a living pond. The skin is turquoise and teal on top with dark spots, sandy yellow on the belly, with bold orange warning stripes along the sides. Materials: smooth, glossy, wet skin with rough warts. Palette: turquoise water colors with warm sand and orange accents.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 32. Quillback Burrower
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Stein, Rolle Fernkampf (gräbt sich ein, Stachel-Salve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\quillback_burrower\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Quillback Burrower" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A stocky, armored burrowing beast of the rocky badlands - it digs in, hides and fires its quills. The body is low, wide and muscular like a badger, with short, strong legs and huge, shovel-like front claws made for digging. The head is long and wedge-shaped with a blunt snout, small black eyes and a mouth with short, sharp teeth. Its back is covered by a dense mantle of long, thick, stone-grey quills that sweep backward from the neck to the tail and stand up into a bristling crest - from above it reads as a spiked dome. Flat, cracked plates of stone-colored hide protect the shoulders between the quills. The short tail bristles with quills as well. The fur on face, belly and legs is coarse and dark brown-grey, with a pale stripe running from the nose over the head. Materials: coarse fur, hard quills with pale tips and rough plated hide. Palette: dusty stone greys and dark browns with bone-white quill tips.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\quillback_burrower\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Quillback Burrower": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A stocky, armored burrowing beast of the rocky badlands - it digs in, hides and fires its quills. The body is low, wide and muscular like a badger, with short, strong legs and huge, shovel-like front claws made for digging. The head is long and wedge-shaped with a blunt snout, small black eyes and a mouth with short, sharp teeth. Its back is covered by a dense mantle of long, thick, stone-grey quills that sweep backward from the neck to the tail and stand up into a bristling crest - from above it reads as a spiked dome. Flat, cracked plates of stone-colored hide protect the shoulders between the quills. The short tail bristles with quills as well. The fur on face, belly and legs is coarse and dark brown-grey, with a pale stripe running from the nose over the head. Materials: coarse fur, hard quills with pale tips and rough plated hide. Palette: dusty stone greys and dark browns with bone-white quill tips.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 33. Ruin Howler
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Schwarm/Fernkampf (Rudel, wirft Steine) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Ruin Howler" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A lanky, savage temple ape that lives in overgrown ruins - loud, agile and hurling chunks of stone. It walks on all fours on its long, powerful arms and shorter, bent legs, and has a long, thick tail. Its body is lean, with a hunched back and a broad chest. The head has a long, dog-like snout, a jaw full of long canine fangs and deep-set red eyes under a heavy brow; a mane of stiff, bristling hair frames the face and shoulders. Fragments of carved temple stone and tarnished gold rings are grown into the skin of its shoulders and forearms like trophies. The fur is dark rusty brown, lighter and sand-colored on the chest, and the bare face carries a vivid crimson and blue mask like a mandrill. Materials: coarse fur shaped as clean faceted clumps, bare leathery face, stone and old gold. Palette: rusty browns and sand with the vivid face as the eye-catcher.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Ruin Howler": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A lanky, savage temple ape that lives in overgrown ruins - loud, agile and hurling chunks of stone. It walks on all fours on its long, powerful arms and shorter, bent legs, and has a long, thick tail. Its body is lean, with a hunched back and a broad chest. The head has a long, dog-like snout, a jaw full of long canine fangs and deep-set red eyes under a heavy brow; a mane of stiff, bristling hair frames the face and shoulders. Fragments of carved temple stone and tarnished gold rings are grown into the skin of its shoulders and forearms like trophies. The fur is dark rusty brown, lighter and sand-colored on the chest, and the bare face carries a vivid crimson and blue mask like a mandrill. Materials: coarse fur shaped as clean faceted clumps, bare leathery face, stone and old gold. Palette: rusty browns and sand with the vivid face as the eye-catcher.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 34. Tallgrass Viper
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Nahkampf (Hinterhalt, Schlag aus der S-Kurve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tallgrass_viper\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Tallgrass Viper" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A long, sleek steppe viper that hides in the tall grass and strikes from an S-curve - fast and deadly. The body is long and muscular, thickest in the middle, and tapers to a thin tail that ends in a rattle of dry, horny segments. The head is a broad, flat triangle with two short, pointed horns above the eyes, narrow golden eyes with slit pupils and long fangs hidden in the closed mouth. Along the back runs a bold zigzag pattern of dark olive and black over straw-yellow scales that blends in with dry grass; the belly is pale cream with broad plate-like scales. A row of small, raised, keeled scales forms a low ridge along the spine. Materials: dry, matte, keeled scales, smooth belly plates and a horny rattle. Palette: straw yellow, olive and ochre with black zigzags.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tallgrass_viper\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Tallgrass Viper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A long, sleek steppe viper that hides in the tall grass and strikes from an S-curve - fast and deadly. The body is long and muscular, thickest in the middle, and tapers to a thin tail that ends in a rattle of dry, horny segments. The head is a broad, flat triangle with two short, pointed horns above the eyes, narrow golden eyes with slit pupils and long fangs hidden in the closed mouth. Along the back runs a bold zigzag pattern of dark olive and black over straw-yellow scales that blends in with dry grass; the belly is pale cream with broad plate-like scales. A row of small, raised, keeled scales forms a low ridge along the spine. Materials: dry, matte, keeled scales, smooth belly plates and a horny rattle. Palette: straw yellow, olive and ochre with black zigzags.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 35. Mound Queen
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Boss (legt Brut) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\mound_queen\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Mound Queen" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+An enormous termite-like queen of a jungle hive - a slow, bloated mother of the swarm that births her brood in battle. At the front sits a comparatively small, armored insect body with a heavy, plated head, a pair of large serrated mandibles and two thick, curved antennae. Six sturdy, jointed legs carry her, set wide to both sides of the front body. Behind them stretches a gigantic, swollen, segmented abdomen like a pale sac, ribbed with darker bands of chitin plates; it rests on the ground and drags behind her. Clusters of round, glossy eggs cling to the sides of the abdomen, and short chitin spikes line the bands on top. Head and legs are glossy dark amber-brown, the abdomen is pale ivory with a pinkish flesh tint and dark brown bands. Materials: polished chitin, soft stretched membrane and wet eggs. Palette: dark amber and brown with the huge pale abdomen as the dominant shape.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\mound_queen\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Mound Queen": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): An enormous termite-like queen of a jungle hive - a slow, bloated mother of the swarm that births her brood in battle. At the front sits a comparatively small, armored insect body with a heavy, plated head, a pair of large serrated mandibles and two thick, curved antennae. Six sturdy, jointed legs carry her, set wide to both sides of the front body. Behind them stretches a gigantic, swollen, segmented abdomen like a pale sac, ribbed with darker bands of chitin plates; it rests on the ground and drags behind her. Clusters of round, glossy eggs cling to the sides of the abdomen, and short chitin spikes line the bands on top. Head and legs are glossy dark amber-brown, the abdomen is pale ivory with a pinkish flesh tint and dark brown bands. Materials: polished chitin, soft stretched membrane and wet eggs. Palette: dark amber and brown with the huge pale abdomen as the dominant shape.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 36. Bog Warden
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Elite (Tank, Wurzel-Slam) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_warden\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Bog Warden" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A hulking, ancient swamp tree that has torn itself from the mud - a slow, patient guardian that smashes the ground with its roots. Its body is a thick, gnarled, hunched trunk of dark, wet bark, standing on two short, massive legs of twisted roots that spread into claw-like root feet. Two very long, heavy arms of bent branches hang from the shoulders and end in big hands of knotted root-fingers. Where a head should be, a hollow in the trunk forms a face with a deep, dark mouth and two small eyes of pale amber fungus. Its crown is a broad, flat canopy of dead, crooked branches draped with thick strands of grey-green moss - from above it reads as a wide, ragged tree top. Shelf fungi, ivy and moss grow over the bark. Materials: rough, cracked bark, damp moss and soft fungus. Palette: dark brown-black bark, grey-green moss and pale amber accents.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_warden\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Bog Warden": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A hulking, ancient swamp tree that has torn itself from the mud - a slow, patient guardian that smashes the ground with its roots. Its body is a thick, gnarled, hunched trunk of dark, wet bark, standing on two short, massive legs of twisted roots that spread into claw-like root feet. Two very long, heavy arms of bent branches hang from the shoulders and end in big hands of knotted root-fingers. Where a head should be, a hollow in the trunk forms a face with a deep, dark mouth and two small eyes of pale amber fungus. Its crown is a broad, flat canopy of dead, crooked branches draped with thick strands of grey-green moss - from above it reads as a wide, ragged tree top. Shelf fungi, ivy and moss grow over the bark. Materials: rough, cracked bark, damp moss and soft fungus. Palette: dark brown-black bark, grey-green moss and pale amber accents.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at chest height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+## 37. Gloomfang Centipede
+
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Höhle, Rolle Nahkampf (schnell, Giftklauen) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\gloomfang_centipede\input`
+
+### Stufe 1 – Design-Bild → `input/design.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+
+```text
+Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
+
+There is no concept art for this creature yet: design it from the description below. Paint ONE clean, sharp, high-resolution design image of my creature "Gloomfang Centipede" - an original design with a bold silhouette that reads well from a top-down game camera:
+
+A giant cave centipede - a fast, writhing hunter of the deep tunnels with venomous claws. The body is a long, flat chain of armored segments, each with a pair of long, jointed, sharp-tipped legs spread out to the sides, giving it a dense fringe of legs along its whole length. The head is flat and shield-shaped, with a pair of long, segmented antennae sweeping forward and a pair of huge, curved, pincer-like venom claws at the front. At the rear end, two long trailing legs point backward like a second pair of antennae. The armor plates are glossy dark maroon to black-red, each segment edged with a lighter rust-orange rim; the legs are pale amber with dark tips. Materials: polished, hard, segmented chitin. Palette: deep blood red and black, with the amber legs as a bright fringe.
+
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
+
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+```
+
+### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
+
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\gloomfang_centipede\input\design.png`
+
+```text
+Image 1 is the approved, binding design of my creature "Gloomfang Centipede": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A giant cave centipede - a fast, writhing hunter of the deep tunnels with venomous claws. The body is a long, flat chain of armored segments, each with a pair of long, jointed, sharp-tipped legs spread out to the sides, giving it a dense fringe of legs along its whole length. The head is flat and shield-shaped, with a pair of long, segmented antennae sweeping forward and a pair of huge, curved, pincer-like venom claws at the front. At the rear end, two long trailing legs point backward like a second pair of antennae. The armor plates are glossy dark maroon to black-red, each segment edged with a lighter rust-orange rim; the legs are pale amber with dark tips. Materials: polished, hard, segmented chitin. Palette: deep blood red and black, with the amber legs as a bright fringe.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
 ```
