@@ -20,7 +20,7 @@ A gaunt, haunted stag - eerie, silent and noble, like a deer that has been hollo
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing calmly on all four long legs, every leg straight and vertical directly under the body like pillars, front and hind legs equally close together with the hooves about hip-width apart and parallel, hind legs not splayed or bowed outward, head held high facing forward, mouth closed, tail hanging short behind (never between the legs), the antlers rising freely above the head without touching the back or the neck. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 **Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter
@@ -42,7 +42,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 4. back.png - from directly behind
 
 Rules for the 3D model:
-- Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Same posture in all views, only the camera moves. Pose: standing calmly on all four long legs, every leg straight and vertical directly under the body like pillars, front and hind legs equally close together with the hooves about hip-width apart and parallel, hind legs not splayed or bowed outward, head held high facing forward, mouth closed, tail hanging short behind (never between the legs), the antlers rising freely above the head without touching the back or the neck.
 - Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.

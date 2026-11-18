@@ -32,3 +32,8 @@ rigid_head_above = 0.02
 # am rechten Hinterbein an und hebt sich bei Bein-/Beckenbewegung ab (bis 3,05 cm) – kein Gelenk, kein sichtbares Loch.
 [gaps]
 max_opening = 0.032
+
+# 2026-11-18 NEUE REFERENZBILDER NÖTIG (Nutzer, Unity-Play-Modus): Hinterbeine stehen gespreizt (Breitbeine) und etwas hält das
+# Geweih hinten fest. Ursache Breitbeine: input/back.png zeigt die Hinterbeine auswärts gebogen und weiter auseinander als
+# front.png -> Tripo-Modell 2,46x breit hinten (review/model_check.png). Neu: design.png mit neuer Pose (roster.toml `pose`),
+# dann 4 Ansichten, dann Tripo neu (alte Fassung vorher nach raw/_v1). Siehe BACKLOG C12.
