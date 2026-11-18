@@ -51,6 +51,7 @@ Status: ✅ erledigt · 🔄 Subagent arbeitet · ⏭ als Nächstes · ⏸ zurü
 | # | Meldung / Anweisung des Nutzers | Status |
 |---|---|---|
 | G1 | Monster-Datenbank `H:\AIProjects\poe2-MTXeastCatalog\data\catalog.json` (alle PoE-Monster) eigenständig auswerten: Monsterarten auflisten, semantisch in 3D-Kategorien einordnen → lange Liste, welche **Skelette und Bewegungsmuster** wir noch brauchen und welche **Monsterarten zu unserem Game passen**. **Inspiration, keine Kopie!** Ziel des Spiels: später mindestens **50–100 Basis-Monster**, je 5–6 Biom-Varianten oder Elite-Addons. Hinweis des Nutzers: von 7.133 Einträgen sind nur ~2.800 echte Monster, der Rest Varianten. | ✅ `RECHERCHE_MONSTERARTEN.md` (2.872 echte Monster, Stand DB 2026-11-17T20:25Z, Schema v2). Vorhandene 8 Skelette decken 71,9 % der Kreaturen; mit `upright`, `winged`, `amorph`, `static` 99,9 %. 83 generische Basis-Archetypen, 6er-Variantenschema, Reihenfolge: spider → leopard/bear → upright (golem, brute) → wraith/orb → winged → static → slime → frog/badger/monkey. Zuordnung: `temp/monster_research/kategorien.csv`. |
+| G2 | Recherche-Bericht lesen; offene Roster-Liste mit den Erkenntnissen erweitern; je Lücke 2–3 konkrete Kreatur-Vorschläge mit passendem Bewegungsmuster, Nutzer wählt aus. | ❓ Vorschlag `ROSTER_ERWEITERUNG_VORSCHLAG.md` liegt vor, Nutzer wählt |
 
 ## Warteschlange Subagenten (ab 2026-11-18: max. 1 Bau-Agent + 1 leichter Agent gleichzeitig)
 
