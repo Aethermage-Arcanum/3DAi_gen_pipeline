@@ -1,81 +1,98 @@
-# Handover (Stand 2026-11-17, Ende autonomer Lauf)
+# Handover (Stand 2026-11-18 abends)
 
-Für die nächste Session: zuerst `../CLAUDE.md` (Regeln des Nutzers), dann diese Datei, dann `AUTONOM_AUFTRAG.md` (Ergebnis-Tabelle).
+Für die nächste Session lesen, in dieser Reihenfolge:
+1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer**, Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
+2. Diese Datei.
+3. **`BACKLOG.md`**: die Hauptliste aller Nutzer-Meldungen mit Status. Jede neue Meldung kommt zuerst dorthin.
 
 ## Stand
-- **9 fertige Kreaturen** (Mesh + UV + Rig + 9 Clips + FBX/GLB + Events, alle Prüfungen grün):
-  chitin_crawler (crawler/ant), ravine_stalker (quadruped/wolf), eel_stalker (legless/cobra), dune_raptor (biped_raptor/raptor),
-  void_manifestation (floater/tentacle), scorpion_matriarch (multileg/scorpion), needle_wasp (flyer/wasp),
-  reef_snapper (quadruped/lizard), hollow_stag (quadruped/deer). Crab = Testmuster auf dem Chitin Crawler (style_tests/).
-- Referenzbilder für **alle 20** Kreaturen liegen in `creatures/<name>/input/` (front/left/right/back.png).
-- **Tripo-Guthaben 1.475 Credits** (ca. 110 pro Modell). Noch NICHT generiert: spore_drone, broodling, shore_lurker, shellback,
-  stone_boar, rock_hyena, sand_leviathan, glassback_colossus, frost_colossus, flesh_titan, void_harbinger, reality_ripper.
-- Git: lokales Repo `01_kreatur_pipeline`, Remote `origin` = GitHub Aethermage-Arcanum/3DAi_gen_pipeline. **Pushen nur auf Wunsch**
-  (im autonomen Lauf war Push nach jeder Kreatur ausdrücklich erlaubt – das gilt nicht mehr).
+
+### Fertig (Mesh + UV + Rig + Clips + FBX/GLB)
+- **10 Kreaturen:** Chitin Crawler (hexapod/ant), Ravine Stalker (quadruped/wolf), Reef Snapper (quadruped/lizard), Hollow Stag (quadruped/deer), Dune Raptor (biped_raptor/raptor), Eel Stalker (legless/cobra), Scorpion Matriarch (multileg/scorpion), Needle Wasp (flyer/wasp), Void Manifestation (floater/tentacle).
+- **Void Manifestation** wird neu gemacht. Ihr Tentakel-Agent hat nur die allgemeinen Learnings erarbeitet.
+- **Am 18.11. überarbeitet und von Claude geprüft:**
+  - Vierbeiner weich: echter Wolfsgalopp statt Hoppeln, Turn-Vorzeichen behoben.
+  - Raptor, Eel (Ganzkörper), Skorpion-Stich, Tentakel ab der Wurzel.
+  - Wespenflügel doppelseitig, Hirsch-Rig.
+  - Baustein „frei hängende Teile“: `rigging/dangling.py` + Unity-Shader.
+
+### Tripo-Modelle bereit für Rig und Muster (alle Pflichtprüfung B bestanden)
+| Kreatur | Muster | Hinweis für den Rig |
+|---|---|---|
+| broodling | octopod/spider | vorderes Beinpaar leicht angehoben |
+| shellback | quadruped/tortoise | Ansichten aus dem Raster nach Inhalt neu geschnitten |
+| sand_leviathan | legless/sandworm | rundes Maul (Nutzer bevorzugt) |
+| frost_colossus | quadruped/gorilla | – |
+| ruin_howler | quadruped/monkey | – |
+| oasis_gulper | quadruped/frog | **v2 aus der Sprung-Pose** (alle 4 Füße am Boden, Beine gestreckt); v1 liegt in `raw/_v1`. Die Hocke braucht **Gelenk-Verdichtung (C9)**. |
+| reality_ripper | hexapod/mantis | Sensenklingen lose → starr an die Arm-Knochen; Hinterbeine per IK auf den Boden |
+| gloomfang_centipede | legless/centipede | aus dem Design-Bild allein generiert (`tripo_run.py --single design.png`); Beine stehen waagerecht ab → nach unten setzen |
+| bog_warden | upright/treant | **neues Skelett `upright`** – Agent läuft bzw. ist unterbrochen (siehe unten) |
+| cinder_wyvern | winged/drake | neues Skelett `winged`; Tripo hat die Flügel ungleich gestellt → Flügel-Haltung absolut vorgeben |
+| bonepicker_vulture | winged/bird | `winged`; Federspitzen einseitig → `double_sided` |
+
+### Weitere Eckdaten
+- **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell).
+- **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `RECHERCHE_MONSTERARTEN.md`.
+- **Noch keine Modelle:** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, void_manifestation (neu), sowie die übrigen 11 neuen (geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen). Die Prompts für alle sind fertig.
+- **Git:** zuletzt `2735b56`, alles committet. Push nur mit Freigabe des Nutzers.
+
+## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
+1. **Agent `upright`** (Bog Warden; später Flesh Titan und Golem). Wurde wegen des Kontext-/Nutzungslimits evtl. unterbrochen → per SendMessage fortsetzen lassen. Der Auftrag steht in BACKLOG G6. Danach seinen Bericht prüfen: Rig-Bild, `temp/review/upright_posetest.png`, `temp/review/upright_walk.png`.
+2. **Agent `winged`** (Cinder Wyvern + Bonepicker Vulture).
+3. **Baustein Gelenk-Verdichtung (C9)**: Dreiecke um stark beugende Gelenke unterteilen. Nötig vor dem Frosch, hilft auch dem Wolf.
+4. **Muster-Warteschlange**, immer nur ein Bau-Agent:
+   - **Spinne:** Agent existiert, ist am Limit abgebrochen → fortsetzen.
+   - danach Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer.
+5. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
 
 ## Ablauf pro Kreatur
-1. Bilder – **zwei Stufen** (seit 2026-11-18, BACKLOG A10): `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<name>/prompts.md`.
-   Beschreibung = `look` in `creatures/roster.toml` (qualitativ, Englisch, keine Zahlen/Verhältnisse; Sonder-Pose `pose`). Nutzer macht die Bilder in ChatGPT:
-   **Stufe 1** Concept-Ausschnitt + Stil-Referenz + Prompt 1 → ein Design-Bild → **Nutzer prüft gegen sein Concept** → `input/design.png`.
-   **Stufe 2** neuer Chat, nur `input/design.png` + Prompt 2 → `front/left/right/back.png`.
-   Prüfen (Stufe 2, auch gegen design.png): Reihenfolge (1 vorn, 2 Kopf links, 3 Kopf rechts, 4 hinten), Augenhöhe, gleiche Pose. Raster-Bilder (2×2) per Inhalt zerschneiden.
-   **Pflicht: Claude prüft die Bilder gründlich nach der Checkliste in README.md („Prüfung von Referenzbild und Tripo-Modell“, Teil A) – vor jedem Tripo-Lauf.**
-2. Tripo: `python scripts/tripo_run.py creatures/<name> --steps generate --dry-run`, dann ohne `--dry-run` (kostet Credits → vorher fragen!).
-3. Messen + ansehen: `python scripts/model_check.py creatures/<name>` → `review/model_check.png/.json` (Frühwarnsystem: einseitige Flächen,
-   Fuß-Gruppen vs. Beinzahl, Fußbreite hinten/vorne, hängende Teile zwischen den Beinen, Krümmung/Verdrehung, Symmetrie, Schwerpunkt, Dreiecke, lose Teile).
-   **Das Skript ersetzt die Sichtprüfung NICHT** (Nutzer-Anweisung): Prüfbild + `blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/`
-   selbst ansehen und gegen Concept/Referenzbilder vergleichen → **Pflichtprüfung Teil B** (hängende Teile, Beinbreite vorn/hinten, Hautbrücken, gerade Pose, einseitige Flächen, Teilezahl).
-   Gewollte Befunde in `creature.toml` `[model_check.freigabe]` mit Begründung freigeben.
-4. Alles andere kostenlos, ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`
-   (UV-Prüfung → Rig → Clips + Selbstprüfung → Lückenprüfung → GIFs → Export → Gegentest). Skelett/Muster aus `creature.toml [motion] style`.
-5. Selbst prüfen: Clip-Übersicht, `rig/rig_debug.png` (`python rigging/draw_rig.py rig`), GIFs in `rig/anim/`, Kontaktbogen ansehen.
-6. README der Kreatur (Kennzahlen), README des Musters (Naturreferenzen), commit; dem Nutzer ein GIF schicken.
+1. **Bilder in zwei Stufen:** `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<name>/prompts.md`.
+   - Die Beschreibung ist `look` in `roster.toml`: qualitativ, keine Zahlen. Die Pose (`pose`) zeigt **alle Gliedmaßen in voller Länge**, nie sitzend oder gefaltet.
+   - **Stufe 1:** Design-Bild → Nutzer prüft es gegen sein Concept → `input/design.png`. **Stufe 2:** 4 Ansichten aus design.png.
+   - **Grenze der Bild-KI:** ChatGPT klebt an der Vorlage und übernimmt deren Pose. Die Pose muss also schon im Design-Bild stimmen. Trick des Nutzers für den Frosch: „mitten im Sprung“.
+   - ChatGPT-Dateinamen enden auf -1…-4 (vorn, links, rechts, hinten), ohne Nummer = Design. Auf die Standardnamen **kopieren**, die Originale bleiben liegen.
+   - Raster-Bilder nach Inhalt schneiden, mit gemeinsamem Maßstab (siehe Shellback).
+   - **Pflichtprüfung A durch Claude** nach der README-Checkliste.
+   - **Achtung Perspektive:** Die Kamera schaut leicht von oben. Ein gerade nach hinten gestreckter Schwanz wirkt in der Rückansicht wie ein herabhängender Streifen (Fehleinschätzungen bei Gorilla und Affe).
+2. **Tripo:** `python scripts/tripo_run.py creatures/<name> --steps generate --dry-run`, dann ohne `--dry-run`. Der Nutzer hat das Generieren für fertig geprüfte Bilder freigegeben, die Credits trotzdem im Blick behalten.
+   - Option `--single design.png` erzeugt das Modell aus einem einzigen Bild.
+   - Neu generieren mit `--force generate`, die alte Fassung vorher nach `raw/_v1` sichern (raw nie überschreiben).
+3. **Prüfskript:** `python scripts/model_check.py creatures/<name>` – nur Frühwarnsystem, die **Sichtprüfung B ist Pflicht**. Gewollte Befunde kommen nach `[model_check.freigabe]` mit Begründung. Erlaubte Schlüssel: boden, dreiecke, fussbreite, fussgruppen, haengende_teile, mesh_teile, mittellinie, offene_flaechen, symmetrie.
+4. **Pipeline:** `python scripts/creature_pipeline.py creatures/<name> [--stage motion|full|check]`.
+   - `motion` erzeugt Roh-GIFs in `rig/anim/raw/`, die der Nutzer abnimmt.
+   - `full` macht den Export und die End-GIFs in `rig/anim/final/`.
+5. **Unity:** Projekt `Unity_Creature_Test/` (der Nutzer hat es meist offen → für Batch-Läufe eine Kopie verwenden, siehe dortige README). Menü **Kreaturen › Alle importieren + Szene bauen**.
+6. README der Kreatur (Kennzahlen) und des Musters (Naturreferenzen) pflegen, dann committen.
 
-## Skelette (Rig-Skript → Baukasten → Muster)
+## Skelette (Rig → Baukasten → Muster)
 | Skelett | Rig | Baukasten | Muster |
 |---|---|---|---|
-| hexapod | rigging/hexapod_rig.py (braucht getrennte Mesh-Inseln) | motions/hexapod/hexapod_kit.py | ant (später mantis) |
-| octopod | rigging/octopod_rig.py (Kopie, gleiche Erkennung) | motions/octopod/octopod_kit.py | crab (Test auf Chitin Crawler), später spider |
-| multileg | rigging/multileg_rig.py (Oberflächen-Wege, beliebig viele Beine, Scheren, Schwanz) | motions/multileg/multileg_kit.py | scorpion |
-| quadruped | rigging/quadruped_rig.py | motions/quadruped/quadruped_kit.py (Blender-IK) | wolf, lizard, deer (je eigener Clip-Code) |
+| hexapod | rigging/hexapod_rig.py | motions/hexapod/hexapod_kit.py | ant (mantis, broodmother geplant) |
+| octopod | rigging/octopod_rig.py | motions/octopod/octopod_kit.py | crab, spider (Agent läuft) |
+| multileg | rigging/multileg_rig.py | motions/multileg/multileg_kit.py | scorpion |
+| quadruped | rigging/quadruped_rig.py | motions/quadruped/quadruped_kit.py | wolf, lizard, deer (+ tortoise, gorilla, monkey, frog … geplant) |
 | biped_raptor | rigging/biped_raptor_rig.py | motions/biped_raptor/biped_kit.py | raptor |
-| legless | rigging/legless_rig.py | motions/legless/legless_kit.py | cobra |
-| floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle (2026-11-18: wabbelt ab der Wurzel – Learnings in motions/floater/tentacle/README.md; Void-Modell wird neu gemacht) |
-| flyer | rigging/flyer_rig.py + flyer_defaults.toml | motions/flyer/flyer_kit.py | wasp (gutes Beispiel) |
-Gemeinsame Rig-Bausteine: `rigging/rig_common.py`, Lückenprüfung: `rigging/gaps_defaults.toml`. Prüfung/Export für alle: check_gaps.py, export_unity.py, verify_export.py.
+| legless | rigging/legless_rig.py | motions/legless/legless_kit.py | cobra (+ sandworm, centipede, viper geplant) |
+| floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle |
+| flyer | rigging/flyer_rig.py | motions/flyer/flyer_kit.py | wasp |
+| **upright** | rigging/upright_rig.py (in Arbeit) | motions/upright/upright_kit.py | treant (golem, brute geplant) |
+| **winged** | geplant | – | drake, bird |
+| amorph, static | geplant | – | slime; turret/nest/plant |
 
-## Wiederkehrende Probleme + Lösungen (schon eingebaut)
-- **Tripo-Hautbrücken** zwischen sich berührenden Gliedmaßen → reißen bei jeder Gewichtung → Flächen löschen
-  (`cut_between_legs` raptor, `cut_fused_limbs` multileg, `cut_leg_bridges` + `exclusive_leg_pairs` quadruped – dort pro Kreatur einschalten).
-- **UV-Naht-Duplikate** brauchen identische Gewichte (sonst Risse).
-- **Frontbild zeigt Schwanz zwischen den Beinen** → Tripo baut einen hängenden Bauch-Lappen („2. Schwanz“) → `[biped_raptor] cut_belly_flap` (Dune Raptor).
-- **Eng stehende Beine** (Hirsch) liegen im Bauch-Messstreifen → Gelenke zu tief → `[quadruped.rig] adaptive_belly_strip`. **Tripo-Hinterbeine zu breit** → `narrow_hind_legs`. **Geweih/Hörner** am Hals gewichtet → `rigid_head_above`.
-- **Gestreckte Tripo-Beine** → `reach_fix` senkt Rumpf automatisch.
-- **Mittellinien-Vertices** an beiden Seiten gewichtet → reißt; Diagnose mit einem Skript, das die schlimmsten Kanten + Gewichte ausgibt.
-- Dehnungsgrenze (`max_stretch`) nur nach **Sichtprüfung** pro Clip erhöhen und in style.toml begründen.
-- Tripo kann Modelle gedreht liefern (`[floater] facing`), Beinzahlen falsch erfinden (Skorpion 5 Paare) – Fake it.
-- **Einseitige Flügel** (Tripo baut Insektenflügel als offene Platten ohne Rückseite) → in Unity aus manchen Winkeln
-  unsichtbar (Backface Culling), Schatten trotzdem da. Fix im Flieger-Rig: `rigging/double_sided.py` findet Flächen, hinter
-  denen „draußen“ ist (Strahl nach hinten), und kopiert sie mit umgedrehter Richtung (Gewichte + UVs mit, 1 mm versetzt).
-  Schalter `[double_sided]` in `flyer_defaults.toml` (an), pro Kreatur `[flyer.double_sided]`. Wespe: +124 Tris.
-  Für andere Skelette mit dünnen Platten (Flossen, Segel, Hautlappen) einfach dort `double_sided.apply()` nach dem Gewichten aufrufen.
-  Unity-Prüfbilder haben dafür jetzt auch `top` + `back`.
+**Gemeinsame Bausteine:** `rig_common.py`, `gaps_defaults.toml`, `double_sided.py`, `dangling.py`, export_unity / verify_export / check_gaps, `pose_fingerprint.py`.
+**Architektur:**
+- Baukästen nur abwärtskompatibel erweitern.
+- Nach Änderungen an gemeinsamen Dateien `scripts/regression.py --deep` laufen lassen.
+- Freigabe mit `scripts/approve.py`, nur auf Wunsch des Nutzers. Freigegeben ist bisher nichts.
 
-## Offen
-- Flesh Titan (#7) – macht der Nutzer zusammen mit Claude (humanoide Teilstruktur erlaubt).
-- **Unity-Test**: Viewer-Projekt `Unity_Creature_Test/` (siehe dortige README) – Import automatisch, 9 Kreaturen/81 Clips headless geprüft (Texturen, Boden, Bewegung). Sichtprüfung durch den Nutzer läuft. Bodenkontakt im Walk gemessen (alle ≈ 0; Wespe sinkt bis 3,7 cm ein, Raptor 1,9 cm – offen).
-- Echse: Ready/Attack zu dezent. Wolf-Tod: Beine lassen sofort los (`ik_release_start` nutzen). Hirsch: Tripo-UV sehr zerstückelt.
-- **Nutzer-Feedback Unity (2026-11-17):** Death-Clips fast überall unbrauchbar (zu klein) – **Claude macht vorerst keine Death-Animationen (Nutzer-Anweisung)**. Void Manifestation: Tentakel nur an den Enden beweglich, müssen bis zur Wurzel wabbeln. Eel Stalker insgesamt schwach: Tripo-Modell hat feste Krümmung/Drehung, Animation addiert nur darauf; Walk: Kopf starr; Ready: nur Verschieben/Drehen; Turn = gedrehter Walk (slither mit bias); Kopf-Lappen unter dem Kiefer starr (sollen schwingen, Kamm/Hörner starr). → Standard-Baustein „frei hängende Teile“ geplant.
-- Prio-2-Clips aus MOVESET.md (Attack2, Dodge, Knockdown …) gibt es noch für kein Muster.
-
-## Neu: Architektur (2026-11-17, nach Nutzer-Feedback – siehe ../CLAUDE.md "Lehren aus Testlauf 1")
-- **Eine Pipeline für alle Skelette**: `scripts/creature_pipeline.py` (crawler_pipeline.py leitet nur weiter).
-  Stufen: `--stage motion` (Roh-GIFs → rig/anim/raw/, nichts bremst, kein Export) → Nutzer nimmt Bewegung ab →
-  `--stage full` (GIFs → rig/anim/final/, Export, Fingerabdruck). `--stage check` = nur Fingerabdruck. `--work <ordner>` = Ausgabe woanders.
-- **Freigabe/Sperre**: `python scripts/approve.py creatures/<name>` (nur nach OK des Nutzers) → `approved/`; Pipeline verweigert dann den Neubau (außer `--unlock`).
-- **Regressionstest**: `python scripts/regression.py [--deep]` – prüft per Fingerabdruck (alle Knochen + Mesh-Stichprobe, jeder Frame), ob freigegebene Kreaturen gleich bleiben.
-  Getestet: harmlose Änderung → "identisch"; Flügelschlag 38→30° → "VERÄNDERT" mit 65 mm pro Clip benannt.
-- lizard/deer haben eigenen Clip-Code (Kopie von wolf, Beweis: alle 9 Kreaturen Frame für Frame identisch zum Stand vorher).
-- Noch NICHTS freigegeben – die 9 Testlauf-Kreaturen gelten als Testergebnisse. Bisherige GIFs liegen jetzt in rig/anim/final/.
-- Offen: Tests von `--stage motion/full` in temp/t_motion, temp/t_full prüfen; Wolf aus Commit 636de5e (temp/wolf_old, Fingerabdruck temp/wolf_old_fp.json)
-  mit heutigem vergleichen; README-Abschnitt "Zusammenarbeit"; noch nicht committet. Danach: Wolf-Pilot (Dehnung am Mesh, weichere Bewegung).
+## Wiederkehrende Probleme und Lösungen
+- **Tripo-Hautbrücken** → Flächen löschen: `cut_between_legs`, `cut_fused_limbs`, `cut_leg_bridges`, `cut_tail_leg_bridges`, `cut_belly_flap`.
+- **UV-Naht-Duplikate** brauchen identische Gewichte.
+- **Eng stehende Beine** → `adaptive_belly_strip`. Zu breite Hinterbeine → `narrow_hind_legs`. Geweih/Hörner → `rigid_head_above`.
+- **Einseitige Flächen** (Flügel, Krausen) → `double_sided.py`.
+- **Unity-Viewer:** Boden = Bindepose (`RestLowestPoint`), nicht die erste Take-Pose.
+- **Dehnung** ist nur eine Info. Sie wird am Mesh gelöst, nie durch kleinere Bewegung. Die Gelenk-Verdichtung (C9) ist noch offen.
+- **TurnLeft-Vorzeichen** war bei Vierbeiner und Raptor falsch. Bei jedem neuen Muster prüfen.
+- **Windows-Dateisperre** beim GIF-Aufräumen → in der Pipeline behoben (Wiederholung).
+- **Death-Clips:** Der Code ist überall unverändert (Nutzer-Anweisung). Durch Rig-Änderungen weichen einzelne Death-Ergebnisse leicht ab (Skorpion, Tentakel, Raptor-Füße, Hirsch-Lücke 3,05 cm begründet freigegeben).
