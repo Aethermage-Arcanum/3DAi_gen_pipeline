@@ -20,7 +20,11 @@ vorbild = ["Ochsenfrosch springt", "Chamäleon-Zunge (Zeitlupe)", "Aga-Kröte �
 # Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
 # Vorderbeine stehen im Tripo-Modell waagerecht zur Seite ab (aus den Referenzbildern, mit ChatGPT nicht besser zu bekommen – Nutzer).
 # → Der Frosch-Baukasten muss die Vorderbeine per IK auf den Boden setzen.
+# Freigaben für v1 (raw/_v1) – für den v2-Test deaktiviert:
+# [model_check.freigabe]
+# fussgruppen = "Vorderbeine stehen in Ruhe waagerecht ab (Tripo/Referenz), werden im Rig per IK auf den Boden gesetzt – Nutzer-Entscheidung 2026-11-18."
+# schwerpunkt = "Folge der abstehenden Vorderbeine (nur Hinterbeine am Boden); im Rig mit 4 Füßen am Boden behoben."
+# mesh_teile = "Seerosen/Rohrkolben auf dem Rücken sind getrennte Teile (gewollt, Design); das lose Teil beim Rig prüfen."
+# v2 (Sprung-Pose, 2026-11-18): Modellprüfung B – alle 4 Füße am Boden, Beine voll gestreckt; Vergleich mit v1 (raw/_v1) → v2 besser
 [model_check.freigabe]
-fussgruppen = "Vorderbeine stehen in Ruhe waagerecht ab (Tripo/Referenz), werden im Rig per IK auf den Boden gesetzt – Nutzer-Entscheidung 2026-11-18."
-schwerpunkt = "Folge der abstehenden Vorderbeine (nur Hinterbeine am Boden); im Rig mit 4 Füßen am Boden behoben."
-mesh_teile = "Seerosen/Rohrkolben auf dem Rücken sind getrennte Teile (gewollt, Design); das lose Teil beim Rig prüfen."
+fussbreite = "Frosch liegt flach mit weit gespreizten, gestreckten Hinterbeinen (aus der Sprung-Pose) – froschtypisch, gewollt."
