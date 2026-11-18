@@ -41,6 +41,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 1. **Agent `upright`** (Bog Warden; später Flesh Titan und Golem). Wurde wegen des Kontext-/Nutzungslimits evtl. unterbrochen → per SendMessage fortsetzen lassen. Der Auftrag steht in BACKLOG G6. Danach seinen Bericht prüfen: Rig-Bild, `temp/review/upright_posetest.png`, `temp/review/upright_walk.png`.
 2. **Agent `winged`** (Cinder Wyvern + Bonepicker Vulture).
 3. **Baustein Gelenk-Verdichtung (C9)**: Dreiecke um stark beugende Gelenke unterteilen. Nötig vor dem Frosch, hilft auch dem Wolf.
+3b. **Ordner-Nummerierung (BACKLOG G7)** – leichter Agent direkt nach dem upright-Agenten; vollständige Spezifikation in BACKLOG G7 (IDs/Exportnamen bleiben ohne Nummer).
 4. **Muster-Warteschlange**, immer nur ein Bau-Agent:
    - **Spinne:** Agent existiert, ist am Limit abgebrochen → fortsetzen.
    - danach Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer.
