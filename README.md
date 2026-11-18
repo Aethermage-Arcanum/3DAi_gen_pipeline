@@ -101,6 +101,8 @@ Bei einem Befund gilt: Bild neu machen lassen (kostet nichts) statt später im R
 
 Ergebnis: Freigabe für das Rig **oder** neues Referenzbild bzw. neuer Tripo-Lauf (Credits: vorher den Nutzer fragen) **oder** eine bekannte Rig-Korrektur mit Begründung.
 
+**Grenze der KI-Bildgenerierung (Nutzer 2026-11-18):** ChatGPT hält sich sehr stark an angehängte Vorlagen (Concept-Ausschnitt, `design.png`) – auch wenn man mehrfach ausdrücklich eine andere Pose verlangt. Beispiel Frosch: gestreckte Beine oder T-Pose waren nicht zu bekommen, weil die Vorlage hockend war. Folgerung: Die **Pose muss schon im Design-Bild (Stufe 1) stimmen**; in Stufe 2 lässt sie sich kaum noch ändern. Geht es trotzdem nicht, löst das der Rig/Baukasten (Gliedmaßen per IK auf den Boden setzen, Teile starr anhängen) – Fake it.
+
 ## Zusammenarbeit (seit 2026-11-17)
 
 1. **Bewegung zuerst grob zeigen:** `python scripts/creature_pipeline.py creatures/<name> --stage motion` → Roh-GIFs in `rig/anim/raw/` (mit allen Dehnungen/Rissen, keine Prüfung bremst). Pro neuem Muster zuerst Walk + Attack, neben Standbildern aus dem Naturvideo. **Der Nutzer nimmt die Bewegung ab.**
