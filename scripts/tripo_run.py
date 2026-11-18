@@ -111,6 +111,7 @@ def main():
     ap.add_argument("--steps", default=",".join(STEPS))
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force", default="", help="Kommagetrennte Schritte, die neu laufen sollen")
+    ap.add_argument("--single", default=None, help="nur dieses Bild aus input/ nutzen (image-to-model), z. B. design.png")
     a = ap.parse_args()
 
     cdir = pathlib.Path(a.creature_dir).resolve()
@@ -148,6 +149,11 @@ def main():
 
     # ---------- Parameter vorbereiten ----------
     images = find_images(cdir / "input", VIEW_ORDER)
+    if a.single:                         # Einzelbild statt Mehrfachansicht (z. B. Tausendfüßer: Design-Bild schräg von oben)
+        p = cdir / "input" / a.single
+        if not p.exists():
+            raise SystemExit(f"{p} fehlt.")
+        images = {"front": p}
     if "front" not in images:
         raise SystemExit(f"Kein front-Bild gefunden in {cdir / 'input'} (front.png/.jpg/.webp).")
     t = dict(cfg["tripo"])
