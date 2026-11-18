@@ -19,3 +19,9 @@ role = "style"
 style = "hexapod/mantis"
 variant = ""
 vorbild = ["Gottesanbeterin – Fangschlag (Zeitlupe)", "Gottesanbeterin – Wiegen/Schaukeln (Tarnung)"]
+
+# Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
+[model_check.freigabe]
+mesh_teile = "Die beiden Sensenklingen sind lose Teile neben den Armen → im Rig starr an den Arm-Knochen hängen (Fake it)."
+fussgruppen = "4 Laufbeine + 2 Sensen vorhanden; nur das vordere Beinpaar berührt in Ruhe den Boden → Hinterbeine im Baukasten per IK auf den Boden setzen."
+schwerpunkt = "Folge der angehobenen Hinterbeine; mit 4 Füßen am Boden (IK) behoben."
