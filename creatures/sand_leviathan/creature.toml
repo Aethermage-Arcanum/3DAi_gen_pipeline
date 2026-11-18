@@ -3,7 +3,7 @@ name = "sand_leviathan"
 bodyplan = "serpentine"
 style = "lowpoly_b"
 description = "Sand Leviathan: huge legless desert worm with a wide round maw, front part raised out of the sand"
-design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
 
 [[concept]]
 file = "input/concept/design_A.png"

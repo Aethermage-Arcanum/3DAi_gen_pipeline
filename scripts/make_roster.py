@@ -1,8 +1,10 @@
 """Legt für alle Kreaturen aus creatures/roster.toml Ordner + creature.toml + prompts.md an
-und schreibt PROMPTS_ALLE.md (alle Prompts in einem Dokument zum Abarbeiten).
+und schreibt PROMPTS_ALLE.md (alle Prompts in einem Dokument zum Abarbeiten, je Kreatur 2 Stufen).
 
   python scripts/make_roster.py
 Bestehende creature.toml werden nie überschrieben (eigene Anpassungen bleiben erhalten).
+Die Beschreibung (`look`) und Sonder-Posen (`pose`) stehen in creatures/roster.toml – make_prompts.py liest sie dort.
+Vorhandene Bilder (design.png, front/left/right/back.png) werden nie angefasst, nur die Prompts neu geschrieben.
 """
 import pathlib
 import tomllib
@@ -11,12 +13,21 @@ import make_prompts
 
 PIPE = pathlib.Path(__file__).resolve().parent.parent
 R = tomllib.loads((PIPE / "creatures" / "roster.toml").read_text(encoding="utf-8"))
-sheet = (PIPE / R["sheet"]).resolve()
 style = (PIPE / R["style_ref"]).resolve()
-out = ["# Alle ChatGPT-Prompts (je Kreatur ein Prompt → 4 Einzelbilder)", "",
-       f"**Pro Kreatur:** neuer ChatGPT-Chat → anhängen: 1. den Ausschnitt `input/concept/design_*.png` der Kreatur "
-       f"(Übersicht: `creatures/concept_crops.png`) 2. `{style}` → Prompt einfügen → "
-       "die 4 Bilder als `front/left/right/back.png` in den genannten `input`-Ordner speichern.", ""]
+out = ["# Alle ChatGPT-Prompts – zwei Stufen pro Kreatur", "",
+       "Seit 2026-11-18 (BACKLOG A10). Pro Kreatur:", "",
+       "1. **Stufe 1 – Design-Bild:** neuer ChatGPT-Chat → die genannten Bilder anhängen (Concept-Ausschnitt + "
+       "Stil-Referenz) → Prompt 1 einfügen → **ein** Bild. **Du prüfst es gegen dein Concept** (Charakter, "
+       "Körperbau, Anzahl Beine/Teile, Farben). Passt es nicht: neu generieren lassen oder `look` in "
+       "`creatures/roster.toml` anpassen und `python scripts/make_roster.py` neu starten. Passt es: als "
+       "`input/design.png` speichern.",
+       "2. **Stufe 2 – 4 Ansichten:** neuer ChatGPT-Chat → nur `input/design.png` anhängen → Prompt 2 einfügen → "
+       "4 Einzelbilder als `front.png`, `left.png`, `right.png`, `back.png` in denselben `input`-Ordner speichern.",
+       "3. **Claude prüft** die 4 Ansichten nach der Checkliste (`README.md`, Teil A), erst dann Tripo.", "",
+       "Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau – ihre Bilder bleiben, wie sie sind.",
+       "Übersicht aller Concept-Ausschnitte: `creatures/concept_crops.png`.", "",
+       "| # | Kreatur | Tripo-Modell | design.png |", "|---|---|---|---|"]
+body = []
 for i, c in enumerate(R["c"], 2):
     d = PIPE / "creatures" / c["id"]
     (d / "input").mkdir(parents=True, exist_ok=True)
@@ -25,9 +36,9 @@ for i, c in enumerate(R["c"], 2):
         toml.write_text(
             f'# {c["design"]} – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)\n'
             f'name = "{c["id"]}"\nbodyplan = "{c["bodyplan"]}"\nstyle = "lowpoly_b"\n'
-            f'description = "{c["design"]}: {c["hint"]}"\n'
-            f'design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, '
-            f'ignore the grey silhouettes and any text in the background."\n\n'
+            f'description = "{c["design"]}: {c["hint"]}"   # Fallback – die Beschreibung steht in roster.toml (look)\n'
+            f'design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and '
+            f'the background of the concept."\n\n'
             f'[[concept]]\nfile = "input/concept/design_{c["artist"]}.png"\nrole = "design"\n\n'
             f'[[concept]]\nfile = "{style.as_posix()}"\nrole = "style"\n', encoding="utf-8")
     cur = toml.read_text(encoding="utf-8")
@@ -37,11 +48,19 @@ for i, c in enumerate(R["c"], 2):
                  "# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren",
                  "[motion]", f'style = "{c["motion"]}"', f'variant = "{c.get("variant", "")}"', f"vorbild = [{refs}]", ""]
         toml.write_text(cur.rstrip() + "\n" + "\n".join(block), encoding="utf-8")
-    make_prompts.build(d)
-    txt = (d / "prompts.md").read_text(encoding="utf-8")
-    prompt = txt.split("```text\n", 1)[1].split("```", 1)[0]
-    out += [f"## {i}. {c['design']} (Artist {c['artist']}) → `{d / 'input'}`", "",
-            "Anhängen: " + "  ".join(f"{k}. `{(d / x['file']).resolve()}`" for k, x in
-                                     enumerate(tomllib.loads(toml.read_text(encoding='utf-8'))['concept'], 1)), "", "```text", prompt.rstrip(), "```", ""]
-(PIPE / "PROMPTS_ALLE.md").write_text("\n".join(out), encoding="utf-8")
-print("PROMPTS_ALLE.md:", len(R["c"]), "Kreaturen")
+    p = make_prompts.build(d)
+    model = (d / "raw" / "generate_model.glb").exists()
+    out.append(f"| {i} | [{c['design']}](#{i}-{c['design'].lower().replace(' ', '-')}) | "
+               f"{'✅ vorhanden' if model else '–'} | {'✅' if p['design'].exists() else '–'} |")
+    names = ", ".join(f"`{v}.png`" for v in p["views"])
+    body += [f"## {i}. {c['design']}", "",
+             f"Artist {c['artist']} · Ordner `{p['input']}`" +
+             (" · **Tripo-Modell vorhanden – nur bei Neubau nötig**" if model else ""), "",
+             "### Stufe 1 – Design-Bild → `input/design.png`", "",
+             "Anhängen: " + "  ".join(f"{k}. `{x}`" for k, x in enumerate(p["attach1"], 1)), "",
+             "```text", p["stage1"], "```", "",
+             f"### Stufe 2 – 4 Ansichten → {names}", "",
+             f"Anhängen: 1. `{p['design']}`", "",
+             "```text", p["stage2"], "```", ""]
+(PIPE / "PROMPTS_ALLE.md").write_text("\n".join(out + [""] + body), encoding="utf-8")
+print("PROMPTS_ALLE.md:", len(R["c"]), "Kreaturen, je 2 Stufen")

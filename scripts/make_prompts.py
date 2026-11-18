@@ -1,112 +1,175 @@
-"""Erzeugt die ChatGPT-Bildprompts für eine Kreatur.
+"""Erzeugt die ChatGPT-Bildprompts für eine Kreatur – ZWEI STUFEN (seit 2026-11-18, BACKLOG A10).
 
-Aufruf:  python scripts/make_prompts.py creatures/spinne_01
-Ergebnis: creatures/spinne_01/prompts.md  (Prompts zum Kopieren + Speicheranweisung)
+  Stufe 1 – Design-Bild:  Concept-Ausschnitt (+ Stil-Referenz) + ausführliche Beschreibung → EIN sauberes,
+                          hochauflösendes Bild. Der Nutzer prüft es gegen sein Concept → `input/design.png`.
+  Stufe 2 – 4 Ansichten:  `input/design.png` als verbindliche Vorlage → front/left/right/back.png.
+                          Claude prüft sie danach nach der Checkliste (README „Prüfung …“, Teil A).
+
+Warum: Die Concept-Ausschnitte sind winzig und verpixelt (ChatGPT fantasierte), und die alten Prompts beschrieben
+die Kreatur in einem Satz, umgeben von vielen Technik-Anweisungen. Jetzt steht die Beschreibung vorn und dominant,
+die Technik kompakt am Ende.
+
+Woher die Texte kommen (erster Treffer gilt):
+  Beschreibung  `look` in creature.toml → `look` in creatures/roster.toml → `description` in creature.toml
+  Pose          `pose` in creature.toml → `pose` in creatures/roster.toml → Bauplan (templates/bodyplans.toml)
+  Name          `title` in creature.toml → `design` in creatures/roster.toml → Ordnername
+
+Aufruf:  python scripts/make_prompts.py creatures/<name>
+Ergebnis: creatures/<name>/prompts.md  (beide Prompts zum Kopieren + was anhängen + wie speichern)
+Alle Kreaturen auf einmal: python scripts/make_roster.py → PROMPTS_ALLE.md
 """
-import sys
 import pathlib
+import sys
+import tomllib
 
-from common import load_creature
+from PIL import Image
 
-# Regeln, die für JEDES Bild gelten – sie machen das Bild 3D-tauglich.
-RULES = """Requirements for a 3D-model reference image:
-- exactly one creature, centered, the entire body in frame with some margin, nothing cut off
-- {background} background, no ground texture, no scenery, no props, no text, no watermark
-- soft, even, diffuse studio lighting from all sides, no cast shadows, no strong highlights, \
-no rim light, no glow or bloom effects
-- sharp focus everywhere, no depth of field, no motion blur, no smoke, no particles
-- {pose}
-- {camera}
-- {aspect} image"""
+from common import PIPELINE_DIR, load_creature
 
-# Wie jede Ansicht formuliert wird. "left"/"right" = die eigene linke/rechte Körperseite der Kreatur.
+DESIGN_FILE = "input/design.png"   # Ergebnis von Stufe 1 = Vorlage für Stufe 2
+LOWRES_PX = 800                    # Concept-Bild schmaler als das → "kleiner, unscharfer Ausschnitt"
+
+# Ansichten: "left"/"right" = die eigene linke/rechte Körperseite der Kreatur
 VIEWS = {
-    "front": "front view: the creature faces the camera directly",
-    "left": "exact side view of the creature's own LEFT flank: rotated 90 degrees, its head points to the LEFT edge of the image",
-    "back": "exact rear view: rotated 180 degrees, we see the creature from directly behind",
-    "right": "exact side view of the creature's own RIGHT flank: rotated 90 degrees, its head points to the RIGHT edge of the image",
+    "front": "facing the camera",
+    "left": "its own left side, head to the LEFT image edge",
+    "right": "its own right side, head to the RIGHT image edge",
+    "back": "from directly behind",
 }
+ORDER = ["front", "left", "right", "back"]
+
+
+def roster_entry(name):
+    path = PIPELINE_DIR / "creatures" / "roster.toml"
+    if not path.exists():
+        return {}
+    for c in tomllib.loads(path.read_text(encoding="utf-8")).get("c", []):
+        if c["id"] == name:
+            return c
+    return {}
+
+
+def _clean(text):
+    return " ".join(str(text).split()).rstrip(".")
+
+
+def _width(path):
+    try:
+        with Image.open(path) as im:
+            return im.width
+    except OSError:
+        return 0
+
+
+def prompt_design(title, look, style, pose, concepts, cdir, cfg):
+    """Stufe 1: ein sauberes Design-Bild aus dem (verpixelten) Concept + Beschreibung."""
+    roles = []
+    for i, c in enumerate(concepts, 1):
+        if c["role"] == "design":
+            if _width((cdir / c["file"]).resolve()) < LOWRES_PX:
+                roles.append(f"Image {i} is my concept art of this creature - a small, blurry crop: take the overall "
+                             f"design, silhouette and colors from it, the details from the description; do not copy "
+                             f"its blur.")
+            else:
+                roles.append(f"Image {i} is my concept art of this creature: take its design, silhouette and colors; "
+                             f"the description below adds the details.")
+            if cfg.get("design_pick"):
+                roles.append(cfg["design_pick"])
+        elif c["role"] == "style":
+            roles.append(f"Image {i} is only an art-style reference: copy its rendering style, not the creatures in it.")
+    img = cfg["images"]
+    return (f"{' '.join(roles)}\n\n"
+            f"Paint ONE clean, sharp, high-resolution design image of my creature \"{title}\". Stay true to the "
+            f"concept - same character, silhouette, body parts and colors - but redraw it cleanly with these details:\n\n"
+            f"{look}\n\n"
+            f"Style: {_clean(style)}.\n\n"
+            f"Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at "
+            f"body height. Pose: {pose}. All limbs clearly visible and apart from each other. "
+            f"{_clean(img['background']).capitalize()} background, soft even lighting, no cast shadows, no glow, "
+            f"no smoke or particles, no text. One single {img['aspect']} image.")
+
+
+def prompt_views(title, look, pose, camera, views, cfg):
+    """Stufe 2: 4 Ansichten, design.png ist verbindlich. Technik kompakt (Checkliste README Teil A2–A9)."""
+    img = cfg["images"]
+    vlist = "\n".join(f"{i}. {v}.png - {VIEWS[v]}" for i, v in enumerate(views, 1))
+    return (f"Image 1 is the approved, binding design of my creature \"{title}\": keep its anatomy, shapes, colors, "
+            f"materials, style and the number of all parts exactly. Do not redesign, add or remove anything.\n\n"
+            f"Description (also for the hidden sides): {look}\n\n"
+            f"Create {len(views)} SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, "
+            f"the camera circles around it:\n{vlist}\n\n"
+            f"Rules for the 3D model:\n"
+            f"- Same posture in all views, only the camera moves. Pose: {pose}.\n"
+            f"- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between "
+            f"the legs.\n"
+            f"- Thin parts have visible thickness. Same number of parts as in the design, in every view.\n"
+            f"- Whole creature centered and uncropped; {_clean(camera)}; {_clean(img['background'])} background, "
+            f"soft even light, no shadows, glow, particles or text; {img['aspect']}.")
 
 
 def build(creature_dir):
-    creature_dir = pathlib.Path(creature_dir).resolve()
-    cfg, bp, st = load_creature(creature_dir)
-    img = cfg["images"]
-    views = img["views"]
+    """Schreibt prompts.md und gibt die Bausteine zurück (für make_roster.py)."""
+    cdir = pathlib.Path(creature_dir).resolve()
+    cfg, bp, st = load_creature(cdir)
+    ros = roster_entry(cfg["name"])
+    title = cfg.get("title") or ros.get("design") or cfg["name"].replace("_", " ").title()
+    look = _clean(cfg.get("look") or ros.get("look") or cfg["description"]) + "."
+    pose = _clean(cfg.get("pose") or ros.get("pose") or bp["pose"])
+    views = cfg["images"]["views"]
     if "front" not in views:
         raise SystemExit("images.views muss 'front' enthalten.")
-    rules = RULES.format(background=img["background"], pose=bp["pose"],
-                         camera=bp["camera"], aspect=img["aspect"])
-
-    parts = [
-        f"# Bildprompts: {cfg['name']}",
-        "",
-        f"Bauplan: **{bp['label']}** · Stil: **{st['label']}**",
-        "",
-        "**So geht's:** Neuen ChatGPT-Chat öffnen, Bilder anhängen, den einen Prompt einfügen. "
-        "Die Bilder als PNG unter den angegebenen Namen speichern in:",
-        "",
-        f"`{creature_dir / 'input'}`",
-        "",
-        "Gefällt Bild 1 nicht: einfach neu generieren lassen oder die Beschreibung in "
-        "`creature.toml` anpassen und dieses Skript erneut starten.",
-        "",
-    ]
-
-    n = 1
+    views = [v for v in ORDER if v in views] + [v for v in views if v not in ORDER]
     concepts = cfg.get("concept", [])
-    if concepts:
-        # Concept-Modus: Design (und optional Stil) kommen aus angehängten Bildern
-        lines, attach = [], []
-        for i, c in enumerate(concepts, 1):
-            attach.append(f"{i}. `{creature_dir / c['file']}`")
-            if c["role"] == "design":
-                lines.append(f"Image {i} shows the creature DESIGN to recreate: keep its anatomy, body "
-                             f"segments, number of legs, head shape, proportions and color scheme.")
-            elif c["role"] == "style":
-                lines.append(f"Image {i} is only an ART STYLE reference: copy its rendering style, "
-                             f"not the creatures shown in it.")
-        intro = ("I attached reference images. " + " ".join(lines) +
-                 " Ignore any text, labels, scenery and background in the attached images.\n\n"
-                 f"Create {len(views)} separate clean reference images of the creature from the design image "
-                 f"for 3D modeling." +
-                 (f" {cfg['design_pick']}" if cfg.get("design_pick") else ""))
-        parts += ["**Anhängen in ChatGPT, in dieser Reihenfolge:**", ""] + attach + [""]
-    else:
-        intro = f"Create {len(views)} separate clean reference images of this creature for 3D modeling."
-    order = ["front", "left", "right", "back"]
-    views = [v for v in order if v in views] + [v for v in views if v not in order]
-    vlist = "\n".join(f"{i}. `{v}.png` - {VIEWS[v]}" for i, v in enumerate(views, 1))
-    prompt = (f"{intro}\n\n"
-              f"Creature: {cfg['description']}\n\n"
-              f"Style: {st['text']}\n\n"
-              f"Please generate {len(views)} SEPARATE images, one after another (NOT a grid, NOT a collage, "
-              f"NOT one sheet with several views). All images show EXACTLY the same creature - identical "
-              f"design, proportions, number of legs, colors, materials, pose and lighting. Only the camera "
-              f"angle changes - the body posture is IDENTICAL in every view (do not stand the creature upright "
-              f"in the front/back views if it leans forward in the side views; imagine one frozen 3D model and "
-              f"a camera circling around it):\n{vlist}\n\n"
-              f"Keep the exact number of legs, wings, tails and claws of the design and keep all of them "
-              f"clearly visible and separated in every view.\n\n{rules}")
-    parts += [f"## Ein Prompt für alle {len(views)} Ansichten", "",
-              "ChatGPT erzeugt die Bilder nacheinander. Speichern als " +
-              ", ".join(f"`{v}.png`" for v in views) + ". Falls es doch ein Raster macht: "
-              "„Bitte jede Ansicht als eigenes Bild“ nachschieben.", "", "```text", prompt, "```", ""]
-    n = len(views)
+    attach1 = [(cdir / c["file"]).resolve() for c in concepts]
+    design = (cdir / DESIGN_FILE).resolve()
 
-    parts += [
-        "## Kontrolle vor dem Tripo-Schritt",
+    p1 = prompt_design(title, look, st["text"], pose, concepts, cdir, cfg)
+    p2 = prompt_views(title, look, pose, bp["camera"], views, cfg)
+    names = ", ".join(f"`{v}.png`" for v in views)
+    have = "✅ liegt schon vor" if design.exists() else "noch nicht vorhanden – erst Stufe 1"
+    parts = [
+        f"# Bildprompts: {title}",
         "",
-        "- Alle Bilder zeigen dieselbe Kreatur (Farben, Anzahl Beine/Augen, Muster)?",
-        "- Beine/Flügel klar getrennt, nichts überkreuzt, nichts abgeschnitten?",
-        "- Keine harten Schatten, keine Glüh-Effekte?",
+        f"Bauplan: **{bp['label']}** · Stil: **{st['label']}** · Ordner: `{cdir / 'input'}`",
         "",
-        "Wenn eine Ansicht danebengeht, lass sie weg. Tripo braucht nur `front.png` plus mindestens eine weitere.",
+        "**Zwei Stufen:** Stufe 1 macht aus dem kleinen Concept-Ausschnitt EIN sauberes Design-Bild, das du gegen "
+        "dein Concept prüfst. Stufe 2 macht daraus die 4 Ansichten für Tripo. Beschreibung ändern: `look` in "
+        "`creatures/roster.toml` (oder `creature.toml`), dann `python scripts/make_prompts.py` erneut starten.",
+        "",
+        "## Stufe 1 – Design-Bild → `input/design.png`",
+        "",
+        "Neuer ChatGPT-Chat. **Anhängen, in dieser Reihenfolge:**",
+        "",
+        *[f"{i}. `{p}`" for i, p in enumerate(attach1, 1)],
+        "",
+        "```text", p1, "```",
+        "",
+        "**Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? "
+        "Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter",
+        f"`{design}`",
+        "",
+        f"## Stufe 2 – 4 Ansichten → {names}",
+        "",
+        f"Neuer ChatGPT-Chat. **Anhängen:** 1. `{design}` ({have})",
+        "",
+        "```text", p2, "```",
+        "",
+        f"Die Bilder nacheinander als {names} in `{cdir / 'input'}` speichern. Macht ChatGPT doch ein Raster: "
+        "„Bitte jede Ansicht als eigenes Bild“ nachschieben.",
+        "",
+        "## Prüfung vor Tripo (Claude, Pflicht)",
+        "",
+        "Claude prüft die 4 Ansichten nach der Checkliste in `README.md` („Prüfung von Referenzbild und Tripo-Modell“, "
+        "Teil A): Reihenfolge/Blickrichtung, gleiche Haltung in allen Ansichten, nichts zwischen den Beinen, Beine vorn "
+        "und hinten gleich breit, Gliedmaßen frei, gerade Grundpose, Teilezahl wie im Design, dünne Teile mit Volumen, "
+        "kein Glühen. Bei einem Befund: Bild neu machen statt im Rig reparieren.",
     ]
-    out = creature_dir / "prompts.md"
+    out = cdir / "prompts.md"
     out.write_text("\n".join(parts) + "\n", encoding="utf-8")
-    (creature_dir / "input").mkdir(exist_ok=True)
-    print(f"Prompts geschrieben: {out}  ({n} Bilder)")
+    (cdir / "input").mkdir(exist_ok=True)
+    print(f"Prompts geschrieben: {out}  (Stufe 1 + Stufe 2, {len(views)} Ansichten)")
+    return {"title": title, "stage1": p1, "stage2": p2, "attach1": attach1, "design": design,
+            "views": views, "input": cdir / "input", "look": look}
 
 
 if __name__ == "__main__":

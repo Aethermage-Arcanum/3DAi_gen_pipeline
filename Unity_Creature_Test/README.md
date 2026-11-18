@@ -18,7 +18,7 @@ Zeigt alle fertigen Kreaturen der Pipeline (`../creatures/*/output/*.fbx`) in Un
 - FBX + Clip-Bericht (welche Clips Schleifen sind) werden nach `Assets/Creatures/<Name>/` kopiert.
 - Import als **Generic**-Rig, Animationen **unkomprimiert** (genau wie in Blender gebacken), Schleifen laut Pipeline.
 - Die Texturen stecken in der FBX ohne Dateiendung → werden herausgezogen, Endung ergänzt, und es entsteht **ein** Material pro Kreatur (Standard-Shader, Farbe + Normal-Map).
-- Kreaturen stehen auf dem Boden (Ursprung der Modelle liegt in der Körpermitte → wird beim Anzeigen angehoben).
+- Kreaturen stehen auf dem Boden (Ursprung der Modelle liegt in der Körpermitte → wird beim Anzeigen angehoben); Referenz ist die **Ruhepose/Bindepose** wie in Blender, nicht die Pose nach dem Laden = erster FBX-Take Attack1 – sonst landete bei Fliegern/Schwebern die Schwebehöhe auf dem Boden).
 - `Assets/Creatures` und `Assets/CreatureViewer/Generated` sind erzeugt und nicht versioniert.
 
 ## Frei hängende Teile (Lappen, Fühler) – Shader `Creature/Standard Dangling`

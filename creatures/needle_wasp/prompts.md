@@ -1,53 +1,55 @@
-# Bildprompts: needle_wasp
+# Bildprompts: Needle Wasp
 
-Bauplan: **Sechsbeiner (Insekt, Käfer, Ameise)** · Stil: **Artist B: Clean Low-Poly Stylized (Projekt-Standard)**
+Bauplan: **Sechsbeiner (Insekt, Käfer, Ameise)** · Stil: **Artist B: Clean Low-Poly Stylized (Projekt-Standard)** · Ordner: `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input`
 
-**So geht's:** Neuen ChatGPT-Chat öffnen, Bilder anhängen, den einen Prompt einfügen. Die Bilder als PNG unter den angegebenen Namen speichern in:
+**Zwei Stufen:** Stufe 1 macht aus dem kleinen Concept-Ausschnitt EIN sauberes Design-Bild, das du gegen dein Concept prüfst. Stufe 2 macht daraus die 4 Ansichten für Tripo. Beschreibung ändern: `look` in `creatures/roster.toml` (oder `creature.toml`), dann `python scripts/make_prompts.py` erneut starten.
 
-`H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input`
+## Stufe 1 – Design-Bild → `input/design.png`
 
-Gefällt Bild 1 nicht: einfach neu generieren lassen oder die Beschreibung in `creature.toml` anpassen und dieses Skript erneut starten.
-
-**Anhängen in ChatGPT, in dieser Reihenfolge:**
+Neuer ChatGPT-Chat. **Anhängen, in dieser Reihenfolge:**
 
 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\neelde_wasp.png`
 2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\style_B_stalk_wasp.png`
 
-## Ein Prompt für alle 4 Ansichten
-
-ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, `right.png`, `back.png`. Falls es doch ein Raster macht: „Bitte jede Ansicht als eigenes Bild“ nachschieben.
-
 ```text
-I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
+Image 1 is my concept art of this creature: take its design, silhouette and colors; the description below adds the details. Image 1 is a concept sheet of this wasp: the big creature is the design, the small panels show details (head, stinger, wings, eggs) and views. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
 
-Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a concept sheet of this wasp: the big creature is the design, the small panels show details (head, stinger, wings, eggs) and views.
+Paint ONE clean, sharp, high-resolution design image of my creature "Needle Wasp". Stay true to the concept - same character, silhouette, body parts and colors - but redraw it cleanly with these details:
 
-Creature: Needle Wasp: a slender, aggressive forest WASP (clearly a wasp, NOT an ant). Proportions: narrow wasp waist (thin petiole) between thorax and a long pointed abdomen; the abdomen ends in a very long, sharp NEEDLE STINGER that is a key feature - big, clearly visible and highlighted in every view. TWO PAIRS of LARGE translucent wings, each wing about as long as the whole body, spread out to the sides in a flight-ready pose, clearly separated from the body and visible in every view. Six SHORT, THIN, delicate legs, much thinner than the abdomen, tucked slightly under the body like a hovering wasp. Large compound eyes, short antennae, small mandibles.
+A slender, aggressive forest wasp - clearly a wasp, not an ant - fast, nervous and dangerous. Its armor is dark indigo-violet with sharp, faceted plates on the head and thorax; the abdomen is banded in indigo and warm amber-orange. The head is long and wedge-shaped with bright orange eyes, a row of small fangs and a pair of big, curved, sickle-like orange mandibles; two long, thin, segmented antennae sweep back over the head. A narrow wasp waist connects the thorax to a long, pointed, armored abdomen with small serrated plates, ending in a long, sharp crimson needle stinger - the key feature, always clearly visible. A small cluster of round orange venom sacs bulges on the side of the thorax. Two pairs of large, translucent amber wings with fine darker veins spread out to the sides, clearly apart from the body. Six thin, delicate, fairly short brown-orange legs with pointed tips are held slightly tucked under the body like a hovering wasp. Materials: glossy hard chitin, thin glassy wings, a wet-looking stinger tip.
 
-Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Please generate 4 SEPARATE images, one after another (NOT a grid, NOT a collage, NOT one sheet with several views). All images show EXACTLY the same creature - identical design, proportions, number of legs, colors, materials, pose and lighting. Only the camera angle changes - the body posture is IDENTICAL in every view (do not stand the creature upright in the front/back views if it leans forward in the side views; imagine one frozen 3D model and a camera circling around it):
-1. `front.png` - front view: the creature faces the camera directly
-2. `left.png` - exact side view of the creature's own LEFT flank: rotated 90 degrees, its head points to the LEFT edge of the image
-3. `right.png` - exact side view of the creature's own RIGHT flank: rotated 90 degrees, its head points to the RIGHT edge of the image
-4. `back.png` - exact rear view: rotated 180 degrees, we see the creature from directly behind
-
-Keep the exact number of legs, wings, tails and claws of the design and keep all of them clearly visible and separated in every view.
-
-Requirements for a 3D-model reference image:
-- exactly one creature, centered, the entire body in frame with some margin, nothing cut off
-- plain flat medium-grey (#9a9a9a) background, no ground texture, no scenery, no props, no text, no watermark
-- soft, even, diffuse studio lighting from all sides, no cast shadows, no strong highlights, no rim light, no glow or bloom effects
-- sharp focus everywhere, no depth of field, no motion blur, no smoke, no particles
-- neutral rigging pose: body level and horizontal, all six legs spread out symmetrically left/right, clearly separated, no legs crossing, leg tips on the ground, antennae pointing forward and apart, mandibles closed, wings (only if the design has any) folded flat on the back
-- camera slightly elevated at about 20 degrees, orthographic-like, no perspective distortion
-- square 1:1 image
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its six legs with the body level, both pairs of wings spread out flat to the sides, stinger pointing straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
-## Kontrolle vor dem Tripo-Schritt
+**Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter
+`H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\design.png`
 
-- Alle Bilder zeigen dieselbe Kreatur (Farben, Anzahl Beine/Augen, Muster)?
-- Beine/Flügel klar getrennt, nichts überkreuzt, nichts abgeschnitten?
-- Keine harten Schatten, keine Glüh-Effekte?
+## Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Wenn eine Ansicht danebengeht, lass sie weg. Tripo braucht nur `front.png` plus mindestens eine weitere.
+Neuer ChatGPT-Chat. **Anhängen:** 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\design.png` (noch nicht vorhanden – erst Stufe 1)
+
+```text
+Image 1 is the approved, binding design of my creature "Needle Wasp": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A slender, aggressive forest wasp - clearly a wasp, not an ant - fast, nervous and dangerous. Its armor is dark indigo-violet with sharp, faceted plates on the head and thorax; the abdomen is banded in indigo and warm amber-orange. The head is long and wedge-shaped with bright orange eyes, a row of small fangs and a pair of big, curved, sickle-like orange mandibles; two long, thin, segmented antennae sweep back over the head. A narrow wasp waist connects the thorax to a long, pointed, armored abdomen with small serrated plates, ending in a long, sharp crimson needle stinger - the key feature, always clearly visible. A small cluster of round orange venom sacs bulges on the side of the thorax. Two pairs of large, translucent amber wings with fine darker veins spread out to the sides, clearly apart from the body. Six thin, delicate, fairly short brown-orange legs with pointed tips are held slightly tucked under the body like a hovering wasp. Materials: glossy hard chitin, thin glassy wings, a wet-looking stinger tip.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing on its six legs with the body level, both pairs of wings spread out flat to the sides, stinger pointing straight back.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+Die Bilder nacheinander als `front.png`, `left.png`, `right.png`, `back.png` in `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input` speichern. Macht ChatGPT doch ein Raster: „Bitte jede Ansicht als eigenes Bild“ nachschieben.
+
+## Prüfung vor Tripo (Claude, Pflicht)
+
+Claude prüft die 4 Ansichten nach der Checkliste in `README.md` („Prüfung von Referenzbild und Tripo-Modell“, Teil A): Reihenfolge/Blickrichtung, gleiche Haltung in allen Ansichten, nichts zwischen den Beinen, Beine vorn und hinten gleich breit, Gliedmaßen frei, gerade Grundpose, Teilezahl wie im Design, dünne Teile mit Volumen, kein Glühen. Bei einem Befund: Bild neu machen statt im Rig reparieren.

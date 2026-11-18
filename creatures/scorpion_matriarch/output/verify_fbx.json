@@ -2,7 +2,7 @@
   "skeleton": "multileg",
   "file": "ScorpionMatriarch.fbx",
   "meshes": 1,
-  "triangles": 3952,
+  "triangles": 3974,
   "bones": 59,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,
@@ -100,7 +100,7 @@
   "dimensions_m": [
     0.947,
     1.049,
-    0.764
+    0.758
   ],
   "ok": true
 }

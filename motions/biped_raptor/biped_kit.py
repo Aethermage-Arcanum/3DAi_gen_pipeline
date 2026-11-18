@@ -259,7 +259,8 @@ def gait_smooth(t, P, offsets, direction=FWD, turn=0.0):
         if turn:
             r = REST[leg]["ball"] - DB["Root"].head_local
             r = Vector((r.x, r.y, 0))
-            off = Quaternion(UP, -turn * u).to_matrix() @ r - r
+            # Vorzeichen: turn > 0 = Körper dreht nach LINKS (im alten gait() war es vertauscht → TurnLeft drehte rechts)
+            off = Quaternion(UP, turn * u).to_matrix() @ r - r
         else:
             off = direction * (S * u)
         set_foot(leg, off + Vector((0, 0, lift)), curl)
@@ -349,14 +350,15 @@ def chain_len(leg):
     return sum(DB[f"Leg_{leg}_{k}"].length for k in (1, 2, 3))   # Schulterblatt nicht mitgezählt (steif)
 
 
-def reach_fix(margin=0.97, iters=4):
+def reach_fix(margin=0.97, iters=4, legs=None):
     """Kann ein Bein sein Ziel nicht erreichen (überstreckt), sinkt der ganze Rumpf genau so weit ab, bis
-    alle Ziele erreichbar sind – wie ein Tier, das beim weiten Ausgreifen tiefer geht. Liefert die Absenkung."""
+    alle Ziele erreichbar sind – wie ein Tier, das beim weiten Ausgreifen tiefer geht. Liefert die Absenkung.
+    legs = nur diese Beine berücksichtigen (Standard: alle)."""
     total = 0.0
     for _ in range(iters):
         bpy.context.view_layer.update()
         need = 0.0
-        for leg in LEGS:
+        for leg in (LEGS if legs is None else legs):
             root = PB[f"Leg_{leg}_1"].head
             tgt = arm.matrix_world.inverted() @ IK[leg].matrix_world.translation
             d = tgt - root
@@ -417,6 +419,16 @@ def max_stretch():
     return worst
 
 
+def smooth_envelope(v, r, loop):
+    """Glatte Kurve, die nie unter v liegt: gleitendes Maximum (Radius r), dann Dreiecksfilter (Radius r)."""
+    n = len(v) - 1 if loop else len(v)
+    at = (lambda i: v[i % n]) if loop else (lambda i: v[max(0, min(n - 1, i))])  # noqa: E731
+    mx = [max(at(i + k) for k in range(-r, r + 1)) for i in range(-r, n + r)]
+    w = [r + 1 - abs(k) for k in range(-r, r + 1)]
+    out = [sum(w[k + r] * mx[i + r + k] for k in range(-r, r + 1)) / sum(w) for i in range(n)]
+    return out + [out[0]] if loop else out
+
+
 # ---------------------------------------------------------------- Backen + Selbstprüfung
 def bake(clips):
     """clips: {Name: {N, loop, kind (locomotion|stand|stand_return|death), pose(f), swing(leg,f), duty,
@@ -430,10 +442,27 @@ def bake(clips):
         N, kind = spec["N"], spec["kind"]
         frames, feet, stretch, ev = [], {l: [] for l in LEGS}, 1.0, list(spec.get("events", []))
         prev, lowered, where = {}, 0.0, ""
+        # reach = "smooth": Rumpf-Absenkung erst für alle Frames messen (nur Beine am Boden), dann zeitlich glätten
+        # (gleitendes Maximum + Dreiecksfilter gleicher Breite → nie weniger als nötig) – statt eines Ein-Frame-Ruckes
+        # (Raptor: Run 3 cm, Attack1 7 cm in einem Frame). Ohne den Schlüssel altes Verhalten.
+        smooth = spec.get("reach") == "smooth" and kind != "death"
+
+        def ground_legs(f):
+            return [l for l in LEGS if not (kind == "locomotion" and spec["swing"](l, f))]
+        if smooth:
+            need = []
+            for f in range(N + 1):
+                reset()
+                spec["pose"](f)
+                need.append(reach_fix(legs=ground_legs(f)))
+            low_s = smooth_envelope(need, spec.get("reach_radius", 3), spec.get("loop", False))
         for f in range(N + 1):
             reset()
             spec["pose"](f)
-            if kind != "death":
+            if smooth:
+                move("Root", Vector((0, 0, -low_s[f])))
+                lowered = max(lowered, low_s[f] + reach_fix(legs=ground_legs(f)))
+            elif kind != "death":
                 lowered = max(lowered, reach_fix())
             bpy.context.view_layer.update()
             frames.append({pb.name: arm.convert_space(pose_bone=pb, matrix=pb.matrix, from_space="POSE",

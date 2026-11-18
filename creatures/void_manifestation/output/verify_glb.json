@@ -3,7 +3,7 @@
   "file": "VoidManifestation.glb",
   "meshes": 1,
   "triangles": 4022,
-  "bones": 46,
+  "bones": 74,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,
   "max_influences": 4,
@@ -101,9 +101,9 @@
   "head_direction_blender": null,
   "foot_moves_m": null,
   "dimensions_m": [
-    1.001,
-    0.67,
-    0.938
+    1.004,
+    0.669,
+    0.94
   ],
   "ok": true
 }

@@ -1,79 +1,79 @@
 {
-  "pairs_checked": 304,
-  "threshold_m": 0.015,
-  "max_opening_m": 0.0072,
+  "pairs_checked": 295,
+  "threshold_m": 0.0148,
+  "max_opening_m": 0.0105,
   "joints_over_threshold": 0,
   "per_clip_max_m": {
-    "Quadruped_Wolf_Attack1": 0.0037,
+    "Quadruped_Wolf_Attack1": 0.0058,
     "Quadruped_Wolf_Death": 0.0027,
-    "Quadruped_Wolf_Hit": 0.0017,
-    "Quadruped_Wolf_Idle": 0.0002,
-    "Quadruped_Wolf_Ready": 0.0033,
-    "Quadruped_Wolf_Run": 0.0072,
-    "Quadruped_Wolf_TurnLeft": 0.0032,
-    "Quadruped_Wolf_TurnRight": 0.0039,
-    "Quadruped_Wolf_Walk": 0.0061
+    "Quadruped_Wolf_Hit": 0.0041,
+    "Quadruped_Wolf_Idle": 0.001,
+    "Quadruped_Wolf_Ready": 0.006,
+    "Quadruped_Wolf_Run": 0.0105,
+    "Quadruped_Wolf_TurnLeft": 0.0055,
+    "Quadruped_Wolf_TurnRight": 0.0045,
+    "Quadruped_Wolf_Walk": 0.0097
   },
   "worst": [
     [
       "Quadruped_Wolf_Run: Hips / Leg_BL_1",
-      0.0072,
-      7
+      0.0105,
+      9
     ],
     [
       "Quadruped_Wolf_Walk: Hips / Leg_BL_1",
-      0.0061,
-      23
-    ],
-    [
-      "Quadruped_Wolf_Walk: Leg_BR_1 / Leg_BR_2",
-      0.0049,
-      9
-    ],
-    [
-      "Quadruped_Wolf_Walk: Hips / Leg_BR_1",
-      0.0046,
-      7
+      0.0097,
+      22
     ],
     [
       "Quadruped_Wolf_Run: Hips / Leg_BR_1",
-      0.0044,
-      9
+      0.0087,
+      11
     ],
     [
-      "Quadruped_Wolf_TurnRight: Leg_BR_1 / Leg_BR_2",
-      0.0039,
-      7
-    ],
-    [
-      "Quadruped_Wolf_Attack1: Hips / Leg_BL_1",
-      0.0037,
-      13
-    ],
-    [
-      "Quadruped_Wolf_Ready: Leg_BR_1 / Leg_BR_2",
-      0.0033,
-      1
-    ],
-    [
-      "Quadruped_Wolf_Run: Leg_FL_3 / Leg_FL_4",
-      0.0033,
+      "Quadruped_Wolf_Walk: Hips / Leg_BR_1",
+      0.0074,
       6
     ],
     [
-      "Quadruped_Wolf_Walk: Leg_FL_3 / Leg_FL_4",
-      0.0033,
-      2
+      "Quadruped_Wolf_Run: Leg_BR_1 / Leg_BR_2",
+      0.0071,
+      5
     ],
     [
-      "Quadruped_Wolf_Run: Leg_FR_3 / Leg_FR_4",
-      0.0032,
-      2
+      "Quadruped_Wolf_Ready: Leg_BR_1 / Leg_BR_2",
+      0.006,
+      41
     ],
     [
-      "Quadruped_Wolf_TurnLeft: Leg_FL_3 / Leg_FL_4",
-      0.0032,
-      1
+      "Quadruped_Wolf_Walk: Leg_BR_1 / Leg_BR_2",
+      0.0059,
+      9
+    ],
+    [
+      "Quadruped_Wolf_Attack1: Leg_BR_1 / Leg_BR_2",
+      0.0058,
+      10
+    ],
+    [
+      "Quadruped_Wolf_TurnLeft: Hips / Leg_BL_1",
+      0.0055,
+      22
+    ],
+    [
+      "Quadruped_Wolf_Attack1: Hips / Leg_BL_1",
+      0.0051,
+      14
+    ],
+    [
+      "Quadruped_Wolf_TurnLeft: Leg_BR_1 / Leg_BR_2",
+      0.005,
+      7
+    ],
+    [
+      "Quadruped_Wolf_Run: Leg_BL_1 / Leg_BL_2",
+      0.0049,
+      10
     ]
   ],
   "ok": true

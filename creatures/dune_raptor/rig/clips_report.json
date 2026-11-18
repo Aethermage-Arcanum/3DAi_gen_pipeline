@@ -17,7 +17,7 @@
       "moves_ok": true,
       "move_speed_mps": 0.507,
       "loop_ok": true,
-      "max_stretch": 3.94,
+      "max_stretch": 2.43,
       "stretch_at": "Leg_BR_4 @ Frame 3",
       "stretch_ok": true,
       "ok": true
@@ -27,7 +27,7 @@
       "seconds": 0.533,
       "loop": true,
       "ik_reach_error_m": 0.0002,
-      "body_lowered_max_m": 0.0352,
+      "body_lowered_max_m": 0.0,
       "foot_contact_max_m": 0.0001,
       "foot_contact_ok": true,
       "stride_m": [
@@ -37,7 +37,7 @@
       "moves_ok": true,
       "move_speed_mps": 1.716,
       "loop_ok": true,
-      "max_stretch": 4.67,
+      "max_stretch": 2.91,
       "stretch_at": "Leg_BL_4 @ Frame 6",
       "stretch_ok": true,
       "ok": true
@@ -85,7 +85,7 @@
       "moves_ok": true,
       "turn_speed_deg_s": 46.2,
       "loop_ok": true,
-      "max_stretch": 2.23,
+      "max_stretch": 1.7,
       "stretch_at": "Leg_BR_4 @ Frame 6",
       "stretch_ok": true,
       "ok": true
@@ -105,8 +105,8 @@
       "moves_ok": true,
       "turn_speed_deg_s": -46.2,
       "loop_ok": true,
-      "max_stretch": 1.83,
-      "stretch_at": "Leg_BL_4 @ Frame 21",
+      "max_stretch": 1.93,
+      "stretch_at": "Leg_BR_4 @ Frame 6",
       "stretch_ok": true,
       "ok": true
     },
@@ -118,7 +118,7 @@
       "body_lowered_max_m": 0.0669,
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
-      "max_stretch": 4.11,
+      "max_stretch": 2.63,
       "stretch_at": "Leg_BR_4 @ Frame 9",
       "stretch_ok": true,
       "ok": true
@@ -145,8 +145,8 @@
       "body_lowered_max_m": 0.0,
       "final_min_z_vs_ground_m": 0.0,
       "no_ground_penetration": true,
-      "max_stretch": 2.05,
-      "stretch_at": "Leg_BL_4 @ Frame 9",
+      "max_stretch": 2.4,
+      "stretch_at": "Leg_BR_1 @ Frame 24",
       "stretch_ok": true,
       "ok": true
     }

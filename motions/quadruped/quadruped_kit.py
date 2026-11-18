@@ -5,6 +5,10 @@ Prinzip ("Aufwand nach Blender"): Die Beine rechnet Blenders eigene IK. Pro Bein
 (trägt auch die Zehen-Ausrichtung), IK-Kette Oberarm/Oberschenkel → Mittelhand/-fuß. Ein Clip setzt pro Frame
 nur Fuß-Ziele + Rumpf/Hals/Kopf/Kiefer/Schwanz. bake() liest die fertige (visuelle) Pose jedes Frames aus und
 schreibt sie als normale Keyframes – danach werden Constraints + Empties entfernt (Unity braucht nur FK).
+
+Weiche Bewegung (2026-11-17, optional, alte Aufrufe unverändert): gait_smooth/foot_profile, keys (Auto-Clamped-Kurven),
+follow (Follow-Through entlang Ketten), bump, bend; Clip-Optionen für bake(): reach_smooth/reach_flat (glatte Rumpf-
+Absenkung, nur Standbeine), ik_stiff (IK-Steifigkeit pro Clip), foot_ground (kein Unterbein unter dem Boden).
 """
 import json
 import math
@@ -324,6 +328,54 @@ def gait_smooth(t, P, offsets, direction=FWD, turn=0.0):
         set_foot(leg, off + Vector((0, 0, lift)), curl)
 
 
+_FOOT = None
+
+
+def _foot_setup():
+    """Bindepose-Boden des Mesh + Vertices je Unterbein (Hauptgewicht auf Leg_<XX>_2/_3/_4)."""
+    global _FOOT
+    if _FOOT is None:
+        mw, me = body_obj.matrix_world, body_obj.data
+        names = {g.index: g.name for g in body_obj.vertex_groups}
+        idx = {l: [] for l in LEGS}
+        for v in me.vertices:
+            if len(v.groups):
+                n = names[max(v.groups, key=lambda g: g.weight).group]
+                if n.startswith("Leg_") and n[-1] in "234" and n[4:6] in idx:
+                    idx[n[4:6]].append(v.index)
+        _FOOT = (min((mw @ v.co).z for v in me.vertices), idx)
+    return _FOOT
+
+
+def feet_on_ground(iters=3):
+    """Kein Fuß unter dem Boden: Dreht der Mittelfuß beim Ducken/Ausgreifen, kippt die Sohle hinter dem Ballen in den
+    Boden (sie hängt am Mittelfuß-Knochen). Dann wird genau dieses Fuß-Ziel so weit angehoben, dass der tiefste
+    Fuß-Vertex auf Bindepose-Bodenhöhe liegt (der Fuß rollt auf die Sohle). → {Bein: Anhebung in m}"""
+    ground, idx = _foot_setup()
+    up = {l: 0.0 for l in LEGS}
+    mw = body_obj.matrix_world
+    for _ in range(iters):
+        bpy.context.view_layer.update()
+        ev = body_obj.evaluated_get(bpy.context.evaluated_depsgraph_get())
+        m = ev.to_mesh()
+        moved = False
+        for leg in LEGS:
+            if not idx[leg]:
+                continue
+            pen = ground - min((mw @ m.vertices[i].co).z for i in idx[leg])
+            if pen > 1e-4:
+                e = IK[leg]
+                mt = e.matrix_world.copy()
+                mt.translation.z += pen
+                e.matrix_world = mt
+                up[leg] += pen
+                moved = True
+        ev.to_mesh_clear()
+        if not moved:
+            break
+    return up
+
+
 def _smooth_envelope(need, radius, loop):
     """Glatte Kurve ≥ need: erst Maximum über ±radius, dann Hann-gewichtetes Mittel über ±radius."""
     n = len(need)
@@ -427,6 +479,17 @@ def bake(clips):
         N, kind = spec["N"], spec["kind"]
         frames, feet, stretch, ev = [], {l: [] for l in LEGS}, 1.0, list(spec.get("events", []))
         prev, lowered, where = {}, 0.0, ""
+        lifts = []                                       # je Frame: Anhebung je Fuß durch feet_on_ground (sonst 0)
+        # Optional "ik_stiff": {"Leg_3": 0.8, …} – IK-Steifigkeit einzelner Beinknochen nur für diesen Clip (danach
+        # wieder wie vorher). Steifer Mittelfuß (Leg_3) → beim Absenken beugen Hüfte/Knie statt des Sprunggelenks, und
+        # die Fußsohle hinter dem Ballen dreht nicht in den Boden.
+        stiff_saved = {}
+        if spec.get("ik_stiff") and kind != "death":
+            for leg in LEGS:
+                for bone, k in spec["ik_stiff"].items():
+                    pb = PB[f"Leg_{leg}_{bone[-1]}"] if bone.startswith("Leg_") else PB[bone]
+                    stiff_saved[pb.name] = (pb.ik_stiffness_x, pb.ik_stiffness_y, pb.ik_stiffness_z)
+                    pb.ik_stiffness_x = pb.ik_stiffness_y = pb.ik_stiffness_z = k
         # Optional "reach_smooth": <Frames> – die nötige Rumpf-Absenkung (überstreckte Beine) wird vorab für alle Frames
         # gemessen und als glatte Kurve angewandt. Ohne das sackt der Rumpf an jedem Fußwechsel mit einem Knick ab
         # (Maximum über 4 Beine) – eine Hauptursache für "kantig/abrupt".
@@ -441,8 +504,6 @@ def bake(clips):
                 reset()
                 spec["pose"](f)
                 need.append(reach_fix(legs=reach_legs(f)))
-            if __import__("os").environ.get("QUAD_DEBUG"):
-                print("NEED", cname, [round(v, 3) for v in need], [reach_legs(f) for f in range(N + 1)])
             pre = _smooth_envelope(need, int(spec["reach_smooth"]), spec.get("loop", False))
             fl = spec.get("reach_flat", 0.0)               # 0..1: Anteil konstanter Absenkung (kein Auf/Ab durch Reichweite)
             if fl:
@@ -459,6 +520,8 @@ def bake(clips):
                 lowered = max(lowered, pre[f] + reach_fix(legs=reach_legs(f)))
             elif kind != "death":
                 lowered = max(lowered, reach_fix())
+            up = feet_on_ground() if spec.get("foot_ground") and kind != "death" else {l: 0.0 for l in LEGS}
+            lifts.append(up)
             bpy.context.view_layer.update()
             frames.append({pb.name: arm.convert_space(pose_bone=pb, matrix=pb.matrix, from_space="POSE",
                                                       to_space="LOCAL").copy() for pb in PB})
@@ -472,19 +535,23 @@ def bake(clips):
                 st_now = max_stretch()
                 if st_now > stretch:
                     stretch, where = st_now, f"{STRETCH_WHERE} @ Frame {f}"
+        for n, v in stiff_saved.items():
+            PB[n].ik_stiffness_x, PB[n].ik_stiffness_y, PB[n].ik_stiffness_z = v
         baked[cname] = frames
         r = {"frames": N, "seconds": round(N / FPS, 3), "loop": spec.get("loop", False)}
         # IK erreicht das Ziel? (sonst schwebt/rutscht der Fuß)
         reach = 0.0 if kind == "death" else max((b - tgt).length for s in feet.values() for _, b, sw, tgt in s if not sw)
         r["ik_reach_error_m"] = round(reach, 4)
         r["body_lowered_max_m"] = round(lowered, 4)
+        if spec.get("foot_ground"):
+            r["sole_lift_max_m"] = round(max(max(u.values()) for u in lifts), 4)
         if kind == "locomotion":
             fl, st_ = [], []
             for leg, s in feet.items():
-                stance = [(t_, b) for t_, b, sw, _ in s if not sw]
-                fl.append(max(abs(b.z - REST[leg]["ball"].z) for _, b in stance))
-                xs = [b.x for _, b in stance]
-                ys = [b.y for _, b in stance]
+                stance = [(t_, b, lifts[f][leg]) for f, (t_, b, sw, _) in enumerate(s) if not sw]
+                fl.append(max(abs(b.z - REST[leg]["ball"].z - u) for _, b, u in stance))   # u = gewollte Sohlen-Anhebung
+                xs = [b.x for _, b, _ in stance]
+                ys = [b.y for _, b, _ in stance]
                 st_.append(math.hypot(max(xs) - min(xs), max(ys) - min(ys)))
             r["foot_contact_max_m"] = round(max(fl), 4)
             r["foot_contact_ok"] = max(fl) <= tol_c and reach <= tol_c
@@ -496,7 +563,8 @@ def bake(clips):
                 r["move_speed_mps"] = round(sum(st_) / len(st_) / (spec["duty"] * N / FPS), 3)
         if kind in ("stand", "stand_return"):
             planted = spec.get("planted", LEGS)
-            mv = max((t_ - feet[l][0][0]).length for l in planted for t_, _, _, _ in feet[l])
+            mv = max((t_ - Vector((0, 0, lifts[f][l])) - feet[l][0][0] + Vector((0, 0, lifts[0][l]))).length
+                     for l in planted for f, (t_, _, _, _) in enumerate(feet[l]))
             r["feet_moved_max_m"] = round(mv, 4)
             r["feet_planted_ok"] = mv <= tol_p and reach <= tol_p
         if r["loop"]:

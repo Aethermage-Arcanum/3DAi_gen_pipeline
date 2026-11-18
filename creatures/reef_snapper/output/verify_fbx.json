@@ -31,7 +31,7 @@
       "ReefSnapper|ReefSnapper|Quadruped_Lizard_Attack1",
       [
         1,
-        25
+        31
       ]
     ],
     [
@@ -45,7 +45,7 @@
       "ReefSnapper|ReefSnapper|Quadruped_Lizard_Hit",
       [
         1,
-        11
+        16
       ]
     ],
     [
@@ -59,14 +59,14 @@
       "ReefSnapper|ReefSnapper|Quadruped_Lizard_Ready",
       [
         1,
-        31
+        49
       ]
     ],
     [
       "ReefSnapper|ReefSnapper|Quadruped_Lizard_Run",
       [
         1,
-        17
+        19
       ]
     ],
     [
@@ -96,11 +96,11 @@
     -0.95,
     -0.32
   ],
-  "foot_moves_m": 0.129,
+  "foot_moves_m": 0.1455,
   "dimensions_m": [
     0.44,
-    0.942,
-    0.373
+    0.992,
+    0.366
   ],
   "ok": true
 }

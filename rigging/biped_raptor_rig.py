@@ -264,32 +264,109 @@ RC.skin(obj, V, part, MAIN, B, names, allow, CFG)
 # bodennahe Vertices teils am Mittelfuß (Leg_3) oder sogar am Schienbein (Leg_2), kippten sie beim Ausgreifen mit
 # dem Mittelfuß mit – die hintere Kralle sank im Walk 1,9 cm in den Boden (Unity-Messung 2026-11-17).
 # Fix: alles unterhalb foot_rigid_height gehört ganz zu Leg_X_4, darüber weicher Übergang bis + foot_blend.
-n_sole = 0
+n_sole = n_isl = 0
 if CFG.get("foot_rigid_height", 0) > 0:
     za = GROUND + CFG["foot_rigid_height"] * H
     zb = za + CFG.get("foot_blend", 0.05) * H
     gname = {g.index: g.name for g in obj.vertex_groups}
-    for i, v in enumerate(obj.data.vertices):
-        z = V[i, 2]
-        if z >= zb or not len(v.groups):
-            continue
-        ws = {gname[g.group]: g.weight for g in v.groups}
+    W = [{gname[g.group]: g.weight for g in v.groups} for v in obj.data.vertices]
+    changed = set()
+
+    def leg_side(ws):
         side = {sd: sum(w for n, w in ws.items() if n.startswith(f"Leg_{sd}_")) for sd in LEGS}
         sd = max(side, key=side.get)
-        if side[sd] < 0.5:                                   # Rumpf/Schwanz, kein Fuß
+        return sd if side[sd] >= 0.5 else None          # sonst Rumpf/Schwanz, kein Fuß
+
+    for i in range(len(W)):
+        z = V[i, 2]
+        sd = leg_side(W[i]) if z < zb and W[i] else None
+        if not sd:
             continue
         t = 1.0 if z <= za else (zb - z) / (zb - za)
         b = t * t * (3 - 2 * t)
-        new = {n: w * (1 - b) for n, w in ws.items()}
+        new = {n: w * (1 - b) for n, w in W[i].items()}
         new[f"Leg_{sd}_4"] = new.get(f"Leg_{sd}_4", 0.0) + b
-        for n in ws:
-            obj.vertex_groups[n].remove([i])
-        for n, w in new.items():
-            if w > 1e-3:
-                obj.vertex_groups[n].add([i], float(w), "REPLACE")
+        W[i] = new
+        changed.add(i)
         n_sole += 1
-    print(f"RIG_INFO Fußsohle starr am Fuß: {n_sole} Vertices (bis {CFG['foot_rigid_height']:.2f}·H, Übergang {CFG.get('foot_blend', 0.05):.2f}·H)")
-report ={"vertices": int(len(V)), "parts": int(len(np.unique(part))), "height_m": round(float(H), 3),
+    # Getrennte Stücke am Bein: Tripo baut Zehen, Ballen-Polster, Krallen, Schienen als eigene Mesh-Stücke, die sich nur berühren.
+    # Durch die Höhen-Überblendung bekämen sich berührende Ecken verschiedener Stücke verschiedene Gewichte und
+    # klafften am Ballen bis 5 cm auf (Lückenprüfung). → Ecken, die in Ruhe aneinanderliegen (< foot_pair_eps),
+    # werden einige Runden lang auf ihr gemeinsames Mittel gesetzt.
+    E = np.array([e.vertices[:] for e in obj.data.edges])
+    isl = np.arange(len(V))
+
+    def root(i):
+        while isl[i] != i:
+            isl[i] = isl[isl[i]]
+            i = isl[i]
+        return i
+    for u, w in E:
+        isl[root(u)] = root(w)
+    isl = np.array([root(i) for i in range(len(V))])
+    # Bereich: ganzes Bein bis zur Hüfte (auch Oberschenkel-Platten klafften im Run bis 1,7 cm); ein Ende des Paars
+    # muss am Bein hängen, das andere darf Rumpf sein (Hüft-Übergang).
+    legw = np.array([sum(w for n, w in ws.items() if n.startswith("Leg_")) for ws in W])
+    zone = np.where(V[:, 2] < leg_top + CFG["leg_top_margin"] * H)[0]
+    eps = CFG.get("foot_pair_eps", 0.015) * L
+    d = np.linalg.norm(V[zone][:, None, :] - V[zone][None, :, :], axis=2)
+    pairs = [(zone[a_], zone[b_]) for a_, b_ in zip(*np.where((d < eps) & (np.triu(np.ones_like(d), 1) > 0)))
+             if isl[zone[a_]] != isl[zone[b_]] and max(legw[zone[a_]], legw[zone[b_]]) > 0.05]
+    # Glätten über Mesh-Kanten + Berühr-Paare (Paare zählen pair_weight-fach): Paare werden (fast) gleich, die Änderung
+    # verteilt sich weich ins jeweilige Stück (sonst reißt es dort). Fest bleiben: Sohle (bis foot_rigid_height) und
+    # alles, was nicht am Bein hängt (sonst wandern Bein-Gewichte in Schwanz/Rumpf).
+    pw = CFG.get("foot_pair_weight", 4.0)
+    nb = {}
+    for i, j in pairs:
+        nb.setdefault(int(i), {})[int(j)] = pw
+        nb.setdefault(int(j), {})[int(i)] = pw
+    near = set(nb)
+    for u, w in E:                                       # Kanten nur im Umfeld der Paare (zwei Ringe)
+        if u in near or w in near:
+            nb.setdefault(int(u), {}).setdefault(int(w), 1.0)
+            nb.setdefault(int(w), {}).setdefault(int(u), 1.0)
+    pinned = {i for i in nb if not leg_side(W[i]) or V[i, 2] <= za}   # Rumpf/Schwanz + Sohle bleiben fest
+    for _ in range(CFG.get("foot_pair_rounds", 12)):
+        upd = {}
+        for i, js in nb.items():
+            if i in pinned:
+                continue
+            acc = dict(W[i])
+            for j, k in js.items():
+                for n, w in W[j].items():
+                    acc[n] = acc.get(n, 0.0) + k * w
+            tot = sum(acc.values())
+            upd[i] = {n: w / tot for n, w in acc.items()}
+        for i, w in upd.items():
+            W[i] = w
+            changed.add(i)
+    # UV-Naht-Duplikate (gleiche Position, getrennte Ecken) müssen exakt gleich hängen, sonst reißen weiße Nähte auf
+    weld = {}
+    for i in changed:
+        weld.setdefault(tuple(np.round(V[i], 5)), []).append(i)
+    for i in range(len(V)):
+        k = tuple(np.round(V[i], 5))
+        if k in weld and i not in weld[k]:
+            weld[k].append(i)
+    for grp in weld.values():
+        if len(grp) > 1:
+            acc = {}
+            for i in grp:
+                for n, w in W[i].items():
+                    acc[n] = acc.get(n, 0.0) + w / len(grp)
+            for i in grp:
+                W[i] = dict(acc)
+                changed.add(i)
+    n_isl = len(pairs)
+    for i in changed:
+        for g in list(obj.data.vertices[i].groups):
+            obj.vertex_groups[gname[g.group]].remove([i])
+        for n, w in W[i].items():
+            if w > 1e-3:
+                obj.vertex_groups[n].add([int(i)], float(w), "REPLACE")
+    print(f"RIG_INFO Fußsohle starr am Fuß: {n_sole} Vertices (bis {CFG['foot_rigid_height']:.2f}·H, Übergang "
+          f"{CFG.get('foot_blend', 0.05):.2f}·H), {n_isl} Berühr-Ecken getrennter Fuß-Stücke angeglichen")
+report = {"vertices": int(len(V)), "parts": int(len(np.unique(part))), "height_m": round(float(H), 3),
           "length_m": round(float(L), 3), "bones": len(order), "arms": sorted(ARMS)}
 RC.finish(obj, arm, OUT, "biped_raptor_rigged.blend", report, B, order, V,
           tracks={**{k: np.round(v["track"], 4).tolist() for k, v in LEGS.items()},

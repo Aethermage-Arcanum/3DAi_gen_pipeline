@@ -48,6 +48,16 @@ HINWEIS = ("Automatische Messung = nur Frühwarnsystem. Eine individuelle Sichtp
            "gegen Concept und Referenzbilder vergleichen) durch den Agenten ist IMMER zusätzlich notwendig.")
 ERGEBNIS_LEER = "keine automatischen Auffälligkeiten – Sichtprüfung trotzdem erforderlich (keine Freigabe)"
 
+
+def ergebnis(befunde):
+    """Gesamtsatz – nie als Freigabe formuliert, auch wenn alles unauffällig ist."""
+    n_warn = sum(1 for b in befunde.values() if b["status"] == "WARNUNG")
+    n_frei = sum(1 for b in befunde.values() if b["status"] == "freigegeben")
+    frei = f" ({n_frei} mit Begründung freigegeben)" if n_frei else ""
+    if n_warn:
+        return n_warn, f"{n_warn} automatische Auffälligkeit(en){frei} – Sichtprüfung erforderlich"
+    return 0, ERGEBNIS_LEER.replace(" – ", f"{frei} – ", 1)
+
 TITEL = {
     "offene_flaechen": "Einseitige/offene Flächen",
     "fussgruppen": "Fuß-Gruppen am Boden",
@@ -432,7 +442,10 @@ def m_symmetry(M, c):
     frac = float(bad.mean())
     warn = frac > c["max_anteil"]
     return {"warn": warn, "text": f"{frac * 100:.1f} % der Vertices ohne Spiegel-Partner (erlaubt {c['max_anteil'] * 100:.0f} %)",
-            "werte": {"anteil_unsymmetrisch": round(frac, 3)}, "_polys": M.polys_of_verts(bad) if warn else []}
+            "werte": {"anteil_unsymmetrisch": round(frac, 3)},
+            # nur örtlich begrenzte Unsymmetrie einfärben – ist fast alles unsymmetrisch (verbogener Körper),
+            # würde Rot alles verdecken; dann zeigt die Mittellinie die Ursache
+            "_polys": M.polys_of_verts(bad) if warn and frac <= c["max_anteil_einfaerben"] else []}
 
 
 def m_ground(M, c, groups):
@@ -599,11 +612,13 @@ def compose(outdir, views, befunde, groups, meta, M, out_png):
                     a = P([M.mn[0], mk["mid"], 0])
                     bb = P([M.mx[0], mk["mid"], 0])
                     dr.line([(a[0], a[1]), (bb[0], bb[1])], fill=(200, 200, 200), width=1)
-                    dr.line(pts, fill=col if b.get("status") != "ok" else FARBE["info"], width=3)
+                    dr.line(pts, fill=(0, 0, 0), width=7)
+                    dr.line(pts, fill=FARBE["gelb"] if b.get("status") == "WARNUNG" else
+                            col if b.get("status") != "unauffällig" else FARBE["info"], width=3)
                 elif t == "standflaeche" and name == "unten":
                     h = [P([x, y, mk["z"]]) for x, y in mk["hull"]]
                     if len(h) >= 2:
-                        dr.line(h + [h[0]], fill=col if b.get("status") != "ok" else FARBE["info"], width=1)
+                        dr.line(h + [h[0]], fill=col if b.get("status") != "unauffällig" else FARBE["info"], width=1)
                     x, y = P(mk["com"])
                     dr.line([(x - 8, y), (x + 8, y)], fill=col, width=3)
                     dr.line([(x, y - 8), (x, y + 8)], fill=col, width=3)
@@ -617,35 +632,35 @@ def compose(outdir, views, befunde, groups, meta, M, out_png):
     lines = []
     for key, b in befunde.items():
         st = b["status"]
-        col = {"WARNUNG": FARBE["rot"], "freigegeben": FARBE["orange"], "ok": FARBE["ok"]}.get(st, (170, 170, 170))
+        col = {"WARNUNG": FARBE["rot"], "freigegeben": FARBE["orange"], "unauffällig": FARBE["ok"]}.get(st, (170, 170, 170))
         txt = f"{st:<13} {TITEL[key]}: {b.get('text', '')}"
         if st == "freigegeben":
             txt += f"  [Begründung: {b['begruendung']}]"
-        lines.append((txt, col))
-    head_h = 120 + 22 * len(lines)
+        for i, part in enumerate(textwrap.wrap(txt, 150, subsequent_indent=" " * 22)):
+            lines.append((part, col))
+    head_h = 146 + 22 * len(lines)
     W = res * 2
-    img = Image.new("RGB", (W, head_h + res * 2 + 80), (25, 25, 28))
+    img = Image.new("RGB", (W, head_h + res * 2 + 96), (25, 25, 28))
     dr = ImageDraw.Draw(img)
     dr.rectangle([0, 0, W, 78], fill=(150, 0, 0))
     dr.text((12, 8), "NUR FRÜHWARNSYSTEM – Sichtprüfung durch den Agenten IMMER zusätzlich notwendig!", fill=(255, 255, 255), font=font(24))
     dr.text((12, 44), "Bilder ansehen, gegen Concept und Referenzbilder vergleichen. Kein Befund ≠ Freigabe.",
             fill=(255, 230, 230), font=font(18))
-    n_warn = sum(1 for b in befunde.values() if b["status"] == "WARNUNG")
-    erg = f"{n_warn} automatische Auffälligkeit(en) – Sichtprüfung erforderlich" if n_warn else ERGEBNIS_LEER
-    dr.text((12, 88), f"{meta['kreatur']}  ·  Skelett {meta['skelett']}/{meta['muster']}  ·  {erg}",
-            fill=FARBE["rot"] if n_warn else (230, 230, 230), font=font(18))
-    y = 116
+    n_warn, erg = ergebnis(befunde)
+    dr.text((12, 86), f"{meta['kreatur']}  ·  Skelett {meta['skelett']}/{meta['muster']}", fill=(230, 230, 230), font=font(18))
+    dr.text((12, 110), erg, fill=FARBE["rot"] if n_warn else FARBE["gelb"], font=font(18))
+    y = 142
     for txt, col in lines:
-        while dr.textlength(txt, font=font(14)) > W - 24 and len(txt) > 20:
-            txt = txt[:-4] + "…"
         dr.text((12, y), txt, fill=col, font=font(14))
         y += 22
     for i, name in enumerate(order):
         img.paste(tiles[name], ((i % 2) * res, head_h + (i // 2) * res))
-    dr.text((12, head_h + 2 * res + 8), "rot = Auffälligkeit · orange = per creature.toml mit Begründung freigegeben · "
-            "grün/blau = gemessen, unauffällig · gelb = Bauchlinie/Prüfstreifen", fill=(220, 220, 220), font=font(15))
+    dr.text((12, head_h + 2 * res + 6), "rot = Auffälligkeit · orange = per creature.toml mit Begründung freigegeben · "
+            "grün/blau = gemessen, unauffällig", fill=(220, 220, 220), font=font(15))
+    dr.text((12, head_h + 2 * res + 26), "gelb = Bauchlinie/Prüfstreifen bzw. verbogene Mittellinie (oben/unten) · "
+            "graue Linie = Boden bzw. Symmetrieebene", fill=(220, 220, 220), font=font(15))
     for i, line in enumerate(textwrap.wrap(HINWEIS, 125)):
-        dr.text((12, head_h + 2 * res + 32 + 18 * i), line, fill=(255, 120, 120), font=font(14))
+        dr.text((12, head_h + 2 * res + 50 + 18 * i), line, fill=(255, 120, 120), font=font(14))
     img.save(out_png)
 
 
@@ -677,7 +692,7 @@ def check(creature_dir, quiet=False):
             if "skip" in b:
                 befunde[key] = {"status": "nicht geprüft", "text": b["skip"]}
                 continue
-            st = "info" if b.get("info_only") else "WARNUNG" if b["warn"] else "ok"
+            st = "info" if b.get("info_only") else "WARNUNG" if b["warn"] else "unauffällig"
             if st == "WARNUNG" and key in freigabe:
                 st = "freigegeben"
             out = {"status": st, "text": b["text"], "werte": b.get("werte", {})}
@@ -699,10 +714,10 @@ def check(creature_dir, quiet=False):
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
-    n_warn = sum(1 for b in befunde.values() if b["status"] == "WARNUNG")
+    n_warn, erg = ergebnis(befunde)
     report = {
         "hinweis": HINWEIS,
-        "ergebnis": (f"{n_warn} automatische Auffälligkeit(en) – Sichtprüfung erforderlich" if n_warn else ERGEBNIS_LEER),
+        "ergebnis": erg,
         "ist_freigabe": False,
         "kreatur": meta["kreatur"], "modell": str(src.relative_to(ROOT)).replace("\\", "/"),
         "skelett": meta["skelett"], "muster": meta["muster"], "facing": meta["facing"],
@@ -755,7 +770,7 @@ def main():
             print(f"→ {d.name}", flush=True)
             reps.append(check(d, quiet=True))
         keys = list(TITEL)
-        short = {"WARNUNG": "WARN", "ok": "ok", "freigegeben": "frei", "info": "info", "nicht geprüft": "–"}
+        short = {"WARNUNG": "WARN", "unauffällig": "unauff.", "freigegeben": "frei", "info": "info", "nicht geprüft": "–"}
         print("\n" + "Kreatur".ljust(20) + "".join(k[:10].ljust(11) for k in keys))
         for r in reps:
             print(r["kreatur"][:19].ljust(20) + "".join(short[r["befunde"][k]["status"]].ljust(11) for k in keys))

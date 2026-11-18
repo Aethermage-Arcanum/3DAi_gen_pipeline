@@ -25,14 +25,14 @@
         "leg": "BR"
       },
       {
-        "frame": 8,
-        "event": "footstep",
-        "leg": "FR"
-      },
-      {
         "frame": 9,
         "event": "footstep",
         "leg": "FL"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "FR"
       }
     ],
     "Quadruped_Deer_Idle": [],
@@ -73,7 +73,7 @@
     ],
     "Quadruped_Deer_Attack1": [
       {
-        "frame": 13,
+        "frame": 14,
         "event": "hit"
       }
     ],

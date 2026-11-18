@@ -90,7 +90,7 @@ def locomotion(P, turn=0.0):
                   alt=P.get("arm_swing_deg", 0) * math.sin(tw * (t - 0.08)))
         K.apply_toes()
     return {"N": N, "loop": True, "kind": "locomotion", "pose": pose, "duty": P["duty"], "turn": turn,
-            "max_stretch": P.get("max_stretch"),
+            "max_stretch": P.get("max_stretch"), "reach": "smooth",
             "swing": lambda leg, f: phase((f % N) / N, off[leg], P["duty"])[0]}
 
 
@@ -225,7 +225,7 @@ def clip_attack1(P):
                   d3=C["arms2"][f] * 0.6)
         K.apply_toes()
     return {"N": N, "loop": False, "kind": "stand", "pose": pose, "planted": [l for l in LEGS if l != kl],
-            "max_stretch": P.get("max_stretch"),
+            "max_stretch": P.get("max_stretch"), "reach": "smooth",
             "events": [{"frame": P["hit_frame"], "event": "hit"}]}
 
 

@@ -38,7 +38,7 @@
       "Quadruped_Wolf_Attack1",
       [
         0,
-        19
+        25
       ]
     ],
     [
@@ -52,7 +52,7 @@
       "Quadruped_Wolf_Hit",
       [
         0,
-        8
+        12
       ]
     ],
     [
@@ -66,7 +66,7 @@
       "Quadruped_Wolf_Ready",
       [
         0,
-        24
+        38
       ]
     ],
     [
@@ -103,11 +103,11 @@
     -1.0,
     0.05
   ],
-  "foot_moves_m": 0.0823,
+  "foot_moves_m": 0.1074,
   "dimensions_m": [
-    0.222,
-    0.999,
-    0.483
+    0.235,
+    0.986,
+    0.46
   ],
   "ok": true
 }

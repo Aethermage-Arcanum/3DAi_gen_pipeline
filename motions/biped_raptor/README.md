@@ -1,7 +1,7 @@
 # Skelett biped_raptor (Zweibeiner mit Schwanz: Raptoren, Laufvögel)
 
 Rig: `rigging/biped_raptor_rig.py` (Werte `rigging/biped_raptor_defaults.toml`, pro Kreatur `[biped_raptor]`).
-Clips nutzen den **Beine-Baukasten** `motions/quadruped/quadruped_kit.py` (Blender-IK, Rumpf-Absenkung, Prüfung) – er liest die Beine aus dem Rig.
+Clips nutzen den **Beine-Baukasten** `motions/biped_raptor/biped_kit.py` (Blender-IK, Rumpf-Absenkung, Prüfung) – er liest die Beine aus dem Rig.
 Muster: `raptor/`. Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
 
 ## Skelett (26 Knochen)

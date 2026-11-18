@@ -1,7 +1,6 @@
-# Bewegungsmuster quadruped/deer – Hirsch (Hollow Stag): Viertakt-Schritt, Galopp, Drohen mit gesenktem Geweih,
-# Geweihstoß statt Biss. Generator: ../wolf/wolf_clips.py Winkel in Grad,
-# Längen als Anteil der Körperlänge (stride) bzw. Rumpfhöhe (lift, Höhen).
-
+# Bewegungsmuster quadruped/deer – Hirsch (Hollow Stag): Viertakt-Schritt mit Kopfnicken, Transvers-Galopp mit Schaukeln,
+# Drohen mit gesenktem Geweih + Stampfen, Geweihstoß mit Haken. Generator: deer_clips.py. Winkel in Grad, Längen als
+# Anteil der Körperlänge (stride) bzw. Rumpfhöhe (lift, Höhen). Herleitung: README.md "Abgeleitete Werte".
 [meta]
 skeleton = "quadruped"
 style = "deer"
@@ -14,78 +13,110 @@ inherit = { turn = "walk" }
 scapula_stiffness = 0.3   # lange Beine: Schulterblatt bedeckt den Oberarm → muss weicher mitgehen
 
 [walk]   # lateraler Viertakt: HL → VL → HR → VR (je ¼ Zyklus versetzt)
-max_stretch = 3.2   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 cycle_frames = 32
-duty = 0.62
+duty = 0.64
 order = { BL = 0.0, FL = 0.75, BR = 0.5, FR = 0.25 }
-stride = 0.18
-lift_front = 0.14
-lift_back = 0.11
-toe_curl_deg = 18
-bob = 0.012           # Rumpf auf/ab (Anteil Rumpfhöhe), 2× pro Zyklus
-roll_deg = 2.0
-head_bob_deg = 3.0
-head_stabilize = 0.6
-tail_deg = 3
-tail_lift_deg = 5    # Wolf trägt den Schwanz beim Gehen leicht hängend
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.45      # Huftiere heben den Huf hoch und spät (stelzend)
+curl_peak = 0.35
+stride = 0.20         # war 0,18
+lift_front = 0.16
+lift_back = 0.12
+toe_curl_deg = 35     # Huf klappt nach hinten weg
+bob = 0.015
+hip_yaw_deg = 3       # steifer Huftier-Rücken: wenig Gieren, etwas Rollen
+shoulder_yaw_deg = 2
+hip_roll_deg = 3
+shoulder_roll_deg = 2
+sway = 0.006
+head_bob_deg = 6      # Huftiere nicken deutlich, 2× pro Schritt (Pferd: Kopf 9 cm vs. Widerrist 3 cm)
+nod_shift = 0.25      # Kopf um ¼ Zyklus gegen den Widerrist versetzt (Loscher et al. 2016)
+head_gain = 0.6
+neck_lag = 0.05
+tail_deg = 6
+tail_lift_deg = 5
+reach_smooth = 4
+reach_flat = 0.3
+max_stretch = 3.2     # nur Info
 
-[run]    # rotierender Galopp: HL, HR knapp danach, dann VR, VL – Rücken beugt/streckt sich
-max_stretch = 3.0   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
-cycle_frames = 16
-duty = 0.36
-order = { BL = 0.0, BR = 0.9, FR = 0.55, FL = 0.45 }
-stride = 0.21
-lift_front = 0.17
-lift_back = 0.17
-toe_curl_deg = 25
-bob = 0.03
-pitch_deg = 3
-spine_flex_deg = 5
-head_stabilize = 0.0
-tail_deg = 4
-tail_lift_deg = 6
+[run]    # Transvers-Galopp (Huftiere): HL → HR → VL → VR, eine gesammelte Schwebe nach VR
+body = "gallop"
+cycle_frames = 18
+duty = 0.32
+order = { BL = 0.0, BR = 0.9, FL = 0.5, FR = 0.4 }   # Aufsetzen HL 0 · HR 0,1 · VL 0,5 · VR 0,6
+foot_profile = "smooth"
+swing_match = 0.6
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.24         # war 0,21
+swing_ext_front = 0.08
+swing_ext_back = 0.08
+reach_flat = 0.7
+lift_front = 0.22
+lift_back = 0.18
+toe_curl_deg = 45
+spine_flex_deg = 6    # Huftiere: steifer Rücken (vgl. Wolf 13)
+flex_peak = 0.97
+pitch_deg = 8         # dafür starkes Schaukeln (war 3)
+pitch_peak = 0.30
+bob = 0.035
+bob_low = 0.2
+head_bob_deg = 10     # Hals pumpt 1× pro Sprung mit: tief, wenn die Vorderbeine landen
+nod_peak = 0.3
+head_gain = 0.6
+neck_lag = 0.06
+tail_deg = 8
+tail_lift_deg = 15    # Wedel hoch bei der Flucht
+reach_smooth = 3
+max_stretch = 3.0     # nur Info
 
 [turn]
-max_stretch = 3.2   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
 cycle_frames = 28
 duty = 0.6
-turn_deg = 30         # Drehung pro Zyklus
+turn_deg = 30
 stride = 0.0
+turn_bend_deg = 12
+turn_head_deg = 26
+max_stretch = 3.2
 
-[idle]   # stehen, atmen, umschauen, Schwanz pendelt ruhig
+[idle]   # sichern: atmen, Gewicht verlagern, Kopf hebt sich und schaut (Kopf führt), Wedel zuckt
 frames = 90
 breathe_deg = 1.5
-look_deg = 22
-tail_deg = 5
+look_deg = 28
+tail_deg = 12
+reach_smooth = 3
 
-[ready]  # Drohhaltung: geduckt, Kopf tief + nach vorn, Lefzen hoch (Kiefer leicht offen), Schwanz steif
-max_stretch = 3.6   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
+[ready]  # Drohen: Geweih gesenkt und pendelnd, Vorderhuf stampft 2× (Warnsignal), Gewicht hinten
+frames = 40
+crouch = 0.10
+pitch_deg = 3
+head_down_deg = 30    # war 18
+sweep_deg = 12
+stomp_leg = "FL"
+stomp_lift = 0.2
+tail_lift_deg = 12
+reach_smooth = 4
+max_stretch = 3.6     # nur Info
+
+[attack1] # Geweihstoß: Kopf tief, zurückladen → Hinterhand schiebt vor, Geweih stößt (hit) und hakt nach oben/seitlich
 frames = 30
-crouch = 0.18         # Rumpf absenken (Anteil Rumpfhöhe)
-head_down_deg = 18
-jaw_deg = 0
-tremble_deg = 1.2
-tail_lift_deg = 10
-
-[attack1] # Anspringen + Biss: zurücksetzen/ducken → nach vorn schnellen, Maul auf → zuschnappen (hit)
-max_stretch = 4.5   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
-frames = 24
-windup_end = 9
-strike_end = 13
-hold_end = 16
-crouch = 0.15
-lunge = 0.08          # Rumpf nach vorn (Anteil Länge), Füße bleiben stehen
-lunge_up = 0.05
+windup_end = 10
+strike_end = 14
+hit_frame = 14
+crouch = 0.12
+lunge = 0.10          # war 0,08
 neck_reach_deg = 40
-type = "headbutt"
-jaw_open_deg = 40
-hit_frame = 13
+hook_deg = 16
+reach_smooth = 3
+max_stretch = 4.5     # nur Info
 
 [hit]
-frames = 10
+frames = 15
 jolt = 0.05
-roll_deg = 6
-head_deg = 26
+roll_deg = 7
+head_deg = 24
+reach_smooth = 2
 
 [death]  # zur Seite kippen, Beine erschlaffen
 max_stretch = 2.1   # Sichtprüfung ok: Schulter/Halsansatz des dichten Tripo-Mesh (6.400 Vertices), kein sichtbarer Riss
@@ -101,3 +132,6 @@ planted_tolerance = 0.012
 min_stride = 0.05
 max_stretch = 1.9          # 1,8 → 1,9 nach Sichtprüfung: schlimmste Kanten direkt an Hüft-/Schultergelenk, im Bild unsichtbar
 stretch_every = 3
+
+[ik]   # nur für Nicht-Death-Clips: steifer Mittelfuß → Sohle dreht beim Ducken nicht in den Boden
+stiffness = { Leg_3 = 0.8 }

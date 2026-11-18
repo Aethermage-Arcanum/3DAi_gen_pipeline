@@ -14,7 +14,7 @@ python scripts/creature_pipeline.py creatures/needle_wasp             # kostenlo
 | Texturen | Farbe, Normal, ORM je 1024² |
 | Knochen | 51: Root + Core + 13 Ketten (6 Flügelstücke, 4 Beine, 2 Fühler, Hinterleib mit 5 Gliedern) |
 | UV | Tripo-UV |
-| Clips | 9, alle grün (Dehnung ≤ 1,28, nie im Boden, Tod liegt am Boden) |
+| Clips | 9, alle grün (Dehnung ≤ 1,28; im Flug jeder Mesh-Punkt ≥ 3 cm über dem Boden, Tod liegt am Boden) |
 
 ## Flügel doppelseitig (2026-11-17, Nutzer-Meldung aus Unity)
 **Problem:** In Unity waren die Flügel aus manchen Winkeln (z. B. schräg von oben = ARPG-Kamera) unsichtbar oder halb weg,
@@ -40,3 +40,14 @@ weil es engine-unabhängig mit einem Material bleibt; durchscheinende/flirrende 
 
 Hinweis: Die Tripo-Flügel stehen in Ruhe steil nach oben (V-Form). Von oben und schräg von vorn sieht man sie deshalb
 teils fast von der Kante – das ist die Form, nicht mehr das Culling.
+
+## Bodenabstand (2026-11-17, Meldung „sinkt in Unity 3,7 cm in den Boden“)
+**Ursache:** keine Animation, sondern die Bodenreferenz im Unity-Viewer. Er stellte die Pose auf den Boden, die Unity nach
+dem Laden zeigt = erster Take im FBX (Attack1, Frame 0) – bei der Wespe schon die Schwebehöhe (+17,6 cm über der
+Tripo-Ruhepose). Walk fliegt 13,9–18,5 cm über der Ruhepose-Unterkante, also −3,7…+0,9 cm relativ zur Schwebepose.
+Fix: Viewer misst die Bindepose (`CreatureViewer.RestLowestPoint`), wie die Pipeline in Blender. Laufende Kreaturen
+unverändert (beide Posen gleich).
+**Zweiter Fund:** In Ready (jeder Frame), Attack1 (Ausholen) und Hit lag der Stachel genau auf dem Boden (0,0 cm).
+Jetzt `[hover] min_clearance = 0.03` → ≥ 3 cm (Unity, 240 Stichproben auch zwischen Frames: Attack1 ≥ 2,3, Hit ≥ 1,7 cm).
+Nur diese drei Clips sind um genau 3 cm angehoben, alles andere Frame für Frame identisch (Regression). Death unverändert.
+Vorher/Nachher: `temp/review/wasp_ground.png`. Naturreferenzen: `motions/flyer/wasp/README.md`.

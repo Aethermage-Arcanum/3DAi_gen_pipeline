@@ -1,68 +1,62 @@
 # Baupläne: legen Pose, Kamera und Rig-Typ fest, damit Bilder IMMER riggbar herauskommen.
-# pose      → Neutralpose fürs Riggen (wie die T-Pose bei Menschen)
-# camera    → Kamerawinkel für alle Ansichten
+# pose      → Neutralpose fürs Riggen (wie die T-Pose bei Menschen). KOMPAKT halten (seit 2026-11-18, BACKLOG A10):
+#             steht in beiden Prompt-Stufen, die Kreatur-Beschreibung soll dominieren. Kreatur-eigene Abweichung
+#             (Knöchelgang, Flügel, Tentakel …): `pose` in creatures/roster.toml bzw. creature.toml.
+# camera    → Kamerawinkel für die 4 Ansichten (Checkliste README Teil A1: Augenhöhe, keine Draufsicht)
 # rig_type  → Tripo-Rig-Typ
 # walk      → Tripo-Preset für den Laufzyklus
 
 [octopod]
 label = "Achtbeiner (Spinne, Skorpion)"
-pose = """neutral rigging pose: body level and horizontal, all eight legs spread out \
-radially and symmetrically left/right, evenly spaced, clearly separated from each other, \
-no legs crossing or overlapping, leg tips resting on the ground plane, fangs/mandibles \
-closed, abdomen fully visible"""
-camera = "camera slightly elevated at about 25 degrees, orthographic-like, no perspective distortion"
+pose = """body level, all eight legs spread evenly and symmetrically to both sides, none crossing, \
+leg tips on the ground, fangs closed, abdomen fully visible"""
+camera = "camera slightly above body height, orthographic-like, no perspective distortion"
 rig_type = "octopod"
 walk = "preset:octopod:walk"
 
 [hexapod]
 label = "Sechsbeiner (Insekt, Käfer, Ameise)"
-pose = """neutral rigging pose: body level and horizontal, all six legs spread out \
-symmetrically left/right, clearly separated, no legs crossing, leg tips on the ground, \
-antennae pointing forward and apart, mandibles closed, wings (only if the design has \
-any) folded flat on the back"""
-camera = "camera slightly elevated at about 20 degrees, orthographic-like, no perspective distortion"
+pose = """body level, all six legs spread evenly and symmetrically to both sides, none crossing, \
+leg tips on the ground, antennae forward and apart, mandibles closed"""
+camera = "camera slightly above body height, orthographic-like, no perspective distortion"
 rig_type = "hexapod"
 walk = "preset:hexapod:walk"
 
 [quadruped]
 label = "Vierbeiner (Bestie, Wolf, Echse)"
-pose = """neutral rigging pose: standing still, all four legs straight and slightly apart, \
-each leg clearly separated and visible, weight evenly on all four feet, head facing \
-straight forward, mouth closed, tail extended straight back, no twisting"""
-camera = "camera at body height, very slightly elevated, orthographic-like, no perspective distortion"
+pose = """standing still, all four legs straight down under the body, front and hind legs equally \
+wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting"""
+camera = "camera at body height, very slightly from above, orthographic-like, no perspective distortion"
 rig_type = "quadruped"
 walk = "preset:quadruped:walk"
 
 [serpentine]
 label = "Schlange, Wurm"
-pose = """neutral rigging pose: body stretched out long with only one gentle S-curve, \
-lying flat on the ground, no coiling, no overlapping body parts, head slightly raised and \
-facing forward, mouth closed"""
-camera = "camera elevated at about 35 degrees, orthographic-like, whole body length in frame"
+pose = """body stretched out long on the ground with at most one gentle curve, not coiled, twisted \
+or overlapping, head slightly raised and facing forward, mouth closed or only slightly open"""
+camera = "camera slightly from above, orthographic-like, whole body length in frame"
 rig_type = "serpentine"
 walk = "preset:serpentine:march"
 
 [avian]
 label = "Flieger (Vogel, Drache, Fledermaus)"
-pose = """neutral rigging pose: standing upright, both wings fully spread out horizontally \
-and symmetrically like a T-pose, wing membranes/feathers flat and clearly visible, legs \
-straight down, tail extended straight back, head facing forward, mouth/beak closed"""
+pose = """standing upright, both wings spread out horizontally and symmetrically like a T-pose, \
+legs straight down, tail extended straight back, head forward, beak/mouth closed"""
 camera = "camera at body height, orthographic-like, no perspective distortion"
 rig_type = "avian"
 walk = ""   # Tripo hat (Stand 11/2026) kein Flieger-Preset
 
 [aquatic]
 label = "Wasserwesen (Fisch, Hai)"
-pose = """neutral rigging pose: body straight and horizontal, all fins extended and clearly \
-visible, tail fin straight, mouth closed"""
+pose = """body straight and horizontal, all fins extended, tail fin straight, mouth closed"""
 camera = "camera at body height, orthographic-like, no perspective distortion"
 rig_type = "aquatic"
 walk = "preset:aquatic:march"
 
 [biped]
 label = "Zweibeiner/Humanoid"
-pose = """neutral rigging A-pose: standing straight, arms angled down about 45 degrees away \
-from the body, legs straight and slightly apart, palms facing down, head forward"""
+pose = """A-pose: standing straight, legs straight and slightly apart, arms angled down and away \
+from the body, head forward"""
 camera = "camera at chest height, orthographic-like, no perspective distortion"
 rig_type = "biped"
 walk = "preset:walk"

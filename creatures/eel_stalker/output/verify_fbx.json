@@ -31,7 +31,7 @@
       "EelStalker|EelStalker|Legless_Cobra_Attack1",
       [
         1,
-        27
+        31
       ]
     ],
     [
@@ -45,14 +45,14 @@
       "EelStalker|EelStalker|Legless_Cobra_Hit",
       [
         1,
-        13
+        19
       ]
     ],
     [
       "EelStalker|EelStalker|Legless_Cobra_Idle",
       [
         1,
-        91
+        121
       ]
     ],
     [
@@ -98,9 +98,15 @@
   ],
   "foot_moves_m": null,
   "dimensions_m": [
-    0.225,
-    1.0,
-    0.308
+    0.261,
+    0.806,
+    0.455
   ],
+  "dangling": {
+    "domain": "CORNER",
+    "values": 11994,
+    "marked": 1609,
+    "max": 1.0
+  },
   "ok": true
 }

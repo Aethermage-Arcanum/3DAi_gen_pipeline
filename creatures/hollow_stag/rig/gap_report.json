@@ -1,80 +1,80 @@
 {
-  "pairs_checked": 317,
-  "threshold_m": 0.0149,
-  "max_opening_m": 0.0246,
-  "joints_over_threshold": 1,
+  "pairs_checked": 325,
+  "threshold_m": 0.0319,
+  "max_opening_m": 0.0305,
+  "joints_over_threshold": 0,
   "per_clip_max_m": {
-    "Quadruped_Deer_Attack1": 0.0041,
+    "Quadruped_Deer_Attack1": 0.0305,
     "Quadruped_Deer_Death": 0.0246,
-    "Quadruped_Deer_Hit": 0.0056,
-    "Quadruped_Deer_Idle": 0.0021,
-    "Quadruped_Deer_Ready": 0.0025,
-    "Quadruped_Deer_Run": 0.0068,
-    "Quadruped_Deer_TurnLeft": 0.004,
-    "Quadruped_Deer_TurnRight": 0.0039,
-    "Quadruped_Deer_Walk": 0.005
+    "Quadruped_Deer_Hit": 0.0177,
+    "Quadruped_Deer_Idle": 0.0036,
+    "Quadruped_Deer_Ready": 0.0163,
+    "Quadruped_Deer_Run": 0.029,
+    "Quadruped_Deer_TurnLeft": 0.0166,
+    "Quadruped_Deer_TurnRight": 0.0156,
+    "Quadruped_Deer_Walk": 0.0176
   },
   "worst": [
+    [
+      "Quadruped_Deer_Attack1: Leg_BR_2 / Tail_1",
+      0.0305,
+      10
+    ],
+    [
+      "Quadruped_Deer_Run: Leg_BR_2 / Tail_1",
+      0.029,
+      3
+    ],
     [
       "Quadruped_Deer_Death: Leg_BR_2 / Tail_1",
       0.0246,
       22
     ],
     [
-      "Quadruped_Deer_Run: Leg_BR_2 / Tail_1",
-      0.0068,
-      1
-    ],
-    [
       "Quadruped_Deer_Hit: Leg_BR_2 / Tail_1",
-      0.0056,
-      2
+      0.0177,
+      3
     ],
     [
       "Quadruped_Deer_Walk: Leg_BR_2 / Tail_1",
-      0.005,
-      14
+      0.0176,
+      12
     ],
     [
-      "Quadruped_Deer_Run: Leg_BL_3 / Leg_BL_4",
-      0.0048,
-      13
+      "Quadruped_Deer_TurnLeft: Leg_BR_2 / Tail_1",
+      0.0166,
+      8
     ],
     [
-      "Quadruped_Deer_Walk: Leg_BL_3 / Leg_BL_4",
-      0.0046,
-      28
-    ],
-    [
-      "Quadruped_Deer_Attack1: Leg_BR_2 / Tail_1",
-      0.0041,
-      9
-    ],
-    [
-      "Quadruped_Deer_Run: Leg_BR_3 / Leg_BR_4",
-      0.004,
-      15
-    ],
-    [
-      "Quadruped_Deer_TurnLeft: Leg_BL_3 / Leg_BL_4",
-      0.004,
-      23
-    ],
-    [
-      "Quadruped_Deer_TurnRight: Leg_BL_3 / Leg_BL_4",
-      0.0039,
-      22
+      "Quadruped_Deer_Ready: Leg_BR_2 / Tail_1",
+      0.0163,
+      30
     ],
     [
       "Quadruped_Deer_TurnRight: Leg_BR_2 / Tail_1",
-      0.0034,
-      11
+      0.0156,
+      7
     ],
     [
-      "Quadruped_Deer_Walk: Leg_BR_3 / Leg_BR_4",
-      0.0034,
-      12
+      "Quadruped_Deer_Run: Leg_BL_3 / Leg_BL_4",
+      0.0044,
+      14
+    ],
+    [
+      "Quadruped_Deer_TurnRight: Leg_BL_3 / Leg_BL_4",
+      0.0042,
+      21
+    ],
+    [
+      "Quadruped_Deer_TurnLeft: Leg_BL_3 / Leg_BL_4",
+      0.0039,
+      20
+    ],
+    [
+      "Quadruped_Deer_Idle: Leg_BR_2 / Tail_1",
+      0.0036,
+      51
     ]
   ],
-  "ok": false
+  "ok": true
 }

@@ -42,3 +42,6 @@ flap_min_height = 0.03
 foot_rigid_height = 0.05  # Bodenkontakt: alles bis zu dieser Höhe (Anteil H) gehört ganz zum Fuß/Zehen-Knochen Leg_X_4 –
                           # sonst kippt die hintere Kralle mit dem Mittelfuß in den Boden (Dune Raptor: −1,9 cm). 0 = aus
 foot_blend = 0.05         # … darüber weicher Übergang zu den bisherigen Gewichten (Anteil H)
+foot_pair_eps = 0.015     # Ecken getrennter Bein-/Fuß-Stücke (Zehen, Polster, Krallen, Platten), die in Ruhe so nah liegen (Anteil Länge) …
+foot_pair_rounds = 20     # … werden so viele Runden geglättet (Kanten + Paare), bis sie fast gleich hängen (sonst klaffen sie am Ballen auf)
+foot_pair_weight = 4.0    # Gewicht eines Berühr-Paars gegenüber einer normalen Kante beim Glätten

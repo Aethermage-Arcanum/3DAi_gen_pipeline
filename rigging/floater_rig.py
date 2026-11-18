@@ -213,11 +213,12 @@ if RING:
             for i in g:
                 RING[i] = max(r, key=lambda x: x[0])
     for i, (fade, cols) in RING.items():
-        w = tw[i, cols] / max(1e-12, tw[i, cols].sum()) * fade
+        top = sorted(cols, key=lambda j: -tw[i, j])[:3]                 # max. 4 Einflüsse (Unity-Standard): 3 Knochen + Core
+        w = tw[i, top] / max(1e-12, tw[i, top].sum()) * fade
         for gname in [names[j] for j in cols] + ["Core"]:
             obj.vertex_groups[gname].remove([int(i)])
         obj.vertex_groups["Core"].add([int(i)], float(1 - fade), "REPLACE")
-        for j, wj in zip(cols, w):
+        for j, wj in zip(top, w):
             if wj > 1e-3:
                 obj.vertex_groups[names[j]].add([int(i)], float(wj), "REPLACE")
 if CFG["root_depth"] < 1.0:

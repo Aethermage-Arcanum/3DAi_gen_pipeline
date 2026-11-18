@@ -31,7 +31,7 @@
       "HollowStag|HollowStag|Quadruped_Deer_Attack1",
       [
         1,
-        25
+        31
       ]
     ],
     [
@@ -45,7 +45,7 @@
       "HollowStag|HollowStag|Quadruped_Deer_Hit",
       [
         1,
-        11
+        16
       ]
     ],
     [
@@ -59,14 +59,14 @@
       "HollowStag|HollowStag|Quadruped_Deer_Ready",
       [
         1,
-        31
+        41
       ]
     ],
     [
       "HollowStag|HollowStag|Quadruped_Deer_Run",
       [
         1,
-        17
+        19
       ]
     ],
     [
@@ -96,11 +96,11 @@
     -0.81,
     0.58
   ],
-  "foot_moves_m": 0.08,
+  "foot_moves_m": 0.102,
   "dimensions_m": [
     0.563,
-    0.912,
-    0.994
+    0.921,
+    0.997
   ],
   "ok": true
 }

@@ -6,7 +6,7 @@
   "bones": 26,
   "missing_standard_bones": [],
   "unweighted_vertices": 0,
-  "max_influences": 4,
+  "max_influences": 8,
   "materials": [
     "tripo_material_792084f5-fdd3-4060-bf8c-6d61aa8aa40f"
   ],
@@ -87,7 +87,7 @@
       "DuneRaptor|DuneRaptor|Biped_Raptor_Walk",
       [
         1,
-        31
+        29
       ]
     ]
   ],
@@ -96,11 +96,11 @@
     -0.94,
     0.34
   ],
-  "foot_moves_m": 0.1666,
+  "foot_moves_m": 0.2418,
   "dimensions_m": [
-    0.405,
-    0.988,
-    0.579
+    0.404,
+    0.99,
+    0.559
   ],
   "ok": true
 }

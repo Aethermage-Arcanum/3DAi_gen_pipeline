@@ -1,0 +1,10 @@
+{
+  "attribute": "_DANGLING",
+  "channels": "R = Gewicht (0 starr … 1 frei), G = Phase je Teil",
+  "amplitude_m": 0.025,
+  "frequency_hz": 0.7,
+  "lag_rad": 1.5,
+  "vertical": 0.3,
+  "dangling_vertices": 580,
+  "vertices": 3307
+}

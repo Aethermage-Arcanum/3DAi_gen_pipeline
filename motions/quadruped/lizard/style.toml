@@ -81,13 +81,14 @@ reach_smooth = 3
 [ready]  # Drohen: Seitenprofil (Rumpf gebogen), Hals hoch, Maul weit auf + Fauch-Stöße, Schwanz gespannt und peitschend
 frames = 48
 crouch = 0.0
-arc_deg = 14          # Rumpfbogen zum Gegner
-lean_deg = 4
+arc_deg = 22          # Rumpfbogen zum Gegner (Seitenprofil)
+lean_deg = 6
+jab = 0.025           # Schein-Vorstoß bei jedem Fauchen (Anteil Länge)
 pitch_deg = 3         # Brust leicht hoch
-head_up_deg = 18
-jaw_deg = 30          # war 13 (wegen Mundwinkel-Dehnung verkleinert) – Dehnung ist nur Info
-hiss_jaw_deg = 8
-tail_lash_deg = 10
+head_up_deg = 26
+jaw_deg = 34          # war 13 (wegen Mundwinkel-Dehnung verkleinert) – Dehnung ist nur Info
+hiss_jaw_deg = 10
+tail_lash_deg = 18
 tail_lift_deg = 6
 reach_smooth = 4
 
@@ -97,8 +98,8 @@ windup_end = 10
 strike_end = 14
 hit_frame = 14
 crouch = 0.12
-lunge = 0.10          # war 0,08
-snap_yaw_deg = 26     # Kopfschwung von der Seite (war 18, nur am Kopf)
+lunge = 0.12          # war 0,08
+snap_yaw_deg = 32     # Kopfschwung von der Seite (war 18, nur am Kopf)
 neck_reach_deg = 22
 jaw_open_deg = 45
 reach_smooth = 3
@@ -125,3 +126,6 @@ planted_tolerance = 0.012
 min_stride = 0.05
 max_stretch = 1.9          # 1,8 → 1,9 nach Sichtprüfung: schlimmste Kanten direkt an Hüft-/Schultergelenk, im Bild unsichtbar
 stretch_every = 3
+
+[ik]   # nur für Nicht-Death-Clips: steifer Mittelfuß → Sohle dreht beim Ducken nicht in den Boden
+stiffness = { Leg_3 = 0.8 }

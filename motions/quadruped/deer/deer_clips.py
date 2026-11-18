@@ -166,7 +166,7 @@ def clip_attack1(P):
     rec = N - 5
     dx = [(0, 0), (w, -0.05 * SIZE), (s, L), (s + 3, L * 0.9), (s + 8, L * 0.2), (rec, 0)]
     dz = [(0, 0), (w, -c), (s, -c * 0.3), (s + 3, c * 0.3), (s + 8, -c * 0.1), (rec, 0)]
-    pitch = [(0, 0), (w, R(3)), (s, -R(6)), (s + 3, R(5)), (s + 8, -R(1)), (rec, 0)]
+    pitch = [(0, 0), (w, R(3)), (s, -R(4)), (s + 4, R(3)), (s + 9, -R(0.5)), (rec, 0)]
     neck = [(0, 0), (w, -nk * 0.8), (s, -nk), (s + 3, -nk * 0.2), (s + 8, -nk * 0.3), (rec, 0)]    # + = hoch
     head = [(0, 0), (w, -nk * 0.25), (s, -nk * 0.4), (s + 3, nk * 0.25), (s + 8, -nk * 0.05), (rec, 0)]
     hook = [(0, 0), (s, 0), (s + 3, R(P.get("hook_deg", 14))), (s + 7, -R(4)), (rec, 0)]
@@ -247,14 +247,23 @@ def clip_death(P):
 
 
 turn = R(ST["turn"]["turn_deg"])
+IK_STIFF = ST.get("ik", {}).get("stiffness", {})              # z. B. {"Leg_3": 0.8} – gilt nicht für Death
+
+
+def stiff(spec):
+    spec["ik_stiff"] = IK_STIFF
+    spec["foot_ground"] = True                                  # kein Fuß unter dem Boden (Kit: feet_on_ground)
+    return spec
+
+
 K.bake({
-    "Walk": locomotion(ST["walk"]),
-    "Run": locomotion(ST["run"]),
-    "TurnLeft": locomotion(ST["turn"], turn=turn),
-    "TurnRight": locomotion(ST["turn"], turn=-turn),
-    "Idle": clip_idle(ST["idle"]),
-    "Ready": clip_ready(ST["ready"]),
-    "Attack1": clip_attack1(ST["attack1"]),
-    "Hit": clip_hit(ST["hit"]),
+    "Walk": stiff(locomotion(ST["walk"])),
+    "Run": stiff(locomotion(ST["run"])),
+    "TurnLeft": stiff(locomotion(ST["turn"], turn=turn)),
+    "TurnRight": stiff(locomotion(ST["turn"], turn=-turn)),
+    "Idle": stiff(clip_idle(ST["idle"])),
+    "Ready": stiff(clip_ready(ST["ready"])),
+    "Attack1": stiff(clip_attack1(ST["attack1"])),
+    "Hit": stiff(clip_hit(ST["hit"])),
     "Death": clip_death(ST["death"]),
 })

@@ -31,7 +31,7 @@
       "RavineStalker|RavineStalker|Quadruped_Wolf_Attack1",
       [
         1,
-        25
+        33
       ]
     ],
     [
@@ -45,7 +45,7 @@
       "RavineStalker|RavineStalker|Quadruped_Wolf_Hit",
       [
         1,
-        11
+        16
       ]
     ],
     [
@@ -59,7 +59,7 @@
       "RavineStalker|RavineStalker|Quadruped_Wolf_Ready",
       [
         1,
-        31
+        49
       ]
     ],
     [
@@ -96,11 +96,11 @@
     -1.0,
     0.05
   ],
-  "foot_moves_m": 0.0741,
+  "foot_moves_m": 0.0973,
   "dimensions_m": [
-    0.221,
-    1.0,
-    0.476
+    0.233,
+    0.985,
+    0.459
   ],
   "ok": true
 }

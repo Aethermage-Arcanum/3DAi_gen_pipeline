@@ -20,6 +20,7 @@ import pathlib
 import shutil
 import subprocess
 import sys
+import time
 import tomllib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -50,7 +51,11 @@ def render_gifs(clips_blend, clips, anim):
                 f"Vorschau {clip}", show=("Traceback", "Error"))
         subprocess.run([sys.executable, str(R / "make_gif.py"), str(d), "30", clip], check=True, capture_output=True)
         shutil.copy(d / f"{clip}.gif", anim / f"{clip}.gif")
-        shutil.rmtree(d)
+        for _ in range(5):                        # Windows: Zwischenbilder manchmal kurz gesperrt (WinError 32)
+            shutil.rmtree(d, ignore_errors=True)
+            if not d.exists():
+                break
+            time.sleep(1)
 
 
 def fingerprint(clips_blend, dest):

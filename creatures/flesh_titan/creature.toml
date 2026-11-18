@@ -3,7 +3,7 @@ name = "flesh_titan"
 bodyplan = "biped"
 style = "lowpoly_b"
 description = "Flesh Titan: hulking two-legged abyssal flesh monster with a partly humanoid upper body"
-design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
 
 [[concept]]
 file = "input/concept/design_B.png"

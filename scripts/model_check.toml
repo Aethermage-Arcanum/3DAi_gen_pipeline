@@ -63,6 +63,7 @@ kopf_auslassen = 0.15         # vorderster Anteil (Kopf) zählt bei der Drehung 
 aktiv = true
 toleranz = 0.02               # Vertex ohne Spiegel-Partner näher als das (Anteil Größe) = unsymmetrisch
 max_anteil = 0.10             # Warnung, wenn mehr Vertices unsymmetrisch
+max_anteil_einfaerben = 0.2   # bis zu diesem Anteil werden unsymmetrische Stellen im Bild rot (darüber: ganzer Körper verbogen)
 
 # 6. Boden: Schwerpunkt (Oberflächen-Mittelpunkt) über der Standfläche der Füße?
 [boden]

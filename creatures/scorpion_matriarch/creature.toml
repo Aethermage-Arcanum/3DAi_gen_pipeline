@@ -3,7 +3,7 @@ name = "scorpion_matriarch"
 bodyplan = "octopod"
 style = "lowpoly_b"
 description = "Scorpion Matriarch: giant desert scorpion: two large pincers, eight walking legs, segmented tail with stinger arched over the back"
-design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
 
 [[concept]]
 file = "input/concept/design_A.png"
@@ -23,4 +23,8 @@ vorbild = ["Skorpion – Gang, Scheren vorne", "Skorpion – Stich und Drohhaltu
 # Lückenprüfung: Tripo hat ein 5. Beinpaar erzeugt, das am Schwanzansatz mit der Hüfte verschmolzen war (im Rig
 # getrennt, rigging/multileg_rig.py cut_fused_limbs). Rest-Lücke dort max. 2,5 cm im Rennen, Sichtprüfung ok → 3 cm.
 [gaps]
-max_opening = 0.03
+# 2026-11-18 (Orchestrator nach Sichtprüfung der Nahaufnahme temp/agent_scorpion/close_gap.png): Beim neuen, gestreckten
+# Stich öffnen sich zwei kleine Hautinseln (16/23 Vertices) zwischen Schwanzwurzel und dem von Tripo erfundenen 5. Beinpaar
+# bis 7 cm – kein sichtbares Loch, nur gespannte Haut, aus der ARPG-Kamera kaum zu sehen. Saubere Lösung: neues Modell mit
+# 4 Beinpaaren (Referenzbild-Prüfung, Teil A Punkt 7).
+max_opening = 0.075

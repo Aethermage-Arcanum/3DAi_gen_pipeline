@@ -1,53 +1,55 @@
-# Bildprompts: frost_colossus
+# Bildprompts: Frost Colossus
 
-Bauplan: **Vierbeiner (Bestie, Wolf, Echse)** · Stil: **Artist B: Clean Low-Poly Stylized (Projekt-Standard)**
+Bauplan: **Vierbeiner (Bestie, Wolf, Echse)** · Stil: **Artist B: Clean Low-Poly Stylized (Projekt-Standard)** · Ordner: `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input`
 
-**So geht's:** Neuen ChatGPT-Chat öffnen, Bilder anhängen, den einen Prompt einfügen. Die Bilder als PNG unter den angegebenen Namen speichern in:
+**Zwei Stufen:** Stufe 1 macht aus dem kleinen Concept-Ausschnitt EIN sauberes Design-Bild, das du gegen dein Concept prüfst. Stufe 2 macht daraus die 4 Ansichten für Tripo. Beschreibung ändern: `look` in `creatures/roster.toml` (oder `creature.toml`), dann `python scripts/make_prompts.py` erneut starten.
 
-`H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input`
+## Stufe 1 – Design-Bild → `input/design.png`
 
-Gefällt Bild 1 nicht: einfach neu generieren lassen oder die Beschreibung in `creature.toml` anpassen und dieses Skript erneut starten.
-
-**Anhängen in ChatGPT, in dieser Reihenfolge:**
+Neuer ChatGPT-Chat. **Anhängen, in dieser Reihenfolge:**
 
 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\concept\design_A.png`
 2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
-## Ein Prompt für alle 4 Ansichten
-
-ChatGPT erzeugt die Bilder nacheinander. Speichern als `front.png`, `left.png`, `right.png`, `back.png`. Falls es doch ein Raster macht: „Bitte jede Ansicht als eigenes Bild“ nachschieben.
-
 ```text
-I attached reference images. Image 1 shows the creature DESIGN to recreate: keep its anatomy, body segments, number of legs, head shape, proportions and color scheme. Image 2 is only an ART STYLE reference: copy its rendering style, not the creatures shown in it. Ignore any text, labels, scenery and background in the attached images.
+Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
 
-Create 4 separate clean reference images of the creature from the design image for 3D modeling. Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background.
+Paint ONE clean, sharp, high-resolution design image of my creature "Frost Colossus". Stay true to the concept - same character, silhouette, body parts and colors - but redraw it cleanly with these details:
 
-Creature: Frost Colossus: huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor
+A huge gorilla-like ice beast - brutal, heavy and ancient, a walking glacier. It stands on all fours on its knuckles, with massive, long front arms, a broad chest and shoulders, and shorter, thick hind legs; like a gorilla it has no tail. Its body is dark steel-blue under thick armor of pale blue-white ice and frost plates on the shoulders, arms, back and legs. Jagged ice spikes and frozen crystal shards jut out of the shoulders, the back and the top of the head. The head is low and heavy, with a gaping, fanged mouth and small pale eyes deep under a frosty brow. Its fists and feet are huge and crusted with ice. Materials: rough frozen hide, cold translucent ice crystals, patches of frosted fur.
 
-Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset
+Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Please generate 4 SEPARATE images, one after another (NOT a grid, NOT a collage, NOT one sheet with several views). All images show EXACTLY the same creature - identical design, proportions, number of legs, colors, materials, pose and lighting. Only the camera angle changes - the body posture is IDENTICAL in every view (do not stand the creature upright in the front/back views if it leans forward in the side views; imagine one frozen 3D model and a camera circling around it):
-1. `front.png` - front view: the creature faces the camera directly
-2. `left.png` - exact side view of the creature's own LEFT flank: rotated 90 degrees, its head points to the LEFT edge of the image
-3. `right.png` - exact side view of the creature's own RIGHT flank: rotated 90 degrees, its head points to the RIGHT edge of the image
-4. `back.png` - exact rear view: rotated 180 degrees, we see the creature from directly behind
-
-Keep the exact number of legs, wings, tails and claws of the design and keep all of them clearly visible and separated in every view.
-
-Requirements for a 3D-model reference image:
-- exactly one creature, centered, the entire body in frame with some margin, nothing cut off
-- plain flat medium-grey (#9a9a9a) background, no ground texture, no scenery, no props, no text, no watermark
-- soft, even, diffuse studio lighting from all sides, no cast shadows, no strong highlights, no rim light, no glow or bloom effects
-- sharp focus everywhere, no depth of field, no motion blur, no smoke, no particles
-- neutral rigging pose: standing still, all four legs straight and slightly apart, each leg clearly separated and visible, weight evenly on all four feet, head facing straight forward, mouth closed, tail extended straight back, no twisting
-- camera at body height, very slightly elevated, orthographic-like, no perspective distortion
-- square 1:1 image
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
-## Kontrolle vor dem Tripo-Schritt
+**Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter
+`H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\design.png`
 
-- Alle Bilder zeigen dieselbe Kreatur (Farben, Anzahl Beine/Augen, Muster)?
-- Beine/Flügel klar getrennt, nichts überkreuzt, nichts abgeschnitten?
-- Keine harten Schatten, keine Glüh-Effekte?
+## Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Wenn eine Ansicht danebengeht, lass sie weg. Tripo braucht nur `front.png` plus mindestens eine weitere.
+Neuer ChatGPT-Chat. **Anhängen:** 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\design.png` (noch nicht vorhanden – erst Stufe 1)
+
+```text
+Image 1 is the approved, binding design of my creature "Frost Colossus": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
+
+Description (also for the hidden sides): A huge gorilla-like ice beast - brutal, heavy and ancient, a walking glacier. It stands on all fours on its knuckles, with massive, long front arms, a broad chest and shoulders, and shorter, thick hind legs; like a gorilla it has no tail. Its body is dark steel-blue under thick armor of pale blue-white ice and frost plates on the shoulders, arms, back and legs. Jagged ice spikes and frozen crystal shards jut out of the shoulders, the back and the top of the head. The head is low and heavy, with a gaping, fanged mouth and small pale eyes deep under a frosty brow. Its fists and feet are huge and crusted with ice. Materials: rough frozen hide, cold translucent ice crystals, patches of frosted fur.
+
+Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D model, the camera circles around it:
+1. front.png - facing the camera
+2. left.png - its own left side, head to the LEFT image edge
+3. right.png - its own right side, head to the RIGHT image edge
+4. back.png - from directly behind
+
+Rules for the 3D model:
+- Same posture in all views, only the camera moves. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open.
+- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
+- Thin parts have visible thickness. Same number of parts as in the design, in every view.
+- Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
+```
+
+Die Bilder nacheinander als `front.png`, `left.png`, `right.png`, `back.png` in `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input` speichern. Macht ChatGPT doch ein Raster: „Bitte jede Ansicht als eigenes Bild“ nachschieben.
+
+## Prüfung vor Tripo (Claude, Pflicht)
+
+Claude prüft die 4 Ansichten nach der Checkliste in `README.md` („Prüfung von Referenzbild und Tripo-Modell“, Teil A): Reihenfolge/Blickrichtung, gleiche Haltung in allen Ansichten, nichts zwischen den Beinen, Beine vorn und hinten gleich breit, Gliedmaßen frei, gerade Grundpose, Teilezahl wie im Design, dünne Teile mit Volumen, kein Glühen. Bei einem Befund: Bild neu machen statt im Rig reparieren.

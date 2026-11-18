@@ -14,11 +14,18 @@ Für die nächste Session: zuerst `../CLAUDE.md` (Regeln des Nutzers), dann dies
   (im autonomen Lauf war Push nach jeder Kreatur ausdrücklich erlaubt – das gilt nicht mehr).
 
 ## Ablauf pro Kreatur
-1. Bilder: `python scripts/make_roster.py` → `PROMPTS_ALLE.md` (ein Prompt → 4 Einzelbilder). Nutzer macht die Bilder in ChatGPT.
-   Prüfen: Reihenfolge (1 vorn, 2 Kopf links, 3 Kopf rechts, 4 hinten), Augenhöhe, gleiche Pose. Raster-Bilder (2×2) per Inhalt zerschneiden.
+1. Bilder – **zwei Stufen** (seit 2026-11-18, BACKLOG A10): `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<name>/prompts.md`.
+   Beschreibung = `look` in `creatures/roster.toml` (qualitativ, Englisch, keine Zahlen/Verhältnisse; Sonder-Pose `pose`). Nutzer macht die Bilder in ChatGPT:
+   **Stufe 1** Concept-Ausschnitt + Stil-Referenz + Prompt 1 → ein Design-Bild → **Nutzer prüft gegen sein Concept** → `input/design.png`.
+   **Stufe 2** neuer Chat, nur `input/design.png` + Prompt 2 → `front/left/right/back.png`.
+   Prüfen (Stufe 2, auch gegen design.png): Reihenfolge (1 vorn, 2 Kopf links, 3 Kopf rechts, 4 hinten), Augenhöhe, gleiche Pose. Raster-Bilder (2×2) per Inhalt zerschneiden.
    **Pflicht: Claude prüft die Bilder gründlich nach der Checkliste in README.md („Prüfung von Referenzbild und Tripo-Modell“, Teil A) – vor jedem Tripo-Lauf.**
 2. Tripo: `python scripts/tripo_run.py creatures/<name> --steps generate --dry-run`, dann ohne `--dry-run` (kostet Credits → vorher fragen!).
-3. Ansehen: `blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/` → **Pflichtprüfung Teil B** (hängende Teile, Beinbreite vorn/hinten, Hautbrücken, gerade Pose, einseitige Flächen, Teilezahl).
+3. Messen + ansehen: `python scripts/model_check.py creatures/<name>` → `review/model_check.png/.json` (Frühwarnsystem: einseitige Flächen,
+   Fuß-Gruppen vs. Beinzahl, Fußbreite hinten/vorne, hängende Teile zwischen den Beinen, Krümmung/Verdrehung, Symmetrie, Schwerpunkt, Dreiecke, lose Teile).
+   **Das Skript ersetzt die Sichtprüfung NICHT** (Nutzer-Anweisung): Prüfbild + `blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/`
+   selbst ansehen und gegen Concept/Referenzbilder vergleichen → **Pflichtprüfung Teil B** (hängende Teile, Beinbreite vorn/hinten, Hautbrücken, gerade Pose, einseitige Flächen, Teilezahl).
+   Gewollte Befunde in `creature.toml` `[model_check.freigabe]` mit Begründung freigeben.
 4. Alles andere kostenlos, ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`
    (UV-Prüfung → Rig → Clips + Selbstprüfung → Lückenprüfung → GIFs → Export → Gegentest). Skelett/Muster aus `creature.toml [motion] style`.
 5. Selbst prüfen: Clip-Übersicht, `rig/rig_debug.png` (`python rigging/draw_rig.py rig`), GIFs in `rig/anim/`, Kontaktbogen ansehen.
@@ -33,7 +40,7 @@ Für die nächste Session: zuerst `../CLAUDE.md` (Regeln des Nutzers), dann dies
 | quadruped | rigging/quadruped_rig.py | motions/quadruped/quadruped_kit.py (Blender-IK) | wolf, lizard, deer (je eigener Clip-Code) |
 | biped_raptor | rigging/biped_raptor_rig.py | motions/biped_raptor/biped_kit.py | raptor |
 | legless | rigging/legless_rig.py | motions/legless/legless_kit.py | cobra |
-| floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle (⚠ zu steif – Tentakel müssen wabbeln) |
+| floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle (2026-11-18: wabbelt ab der Wurzel – Learnings in motions/floater/tentacle/README.md; Void-Modell wird neu gemacht) |
 | flyer | rigging/flyer_rig.py + flyer_defaults.toml | motions/flyer/flyer_kit.py | wasp (gutes Beispiel) |
 Gemeinsame Rig-Bausteine: `rigging/rig_common.py`, Lückenprüfung: `rigging/gaps_defaults.toml`. Prüfung/Export für alle: check_gaps.py, export_unity.py, verify_export.py.
 

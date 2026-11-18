@@ -87,7 +87,7 @@ def do_render(src, outdir, facing, marks_path):
     me = obj.data
     # Markierungsfarben als zusätzliche Materialien (nur fürs Bild, das Modell wird nicht gespeichert)
     slot_of = {}
-    for name, rgb in (("rot", (1.0, 0.02, 0.02)), ("orange", (1.0, 0.45, 0.0))):
+    for name, rgb in (("rot", (1.0, 0.02, 0.02)), ("orange", (1.0, 0.25, 0.0))):
         polys = marks.get(name, [])
         if not polys:
             continue

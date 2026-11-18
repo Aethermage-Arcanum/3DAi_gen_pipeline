@@ -133,3 +133,6 @@ planted_tolerance = 0.012
 min_stride = 0.05
 max_stretch = 1.9          # 1,8 → 1,9 nach Sichtprüfung: schlimmste Kanten direkt an Hüft-/Schultergelenk, im Bild unsichtbar
 stretch_every = 3
+
+[ik]   # nur für Nicht-Death-Clips: steifer Mittelfuß → Sohle dreht beim Ducken nicht in den Boden
+stiffness = { Leg_3 = 0.8 }

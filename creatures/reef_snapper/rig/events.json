@@ -15,14 +15,9 @@
     ],
     "Quadruped_Lizard_Run": [
       {
-        "frame": 2,
+        "frame": 9,
         "event": "footstep",
         "leg": "BR"
-      },
-      {
-        "frame": 8,
-        "event": "footstep",
-        "leg": "FR"
       },
       {
         "frame": 9,
@@ -58,7 +53,7 @@
     ],
     "Quadruped_Lizard_Attack1": [
       {
-        "frame": 13,
+        "frame": 14,
         "event": "hit"
       }
     ],

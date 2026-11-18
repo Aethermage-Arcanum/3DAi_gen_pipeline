@@ -57,3 +57,6 @@ beim Treffer lag die Spitze 3 mm über dem eigenen Rücken und zeigte −62° na
   (Hautbrücken Schwanz ↔ 5. Beinpaar). Dehnung im Stich ×12,9 → ×7,4; Walk ×4,0 → ×2,3, Run ×4,8 → ×2,6.
   Rest: schmaler, geschlossener Hautstreifen zwischen Schwanzwurzel und 5. Beinpaar, solange der Schwanz gestreckt ist.
   Eine lockerere Schnitt-Regel brächte ×3,4, öffnet aber Löcher am Hinterleib → verworfen.
+- Lückenprüfung: Das Paar `Leg_L5_2 / Tail_1` (zwei kleine Hautinseln, 16 + 23 Vertices, schon in Ruhe 1,4 cm auseinander) öffnet
+  sich im Stich auf 7 cm, weil Schwanz und 5. Bein auseinandergehen – Nahaufnahme ohne sichtbares Loch. Braucht in
+  `creatures/scorpion_matriarch/creature.toml` `[gaps] max_opening = 0.075` (mit dieser Begründung), sonst ist `--stage full` rot.

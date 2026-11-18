@@ -3,7 +3,7 @@ name = "void_manifestation"
 bodyplan = "aquatic"
 style = "lowpoly_b"
 description = "Void Manifestation: floating void orb with squid-like tentacles hanging below it, hovering above the ground"
-design_pick = "Image 1 is a crop from a concept sheet: recreate ONLY the large creature in front, ignore the grey silhouettes and any text in the background."
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
 
 [[concept]]
 file = "input/concept/design_A.png"

@@ -38,7 +38,7 @@
       "Legless_Cobra_Attack1",
       [
         0,
-        20
+        24
       ]
     ],
     [
@@ -52,14 +52,14 @@
       "Legless_Cobra_Hit",
       [
         0,
-        9
+        14
       ]
     ],
     [
       "Legless_Cobra_Idle",
       [
         0,
-        72
+        96
       ]
     ],
     [
@@ -105,9 +105,15 @@
   ],
   "foot_moves_m": null,
   "dimensions_m": [
-    0.225,
-    0.997,
-    0.314
+    0.261,
+    0.799,
+    0.457
   ],
+  "dangling": {
+    "domain": "POINT",
+    "values": 11994,
+    "marked": 2030,
+    "max": 1.0
+  },
   "ok": true
 }

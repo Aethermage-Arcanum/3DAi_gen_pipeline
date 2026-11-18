@@ -278,14 +278,23 @@ def clip_death(P):
 
 
 turn = R(ST["turn"]["turn_deg"])
+IK_STIFF = ST.get("ik", {}).get("stiffness", {})              # z. B. {"Leg_3": 0.8} – gilt nicht für Death
+
+
+def stiff(spec):
+    spec["ik_stiff"] = IK_STIFF
+    spec["foot_ground"] = True                                  # kein Fuß unter dem Boden (Kit: feet_on_ground)
+    return spec
+
+
 K.bake({
-    "Walk": locomotion(ST["walk"]),
-    "Run": locomotion(ST["run"]),
-    "TurnLeft": locomotion(ST["turn"], turn=turn),
-    "TurnRight": locomotion(ST["turn"], turn=-turn),
-    "Idle": clip_idle(ST["idle"]),
-    "Ready": clip_ready(ST["ready"]),
-    "Attack1": clip_attack1(ST["attack1"]),
-    "Hit": clip_hit(ST["hit"]),
+    "Walk": stiff(locomotion(ST["walk"])),
+    "Run": stiff(locomotion(ST["run"])),
+    "TurnLeft": stiff(locomotion(ST["turn"], turn=turn)),
+    "TurnRight": stiff(locomotion(ST["turn"], turn=-turn)),
+    "Idle": stiff(clip_idle(ST["idle"])),
+    "Ready": stiff(clip_ready(ST["ready"])),
+    "Attack1": stiff(clip_attack1(ST["attack1"])),
+    "Hit": stiff(clip_hit(ST["hit"])),
     "Death": clip_death(ST["death"]),
 })

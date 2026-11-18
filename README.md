@@ -6,13 +6,20 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 
 | # | Schritt | Wer | Kosten |
 |---|---|---|---|
-| 1 | `creature.toml` schreiben (Bauplan, Stil, Beschreibung) | du | – |
-| 2 | `python scripts/make_prompts.py creatures/<name>` → `prompts.md` | Skript | – |
-| 3 | **Ein** Prompt pro Kreatur in ChatGPT → 4 Einzelbilder, als `front/left/right/back.png` in `input/` speichern | du | ChatGPT-Abo |
+| 1 | Kreatur eintragen: `creatures/roster.toml` (Bauplan, Concept-Zelle, **`look`** = ausführliche Beschreibung, ggf. `pose`) bzw. `creature.toml` | du / Claude | – |
+| 2 | `python scripts/make_prompts.py creatures/<name>` (alle: `make_roster.py`) → `prompts.md` mit **zwei** Prompts | Skript | – |
+| 3a | **Stufe 1 – Design-Bild:** Concept-Ausschnitt + Stil-Referenz + Prompt 1 in ChatGPT → **ein** sauberes Bild. **Du prüfst es gegen dein Concept** und speicherst es als `input/design.png` | du | ChatGPT-Abo |
+| 3b | **Stufe 2 – 4 Ansichten:** `input/design.png` + Prompt 2 in einen neuen Chat → 4 Einzelbilder als `front/left/right/back.png` in `input/`. **Claude prüft** sie nach Checkliste Teil A | du, dann Claude | ChatGPT-Abo |
 | 4 | `python scripts/tripo_run.py creatures/<name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
 | 5 | `python scripts/creature_pipeline.py creatures/<name>` (jedes Skelett) → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
+
+**Warum zwei Stufen (seit 2026-11-18, BACKLOG A10):** Die Concept-Ausschnitte sind winzig und verpixelt (Original-Sheet nur 1536×1024, ein Ausschnitt ≈ 190×110 px), und die alten Prompts beschrieben die Kreatur in einem einzigen Satz zwischen vielen Technik-Anweisungen → ChatGPT fantasierte. Jetzt:
+- **Stufe 1** macht aus Ausschnitt + ausführlicher Beschreibung **ein** sauberes, hochauflösendes Design-Bild (Dreiviertel-Ansicht, Neutralpose, neutraler Hintergrund, ganze Kreatur). Du entscheidest, ob es dein Monster ist → `input/design.png`.
+- **Stufe 2** nimmt nur noch `input/design.png` als **verbindliche** Vorlage (nicht mehr den verpixelten Ausschnitt) und macht daraus die 4 Ansichten.
+- **Beschreibung (`look`)**: Englisch, ca. 6–12 Sätze, **qualitativ** – Charakter/Wirkung, Silhouette, Körperbau, Kopf, Gliedmaßen (Anzahl ja), Schwanz, markante Merkmale, Farben pro Körperbereich, Material. **Keine Zahlen, Maße oder Verhältnisse** – der KI Kreativität lassen. Nur, was im Concept zu sehen ist bzw. dazu passt. Steht vorn und dominant; Technik (Pose, Hintergrund, Licht, Ansichten, Checkliste A2–A9) kompakt am Ende.
+- Quelle der Texte (erster Treffer gilt): `look`/`pose` in `creature.toml` → in `creatures/roster.toml` → `description` bzw. Bauplan-Pose (`templates/bodyplans.toml`). Vorhandene Bilder werden nie angefasst – fertige Kreaturen bleiben, wie sie sind; nur `prompts.md` wird neu geschrieben.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
 **Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
@@ -22,7 +29,8 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 ## Stellschrauben
 
 - `pipeline.toml`: globale Standardwerte, z. B. **`face_limit`** (Polygon-Obergrenze = wichtigster Performance-Regler), Texturqualität, Rig-Version, Animationen
-- `templates/bodyplans.toml`: Neutralpose + Kamera + Rig-Typ pro Bauplan (octopod, hexapod, quadruped, serpentine, avian, aquatic, biped)
+- `creatures/roster.toml`: alle Kreaturen aus der Concept Art, je mit **`look`** (Beschreibung für die Prompts) und optional `pose` (Sonder-Neutralpose, z. B. Knöchelgang, Flügel, Tentakel)
+- `templates/bodyplans.toml`: Neutralpose (kompakt) + Kamera + Rig-Typ pro Bauplan (octopod, hexapod, quadruped, serpentine, avian, aquatic, biped)
 - `templates/styles.toml`: Stil-Vorlagen (dark_fantasy, stylized, realistic)
 - `creatures/<name>/creature.toml`: eine Kreatur; kann jeden Wert aus `pipeline.toml` überschreiben
 
@@ -31,8 +39,9 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 ```
 creatures/<name>/
   creature.toml     Eingabe
-  prompts.md        generiert – zum Kopieren in ChatGPT
-  input/            deine Bilder aus ChatGPT
+  prompts.md        generiert – zwei Prompts (Stufe 1 Design-Bild, Stufe 2 4 Ansichten) zum Kopieren in ChatGPT
+  input/            deine Bilder aus ChatGPT: design.png (Stufe 1) + front/left/right/back.png (Stufe 2);
+                    concept/ = Concept-Ausschnitt(e)
   raw/              Tripo-Ergebnisse + tripo_state.json (Task-IDs, Credits) – nicht von Hand ändern
   output/           fertige Exporte (Schritt 5)
 ```
@@ -51,6 +60,8 @@ creatures/<name>/
 Deshalb prüft Claude **gründlich vor jedem bezahlten Tripo-Lauf** die Bilder und **vor dem Riggen** das Modell. Die Ergebnisse kommen ins README der Kreatur.
 Bei einem Befund gilt: Bild neu machen lassen (kostet nichts) statt später im Rig reparieren.
 
+**Gilt für beide Bild-Stufen** (seit 2026-11-18): Das **Design-Bild** (Stufe 1, `input/design.png`) prüft **der Nutzer gegen sein Concept** – ist es das Monster, das er meint (Charakter, Körperbau, Anzahl Beine/Teile, Farben)? Fehler hier wandern in alle 4 Ansichten. Die **4 Ansichten** (Stufe 2) prüft **Claude nach der Checkliste A** – zusätzlich gegen `design.png` (gleiche Kreatur, gleiche Teilezahl, nichts hinzuerfunden).
+
 **A. Referenzbilder (vor Tripo), jedes Bild einzeln und alle vier im Vergleich:**
 1. Reihenfolge und Blickrichtung stimmen (1 vorn, 2 Kopf links, 3 Kopf rechts, 4 hinten), Kamera auf Augenhöhe, keine Draufsicht.
 2. **Gleiche Körperhaltung in allen vier Ansichten.** Waagerechter Körper in der Seitenansicht heißt waagerecht auch vorne und hinten. *(Dune Raptor: vorne aufrecht, seitlich waagerecht → Tripo hat einen Hautlappen gebaut.)*
@@ -63,7 +74,20 @@ Bei einem Befund gilt: Bild neu machen lassen (kostet nichts) statt später im R
 9. Kein Glühen und keine Effekte im Bild, neutraler Hintergrund, keine Schrift.
 
 **B. Tripo-Modell (nach Tripo, vor dem Rig), Bilder ansehen und messen:**
-`blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/` (vorn, Seite, oben, ARPG). Prüfen:
+1. **Messung (Frühwarnsystem):** `python scripts/model_check.py creatures/<name>` (alle: `--all`) →
+   `review/model_check.json` + `review/model_check.png` (vorn/Seite/oben/unten, Auffälligkeiten **rot**, mit Begründung freigegebene **orange**).
+   Misst: einseitige Flächen, Fuß-Gruppen am Boden gegen die Beinzahl des Skeletts, Fußabstand hinten/vorne (Vierbeiner),
+   hängende Teile unter der Bauchlinie zwischen den Beinen, Krümmung/Verdrehung der Mittellinie, Symmetrie, Schwerpunkt über den Füßen,
+   Dreiecke gegen `face_limit`, lose Mesh-Teile. Schwellen: `scripts/model_check.toml`; pro Kreatur `[model_check]` in `creature.toml`,
+   gewollte Befunde **nur mit Begründung** freigeben: `[model_check.freigabe] haengende_teile = "Tentakel hängen gewollt unter dem Körper"`.
+   Blender-Teil: `rigging/model_check_blender.py`. Belegt an den bekannten Fällen (Stag 2,46×, Raptor-Lappen, Wespe 124 einseitige Flächen,
+   Skorpion 12 statt 8–10 Bodenkontakte, Eel Krümmung/Drehung); Ravine Stalker ohne Befund.
+
+   > ⚠ **Automatische Messung = nur Frühwarnsystem. Eine individuelle Sichtprüfung des Modells (Bilder ansehen, gegen Concept und
+   > Referenzbilder vergleichen) durch den Agenten ist IMMER zusätzlich notwendig.** „Keine automatischen Auffälligkeiten“ ist **keine Freigabe** –
+   > viele Fehler (falsche Form, verschmolzene Gliedmaßen, Textur, Abweichung vom Concept) misst das Skript gar nicht.
+2. **Sichtprüfung (Pflicht):** `model_check.png` und zusätzlich `blender -b --factory-startup -P scripts/inspect_model.py -- raw/generate_model.glb review/`
+   (vorn, Seite, oben, ARPG) ansehen, gegen Concept und Referenzbilder vergleichen. Prüfen:
 1. Hängende oder überzählige Teile unter dem Körper oder zwischen den Beinen (Front- und Unteransicht).
 2. Hufe/Füße: Abstand vorne gegen hinten (gleich breit?), Beine stehen auf dem Boden.
 3. Verschmolzene Gliedmaßen und Hautbrücken.
@@ -88,4 +112,4 @@ Ergebnis: Freigabe für das Rig **oder** neues Referenzbild bzw. neuer Tripo-Lau
 
 - 2026-11-17: Prompt-Generator und Tripo-Skript fertig. API-Kette (Upload, Task, Polling, Rig-Check) mit einem Testmodell geprüft, ohne Credit-Verbrauch.
 - 2026-11-17: Stil B (Low-Poly) entschieden → Tripo-Standard auf P-Serie, `face_limit = 4000`. Prozedurale Anbauteile (Stacheln/Platten) als Prototyp in `procedural/`, siehe dortige README.
-- Noch offen: Prompt-Generator auf „Concept-Art-Ausschnitt als Vorlage“ umbauen (statt Text-Beschreibung). Erstes echtes Monster aus der Concept Art wählen.
+- 2026-11-18: Prompt-Generator **zweistufig** (Design-Bild → 4 Ansichten) mit ausführlicher qualitativer Beschreibung (`look`) für alle 20 Roster-Kreaturen (BACKLOG A10).

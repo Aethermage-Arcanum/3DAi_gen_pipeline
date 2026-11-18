@@ -30,7 +30,7 @@
         "leg": "FR"
       },
       {
-        "frame": 9,
+        "frame": 10,
         "event": "footstep",
         "leg": "FL"
       }
@@ -73,7 +73,7 @@
     ],
     "Quadruped_Wolf_Attack1": [
       {
-        "frame": 13,
+        "frame": 14,
         "event": "hit"
       }
     ],

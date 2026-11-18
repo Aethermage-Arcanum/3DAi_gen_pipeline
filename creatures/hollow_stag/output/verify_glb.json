@@ -38,7 +38,7 @@
       "Quadruped_Deer_Attack1",
       [
         0,
-        19
+        24
       ]
     ],
     [
@@ -52,7 +52,7 @@
       "Quadruped_Deer_Hit",
       [
         0,
-        8
+        12
       ]
     ],
     [
@@ -66,14 +66,14 @@
       "Quadruped_Deer_Ready",
       [
         0,
-        24
+        32
       ]
     ],
     [
       "Quadruped_Deer_Run",
       [
         0,
-        12
+        14
       ]
     ],
     [
@@ -103,10 +103,10 @@
     -0.81,
     0.58
   ],
-  "foot_moves_m": 0.0863,
+  "foot_moves_m": 0.1097,
   "dimensions_m": [
     0.563,
-    0.912,
+    0.918,
     0.997
   ],
   "ok": true

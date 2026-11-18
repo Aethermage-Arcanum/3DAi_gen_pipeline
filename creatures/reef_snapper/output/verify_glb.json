@@ -38,7 +38,7 @@
       "Quadruped_Lizard_Attack1",
       [
         0,
-        19
+        24
       ]
     ],
     [
@@ -52,7 +52,7 @@
       "Quadruped_Lizard_Hit",
       [
         0,
-        8
+        12
       ]
     ],
     [
@@ -66,14 +66,14 @@
       "Quadruped_Lizard_Ready",
       [
         0,
-        24
+        38
       ]
     ],
     [
       "Quadruped_Lizard_Run",
       [
         0,
-        12
+        14
       ]
     ],
     [
@@ -103,11 +103,11 @@
     -0.95,
     -0.32
   ],
-  "foot_moves_m": 0.1265,
+  "foot_moves_m": 0.1469,
   "dimensions_m": [
     0.44,
-    0.939,
-    0.38
+    0.991,
+    0.367
   ],
   "ok": true
 }
