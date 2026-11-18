@@ -53,7 +53,7 @@ public class CreatureViewer : MonoBehaviour
         var e = Cur;
         inst = Instantiate(e.model, Vector3.zero, Quaternion.identity);
         inst.name = e.name;
-        PlaceOnGround(inst);
+        PlaceOnGround(inst, e.restMinY);
         var animator = inst.GetComponent<Animator>();
         if (animator == null) animator = inst.AddComponent<Animator>();
         animator.applyRootMotion = false;
@@ -127,25 +127,12 @@ public class CreatureViewer : MonoBehaviour
     /// Blender jeden Clip prüft. NICHT die Pose, die Unity nach dem Instantiieren zeigt: das ist der erste Take im FBX
     /// (Attack1, Frame 0) und bei Fliegern/Schwebern schon die Schwebehöhe (Wespe +17,6 cm, Void +5,9 cm) → die Schwebe-
     /// höhe landete auf dem Boden und der Flug "sank ein". Bei laufenden Kreaturen sind beide Posen gleich (±0,0 cm).
-    /// Gemessen am echten Mesh, nicht an Renderer.bounds (bei animierten Modellen absichtlich zu groß).</summary>
-    public static void PlaceOnGround(GameObject go)
+    /// Gemessen am echten Mesh, nicht an Renderer.bounds (bei animierten Modellen absichtlich zu groß).
+    /// restMinY wird beim Import berechnet (CreatureImportSettings.OnPostprocessModel) und steht im Katalog (Entry.restMinY):
+    /// das Mesh bleibt NICHT lesbar (Read/Write aus) – spart bei vielen Gegnern den doppelten Speicher und geht auch im Build.</summary>
+    public static void PlaceOnGround(GameObject go, float restMinY)
     {
-        go.transform.position = Vector3.zero;
-        float minY = RestLowestPoint(go);
-        go.transform.position = new Vector3(0f, -minY, 0f);
-    }
-
-    /// <summary>Tiefster Punkt der Bindepose: Mesh-Ecken (liegen im Raum des Renderers zum Bindezeitpunkt) ohne Skinning.</summary>
-    public static float RestLowestPoint(GameObject go)
-    {
-        float minY = float.MaxValue;
-        foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>())
-            if (smr.sharedMesh != null)
-                foreach (var v in smr.sharedMesh.vertices) minY = Mathf.Min(minY, smr.transform.TransformPoint(v).y);
-        foreach (var mf in go.GetComponentsInChildren<MeshFilter>())
-            if (mf.sharedMesh != null)
-                foreach (var v in mf.sharedMesh.vertices) minY = Mathf.Min(minY, mf.transform.TransformPoint(v).y);
-        return minY == float.MaxValue ? LowestPoint(go) : minY;
+        go.transform.position = new Vector3(0f, -restMinY, 0f);
     }
 
     public static float LowestPoint(GameObject go)

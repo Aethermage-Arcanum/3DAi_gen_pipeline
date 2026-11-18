@@ -19,6 +19,8 @@ Zeigt alle fertigen Kreaturen der Pipeline (`../creatures/*/output/*.fbx`) in Un
 - Import als **Generic**-Rig, Animationen **unkomprimiert** (genau wie in Blender gebacken), Schleifen laut Pipeline.
 - Die Texturen stecken in der FBX ohne Dateiendung → werden herausgezogen, Endung ergänzt, und es entsteht **ein** Material pro Kreatur (Standard-Shader, Farbe + Normal-Map).
 - Kreaturen stehen auf dem Boden (Ursprung der Modelle liegt in der Körpermitte → wird beim Anzeigen angehoben); Referenz ist die **Ruhepose/Bindepose** wie in Blender, nicht die Pose nach dem Laden = erster FBX-Take Attack1 – sonst landete bei Fliegern/Schwebern die Schwebehöhe auf dem Boden).
+- Bodenhöhe: Read/Write der Meshes bleibt **aus** (Performance). Der tiefste Punkt der Bindepose wird beim Import berechnet (`<Name>_ground.txt`) und im Katalog gespeichert (`restMinY`). Fehler „Not allowed to access vertices … isReadable is false“ = alter Stand → Menü **Kreaturen › Alle importieren + Szene bauen** klicken.
+- Die Kreaturen erscheinen erst im **Play-Modus** (der Viewer erzeugt sie in `Start()`); im Editor stehen nur Kamera, Licht, Boden, Viewer.
 - `Assets/Creatures` und `Assets/CreatureViewer/Generated` sind erzeugt und nicht versioniert.
 
 ## Frei hängende Teile (Lappen, Fühler) – Shader `Creature/Standard Dangling`

@@ -23,6 +23,7 @@ public class CreatureCatalog : ScriptableObject
         public int triangles;
         public int bones;
         public int materials;
+        public float restMinY;        // tiefster Punkt der Bindepose (m, im Modell-Raum) – beim Import vorberechnet, damit das Mesh nicht lesbar (Read/Write) sein muss
     }
 
     public List<Entry> entries = new List<Entry>();

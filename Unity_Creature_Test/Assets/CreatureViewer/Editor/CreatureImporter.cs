@@ -107,6 +107,8 @@ public static class CreatureImporter
         }
     }
 
+    public static string GroundFile(string name) => $"{CreaturesDir}/{name}/{name}_ground.txt";
+
     static string Dest(string name) => $"{CreaturesDir}/{name}/{name}.fbx";
 
     static bool NeedsCopy(string src, string dst)
@@ -144,6 +146,9 @@ public static class CreatureImporter
         foreach (var d in Directory.GetDirectories(CreaturesDir))
             if (sources.All(s => s.name != Path.GetFileName(d))) AssetDatabase.DeleteAsset(d.Replace('\\', '/'));
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+        // Bodenwert (Name_ground.txt) kommt aus dem Import; fehlt er (FBX vor dieser Version importiert) → Reimport erzwingen
+        foreach (var s in sources)
+            if (!File.Exists(GroundFile(s.name))) AssetDatabase.ImportAsset(Dest(s.name), ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
         // Texturen stecken in der FBX (Blender: embed_textures) → herausziehen, damit die Materialien sie benutzen
         foreach (var s in sources) EnsureMaterial(s.name);
 
@@ -255,7 +260,7 @@ public static class CreatureImporter
         foreach (var e in cat.entries)
         {
             var go = UnityEngine.Object.Instantiate(e.model);
-            CreatureViewer.PlaceOnGround(go);
+            CreatureViewer.PlaceOnGround(go, e.restMinY);
             var smr = go.GetComponentInChildren<SkinnedMeshRenderer>();
             var mat = smr != null ? smr.sharedMaterial : null;
             if (mat == null || mat.shader.name != DangleShader) { UnityEngine.Object.DestroyImmediate(go); continue; }
@@ -365,6 +370,9 @@ public static class CreatureImporter
                 e.bones = Mathf.Max(e.bones, smr.bones.Length);
                 e.materials += smr.sharedMaterials.Length;
             }
+            var gf = GroundFile(name);
+            if (File.Exists(gf)) e.restMinY = float.Parse(File.ReadAllText(gf).Trim(), System.Globalization.CultureInfo.InvariantCulture);
+            else Debug.LogWarning($"[Kreaturen] {name}: kein Bodenwert ({gf}) – Kreatur steht evtl. falsch auf dem Boden");
             cat.entries.Add(e);
         }
         EditorUtility.SetDirty(cat);
@@ -453,7 +461,7 @@ public static class CreatureImporter
         foreach (var e in cat.entries)
         {
             var go = UnityEngine.Object.Instantiate(e.model);
-            CreatureViewer.PlaceOnGround(go);
+            CreatureViewer.PlaceOnGround(go, e.restMinY);
             var walk = e.clips.FirstOrDefault(c => c.label == "Walk") ?? e.clips.FirstOrDefault();
             if (walk != null)
             {
@@ -471,7 +479,7 @@ public static class CreatureImporter
             var b = CreatureViewer.Bounds(go);
             float size = Mathf.Max(b.size.x, b.size.y, b.size.z);
             var restGo = UnityEngine.Object.Instantiate(e.model);           // Ruhepose (ohne Clip) für top/back
-            CreatureViewer.PlaceOnGround(restGo);
+            CreatureViewer.PlaceOnGround(restGo, e.restMinY);
             var rb = CreatureViewer.Bounds(restGo);
             foreach (var (vn, v, rest) in views)
             {
@@ -515,6 +523,34 @@ public class CreatureImportSettings : AssetPostprocessor
         mi.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
         mi.importCameras = false;
         mi.importLights = false;
+    }
+
+    // Version hochzählen = Unity importiert alle Kreatur-FBX einmal neu (z. B. wenn OnPostprocessModel sich ändert)
+    public override uint GetVersion() => 2;
+
+    /// <summary>Tiefster Punkt der Bindepose (Mesh-Ecken im Raum des Wurzelobjekts, ohne Skinning) → Name_ground.txt.
+    /// Hier ist das Mesh noch lesbar; zur Laufzeit ist es das nicht (Read/Write bleibt aus: halber Speicher bei vielen Gegnern).</summary>
+    void OnPostprocessModel(GameObject root)
+    {
+        if (!Ours) return;
+        float minY = float.MaxValue;
+        var toRoot = root.transform.worldToLocalMatrix;
+        foreach (var smr in root.GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            if (smr.sharedMesh == null) continue;
+            var m = toRoot * smr.transform.localToWorldMatrix;
+            foreach (var v in smr.sharedMesh.vertices) minY = Mathf.Min(minY, m.MultiplyPoint3x4(v).y);
+        }
+        foreach (var mf in root.GetComponentsInChildren<MeshFilter>())
+        {
+            if (mf.sharedMesh == null) continue;
+            var m = toRoot * mf.transform.localToWorldMatrix;
+            foreach (var v in mf.sharedMesh.vertices) minY = Mathf.Min(minY, m.MultiplyPoint3x4(v).y);
+        }
+        if (minY == float.MaxValue) minY = 0f;
+        var file = Path.ChangeExtension(assetPath, null) + "_ground.txt";
+        var text = minY.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
+        if (!File.Exists(file) || File.ReadAllText(file).Trim() != text) File.WriteAllText(file, text);
     }
 
     void OnPreprocessTexture()
