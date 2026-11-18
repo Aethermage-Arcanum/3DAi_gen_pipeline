@@ -20,7 +20,7 @@ A creepy forest beetle that carries a huge fungal growth on its back - slow, hea
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 **Prüfen (du):** Passt das Bild zu deinem Concept – Charakter, Körperbau, Anzahl der Beine/Teile, Farben? Wenn nicht: neu generieren lassen oder `look` anpassen. Wenn ja: als PNG speichern unter
@@ -43,6 +43,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.

@@ -14,20 +14,20 @@ Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau
 |---|---|---|---|
 | 2 | [Spore Drone](#2-spore-drone) | – | – |
 | 3 | [Needle Wasp](#3-needle-wasp) | ✅ vorhanden | – |
-| 4 | [Broodling](#4-broodling) | – | – |
+| 4 | [Broodling](#4-broodling) | ✅ vorhanden | – |
 | 5 | [Reef Snapper](#5-reef-snapper) | ✅ vorhanden | – |
 | 6 | [Shore Lurker](#6-shore-lurker) | – | – |
-| 7 | [Shellback](#7-shellback) | – | – |
+| 7 | [Shellback](#7-shellback) | ✅ vorhanden | – |
 | 8 | [Eel Stalker](#8-eel-stalker) | ✅ vorhanden | – |
 | 9 | [Ravine Stalker](#9-ravine-stalker) | ✅ vorhanden | – |
 | 10 | [Stone Boar](#10-stone-boar) | – | – |
 | 11 | [Hollow Stag](#11-hollow-stag) | ✅ vorhanden | – |
 | 12 | [Rock Hyena](#12-rock-hyena) | – | – |
-| 13 | [Sand Leviathan](#13-sand-leviathan) | – | – |
+| 13 | [Sand Leviathan](#13-sand-leviathan) | ✅ vorhanden | – |
 | 14 | [Dune Raptor](#14-dune-raptor) | ✅ vorhanden | – |
 | 15 | [Glassback Colossus](#15-glassback-colossus) | – | – |
 | 16 | [Scorpion Matriarch](#16-scorpion-matriarch) | ✅ vorhanden | – |
-| 17 | [Frost Colossus](#17-frost-colossus) | – | – |
+| 17 | [Frost Colossus](#17-frost-colossus) | ✅ vorhanden | – |
 | 18 | [Flesh Titan](#18-flesh-titan) | – | – |
 | 19 | [Void Manifestation](#19-void-manifestation) | ✅ vorhanden | – |
 | 20 | [Void Harbinger](#20-void-harbinger) | – | – |
@@ -35,19 +35,19 @@ Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau
 | 22 | [Geode Golem](#22-geode-golem) | – | – |
 | 23 | [Tomb Shroud](#23-tomb-shroud) | – | – |
 | 24 | [Idol Eye](#24-idol-eye) | – | – |
-| 25 | [Bonepicker Vulture](#25-bonepicker-vulture) | – | – |
-| 26 | [Cinder Wyvern](#26-cinder-wyvern) | – | – |
+| 25 | [Bonepicker Vulture](#25-bonepicker-vulture) | – | ✅ |
+| 26 | [Cinder Wyvern](#26-cinder-wyvern) | ✅ vorhanden | ✅ |
 | 27 | [Umbral Panther](#27-umbral-panther) | – | – |
 | 28 | [Rimehide Bear](#28-rimehide-bear) | – | – |
 | 29 | [Sporecap Mortar](#29-sporecap-mortar) | – | – |
 | 30 | [Bog Ooze](#30-bog-ooze) | – | – |
-| 31 | [Oasis Gulper](#31-oasis-gulper) | – | – |
+| 31 | [Oasis Gulper](#31-oasis-gulper) | – | ✅ |
 | 32 | [Quillback Burrower](#32-quillback-burrower) | – | – |
-| 33 | [Ruin Howler](#33-ruin-howler) | – | – |
+| 33 | [Ruin Howler](#33-ruin-howler) | ✅ vorhanden | ✅ |
 | 34 | [Tallgrass Viper](#34-tallgrass-viper) | – | – |
 | 35 | [Mound Queen](#35-mound-queen) | – | – |
-| 36 | [Bog Warden](#36-bog-warden) | – | – |
-| 37 | [Gloomfang Centipede](#37-gloomfang-centipede) | – | – |
+| 36 | [Bog Warden](#36-bog-warden) | – | ✅ |
+| 37 | [Gloomfang Centipede](#37-gloomfang-centipede) | – | ✅ |
 
 ## 2. Spore Drone
 
@@ -66,7 +66,7 @@ A creepy forest beetle that carries a huge fungal growth on its back - slow, hea
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -86,6 +86,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body level, all six legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, antennae forward and apart, mandibles closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -108,7 +109,7 @@ A slender, aggressive forest wasp - clearly a wasp, not an ant - fast, nervous a
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its six legs with the body level, both pairs of wings spread out flat to the sides, stinger pointing straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its six legs with the body level, both pairs of wings spread out flat to the sides, stinger pointing straight back. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -128,6 +129,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on its six legs with the body level, both pairs of wings spread out flat to the sides, stinger pointing straight back.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -135,7 +137,7 @@ Rules for the 3D model:
 
 ## 4. Broodling
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -150,7 +152,7 @@ A small, unsettling forest spider that carries its own brood - a scuttling mothe
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all eight legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, fangs closed, abdomen fully visible. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all eight legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, fangs closed, abdomen fully visible. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -170,6 +172,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body level, all eight legs spread evenly and symmetrically to both sides, none crossing, leg tips on the ground, fangs closed, abdomen fully visible.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -192,7 +195,7 @@ A low, long coastal lizard predator built for ambush and snapping - all jaws and
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -212,6 +215,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -234,7 +238,7 @@ A hulking, low-slung coastal ambusher - heavy, brooding and patient, somewhere b
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -254,6 +258,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -261,7 +266,7 @@ Rules for the 3D model:
 
 ## 7. Shellback
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -276,7 +281,7 @@ A heavy, armored coastal tortoise-beast - slow and stubborn, but with a snapping
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -296,6 +301,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -318,7 +324,7 @@ A long, legless coastal eel-serpent - sinuous, slimy and predatory, always ready
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -338,6 +344,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -360,7 +367,7 @@ A lean, gaunt wolf-like highland predator - hungry, fast and menacing. The body 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -380,6 +387,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -402,7 +410,7 @@ A massive, hump-backed boar armored like a boulder - stubborn, heavy and built t
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -422,6 +430,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -444,7 +453,7 @@ A gaunt, haunted stag - eerie, silent and noble, like a deer that has been hollo
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -464,6 +473,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -486,7 +496,7 @@ A hunched, hyena-like scavenger of the highlands - crooked, sly and aggressive. 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -506,6 +516,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -513,7 +524,7 @@ Rules for the 3D model:
 
 ## 13. Sand Leviathan
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -528,7 +539,7 @@ A huge, legless desert worm - ancient, crushing and terrifying, bursting out of 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground in one gentle curve, not coiled or twisted, only the front part with the head raised a little, facing forward. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground in one gentle curve, not coiled or twisted, only the front part with the head raised a little, facing forward. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -548,6 +559,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body stretched out long on the ground in one gentle curve, not coiled or twisted, only the front part with the head raised a little, facing forward.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -570,7 +582,7 @@ A fast, two-legged desert raptor - a lean, agile pack hunter that moves like a r
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body leaning forward and level, both legs straight under the hips and slightly apart, tail extended straight back in line with the body (never hanging down between the legs), head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body leaning forward and level, both legs straight under the hips and slightly apart, tail extended straight back in line with the body (never hanging down between the legs), head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -590,6 +602,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body leaning forward and level, both legs straight under the hips and slightly apart, tail extended straight back in line with the body (never hanging down between the legs), head forward, mouth closed or only slightly open.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at chest height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -612,7 +625,7 @@ A massive desert colossus - a hulking, ape-like brute armored in rock and crysta
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -632,6 +645,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -654,7 +668,7 @@ A giant desert scorpion queen - huge, imperious and venomous. The body is low an
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, the eight walking legs spread evenly to both sides with the tips on the ground, both pincers held forward and apart, tail arched up over the back without touching it. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, the eight walking legs spread evenly to both sides with the tips on the ground, both pincers held forward and apart, tail arched up over the back without touching it. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -674,6 +688,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body level, the eight walking legs spread evenly to both sides with the tips on the ground, both pincers held forward and apart, tail arched up over the back without touching it.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -681,7 +696,7 @@ Rules for the 3D model:
 
 ## 17. Frost Colossus
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -696,7 +711,7 @@ A huge gorilla-like ice beast - brutal, heavy and ancient, a walking glacier. It
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -716,6 +731,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -738,7 +754,7 @@ A hulking, two-legged abyssal flesh brute with a partly humanoid upper body - gr
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: A-pose: standing straight, legs straight and slightly apart, arms angled down and away from the body, head forward. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: A-pose: standing straight, legs straight and slightly apart, arms angled down and away from the body, head forward. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -758,6 +774,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: A-pose: standing straight, legs straight and slightly apart, arms angled down and away from the body, head forward.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at chest height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -780,7 +797,7 @@ A floating horror from the void - an alien, silent watcher that hovers above the
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating level in the air, the eye facing forward, all tentacles hanging down and slightly spread, each one separate and only gently curved, not curled up or tangled. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating level in the air, the eye facing forward, all tentacles hanging down and slightly spread, each one separate and only gently curved, not curled up or tangled. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -800,6 +817,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: floating level in the air, the eye facing forward, all tentacles hanging down and slightly spread, each one separate and only gently curved, not curled up or tangled.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -822,7 +840,7 @@ A tall, partly humanoid void creature - a dark herald, spindly and unnatural. In
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on its two legs, legs straight and slightly apart, arms angled down and away from the body, both wings spread out symmetrically to the sides, free from the body and the arms. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on its two legs, legs straight and slightly apart, arms angled down and away from the body, both wings spread out symmetrically to the sides, free from the body and the arms. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -842,6 +860,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing upright on its two legs, legs straight and slightly apart, arms angled down and away from the body, both wings spread out symmetrically to the sides, free from the body and the arms.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at chest height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -864,7 +883,7 @@ A mantis-like abyssal predator - a nightmare hunter that slices through reality.
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and folded in front of the body, free from the legs and the head. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and held forward at their full length, free from the legs and the head. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -883,7 +902,8 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 4. back.png - from directly behind
 
 Rules for the 3D model:
-- Same posture in all views, only the camera moves. Pose: body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and folded in front of the body, free from the legs and the head.
+- Same posture in all views, only the camera moves. Pose: body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and held forward at their full length, free from the legs and the head.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -906,7 +926,7 @@ A massive, slow golem of split rock, hollow like a geode - ancient, heavy and un
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -926,6 +946,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at chest height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -948,7 +969,7 @@ A silent crypt wraith - a hooded shroud that floats above the ground, mournful a
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -968,6 +989,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: floating upright above the ground, both arms held out and angled down away from the body, claws open and apart, the cloth tail hanging straight down without touching the ground.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -990,7 +1012,7 @@ A floating temple guardian - an ancient stone idol that has cracked open to reve
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1010,6 +1032,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: floating level above the ground, the eye facing forward, the stone plates spread open evenly and symmetrically around it, each plate separate.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1032,7 +1055,7 @@ A large, ragged steppe vulture - a patient scavenger that circles high and then 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1052,6 +1075,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1059,7 +1083,7 @@ Rules for the 3D model:
 
 ## 26. Cinder Wyvern
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Vulkan, Rolle Elite (landet zum Kämpfen, Feueratem) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Vulkan, Rolle Elite (landet zum Kämpfen, Feueratem) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -1074,7 +1098,7 @@ A fierce volcanic wyvern - a heavy, armored dragon-beast that lands to fight and
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1094,6 +1118,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on its two legs, legs straight down and apart, body level, both wings spread out wide and symmetrically to the sides, fully open and free from the body and the legs, head forward, beak/mouth closed, tail extended straight back.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1116,7 +1141,7 @@ A sleek jungle panther built for ambush - silent, lithe and deadly. The body is 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1136,6 +1161,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1158,7 +1184,7 @@ A colossal glacier bear - a hulking, armored beast that rises on its hind legs t
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1178,6 +1204,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1200,7 +1227,7 @@ A giant living mushroom turret that lobs spore bombs - rooted, bloated and poiso
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still and upright on its base, the base flat on the ground, the top facing up and forward, all flaps, petals or tendrils open, symmetric and apart from each other. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still and upright on its base, the base flat on the ground, the top facing up and forward, all flaps, petals or tendrils open, symmetric and apart from each other. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1220,6 +1247,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still and upright on its base, the base flat on the ground, the top facing up and forward, all flaps, petals or tendrils open, symmetric and apart from each other.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above the top, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1242,7 +1270,7 @@ A bubbling swamp ooze - a heaving blob of acidic sludge that splits apart when s
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or squashed, any short appendages separate and apart from each other. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or squashed, any short appendages separate and apart from each other. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1262,6 +1290,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: resting on the ground as one compact, evenly rounded mass, symmetric, not stretched, tilted or squashed, any short appendages separate and apart from each other.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1284,7 +1313,7 @@ A huge, bloated oasis toad - a lazy-looking ambusher that snaps prey from afar w
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours with straight, fully extended legs, the big hind legs stretched out and clearly visible at their full length, body lifted clear of the ground, feet flat on the ground, head forward, mouth closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1303,7 +1332,8 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 4. back.png - from directly behind
 
 Rules for the 3D model:
-- Same posture in all views, only the camera moves. Pose: sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed.
+- Same posture in all views, only the camera moves. Pose: standing on all fours with straight, fully extended legs, the big hind legs stretched out and clearly visible at their full length, body lifted clear of the ground, feet flat on the ground, head forward, mouth closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1326,7 +1356,7 @@ A stocky, armored burrowing beast of the rocky badlands - it digs in, hides and 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1346,6 +1376,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing still, all four legs straight down under the body, front and hind legs equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back, no twisting.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1353,7 +1384,7 @@ Rules for the 3D model:
 
 ## 33. Ruin Howler
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Schwarm/Fernkampf (Rudel, wirft Steine) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Schwarm/Fernkampf (Rudel, wirft Steine) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
@@ -1368,7 +1399,7 @@ A lanky, savage temple ape that lives in overgrown ruins - loud, agile and hurli
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1388,6 +1419,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing on all fours, the long front arms resting on the knuckles, arms and hind legs straight down and equally wide apart, head forward, mouth closed or only slightly open, tail extended straight back.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at body height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1410,7 +1442,7 @@ A long, sleek steppe viper that hides in the tall grass and strikes from an S-cu
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1430,6 +1462,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body stretched out long on the ground with at most one gentle curve, not coiled, twisted or overlapping, head slightly raised and facing forward, mouth closed or only slightly open.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1452,7 +1485,7 @@ An enormous termite-like queen of a jungle hive - a slow, bloated mother of the 
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1472,6 +1505,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body level, all six legs spread evenly and symmetrically to both sides of the front body, none crossing, the huge abdomen stretched straight back behind the legs and resting on the ground, mandibles closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly above body height, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1494,7 +1528,7 @@ A hulking, ancient swamp tree that has torn itself from the mud - a slow, patien
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1514,6 +1548,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: standing upright on two legs, legs straight and slightly apart, both arms hanging down and angled away from the body so they touch neither the body nor the legs, head forward, mouth closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera at chest height, very slightly from above, orthographic-like, no perspective distortion; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.
@@ -1536,7 +1571,7 @@ A giant cave centipede - a fast, writhing hunter of the deep tunnels with venomo
 
 Style: clean low-poly stylized game creature: faceted planar surfaces with crisp edges, simplified chunky shapes, bold readable silhouette that reads well from a top-down camera, strong color blocking with simple painted gradients per facet, colorful yet dark palette, gameplay-focused readability, rendered like a stylized low-poly 3D game asset.
 
-Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed. All limbs clearly visible and apart from each other. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
+Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at body height. Pose: body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. Plain flat medium-grey (#9a9a9a) background, soft even lighting, no cast shadows, no glow, no smoke or particles, no text. One single square 1:1 image.
 ```
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
@@ -1556,6 +1591,7 @@ Create 4 SEPARATE images (not a grid) of exactly this creature - one frozen 3D m
 
 Rules for the 3D model:
 - Same posture in all views, only the camera moves. Pose: body stretched out long and straight on the ground, not coiled, all leg pairs spread evenly to both sides, none crossing, head slightly raised and facing forward, venom claws closed.
+- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.
 - Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between the legs.
 - Thin parts have visible thickness. Same number of parts as in the design, in every view.
 - Whole creature centered and uncropped; camera slightly from above, orthographic-like, whole body length in frame; plain flat medium-grey (#9a9a9a) background, soft even light, no shadows, glow, particles or text; square 1:1.

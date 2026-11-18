@@ -100,7 +100,7 @@ def prompt_design(title, look, style, pose, concepts, cdir, cfg):
             f"{look}\n\n"
             f"Style: {_clean(style)}.\n\n"
             f"Show the whole creature, uncropped, in a three-quarter view (from the front and a bit from the side) at "
-            f"body height. Pose: {pose}. All limbs clearly visible and apart from each other. "
+            f"body height. Pose: {pose}. All limbs clearly visible and apart from each other. Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching. "
             f"{_clean(img['background']).capitalize()} background, soft even lighting, no cast shadows, no glow, "
             f"no smoke or particles, no text. One single {img['aspect']} image.")
 
@@ -116,6 +116,7 @@ def prompt_views(title, look, pose, camera, views, cfg):
             f"the camera circles around it:\n{vlist}\n\n"
             f"Rules for the 3D model:\n"
             f"- Same posture in all views, only the camera moves. Pose: {pose}.\n"
+            f"- Every leg, arm, wing and tail is shown at its full length and clearly visible - extended, not folded, tucked under the body, sitting or crouching.\n"
             f"- Limbs and appendages stand free, touching neither each other nor the body; nothing hangs between "
             f"the legs.\n"
             f"- Thin parts have visible thickness. Same number of parts as in the design, in every view.\n"

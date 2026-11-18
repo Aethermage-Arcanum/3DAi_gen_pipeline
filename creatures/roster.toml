@@ -388,7 +388,7 @@ blades that rise and arch over its body. The blades are pale silver-grey with da
 is black-violet chitin with deep red highlights along the joints and plate edges. The head is small and pale, \
 sitting at the front, with a single large orange-red eye and a jagged mouth. A few thin, whip-like feelers \
 sweep back from the head. Materials: polished, sharp-edged chitin and metallic-looking blades."""
-pose = "body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and folded in front of the body, free from the legs and the head"
+pose = "body level, standing on its four walking legs spread evenly to both sides, the two blade arms raised and held forward at their full length, free from the legs and the head"
 
 # =============================================================================================================
 # ROSTER-ERWEITERUNG (Nutzer 2026-11-18) – 16 Kreaturen OHNE Concept Art, je eine aus jeder Zeile von
@@ -667,7 +667,7 @@ powerful with long webbed feet. The back is covered with warty bumps, and a few 
 grow from the skin like a living pond. The skin is turquoise and teal on top with dark spots, sandy yellow on \
 the belly, with bold orange warning stripes along the sides. Materials: smooth, glossy, wet skin with rough \
 warts. Palette: turquoise water colors with warm sand and orange accents."""
-pose = "sitting low on all fours, front legs straight down, the big hind legs folded beside the body with a clear gap to the belly, feet flat on the ground, head forward, mouth closed"
+pose = "standing on all fours with straight, fully extended legs, the big hind legs stretched out and clearly visible at their full length, body lifted clear of the ground, feet flat on the ground, head forward, mouth closed"
 varianten = [
   { art = "grund", name = "Oasis Gulper", biome = "oasis", tint = "Türkis/Sand, orange Warnstreifen", addons = "Seerosen-Blätter, Schilf", size = 1.0, effect = "Zungenschlag zieht heran" },
   { art = "biom", name = "Mire Gulper", biome = "swamp", tint = "Olivbraun", addons = "Schlammkruste, Schilf", size = 1.0, effect = "Gift-Spucke" },
