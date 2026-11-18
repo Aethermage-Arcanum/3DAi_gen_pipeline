@@ -19,3 +19,7 @@ role = "style"
 style = "legless/sandworm"
 variant = ""
 vorbild = ["Regenwurm – Peristaltik", "Python – rectilineare (geradlinige) Fortbewegung", "Sandboa – Abtauchen in Sand"]
+
+# Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
+[model_check.freigabe]
+mittellinie = "Sichtprüfung: Körper liegt gerade, Mittellinie schnurgerade, Mesh symmetrisch; die Querschnitts-Drehung misst die Stachelkrause um das runde Maul (Fehlalarm)."
