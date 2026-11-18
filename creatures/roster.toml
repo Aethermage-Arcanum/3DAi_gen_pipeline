@@ -239,9 +239,9 @@ hint = "huge legless desert worm with a wide round maw, front part raised out of
 look = """A huge, legless desert worm - ancient, crushing and terrifying, bursting out of the dunes. The body is long \
 and thick and made of ribbed, ring-shaped segments, sandy beige and ochre with darker brown bands between the \
 rings, tapering toward the tail end. Toward the head the segments become darker and rougher, rust-red and \
-brown, with ragged armor plates. The head is a long, crocodile-like maw packed with jagged teeth, framed by \
-rows of hooked spines and tooth-like tendrils around the jaws and throat. Small dark eyes sit on top of the \
-head. Materials: tough, dry, ribbed hide on the body, bony armor on the head."""
+brown, with ragged armor plates. The head ends in a wide, round maw like a lamprey's: rings of long, \
+inward-curving fangs around a dark red throat, framed by a ruff of hooked spines and tooth-like tendrils. \
+The armored head behind the maw carries small dark eyes. Materials: tough, dry, ribbed hide on the body, bony armor on the head."""
 pose = "body stretched out long on the ground in one gentle curve, not coiled or twisted, only the front part with the head raised a little, facing forward"
 [[c]]
 id = "dune_raptor"
