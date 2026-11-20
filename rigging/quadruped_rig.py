@@ -301,6 +301,20 @@ if RIG.get("cut_leg_bridges", False):
         ids = np.unique(part)
     print(f"RIG_INFO Hautbrücken zwischen den Beinen: {int(fmask.sum())} Flächen entfernt")
 
+# ------------------------------------------------------------------ Gelenk-Verdichtung (C9, nur mit [joint_densify])
+# Allzweck-Baustein rigging/joint_densify.py: mehr Vertices im Ring um stark beugende Gelenke, VOR dem Gewichten.
+# Ohne Abschnitt in der creature.toml passiert hier nichts.
+sys.path.insert(0, str(HERE))
+import joint_densify as JD  # noqa: E402
+JDS = JD.load_cfg(args[2] if len(args) > 2 else None)
+if JDS:
+    import rig_common as RC
+    JDS = JD.densify(body, BONES, JDS)
+    V, part, MAIN = RC.arrays(body)
+    N = len(V)
+    main = part == MAIN
+    ids = np.unique(part)
+
 # ------------------------------------------------------------------ Gewichte
 def seg_dist(P, a, b):
     ab = b - a
@@ -457,6 +471,8 @@ for i in range(N):
     for j, w in zip(top[i], ws):
         if w > 1e-3:
             body.vertex_groups[names[j]].add([i], float(w), "REPLACE")
+if JDS:                                                  # weiche Gewichte über mehrere Ringe (nur im Ring)
+    JD.soften(body, JDS)
 mod = body.modifiers.new("Armature", "ARMATURE")
 mod.object = arm
 body.parent = arm
@@ -467,6 +483,8 @@ bpy.ops.wm.save_as_mainfile(filepath=str(OUT / "quadruped_rigged.blend"))
 report = {"vertices": N, "parts": int(len(ids)), "height_m": round(H, 3), "length_m": round(L, 3),
           "bones": len(order), "feet": {k: [round(float(c), 3) for c in v[:, :2].mean(0)] for k, v in FEET.items()},
           "belly_z": {k: round(v["belly"] - GROUND, 3) for k, v in LEGS.items()}}
+if JDS:
+    report["joint_densify"] = JD.finish(JDS, OUT)
 (OUT / "rig_report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
 sample = V[::max(1, N // 4000)]
 (OUT / "rig_debug.json").write_text(json.dumps({

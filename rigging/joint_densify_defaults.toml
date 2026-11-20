@@ -1,0 +1,16 @@
+# Gelenk-Verdichtung (rigging/joint_densify.py) – Standardwerte. Pro Kreatur in creature.toml unter [joint_densify].
+# Ohne [joint_densify] in der creature.toml passiert gar nichts (Mesh, Gewichte und Export bleiben Bit für Bit gleich).
+# Längen sind Anteile der Kreaturgröße (längste Kante des Mesh-Rahmens), damit die Werte für jede Größe passen.
+
+radius = 0.06          # Ringbreite: Kugel um den Gelenkpunkt (Kopf des genannten Knochens); pro Gelenk überschreibbar
+target_edge = 0.012    # Kanten im Ring werden halbiert, bis sie kürzer sind als das (bereits feine Stellen bleiben)
+levels = 2             # höchstens so oft halbieren (1 = jede lange Kante einmal: 1 Dreieck → bis 4)
+max_extra_tris = 800   # Obergrenze zusätzlicher Dreiecke für die ganze Kreatur (Leitprinzip: performant);
+                       # Kanten an der Gelenk-Ebene zuerst. Wolf-Test: 800 ≈ alle Knie/Sprunggelenk/Ellbogen/Handgelenk-Ringe
+main_only = true       # nur der Hauptkörper (lose Teile wie Platten, Seerosen, Zähne bleiben unverändert)
+
+# Zusätzliches Glätten der Gewichte im Ring (nach dem Gewichten des Rigs, zur Ringmitte hin stärker).
+# Standard AUS: gemessen (Wolf, Raptor 2026-11-20) wurde die Dehnung damit größer, nicht kleiner – die weichen
+# Übergänge des Rigs selbst reichen. Nur für Versuche einschalten.
+soft_iterations = 0    # 0 = aus
+soft_factor = 0.5      # Anteil Nachbar-Mittel pro Runde (in der Ringmitte; zum Ringrand hin weich auf 0)

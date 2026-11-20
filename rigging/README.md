@@ -46,6 +46,64 @@ Root
 - Bisher nur der Clip **Walk**. Es fehlen Idle, Angriff, Treffer, Tod (gleiches Prinzip, jeweils mit eigener Naturreferenz).
 - Laufen ist „in place“. Die Fortbewegung macht Unity mit der empfohlenen Geschwindigkeit aus `walk_report.json`.
 
+## Gelenk-Verdichtung – mehr Vertices nur am Gelenk (Backlog C9, seit 2026-11-20)
+Allzweck-Baustein `joint_densify.py` (Standardwerte `joint_densify_defaults.toml`, Prüfwerkzeug `joint_densify_review.py`).
+Regel des Nutzers: Dehnung nie durch kleinere Bewegung lösen, sondern am Mesh. Tripo-Low-Poly hat an Gelenken oft
+lange Dreiecke; eine lange Kante zwischen zwei Knochen kann beim Beugen nur „abkürzen“ oder sich dehnen.
+
+**Opt-in pro Kreatur** in `creatures/<NN_name>/creature.toml` (ohne Abschnitt ändert sich nichts – Mesh, Gewichte und
+Export bleiben Bit für Bit gleich; Nachweis `scripts/regression.py --deep`, 6 Kreaturen identisch, siehe unten):
+```toml
+[joint_densify]
+# max_extra_tris = 800            # optional: Obergrenze zusätzlicher Dreiecke (ganze Kreatur)
+# target_edge = 0.012             # optional: Kanten im Ring halbieren, bis kürzer als das (Anteil Größe)
+# levels = 2                      # optional: höchstens so oft halbieren
+[[joint_densify.joint]]           # beliebig viele
+bones = ["Leg_*_2", "Leg_*_3"]    # Gelenk = Kopf dieses Knochens (Übergang zum Eltern-Knochen), * erlaubt
+# radius = 0.06                   # optional: Ringbreite (Kugel um das Gelenk, Anteil Größe)
+```
+Eingebaut in `quadruped_rig.py` und `biped_raptor_rig.py` (je 2 Stellen: vor und nach dem Gewichten). Für ein anderes
+Skelett: dieselben Zeilen einbauen (Beschreibung oben in `joint_densify.py`), danach Regression.
+
+**Was passiert** (im Rig-Skript, NACH dem Skelett, VOR dem Gewichten):
+1. Kandidaten: Kanten des Hauptkörpers im Ring, länger als `target_edge`. Kanten, die die Gelenk-Ebene kreuzen, zuerst
+   (Ebene ⟂ mittlere Richtung Eltern-/Kind-Knochen), bis `max_extra_tris` erreicht ist (jede halbierte Kante = +1 Dreieck
+   je anliegender Fläche, die Zählung ist exakt).
+2. Halbieren mit bmesh: neue Vertices liegen **genau auf der alten Kante** (kein Glätten → Facetten-Look bleibt), UVs und
+   Ecken-Daten werden interpoliert, Material/Flat-Flag übernommen. UV-Naht-Duplikate werden immer gemeinsam geteilt
+   (gleiche Position) → keine T-Stöße, nichts reißt. Alte Vertices behalten ihre Nummer.
+3. Danach gewichtet das Rig ganz normal – seine Abstands-Gewichte geben den neuen Stützpunkten Zwischenwerte.
+4. Bericht in `rig/rig_report.json` → `joint_densify` (Tris vorher/nachher, Mehr-Tris, Budget erreicht?) und
+   `rig/joint_densify.json` (Zuordnung alte Kante → neue Vertices, für den fairen Vergleich).
+
+Optional `soft_iterations` (Standard 0 = aus): zusätzliches Glätten der Gewichte nur im Ring. Gemessen an Wolf und Raptor
+wurde die Dehnung damit **größer** – deshalb aus.
+
+**Prüfen** (Dehnung je Clip, fair = Länge entlang der ALTEN Kanten, damit kürzere neue Kanten nicht schönrechnen;
+„ring“ = nur Kanten in den Gelenk-Ringen):
+```
+& "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/joint_densify_review.py -- stretch <aus.json> <verdichtet>/rig/joint_densify.json
+& "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/joint_densify_review.py -- shot <bild.png> <Action> <frame> <Knochen> <radius_m>
+python rigging/joint_densify_review.py sheet <bogen.png> "Vorher" <bild1.png> "Nachher" <bild2.png>
+```
+Prüfbild: Render | Drahtgitter | Dehnung je Dreieck (grau ≤ 1,1 · gelb 1,5 · rot ≥ 2,0).
+
+**Ergebnis Test 2026-11-20** (Kopien in `temp/`, fertige Kreaturen unverändert):
+| Kreatur (Gelenke) | Tris | Dehnung in den Gelenk-Ringen (max · Kanten > 1,5) | gesamt max |
+|---|---|---|---|
+| Wolf (Knie, Sprunggelenk, Ellbogen, Handgelenk) | 4.258 → 5.058 (+800, +19 %) | Run 2,05 → 1,78 · 18 → 12 (> 2,0: 2 → 0); Walk 1,63 → 1,51 · 5 → 2; Ready 1,55 → 1,43 · 3 → 0; TurnLeft 1,64 → 1,49 | unverändert (Run 2,89 Flanke Hüfte, Attack1 2,27 Kopf) |
+| Hollow Stag (gleich) | 4.243 → 5.043 (+800) | Run 3,93 → 3,99 · 8 → 4 | unverändert (3,9–4,2) |
+| Dune Raptor (Knie, Sprunggelenk) | 4.184 → 4.984 (+800) | schlechter: Run 2,55 → 2,65, Walk 2,14 → 2,23 | unverändert/schlechter |
+
+Was das heißt:
+- **Hilft dort, wo lange Kanten über ein stark beugendes Gelenk laufen** (Wolf-Beine): weniger und schwächer gedehnte
+  Dreiecke am Gelenk. Gedacht vor allem für den Frosch (Oasis Gulper: lange Kanten, extremes Beugen in die Hocke).
+- **Hilft nicht** gegen Dehnung aus der Gewichts-Verteilung: Die größten Werte aller getesteten Kreaturen liegen auf
+  ohnehin kurzen Kanten mit falschen/harten Gewichten (Wolf: Flanke Oberschenkel↔Rücken; Hirsch: Vertex am Knie mit
+  42 % Schwanz-Gewicht; Raptor/Geier/Wyvern: harte Sohle am Ballen). Das bleibt Arbeit an den Gewichten des jeweiligen Rigs.
+- Raptor wird schlechter: das Glätten des Rigs zählt Kanten-Schritte; im verdichteten Ring wird der Übergang in Metern
+  schmaler. Nur einschalten, wo der Vergleich (stretch + Prüfbild) eine Verbesserung zeigt.
+
 ## Frei hängende Teile (Lappen, Fühler, Hautfahnen) – ohne Knochen
 Standard-Baustein für alle Skelette (Backlog C7). Kleine Teile, die frei schwingen sollen, bekommen **keine Knochen**,
 sondern eine Markierung im Mesh; der Unity-Shader `Creature/Standard Dangling` lässt sie dann weich pendeln –

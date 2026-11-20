@@ -15,6 +15,7 @@ import numpy as np
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import joint_densify as JD  # noqa: E402
 import rig_common as RC  # noqa: E402
 
 a = sys.argv[sys.argv.index("--") + 1:]
@@ -207,6 +208,14 @@ if CFG.get("cut_belly_flap", False):
         main = part == MAIN
     print(f"RIG_INFO Bauch-Lappen: {int(fv.sum())} Vertices, {n_flap} Flächen entfernt")
 
+# ------------------------------------------------------------------ Gelenk-Verdichtung (C9, nur mit [joint_densify])
+# Allzweck-Baustein rigging/joint_densify.py: mehr Vertices im Ring um stark beugende Gelenke, VOR dem Gewichten.
+JDS = JD.load_cfg(a[2] if len(a) > 2 else None)
+if JDS:
+    JDS = JD.densify(obj, B, JDS)
+    V, part, MAIN = RC.arrays(obj)
+    main = part == MAIN
+
 # ------------------------------------------------------------------ Gewichte mit anatomischen Masken
 names = order[1:]
 allow = np.ones((len(V), len(names)), bool)
@@ -368,6 +377,9 @@ if CFG.get("foot_rigid_height", 0) > 0:
           f"{CFG.get('foot_blend', 0.05):.2f}·H), {n_isl} Berühr-Ecken getrennter Fuß-Stücke angeglichen")
 report = {"vertices": int(len(V)), "parts": int(len(np.unique(part))), "height_m": round(float(H), 3),
           "length_m": round(float(L), 3), "bones": len(order), "arms": sorted(ARMS)}
+if JDS:                                                   # weiche Gewichte über mehrere Ringe (nur im Ring)
+    JD.soften(obj, JDS)
+    report["joint_densify"] = JD.finish(JDS, OUT)
 RC.finish(obj, arm, OUT, "biped_raptor_rigged.blend", report, B, order, V,
           tracks={**{k: np.round(v["track"], 4).tolist() for k, v in LEGS.items()},
                   **{f"Arm_{k}": np.round(v, 4).tolist() for k, v in ARMS.items()}})
