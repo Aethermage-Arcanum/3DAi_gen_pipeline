@@ -395,10 +395,57 @@ for _ in range(RIG["smooth_iterations"]):
 # Sonst liegen die Geweihspitzen näher am Hals-Knochen und verbiegen sich bei jedem Schritt mit dem Hals.
 if RIG.get("rigid_head_above") is not None:
     hb_top = max(BONES["Head"][0][2], BONES["Head"][1][2])
-    rh = (V[:, 2] > hb_top + RIG["rigid_head_above"] * H) & (V[:, 0] > x_sh)
+    above = V[:, 2] > hb_top + RIG["rigid_head_above"] * H
+    hi_ = names.index("Head")
+    if RIG.get("rigid_head_connected", False):
+        # C14 (Hollow Stag): Statt "vor der Schulter" (x > x_sh) zählt der Zusammenhang. Hintere Geweihsprossen ragen
+        # in der Draufsicht bis hinter die Schulter → hingen sonst an Hals/Brust/Schulter und wurden nach hinten gezogen.
+        # Starr am Kopf = alles über der Kopf-Oberkante, das INNERHALB dieser Zone mit dem Schädel verbunden ist
+        # (Rückenstacheln/Mähne liegen tiefer bzw. hängen nicht am Geweih → bleiben am Rumpf).
+        par_h = np.arange(N)
+
+        def find_h(i):
+            while par_h[i] != i:
+                par_h[i] = par_h[par_h[i]]
+                i = par_h[i]
+            return i
+        for u, v in E[above[E[:, 0]] & above[E[:, 1]]]:
+            par_h[find_h(u)] = find_h(v)
+        comp_h = np.array([find_h(i) for i in range(N)])
+        seed = above & (V[:, 0] >= BONES["Head"][0][0])          # über dem Schädel (ab Kopfansatz nach vorn)
+        rh = above & np.isin(comp_h, np.unique(comp_h[seed]))
+        print(f"RIG_INFO Kopf-Aufbau zusammenhängend: {int(rh.sum())} Vertices, davon {int((rh & (V[:, 0] <= x_sh)).sum())} "
+              f"hinter der Schulter; über der Kopf-Oberkante, aber nicht verbunden: {int((above & ~rh).sum())}")
+    else:
+        rh = above & (V[:, 0] > x_sh)
     W[rh] = 0.0
-    W[rh, names.index("Head")] = 1.0
+    W[rh, hi_] = 1.0
     print(f"RIG_INFO Kopf-Aufbau starr am Kopf: {int(rh.sum())} Vertices")
+    # Weicher Übergang starr → Hals über n Kanten-Ringe UNTER der starren Zone (die starre Zone bleibt 100 % Kopf):
+    # sonst harte Kante am Nacken (Head 1,0 direkt neben Neck_2 1,0).
+    rings = int(RIG.get("rigid_head_blend_rings", 0))
+    if rings:
+        rep = np.arange(N)                                      # UV-Naht-Duplikate gemeinsam behandeln
+        for g in WELD:
+            rep[g] = g[0]
+        done, n_ring = rh.copy(), []
+        for k in range(rings):
+            nb = np.zeros(N, bool)
+            cut = done[E[:, 0]] != done[E[:, 1]]
+            nb[E[cut].ravel()] = True
+            nb &= ~done
+            nr = np.zeros(N, bool)
+            nr[rep[nb]] = True
+            nb = nr[rep] & ~done
+            t = (rings - k) / (rings + 1)                        # 2 Ringe: 2/3, 1/3 Kopf-Anteil dazumischen
+            W[nb] *= 1 - t
+            W[nb, hi_] += t
+            done |= nb
+            n_ring.append(nb)
+        allr = np.any(n_ring, 0)
+        print(f"RIG_INFO Übergang Kopf→Hals: {rings} Ringe, {[int(r.sum()) for r in n_ring]} Vertices, "
+              f"x {V[allr, 0].min():.3f}..{V[allr, 0].max():.3f}, z über Boden {V[allr, 2].min() - GROUND:.3f}.."
+              f"{V[allr, 2].max() - GROUND:.3f}")
 for g in WELD:
     W[g] = W[g].mean(0)
 top = np.argsort(-W, 1)[:, :4]

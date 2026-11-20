@@ -18,9 +18,9 @@
       "moves_ok": true,
       "move_speed_mps": 0.261,
       "loop_ok": true,
-      "max_stretch": 4.05,
-      "stretch_at": "Head @ Frame 18",
-      "stretch_ok": false,
+      "max_stretch": 2.81,
+      "stretch_at": "Leg_BR_2 @ Frame 12",
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_Run": {
@@ -54,8 +54,8 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 5.7,
-      "stretch_at": "Head @ Frame 24",
+      "max_stretch": 2.35,
+      "stretch_at": "Hips @ Frame 51",
       "stretch_ok": false,
       "ok": true
     },
@@ -69,8 +69,8 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 8.94,
-      "stretch_at": "Neck_2 @ Frame 27",
+      "max_stretch": 3.82,
+      "stretch_at": "Leg_FR_1 @ Frame 6",
       "stretch_ok": false,
       "ok": true
     },
@@ -90,9 +90,9 @@
       "moves_ok": true,
       "turn_speed_deg_s": 32.1,
       "loop_ok": true,
-      "max_stretch": 7.67,
-      "stretch_at": "Head @ Frame 15",
-      "stretch_ok": false,
+      "max_stretch": 2.74,
+      "stretch_at": "Leg_FR_1 @ Frame 0",
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_TurnRight": {
@@ -111,9 +111,9 @@
       "moves_ok": true,
       "turn_speed_deg_s": -32.1,
       "loop_ok": true,
-      "max_stretch": 7.12,
-      "stretch_at": "Neck_2 @ Frame 0",
-      "stretch_ok": false,
+      "max_stretch": 2.87,
+      "stretch_at": "Leg_FR_1 @ Frame 0",
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_Attack1": {
@@ -125,9 +125,9 @@
       "sole_lift_max_m": 0.0015,
       "feet_moved_max_m": 0.0002,
       "feet_planted_ok": true,
-      "max_stretch": 11.42,
-      "stretch_at": "Head @ Frame 12",
-      "stretch_ok": false,
+      "max_stretch": 3.92,
+      "stretch_at": "Neck_2 @ Frame 12",
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_Hit": {
@@ -140,8 +140,8 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "returns_to_rest": true,
-      "max_stretch": 3.97,
-      "stretch_at": "Head @ Frame 3",
+      "max_stretch": 2.82,
+      "stretch_at": "Leg_BR_2 @ Frame 3",
       "stretch_ok": false,
       "ok": true
     },
