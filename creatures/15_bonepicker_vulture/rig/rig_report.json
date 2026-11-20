@@ -1,0 +1,66 @@
+{
+  "vertices": 5892,
+  "parts": 4,
+  "height_m": 0.72,
+  "bones": 36,
+  "placeholders": [],
+  "landmarks_rel_height": {
+    "crotch": 0.37,
+    "chest": 0.595,
+    "shoulder_L": 0.635,
+    "shoulder_R": 0.635
+  },
+  "wing_span_m": 0.961,
+  "wing_rest_normal": {
+    "L": [
+      -0.757,
+      -0.299,
+      0.581
+    ],
+    "R": [
+      -0.723,
+      0.228,
+      0.652
+    ]
+  },
+  "wing_vertices": {
+    "L": 598,
+    "R": 592
+  },
+  "jaw_vertices": 22,
+  "heel_back_rel": {
+    "L": 0.144,
+    "R": 0.146
+  },
+  "double_sided": {
+    "faces_checked": 4124,
+    "open_back_faces": 473,
+    "regions": 21,
+    "region_areas_m2": [
+      0.0522,
+      0.0469,
+      0.0191,
+      0.0191,
+      0.0113,
+      0.0103,
+      0.0078,
+      0.0049,
+      0.0045,
+      0.0045,
+      0.0039,
+      0.0039,
+      0.0035,
+      0.0035,
+      0.0029,
+      0.0029,
+      0.0018,
+      0.0018,
+      0.0015,
+      0.0011,
+      0.0011
+    ],
+    "faces_added": 428,
+    "verts_total": 6447,
+    "faces_total": 4552
+  }
+}

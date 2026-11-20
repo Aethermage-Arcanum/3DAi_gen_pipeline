@@ -1,0 +1,72 @@
+{
+  "fps": 30,
+  "clips": {
+    "Winged_Drake_Walk": [
+      {
+        "frame": 16,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Drake_Run": [
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Drake_Idle": [],
+    "Winged_Drake_Ready": [],
+    "Winged_Drake_TurnLeft": [
+      {
+        "frame": 15,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Drake_TurnRight": [
+      {
+        "frame": 15,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Drake_Attack1": [
+      {
+        "frame": 20,
+        "event": "hit"
+      }
+    ],
+    "Winged_Drake_Attack2": [
+      {
+        "frame": 29,
+        "event": "hit"
+      }
+    ],
+    "Winged_Drake_Hit": [],
+    "Winged_Drake_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ],
+    "Winged_Drake_Fly": [],
+    "Winged_Drake_Glide": [],
+    "Winged_Drake_TakeOff": [
+      {
+        "frame": 14,
+        "event": "jump"
+      },
+      {
+        "frame": 17,
+        "event": "liftoff"
+      }
+    ],
+    "Winged_Drake_Land": [
+      {
+        "frame": 26,
+        "event": "land"
+      }
+    ]
+  }
+}

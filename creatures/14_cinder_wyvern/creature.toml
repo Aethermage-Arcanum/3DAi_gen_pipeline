@@ -16,3 +16,18 @@ role = "style"
 style = "winged/drake"
 variant = ""
 vorbild = ["Adler/Pelikan – schwere Landung", "Komodowaran – Gang und Kopfschwingen am Boden", "Flughund – Flügelschlag (Zeitlupe)"]
+
+# Rig (rigging/winged_rig.py, Skelett winged): Tripo hat die Flügel ungleich gestellt (links steil + nach hinten gefegt,
+# rechts seitlich) und den Schwanz seitlich gebogen (schon im Referenzbild). Das Rig übernimmt die Form, die Clips geben
+# Flügel (Richtung + Ebene je Knochen, links/rechts gemittelte Gelenkwinkel) und Schwanz ABSOLUT vor.
+# Flügelhaut ist bei Tripo einseitig (model_check: 2 Bereiche, 75 Fl.) → doppelseitig.
+[winged.double_sided]
+enabled = true
+
+# Modellprüfung: gewollte Befunde (Sichtprüfung B, 2026-11-20, winged-Agent)
+[model_check.freigabe]
+symmetrie = "Flügel von Tripo ungleich gestellt + Schwanz seitlich gebogen; Rig/Clips setzen Flügel und Schwanz absolut (symmetrisch)"
+mittellinie = "Schwanz seitlich gebogen (Referenzbild); Clips richten ihn absolut gerade aus"
+offene_flaechen = "Flügelhaut einseitig → rigging/winged_rig.py macht sie doppelseitig ([winged.double_sided])"
+boden = "Schwerpunkt durch den seitlich gebogenen Schwanz verschoben; in den Clips steht der Schwanz gerade hinter dem Körper"
+fussgruppen = "2 Füße vorhanden; Tripo zentriert den Rahmen samt seitlich gebogenem Schwanz, daher liegt ein Fuß scheinbar in der Mitte (Rig nimmt die Mitte zwischen den Füßen)"

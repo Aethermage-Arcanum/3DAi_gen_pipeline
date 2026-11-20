@@ -1,0 +1,56 @@
+# Skelett `winged` (rigging/winged_rig.py): Zweibeiner mit Flügeln – Wyvern/Drache (Muster drake), großer Vogel (bird).
+# Pro Kreatur überschreibbar in creature.toml unter [winged] (Unterabschnitte z. B. [winged.double_sided]).
+# Längen sind Anteile der Höhe H (Boden → höchster Punkt), damit die Werte für jede Größe passen.
+
+# --- Erkennung (rigging/winged_detect.py) ---
+cut_step = 0.01              # Abstand der waagerechten Schnitte (Schritt-Suche)
+ground_band = 0.02           # Vertices so nah am Boden gelten als Bodenkontakt (Füße)
+crotch_search_top = 0.7      # Schritt (Beine laufen zusammen) wird unterhalb dieser Höhe gesucht
+wing_plane = 0.2             # Seitenebene: alles weiter als das von der Mittelebene gilt als „seitlich“
+wing_min_verts = 80          # ein Flügel hat mindestens so viele Vertices jenseits der Seitenebene
+wing_cross_min = 0.4         # … und kreuzt die Seitenebene mindestens so hoch (Schulter; der Schwanz kreuzt tiefer)
+shoulder_in = 0.06           # Schultergelenk so weit innerhalb der Kreuzungsstelle …
+shoulder_down = 0.03         # … und so weit darunter (im Rumpf, nicht auf der Haut)
+shoulder_fwd = 0.0           # Schulter-x = vordere Flügel-Kreuzungsstelle + das (beide Seiten gleich; Tripo-Flügel oft schief)
+wrist_radius = 0.04          # Handgelenk = Mitte der Flügel-Vertices um den höchsten Flügelpunkt (Kralle/Dorn)
+elbow_share = 0.45           # Ellbogen = so weit auf dem Weg Schulter → Handgelenk (Anteil der Länge)
+hand_share = 0.3             # Weg Handgelenk → Spitze: Hand (Mittelhand) bis hier, dann Finger_1, Finger_2
+hip_up = 0.05                # Hüftgelenk so weit über dem Schritt
+chest_back = 0.02            # Brust-Ende (Chest-Spitze) so weit hinter der Schulterlinie …
+chest_down = 0.04            # … und so weit unter den Schultergelenken
+ring_step = 0.025            # Ringbreite für die Mittellinien von Hals und Schwanz
+neck_stop = 0.06             # Hals-Mittellinie endet so nah an der Brust …
+neck_r_max = 0.09            # … oder wo der Ring breiter wird als das (Kopf/Hals geht in den Rumpf über); der Rest
+                             # bis zur Brust wird gerade verbunden
+tail_stop = 0.06             # Schwanz-Mittellinie endet so nah am Becken
+head_share = 0.3             # Kopf = dieser Anteil der Linie Brust → Schnauze/Schnabelspitze
+chest_share = 0.12           # Brust-Knochen reicht so weit auf diese Linie (Halsansatz)
+
+# --- Gelenke ---
+knee_forward = 0.08          # Knie (im Körper versteckt) so weit vor der Hüfte …
+knee_down = 0.1              # … und so weit darunter
+hallux_height = 0.45         # Hinterzehe: Bein-Vertices hinter dem Ballen bis zu diesem Anteil der Fersenhöhe → nur Toe
+ball_height = 0.03           # Fußballen (Zehenansatz) über dem Boden
+heel_window = [0.15, 0.75]   # Ferse („Vogelknie“) = am weitesten hinten liegender Punkt der Bein-Mittellinie (Anteil Ballen → Hüfte)
+
+# --- Gewichte ---
+falloff = 4
+smooth_iterations = 6
+smooth_factor = 0.5
+leg_blend = 0.06             # Übergang Becken ↔ Oberschenkel um den Schritt
+wing_body_blend = 0.08       # Band beidseits der Grenze Flügel ↔ Rumpf (über die Oberfläche), in dem beide mischen
+shoulder_radius = 0.1        # Rumpf-Vertices so nah am Schultergelenk dürfen am Flügel (Schlüsselbein/Oberarm) hängen
+foot_rigid = 0.04            # Fußsohle: bis zu dieser Höhe nur Foot/Toe, hinter dem Ballen nur Toe (Hinterzehe)
+jaw_hinge = 0.3              # Kiefergelenk: so weit vom Kopfansatz Richtung Schnauze (Anteil Kopflänge)
+jaw_hinge_blend = 0.15       # weicher Übergang hinter/vor dem Gelenk (Anteil Kopflänge)
+jaw_gap = 0.0                # Maullinie so weit unter der Kopfachse (Anteil H); darunter = Unterkiefer/-schnabel
+jaw_depth_blend = 0.02       # weicher Übergang an der Maullinie (Anteil H)
+jaw_smooth = 3
+neck_blend = 0.03            # Hals-Knochen wirken nur vor der Brust-Ebene (+ so viel Übergang)
+clavicle_in = 0.4            # Schlüsselbein beginnt so weit von der Brust Richtung Schulter
+part_attach = 0.02           # lose Mesh-Teile: Vertices so nah am Hauptmesh sind die Ansatzstelle
+
+[double_sided]               # einseitige Flächen (Flügelhaut, Federn) doppelseitig machen (rigging/double_sided.py)
+enabled = true
+min_area = 0.002
+offset = 0.001

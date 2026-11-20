@@ -1,0 +1,147 @@
+{
+  "skeleton": "winged",
+  "file": "BonepickerVulture.fbx",
+  "meshes": 1,
+  "triangles": 4552,
+  "bones": 36,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3"
+  ],
+  "textures": [
+    [
+      "Color_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Attack1",
+      [
+        1,
+        35
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Attack2",
+      [
+        1,
+        43
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Fly",
+      [
+        1,
+        23
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Glide",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Hit",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Land",
+      [
+        1,
+        49
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Ready",
+      [
+        1,
+        45
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Run",
+      [
+        1,
+        19
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_TakeOff",
+      [
+        1,
+        53
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_TurnLeft",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_TurnRight",
+      [
+        1,
+        25
+      ]
+    ],
+    [
+      "BonepickerVulture|BonepickerVulture|Winged_Bird_Walk",
+      [
+        1,
+        27
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.78,
+    0.62
+  ],
+  "foot_moves_m": 0.1386,
+  "dimensions_m": [
+    1.148,
+    0.775,
+    0.657
+  ],
+  "dangling": {
+    "domain": "CORNER",
+    "values": 13656,
+    "marked": 1570,
+    "max": 1.0
+  },
+  "ok": true
+}

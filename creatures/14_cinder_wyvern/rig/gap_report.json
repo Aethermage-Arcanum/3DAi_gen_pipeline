@@ -1,0 +1,24 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0183,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Winged_Drake_Attack1": 0.0,
+    "Winged_Drake_Attack2": 0.0,
+    "Winged_Drake_Death": 0.0,
+    "Winged_Drake_Fly": 0.0,
+    "Winged_Drake_Glide": 0.0,
+    "Winged_Drake_Hit": 0.0,
+    "Winged_Drake_Idle": 0.0,
+    "Winged_Drake_Land": 0.0,
+    "Winged_Drake_Ready": 0.0,
+    "Winged_Drake_Run": 0.0,
+    "Winged_Drake_TakeOff": 0.0,
+    "Winged_Drake_TurnLeft": 0.0,
+    "Winged_Drake_TurnRight": 0.0,
+    "Winged_Drake_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

@@ -96,6 +96,10 @@ haengende_teile = { aktiv = true }
 # aufrechter Zweibeiner mit langen Armen (Treant, Golem, Brute): 2 Füße am Boden, Hände hängen frei darüber
 fussgruppen = { erwartet = 2 }
 
+[skelett.winged]
+# Zweibeiner mit Flügeln (Wyvern, Geier): 2 Füße am Boden; Flügel/Schwanz dürfen schief stehen (Rig gibt sie absolut vor)
+fussgruppen = { erwartet = 2 }
+
 [skelett.hexapod]
 # erwartet = 2 × Anzahl [motion.legs] walking_slots (Taster erreichen den Boden nicht), sonst 6
 fussgruppen = { erwartet = 6 }

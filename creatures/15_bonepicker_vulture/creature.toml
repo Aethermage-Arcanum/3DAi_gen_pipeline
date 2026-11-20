@@ -16,3 +16,22 @@ role = "style"
 style = "winged/bird"
 variant = ""
 vorbild = ["Gänsegeier kreist in der Thermik", "Habicht/Adler – Sturzflug mit Krallen", "Geier – Landung, Hüpfen und Hacken am Aas"]
+
+# Rig (rigging/winged_rig.py, Skelett winged): Federspitzen (Hand- und Armschwingen, Halskrause) sind bei Tripo einseitig
+# (model_check: 6 Bereiche, 332 Fl.) → doppelseitig. Lose Teile (Brustknochen-Platte, Halsknochen) hängen je Vertex am
+# nächsten Haupt-Mesh-Vertex. Schnabel und Knochenkamm bleiben starr (Kopf/Kiefer).
+[winged.double_sided]
+enabled = true
+
+# Frei hängende Teile (rigging/dangling.py): Halskrause + Brust-/Bauchfedern schwingen im Unity-Shader nach.
+# Flügel-Federspitzen NICHT (sie folgen den Flügelknochen), Schnabel/Kamm/Knochen sind dick → bleiben starr.
+[dangling]
+amplitude = 0.015
+frequency = 0.9
+[[dangling.region]]
+bones = ["Neck_1", "Neck_2", "Chest", "Spine_2"]
+
+# Modellprüfung: gewollte Befunde (Sichtprüfung B, 2026-11-20, winged-Agent)
+[model_check.freigabe]
+offene_flaechen = "Federn einseitig → rigging/winged_rig.py macht sie doppelseitig ([winged.double_sided])"
+boden = "Geier steht schräg vorgebeugt mit S-Hals; Schwerpunkt vor den Füßen ist gewollt (Referenzbild)"

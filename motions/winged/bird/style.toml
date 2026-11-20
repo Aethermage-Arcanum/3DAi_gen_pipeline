@@ -1,0 +1,196 @@
+# Bewegungsmuster winged/bird – großer Aasvogel (Bonepicker Vulture): watschelt und hüpft am Boden, hackt mit dem ganzen
+# Körper, springt mit Krallen voraus, fliegt mit schweren, langsamen Schlägen und segelt in der Thermik.
+# Vorbilder (Links im README): Gänsegeier (Landung, Hüpfen am Aas, Hacken/Reißen, Flügelschlag, Kreisen),
+# Geier/Adler im Streit am Kadaver (Sprung mit Krallen voraus, Flügel als Mantel), Habicht/Adler (Sturz/Krallen).
+# Einheiten: Längen als Anteil der Hüfthöhe (LEGLEN, Schritt/Hub) bzw. der Körperhöhe (HGT, Höhen/Versatz), Winkel in Grad.
+
+[meta]
+skeleton = "winged"
+style = "bird"
+clip_prefix = "Winged_Bird"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death",
+         "Fly", "Glide", "TakeOff", "Land"]
+inherit = { turn = "walk" }
+
+[rig]
+thigh_stiffness = 0.6        # Vogel: Oberschenkel steckt im Gefieder, bewegt sich kaum
+
+[wing_shape]                 # Flügelform = Ruheform des Modells; Zuschläge je Knochen in der Flügelebene (+ = nach hinten)
+#                  UpperArm Forearm Hand Finger_1 Finger_2
+fold_delta_deg   = [ 30,  -25,   30,  30,  30]    # fold = 1: Flügel angelegt (Hand liegt am Unterarm)
+spread_delta_deg = [ -6,   10,    0,  -4,  -6]    # fold = -1: Ellbogen geöffnet, Handschwingen gefächert
+clavicle_deg = [0.0, 10.0]
+
+[tail_shape]
+droop_deg = 18               # Steuerfedern hängen schräg nach hinten-unten
+curve_deg = [0, 0, 0, 0, 0, 0]
+
+[stand]                      # Standhaltung ABSOLUT
+rise_deg = 40                # Rumpf-Achse Becken → Brust (Geier steht schräg aufgerichtet, Hals in S-Kurve)
+wing = { fold = 0.25, elev = -12, sweep = -32, pitch = 42, arm = 0 }   # halb offen hängend wie im Referenzbild
+
+[walk]   # Watscheln: kurze Schritte, Körper rollt seitlich, Kopf nickt, Flügel hängen halb offen und balancieren
+cycle_frames = 26            # 1,15 Hz
+duty = 0.6
+order = { L = 0.0, R = 0.5 }
+stride = 0.55
+lift = 0.25
+lift_peak = 0.42
+toe_curl_deg = 35            # Zehen schließen sich im Schwung (Vogelfuß)
+rise_deg = 34
+bob = 0.01
+bob_freq = 2
+settle = 0.06
+sway = 0.025                 # watscheln
+roll_deg = 6
+bend_deg = 3
+hip_yaw_deg = 5
+head_counter = 0.8
+head_bob_deg = 9             # Kopf nickt (halten … vorschnellen), 2× pro Zyklus
+bob_head_freq = 2
+tail_yaw_deg = 5
+tail_pitch_deg = 4
+tail_lag = 0.08
+wing_swing_deg = 4
+wing_lift_deg = 4
+
+[run]    # beidbeiniges Hüpfen (Geier am Aas): Füße fast gleichzeitig, Körper im Bogen, Flügel schlagen pro Sprung
+cycle_frames = 18            # 1,7 Sprünge/s
+duty = 0.42
+order = { L = 0.0, R = 0.06 }
+stride = 0.9
+lift = 0.3
+lift_peak = 0.4
+toe_curl_deg = 40
+rise_deg = 30
+bob = 0.04
+bob_freq = 1
+settle = 0.12
+sway = 0.004
+roll_deg = 1
+bend_deg = 1
+hip_yaw_deg = 1
+head_counter = 0.5
+head_bob_deg = 6
+bob_head_freq = 1
+head_phase = 0.2
+tail_yaw_deg = 3
+tail_pitch_deg = 8
+tail_lag = 0.07
+wing_swing_deg = 3
+wing_lift_deg = 22           # Flügel heben sich bei jedem Sprung (Balance/Schub)
+wing = { fold = -0.2, elev = -6, sweep = -22, pitch = 30, arm = 5 }
+
+[turn]   # erbt von walk: auf der Stelle trippeln, Rumpf biegt sich in die Kurve, Kopf führt, Schwanz schleppt nach
+cycle_frames = 24
+turn_deg = 50
+stride = 0.0
+lead_deg = 12
+head_lead_deg = 28
+tail_trail_deg = 14
+sway = 0.016
+
+[idle]   # Geier wartet: Kopf schaut umher, Gefieder/Flügel ordnen (kurzes Lüften), Schwanz wippt
+frames = 120
+breathe_deg = 2.0
+look_deg = 30
+tail_deg = 5
+wing_shuffle = 0.18
+
+[ready]  # Drohen: Flügel als Mantel weit gespreizt und nach vorn gezogen, Hals tief vorgestreckt, Schnabel offen (Fauchen)
+frames = 44
+crouch = 0.05
+rise_deg = 28
+wing = { fold = -0.7, elev = 0, sweep = -6, pitch = 40, arm = -10 }
+neck_deg = 22
+jaw_deg = 16
+tail_deg = 6
+sway = 0.012
+
+[attack1]  # Hacken + Reißen
+frames = 34
+windup_end = 10
+strike_end = 15
+hit_frame = 15
+tug_frames = 9
+rise_back_deg = 52
+rise_strike_deg = 12
+lunge = 0.12
+drop = 0.06
+neck_back_deg = -28
+neck_reach_deg = 32           # Hals beim Stoß gerade, so weit unter der Waagerechten (Welt)
+head_reach_deg = 25           # Schädel zusätzlich nach unten (Schnabel zum Ziel)
+jaw_open_deg = 20
+shake_deg = 10
+wing_up = { fold = -0.4, elev = 4, sweep = -10, pitch = 40, arm = -6 }
+
+[attack2]  # Sprung-Krallenhieb
+frames = 42
+jump_frame = 9
+air_frame = 11
+hit_frame = 19
+land_frame = 27
+crouch = 0.07
+jump = 0.28
+forward = 0.12
+absorb = 0.06
+rise_air_deg = 70
+talon_thigh_deg = 60
+talon_shin_deg = -15
+
+[hit]
+frames = 20
+jolt = 0.04
+pitch_deg = 14
+wing_flinch = 0.4
+
+[death]  # PLATZHALTER – Death pausiert (Nutzer)
+frames = 40
+sag = 0.3
+rise_deg = 15
+
+[fly]    # schwerer Ruderflug: tiefe, langsame Schläge, Handschwingen gespreizt im Abschlag, Flügel im Aufschlag angewinkelt
+cycle_frames = 22            # 1,36 Hz (Gänsegeier ≈ 1,5–2 Hz, Pennycuick-Skalierung; spielbar etwas langsamer)
+height = 0.5
+rise_deg = 10
+sweep = 8
+arm = 28
+down_share = 0.55
+elev_top = 50
+elev_bottom = -30
+fold_up = 0.6
+pitch_down = 4
+pitch_up = -10
+tip_lag = 0.09
+bob = 0.03
+body_pitch_deg = 3
+tail_pitch_deg = 5
+leg_tuck = 1.0
+
+[glide]  # Kreisen in der Thermik: Flügel flach und weit, leichte V-Stellung, Handschwingen gefächert (verdreht), langsames
+         # Kurven (Rollen), Schwanz steuert, Kopf schaut nach unten zum Aas
+frames = 120
+height = 0.5
+rise_deg = 8
+wing = { fold = -1.0, elev = 8, sweep = -4, pitch = 4, arm = 28, twist = [0, 0, 0, 6, 10], bend = [0, 0, -3, -4, -4] }
+bank_deg = 12
+tail_deg = 10
+
+[takeoff]  # Geier braucht Anlauf/Sprung: Ducken → Absprung → drei schwere Schläge (Endpose = Fly Frame 0)
+frames = 52
+crouch = 0.08
+jump_frame = 12
+liftoff_frame = 15
+
+[land]   # Anflug → Flügel bremsen (steil, gespreizt), Füße voraus → Aufsetzen → Einfedern → Flügel anlegen (Stand)
+frames = 48
+touch_frame = 24
+absorb = 0.08
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+ground_tolerance = 0.03
+stretch_min_edge = 0.004
+stretch_every = 3

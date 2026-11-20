@@ -1,0 +1,141 @@
+{
+  "skeleton": "winged",
+  "file": "CinderWyvern.fbx",
+  "meshes": 1,
+  "triangles": 4303,
+  "bones": 36,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_ab1d025e-3c10-4203-9955-12f08abe81d8"
+  ],
+  "textures": [
+    [
+      "Color_ab1d025e-3c10-4203-9955-12f08abe81d8",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_ab1d025e-3c10-4203-9955-12f08abe81d8",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Attack1",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Attack2",
+      [
+        1,
+        49
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Fly",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Glide",
+      [
+        1,
+        91
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Hit",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Land",
+      [
+        1,
+        51
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Ready",
+      [
+        1,
+        49
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Run",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_TakeOff",
+      [
+        1,
+        53
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_TurnLeft",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_TurnRight",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "CinderWyvern|CinderWyvern|Winged_Drake_Walk",
+      [
+        1,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.17,
+    -0.83,
+    0.54
+  ],
+  "foot_moves_m": 0.1098,
+  "dimensions_m": [
+    1.217,
+    1.091,
+    0.511
+  ],
+  "ok": true
+}

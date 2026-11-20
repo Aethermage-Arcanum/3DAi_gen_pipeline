@@ -1,0 +1,148 @@
+{
+  "skeleton": "winged",
+  "file": "CinderWyvern.glb",
+  "meshes": 1,
+  "triangles": 4303,
+  "bones": 36,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_ab1d025e-3c10-4203-9955-12f08abe81d8"
+  ],
+  "textures": [
+    [
+      "Color_ab1d025e-3c10-4203-9955-12f08abe81d8",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_ab1d025e-3c10-4203-9955-12f08abe81d8",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_ab1d025e-3c10-4203-9955-12f08abe81d8",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Winged_Drake_Attack1",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Winged_Drake_Attack2",
+      [
+        0,
+        38
+      ]
+    ],
+    [
+      "Winged_Drake_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Winged_Drake_Fly",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Winged_Drake_Glide",
+      [
+        0,
+        72
+      ]
+    ],
+    [
+      "Winged_Drake_Hit",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Winged_Drake_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Winged_Drake_Land",
+      [
+        0,
+        40
+      ]
+    ],
+    [
+      "Winged_Drake_Ready",
+      [
+        0,
+        38
+      ]
+    ],
+    [
+      "Winged_Drake_Run",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Winged_Drake_TakeOff",
+      [
+        0,
+        41
+      ]
+    ],
+    [
+      "Winged_Drake_TurnLeft",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Winged_Drake_TurnRight",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Winged_Drake_Walk",
+      [
+        0,
+        25
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.17,
+    -0.83,
+    0.54
+  ],
+  "foot_moves_m": 0.1029,
+  "dimensions_m": [
+    1.219,
+    1.086,
+    0.51
+  ],
+  "ok": true
+}

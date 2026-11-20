@@ -1,0 +1,154 @@
+{
+  "skeleton": "winged",
+  "file": "BonepickerVulture.glb",
+  "meshes": 1,
+  "triangles": 4552,
+  "bones": 36,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3"
+  ],
+  "textures": [
+    [
+      "Color_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_699014f4-85d6-4e5e-bfd5-ea4eec0f79b3",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Winged_Bird_Attack1",
+      [
+        0,
+        27
+      ]
+    ],
+    [
+      "Winged_Bird_Attack2",
+      [
+        0,
+        33
+      ]
+    ],
+    [
+      "Winged_Bird_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Winged_Bird_Fly",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Winged_Bird_Glide",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Winged_Bird_Hit",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Winged_Bird_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Winged_Bird_Land",
+      [
+        0,
+        38
+      ]
+    ],
+    [
+      "Winged_Bird_Ready",
+      [
+        0,
+        35
+      ]
+    ],
+    [
+      "Winged_Bird_Run",
+      [
+        0,
+        14
+      ]
+    ],
+    [
+      "Winged_Bird_TakeOff",
+      [
+        0,
+        41
+      ]
+    ],
+    [
+      "Winged_Bird_TurnLeft",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Winged_Bird_TurnRight",
+      [
+        0,
+        19
+      ]
+    ],
+    [
+      "Winged_Bird_Walk",
+      [
+        0,
+        20
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.78,
+    0.62
+  ],
+  "foot_moves_m": 0.1333,
+  "dimensions_m": [
+    1.149,
+    0.774,
+    0.659
+  ],
+  "dangling": {
+    "domain": "POINT",
+    "values": 13642,
+    "marked": 1591,
+    "max": 1.0
+  },
+  "ok": true
+}

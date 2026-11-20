@@ -134,3 +134,28 @@ Schulter), danach Glätten über die Kanten (weiche Manschetten), max. 4 Einflü
 & "D:\Blender\blender.exe" -b <rig>/upright_rigged.blend -P rigging/upright_review.py -- rig <bild.png>
 & "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/upright_review.py -- strip <bild.png> Upright_Treant_Walk 0,5,10 side,front,arpg
 ```
+
+## Skelett `winged` – Zweibeiner mit Flügeln (seit 2026-11-20)
+
+`winged_rig.py` (Rig), `winged_detect.py` (Erkennung, reines numpy), `winged_defaults.toml` (Stellschrauben, pro Kreatur
+`[winged]`), `winged_review.py` (Prüfbilder). Baukasten: `motions/winged/winged_kit.py`, Muster `motions/winged/drake/`
+(Cinder Wyvern) und `motions/winged/bird/` (Bonepicker Vulture). Knochen und Baukasten: `motions/winged/README.md`.
+
+**Erkennung** (auch bei schiefen Tripo-Flügeln und seitlich gebogenem Schwanz):
+- Füße = 2 Gruppen am Boden; ihre Mitte ist die Körper-Mittelebene (nicht die Mitte des Tripo-Rahmens).
+- Beine/Schritt über waagerechte Schnitte (Stücke, die den Boden berühren). Ferse = am weitesten hinten liegender Punkt
+  der Bein-Mittellinie, Knie im Körper vor der Hüfte (digitigrad).
+- Flügel = je Seite das größte Stück jenseits der Seitenebene `wing_plane`, das die Ebene hoch kreuzt (der Schwanz
+  kreuzt tief). Schultern symmetrisch (vordere Kreuzungsstelle), Handgelenk = höchster Flügelpunkt, Spitze = weitester
+  Punkt, Ellbogen/Hand/Finger entlang kürzester Wege über das Mesh. Flügelebene (Oberseite) aus Spannweite × Profil →
+  Eigenschaft `wing_normal_L/R` am Armature-Objekt.
+- Hals und Schwanz folgen der echten Mittellinie (Schwerpunkte gleich weit von der Spitze über die Oberfläche).
+
+**Gewichte:** 1/Abstand + Masken (Beine, Flügel, Kern), Glätten über Kanten; Band `wing_body_blend` beidseits der
+Grenze Flügel ↔ Rumpf (Flughaut-Ansatz verteilt die Dehnung statt einer Naht); Kiefer = untere Kopfhälfte vor dem
+Gelenk; Sohle starr, Hinterzehe nur am Toe; lose Teile je Vertex am nächsten Haupt-Vertex; `[winged.double_sided]`.
+
+```
+& "D:\Blender\blender.exe" -b <rig>/winged_rigged.blend -P rigging/winged_review.py -- rig <bild.png>
+& "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/winged_review.py -- strip <bild.png> Winged_Drake_Walk 0,8,16 arpg,side,front
+```

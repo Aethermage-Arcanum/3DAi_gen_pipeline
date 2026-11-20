@@ -1,0 +1,191 @@
+# Bewegungsmuster winged/drake – schwerer Wyvern (Cinder Wyvern): zweibeinig am Boden, Flügel halb gefaltet erhoben,
+# kämpft am Boden (Biss, Schwanzkeule), fliegt mit langsamen, kräftigen Schlägen.
+# Vorbilder (Links im README): Komodowaran (schwerer Gang, seitliches Rumpf-/Schwanzpendeln, Kopf schwingt),
+# Flughund/Fledermaus (Flügelschlag: Abschlag gestreckt, Aufschlag gefaltet; am Boden: Flügel als Stütze),
+# Adler/Pelikan (schwere Landung: Flügel bremsen steil, Beine voraus).
+# Einheiten: Längen als Anteil der Hüfthöhe (LEGLEN, Schritt/Hub) bzw. der Körperhöhe (HGT, Höhen/Versatz), Winkel in Grad.
+
+[meta]
+skeleton = "winged"
+style = "drake"
+clip_prefix = "Winged_Drake"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death",
+         "Fly", "Glide", "TakeOff", "Land"]
+inherit = { turn = "walk" }
+
+[rig]
+thigh_stiffness = 0.5        # Oberschenkel steckt im Körper
+
+[wing_shape]                 # Flügelform = Ruheform des Modells (Gelenkwinkel bleiben, die Haut ist so aufgespannt);
+                             # Zuschläge je Knochen in der Flügelebene (+ = nach hinten), Reihenfolge
+                             # UpperArm, Forearm, Hand, Finger_1, Finger_2:
+fold_delta_deg   = [ 35, -20,  25,  30,  32]    # fold = 1: Ellbogen + Handgelenk eingeklappt, Finger liegen am Unterarm
+spread_delta_deg = [ -6,  12,   2,   0,  -2]    # fold = -1: Ellbogen geöffnet (Handgelenk nie weiter als modelliert → Haut reißt nicht)
+clavicle_deg = [0.0, 12.0]   # Schlüsselbein: (vor, hoch) – beide Schultern gleich (Tripo-Schultern ungleich)
+
+[tail_shape]
+droop_deg = 6                # Schwanz waagerecht nach hinten, leicht gesenkt (schwer, Keule am Ende)
+curve_deg = [0, -2, 0, 2, 3, 3]   # Keule hängt etwas
+
+[stand]                      # Standhaltung ABSOLUT (nicht die schiefe Tripo-Pose)
+rise_deg = 55                # Rumpf-Achse Becken → Brust über der Waagerechten (aufgerichtet, Brust raus; Tripo ≈ 70)
+wing = { fold = 0.25, elev = 10, sweep = -12, pitch = 52, arm = 0 }   # erhoben, Haut schräg nach oben (von oben sichtbar)
+
+[walk]   # Komodowaran auf zwei Beinen: schwerer Schritt, Rumpf pendelt seitlich und biegt sich (Welle), Kopf hält
+         # Richtung, Schwanz schwingt als S-Welle verzögert nach, Flügel pendeln gegengleich zum Bein derselben Seite.
+cycle_frames = 32            # 0,94 Hz (Komodo ≈ 0,8–1,1 Hz)
+duty = 0.62
+order = { L = 0.0, R = 0.5 }
+stride = 0.75                # Anteil Beinlänge
+lift = 0.22
+lift_peak = 0.4
+toe_curl_deg = 25
+rise_deg = 47                # im Gehen etwas vorgebeugt
+bob = 0.012                  # Anteil HGT, 2× pro Zyklus
+settle = 0.06
+sway = 0.022                 # Gewicht übers Standbein (Anteil HGT)
+roll_deg = 4
+bend_deg = 7                 # Rumpf biegt sich seitlich (Waran-Welle)
+hip_yaw_deg = 6
+head_counter = 0.8           # Kopf dreht gegen die Rumpfbiegung (Blick bleibt vorn)
+tail_yaw_deg = 12            # Schwanz-Welle seitlich
+tail_lag = 0.08
+wing_swing_deg = 8           # Flügel pendeln vor/zurück (gegengleich zum Bein)
+wing_lift_deg = 4            # … und wippen beim Aufsetzen
+
+[run]    # schweres Rennen: Rumpf nach vorn, Flügel halb offen zum Balancieren, kurze Flugphase-ähnliche Sprünge
+cycle_frames = 20            # 1,5 Hz
+duty = 0.45
+order = { L = 0.0, R = 0.5 }
+stride = 1.05
+lift = 0.3
+lift_peak = 0.38
+toe_curl_deg = 35
+rise_deg = 32
+bob = 0.03
+settle = 0.05
+sway = 0.012
+roll_deg = 3
+bend_deg = 5
+hip_yaw_deg = 8
+head_counter = 0.7
+tail_yaw_deg = 8
+tail_lag = 0.07
+wing_swing_deg = 10
+wing_lift_deg = 10
+wing = { fold = 0.1, elev = 12, sweep = -5, pitch = 40, arm = 10 }
+
+[turn]   # erbt von walk: auf der Stelle, Rumpf biegt sich in die Kurve, Kopf führt, Schwanz schleppt nach
+cycle_frames = 30
+turn_deg = 45                # pro Zyklus
+stride = 0.0
+lead_deg = 16                # Rumpf biegt sich der Drehung voraus
+head_lead_deg = 22           # Kopf/Hals noch weiter voraus
+tail_trail_deg = 20          # Schwanz bleibt zurück
+sway = 0.016
+
+[idle]   # schweres Atmen, Kopf schaut umher, Schwanz schwingt langsam, Flügel „richten sich“ (kurzes Falten/Öffnen)
+frames = 120
+breathe_deg = 2.5
+look_deg = 22
+tail_deg = 8
+wing_shuffle = 0.12          # Faltung schwankt
+
+[ready]  # Drohen: Flügel weit gespreizt und erhoben (Mantel), Hals tief nach vorn, Maul auf, Schwanz peitscht
+frames = 48
+crouch = 0.04
+rise_deg = 42
+wing = { fold = -0.7, elev = 16, sweep = 4, pitch = 48, arm = -6 }
+neck_deg = 18                # Hals senkt sich nach vorn
+jaw_deg = 22
+tail_deg = 14
+sway = 0.01
+
+[attack1]  # Biss-Ausfall mit dem ganzen Körper: zurücklehnen + Flügel hoch → Körper schießt vor, Hals streckt,
+           # Flügel schlagen nach vorn-unten (Schwung), Maul schnappt zu (Treffer) → zurück
+frames = 40
+windup_end = 13
+strike_end = 21
+hit_frame = 20
+rise_back_deg = 68           # beim Ausholen aufgerichtet
+rise_strike_deg = 16         # beim Zuschnappen fast waagerecht vorgestreckt
+lunge = 0.2                  # Körper vor (Anteil HGT)
+drop = 0.05
+neck_back_deg = -20
+neck_strike_deg = 30
+jaw_open_deg = 32
+wing_up = { fold = 0.2, elev = 24, sweep = -18, pitch = 62, arm = -8 }
+wing_strike = { fold = -0.6, elev = 0, sweep = 10, pitch = 40, arm = 12 }
+
+[attack2]  # Schwanzkeulen-Hieb: Ausholen (Rumpf dreht weg, Schwanz holt aus) → Ganzkörper-Peitsche (Becken → Brust →
+           # Schwanzwurzel → Keule, jedes Glied später), Flügel spreizen zum Balancieren, Kopf schaut zum Ziel
+frames = 48
+windup_end = 16
+strike_end = 28
+hit_frame = 29
+yaw_wind_deg = 18            # Körper dreht beim Ausholen nach links (Schwanz geht nach rechts) …
+yaw_strike_deg = -40         # … und schwingt dann nach rechts herum (Keule fegt nach links vorn)
+bend_wind_deg = 12
+bend_strike_deg = -22
+tail_wind_deg = -35          # Schwanz-Ausschlag je Glied-Summe
+tail_strike_deg = 75
+tail_lift_deg = -14          # Keule hebt sich beim Schlag
+chain_lag = 1.0              # Frames Verzögerung je Glied
+wing = { fold = -0.5, elev = 12, sweep = 0, pitch = 40, arm = 5 }
+
+[hit]
+frames = 20
+jolt = 0.035
+pitch_deg = 14
+wing_flinch = 0.3
+
+[death]  # PLATZHALTER – Death pausiert (Nutzer)
+frames = 40
+sag = 0.25
+rise_deg = 25
+
+[fly]    # Flügelschlag wie Flughund: Abschlag mit gestrecktem Flügel (Auftrieb), Aufschlag mit angewinkeltem Flügel
+         # (Hand eingeklappt), Körper hebt sich im Abschlag, Kopf bleibt ruhig, Beine angezogen, Schwanz steuert.
+cycle_frames = 26            # 1,15 Hz (großes Tier: deutlich langsamer als ein Flughund mit ≈ 2–3 Hz)
+height = 0.55                # Körper so hoch über dem Boden (Anteil HGT)
+rise_deg = 12                # fast waagerecht
+down_share = 0.55            # Anteil Abschlag
+sweep = 10                   # Flügel etwas nach hinten gefegt (Handgelenk sonst vor dem Kopf)
+arm = 25                     # Flügel in der Ebene nach hinten gedreht: Arm wird zur Vorderkante, Finger fegen zurück
+elev_top = 58
+elev_bottom = -36
+fold_up = 0.5               # Faltung im Aufschlag
+pitch_down = 6               # Anstellwinkel im Abschlag
+pitch_up = -12               # im Aufschlag
+tip_lag = 0.08               # Flügelspitze folgt verzögert (Zyklen)
+bob = 0.03
+body_pitch_deg = 3
+tail_pitch_deg = 6
+leg_tuck = 1.0
+
+[glide]  # Segeln: Flügel weit offen, leichte V-Stellung, langsames Kurven (Rollen) und Schwanz als Ruder
+frames = 90
+height = 0.55
+rise_deg = 8
+wing = { fold = -1.0, elev = 6, sweep = 0, pitch = 6, arm = 25, bend = [0, 0, -3, -3, -2] }
+bank_deg = 10
+tail_deg = 8
+
+[takeoff]  # Ducken → Absprung (Beine strecken) + 2 kräftige Schläge → Flughöhe (Endpose = Fly Frame 0)
+frames = 52
+crouch = 0.08
+jump_frame = 14
+liftoff_frame = 17
+
+[land]   # Anflug → Flügel bremsen (steil, nach vorn), Beine voraus → Aufsetzen → Einfedern → Flügel falten (Stand)
+frames = 50
+touch_frame = 26
+absorb = 0.07
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+ground_tolerance = 0.03
+stretch_min_edge = 0.004
+stretch_every = 3

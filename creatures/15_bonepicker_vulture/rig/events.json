@@ -1,0 +1,80 @@
+{
+  "fps": 30,
+  "clips": {
+    "Winged_Bird_Walk": [
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Bird_Run": [
+      {
+        "frame": 17,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Bird_Idle": [],
+    "Winged_Bird_Ready": [],
+    "Winged_Bird_TurnLeft": [
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Bird_TurnRight": [
+      {
+        "frame": 12,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Winged_Bird_Attack1": [
+      {
+        "frame": 15,
+        "event": "hit"
+      }
+    ],
+    "Winged_Bird_Attack2": [
+      {
+        "frame": 9,
+        "event": "jump"
+      },
+      {
+        "frame": 19,
+        "event": "hit"
+      },
+      {
+        "frame": 27,
+        "event": "land"
+      }
+    ],
+    "Winged_Bird_Hit": [],
+    "Winged_Bird_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ],
+    "Winged_Bird_Fly": [],
+    "Winged_Bird_Glide": [],
+    "Winged_Bird_TakeOff": [
+      {
+        "frame": 12,
+        "event": "jump"
+      },
+      {
+        "frame": 15,
+        "event": "liftoff"
+      }
+    ],
+    "Winged_Bird_Land": [
+      {
+        "frame": 24,
+        "event": "land"
+      }
+    ]
+  }
+}

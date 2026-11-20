@@ -1,0 +1,24 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.017,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Winged_Bird_Attack1": 0.0,
+    "Winged_Bird_Attack2": 0.0,
+    "Winged_Bird_Death": 0.0,
+    "Winged_Bird_Fly": 0.0,
+    "Winged_Bird_Glide": 0.0,
+    "Winged_Bird_Hit": 0.0,
+    "Winged_Bird_Idle": 0.0,
+    "Winged_Bird_Land": 0.0,
+    "Winged_Bird_Ready": 0.0,
+    "Winged_Bird_Run": 0.0,
+    "Winged_Bird_TakeOff": 0.0,
+    "Winged_Bird_TurnLeft": 0.0,
+    "Winged_Bird_TurnRight": 0.0,
+    "Winged_Bird_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}
