@@ -24,7 +24,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | sand_leviathan | legless/sandworm | rundes Maul (Nutzer bevorzugt) |
 | frost_colossus | quadruped/gorilla | – |
 | ruin_howler | quadruped/monkey | – |
-| oasis_gulper | quadruped/frog | **v2 aus der Sprung-Pose** (alle 4 Füße am Boden, Beine gestreckt); v1 liegt in `raw/_v1`. Die Hocke braucht **Gelenk-Verdichtung (C9)**. |
+| oasis_gulper | quadruped/frog | **v2 aus der Sprung-Pose** (alle 4 Füße am Boden, Beine gestreckt); v1 liegt in `raw/_v1`. Die Hocke braucht ggf. **Gelenk-Verdichtung (C9, Baustein fertig)**. Rig bricht ab (C16). |
 | reality_ripper | hexapod/mantis | Sensenklingen lose → starr an die Arm-Knochen; Hinterbeine per IK auf den Boden |
 | gloomfang_centipede | legless/centipede | aus dem Design-Bild allein generiert (`tripo_run.py --single design.png`); Beine stehen waagerecht ab → nach unten setzen |
 | bog_warden | upright/treant | **neues Skelett `upright`** – Agent läuft bzw. ist unterbrochen (siehe unten) |
@@ -35,13 +35,16 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 - **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
 - **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
 - **Noch keine Modelle:** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, void_manifestation (neu), sowie die übrigen 11 neuen (geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen). Die Prompts für alle sind fertig.
-- **Git:** zuletzt `5b09992` (C14 Geweih-Fix), alles committet. Push nur mit Freigabe des Nutzers.
+- **Git:** zuletzt `1d2305b` (C9 Gelenk-Verdichtung), alles committet. Push nur mit Freigabe des Nutzers.
 
 ## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
 2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
 3. ✅ **`winged` fertig** (Commit 38ce1c7): Cinder Wyvern 14 (winged/drake, bleibt zweibeinig – Nutzer 2026-11-20) und Bonepicker Vulture 15 (winged/bird), je 14 Clips, Death nur Platzhalter. Bewegung muss der Nutzer noch per Roh-GIFs abnehmen. Reste (Vorschau-Kamera, Feueratem, Geier-Hinterzehe) in BACKLOG G12; echte Fledermaus = G11 (Todo, nicht vorziehen).
-4. ✅ **Geweih-Fix Hollow Stag (C14)** erledigt 2026-11-20 (Commit 5b09992; Geweih 0,0 cm Abweichung, Wolf und Echse identisch; Abnahme der GIFs durch den Nutzer steht aus), jetzt **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+4. ✅ **Geweih-Fix Hollow Stag (C14)** erledigt 2026-11-20 (Commit 5b09992; Geweih 0,0 cm Abweichung, Wolf und Echse identisch; Abnahme der GIFs durch den Nutzer steht aus).
+   - ✅ **C9 Gelenk-Verdichtung** als Baustein fertig (Commit 1d2305b, `rigging/joint_densify.py`, opt-in `[joint_densify]`, bei keiner Kreatur eingeschaltet). Wolf-Kopie: +800 Tris, Dehnung im Run 2,05 → 1,78, aus der Spielkamera kaum sichtbar, Raptor sogar schlechter. Nutzerkritik: am irrelevanten Sprunggelenk getestet.
+   - 🔄 **jetzt C15: Rumpf/Hals-Dehnung** (Wolf Bauch/Rücken, Hirsch Hals), Build-Agent läuft. Ursache sind die Gewichte (Wolf Hüftflanke 2,89; Hirsch Tail_1 zieht mit 42 % am Knie; Raptor/Geier/Wyvern an der harten Sohle). **Regel: Prüfungen zuerst an dem, was die ARPG-Kamera sieht.**
+   - Danach die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Spinne → Schildkröte → Sandwurm → Gorilla → Affe → Frosch (inkl. Rig-Fehler **C16**: `center_at` liefert None → TypeError in `quadruped_rig.py`, vor dem Frosch-Muster lösen) → Mantis → Tausendfüßer. Immer nur ein Bau-Agent.
    - ⏭ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
 6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
@@ -94,7 +97,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 - **Eng stehende Beine** → `adaptive_belly_strip`. Zu breite Hinterbeine → `narrow_hind_legs`. Geweih/Hörner → `rigid_head_above`.
 - **Einseitige Flächen** (Flügel, Krausen) → `double_sided.py`.
 - **Unity-Viewer:** Boden = Bindepose (`RestLowestPoint`), nicht die erste Take-Pose.
-- **Dehnung** ist nur eine Info. Sie wird am Mesh gelöst, nie durch kleinere Bewegung. Die Gelenk-Verdichtung (C9) ist noch offen.
+- **Dehnung** ist nur eine Info. Sie wird am Mesh gelöst, nie durch kleinere Bewegung. Die Gelenk-Verdichtung (C9) ist als Baustein fertig (opt-in). Die größten Dehnungen kommen aber aus den Gewichten (C15).
 - **TurnLeft-Vorzeichen** war bei Vierbeiner und Raptor falsch. Bei jedem neuen Muster prüfen.
 - **Windows-Dateisperre** beim GIF-Aufräumen → in der Pipeline behoben (Wiederholung).
 - **Death-Clips:** Der Code ist überall unverändert (Nutzer-Anweisung). Durch Rig-Änderungen weichen einzelne Death-Ergebnisse leicht ab (Skorpion, Tentakel, Raptor-Füße, Hirsch-Lücke 3,05 cm begründet freigegeben).
