@@ -402,6 +402,9 @@ pose = "body level, standing on its four walking legs spread evenly to both side
 #   varianten  6er-Satz nach docs/recherche/RECHERCHE_MONSTERARTEN.md §6.2: Grundform + 4 Biom-Varianten + Elite-Addon.
 #              tint = Tönung, addons = Anbauteile (Geometry Nodes), size = Skalierung, effect = Element/Fähigkeit.
 #              Gleicher Mesh, gleiches Rig, gleiche Clips – Varianten kosten keine Tripo-Credits.
+#              Neu (2026-11-20, Schritt 0 „Varianten zuerst“, optional): slider = Proportions-Slider (Text),
+#              eigene_basis = "nein|grenzfall|ja", look = kurze englische Bildnotiz für den Varianten-Bogen.
+#   base_look  (optional) eingedampfte Basis-Kreatur – ersetzt `look` in Stufe 1 + 2. Ablauf: README „Schritt 0“.
 # motion = Skelett/Muster – Skelette upright, winged, amorph, static und viele Muster sind NOCH NICHT GEBAUT.
 # =============================================================================================================
 [[c]]

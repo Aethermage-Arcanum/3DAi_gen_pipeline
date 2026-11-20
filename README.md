@@ -4,7 +4,7 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 
 ## Ablauf
 
-**Varianten zuerst (seit 2026-11-20, BACKLOG G8 d – Standard für neue Kreaturen, Schritt 0):** Pro Monster erst 5–6 Varianten designen/brainstormen (Grundform, Biome, Elite). Was alle gemeinsam haben (Silhouette, Körperbau, Gliedmaßen, Kopf-Grundform) wird die **Basis-Kreatur**; nur sie geht ohne variable Details durch die Schritte 1–5 (Tripo). Unterschiede: nur Farbe → Tönung · Teile dazu/weg (Stacheln, Eiszapfen, Moos, Kristalle …) → Anbauteile per Geometry Nodes mit Slidern · dicker/größer/längere Hörner → Proportions-Slider · Glut/Frost/Gift → Shader + Partikel in Unity · starke Silhouetten-Abweichung → eigene Basis-Kreatur. Alle Varianten teilen ein Rig und einen Clip-Satz. **Bestehende Modelle** bleiben: eingebrannte Details, Varianten nur über Tönung + Anbauteile. Ziel: 250–500 Varianten aus 50–100 Basis-Monstern. *Noch nicht gebaut:* Prompt-Schritt fürs Brainstorming (vor Stufe 1) und Varianten-Baukasten (BACKLOG G9, nach den Skeletten). Die Tabelle unten beschreibt Schritt 1–5 pro Basis-Kreatur.
+**Varianten zuerst (seit 2026-11-20, BACKLOG G8 d – Standard für neue Kreaturen, Schritt 0):** Pro Monster erst 5–6 Varianten designen/brainstormen (Grundform, Biome, Elite). Was alle gemeinsam haben (Silhouette, Körperbau, Gliedmaßen, Kopf-Grundform) wird die **Basis-Kreatur**; nur sie geht ohne variable Details durch die Schritte 1–5 (Tripo). Unterschiede: nur Farbe → Tönung · Teile dazu/weg (Stacheln, Eiszapfen, Moos, Kristalle …) → Anbauteile per Geometry Nodes mit Slidern · dicker/größer/längere Hörner → Proportions-Slider · Glut/Frost/Gift → Shader + Partikel in Unity · starke Silhouetten-Abweichung → eigene Basis-Kreatur. Alle Varianten teilen ein Rig und einen Clip-Satz. **Bestehende Modelle** bleiben: eingebrannte Details, Varianten nur über Tönung + Anbauteile. Ziel: 250–500 Varianten aus 50–100 Basis-Monstern. Prompt-Schritt dafür: „Schritt 0 – Varianten“ unten. *Noch nicht gebaut:* Varianten-Baukasten (Geometry Nodes, BACKLOG G9, nach den Skeletten). Die Tabelle unten beschreibt Schritt 1–5 pro Basis-Kreatur.
 
 | # | Schritt | Wer | Kosten |
 |---|---|---|---|
@@ -29,6 +29,24 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 **Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](docs/archiv/ROADMAP_20_KREATUREN.md). **16 Ergänzungen** (ohne Concept, Claude hat ausgewählt): [ROSTER_ERWEITERUNG_VORSCHLAG.md](docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md) → Abschnitt „Gewählt“.
 **Biome:** [templates/biomes.toml](templates/biomes.toml) – zentrale Liste mit 18 Biomen (Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta, Gras/Steppe, Stein, Kristall, Tempel/Ruinen, Oase, Dschungel, Pilzwald, Eis), je Stimmung, Tönungs-Palette, Akzent/Glühen, typische Anbauteile (Geometry Nodes) und Element-Effekt. Varianten pro Kreatur (Grundform + 4 Biome + Elite-Addon) stehen in `creatures/roster.toml` → `varianten` (Bestand; neue Kreaturen: „Varianten zuerst“, siehe oben).
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
+
+### Schritt 0 – Varianten (seit 2026-11-20, BACKLOG G9; nur neue Kreaturen)
+
+1. **Varianten festlegen (Nutzer):** 5–6 Varianten (Grundform, Biome, Elite) als `varianten` in `creatures/roster.toml` eintragen (bzw. `creature.toml`). Danach `python scripts/make_roster.py`, falls die Kreatur noch keinen Ordner hat.
+2. `python scripts/make_prompts.py <id> --stage variants` → `creatures/<NN_id>/VARIANTEN.md` (aus [templates/VARIANTEN_VORLAGE.md](templates/VARIANTEN_VORLAGE.md), vorbefüllt; wird **nie überschrieben**, wenn sie schon existiert) und `prompts_varianten.md`. Mit `--out <ordner>` landet beides woanders, z. B. zum Testen.
+3. **Optional – Varianten-Bogen:** Prompt aus `prompts_varianten.md` + Stil-Referenz in ChatGPT → **ein** Bild mit allen Varianten nebeneinander (gleiche Pose und Ansicht, alle Beine in voller Länge). Das Bild dient nur zum Vergleichen und geht nicht zu Tripo.
+4. **Basis eindampfen + einsortieren** in `VARIANTEN.md`: Gemeinsames → Basis-Kreatur; Unterschiede → Tönung (`tint`) · Anbauteile (`addons`) · Proportions-Slider (`size`, `slider`) · Shader/Partikel (`effect`). Bei starker Silhouetten-Abweichung `eigene_basis = "ja"` setzen: Die Variante wird dann eine eigene Kreatur.
+5. **`base_look`** (Englisch, qualitativ, ohne variable Details) in den Roster-Eintrag schreiben. Danach erzeugt `python scripts/make_prompts.py <id>` die Stufen 1 und 2 aus `base_look` statt aus `look`. Ab hier läuft alles wie in der Tabelle oben.
+
+Datenformat (baut auf dem bestehenden `varianten` auf, alle neuen Felder sind optional):
+```toml
+base_look = """A massive, hump-backed quadruped ... (no ice, no plates)"""
+varianten = [
+  { art = "grund", name = "Rimehide Bear", biome = "ice", tint = "Weiß/Stahlblau", addons = "Eisplatten", size = 1.0,
+    effect = "Frost-Atem", slider = "", eigene_basis = "nein", look = "pale blue-white fur, clear ice slabs on the back" },
+]
+```
+`look` pro Variante ist eine kurze englische Beschreibung für den Varianten-Bogen. Fehlt sie, setzt das Skript die Zeile aus `tint`/`addons`/`slider`/`size` zusammen. Kreaturen ohne die neuen Felder bekommen exakt dieselben Prompts wie vorher.
 
 ## Stellschrauben
 
