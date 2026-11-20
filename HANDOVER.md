@@ -35,13 +35,13 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 - **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
 - **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
 - **Noch keine Modelle:** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, void_manifestation (neu), sowie die übrigen 11 neuen (geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen). Die Prompts für alle sind fertig.
-- **Git:** zuletzt `73990c3` (vor dem Doku-Commit), alles committet. Push nur mit Freigabe des Nutzers.
+- **Git:** zuletzt `5b09992` (C14 Geweih-Fix), alles committet. Push nur mit Freigabe des Nutzers.
 
 ## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
 2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
 3. ✅ **`winged` fertig** (Commit 38ce1c7): Cinder Wyvern 14 (winged/drake, bleibt zweibeinig – Nutzer 2026-11-20) und Bonepicker Vulture 15 (winged/bird), je 14 Clips, Death nur Platzhalter. Bewegung muss der Nutzer noch per Roh-GIFs abnehmen. Reste (Vorschau-Kamera, Feueratem, Geier-Hinterzehe) in BACKLOG G12; echte Fledermaus = G11 (Todo, nicht vorziehen).
-4. 🔄 **Läuft jetzt: Geweih-Fix Hollow Stag (C14)** (Reihenfolge des Nutzers 2026-11-20, dringend; `rigid_head_above` in `rigging/quadruped_rig.py`, gekapselt, danach `regression.py --deep`, Roh- und End-GIFs), dann **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+4. ✅ **Geweih-Fix Hollow Stag (C14)** erledigt 2026-11-20 (Commit 5b09992; Geweih 0,0 cm Abweichung, Wolf und Echse identisch; Abnahme der GIFs durch den Nutzer steht aus), jetzt **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
    - ⏭ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
 6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
