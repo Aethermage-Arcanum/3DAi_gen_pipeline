@@ -16,6 +16,8 @@ Ohne Concept Art (seit 2026-11-18, Roster-Erweiterung: kein [[concept]] mit role
 Woher die Texte kommen (erster Treffer gilt):
   Beschreibung  `look` in creature.toml → `look` in creatures/roster.toml → `description` in creature.toml
   Pose          `pose` in creature.toml → `pose` in creatures/roster.toml → Bauplan (templates/bodyplans.toml)
+  Zusatz St. 1  `design_note` in creature.toml → `design_note` in creatures/roster.toml (optional, nur Stufe 1,
+                z. B. „Pose NICHT aus dem Concept übernehmen“ – Hollow Stag 2026-11-20, BACKLOG C12)
   Name          `title` in creature.toml → `design` in creatures/roster.toml → `name` (Kreatur-ID)
 
 Aufruf:  python scripts/make_prompts.py creatures/<NN_name>   (oder nur die ID)
@@ -68,7 +70,7 @@ def has_concept(cfg):
     return any(c["role"] == "design" for c in cfg.get("concept", []))
 
 
-def prompt_design(title, look, style, pose, concepts, cdir, cfg):
+def prompt_design(title, look, style, pose, concepts, cdir, cfg, note=""):
     """Stufe 1: ein sauberes Design-Bild aus dem (verpixelten) Concept + Beschreibung –
     oder ohne Concept nur aus Beschreibung + Stil-Referenz (Design-Entwurf)."""
     roles = []
@@ -83,6 +85,8 @@ def prompt_design(title, look, style, pose, concepts, cdir, cfg):
                              f"the description below adds the details.")
             if cfg.get("design_pick"):
                 roles.append(cfg["design_pick"])
+            if note:
+                roles.append(_clean(note) + ".")
         elif c["role"] == "style":
             roles.append(f"Image {i} is only an art-style reference: copy its rendering style, not the creatures in it.")
     img = cfg["images"]
@@ -139,7 +143,8 @@ def build(creature_dir):
     attach1 = [(cdir / c["file"]).resolve() for c in concepts]
     design = (cdir / DESIGN_FILE).resolve()
 
-    p1 = prompt_design(title, look, st["text"], pose, concepts, cdir, cfg)
+    note = cfg.get("design_note") or ros.get("design_note") or ""
+    p1 = prompt_design(title, look, st["text"], pose, concepts, cdir, cfg, note)
     p2 = prompt_views(title, look, pose, bp["camera"], views, cfg)
     names = ", ".join(f"`{v}.png`" for v in views)
     have = "✅ liegt schon vor" if design.exists() else "noch nicht vorhanden – erst Stufe 1"

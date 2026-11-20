@@ -445,7 +445,7 @@ Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\09_hollow_
 Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\09_hollow_stag\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
-Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
+Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Important: take only the look from image 1 (character, body shape, antlers, colors), NOT its pose or stance - ignore how its legs, head and antlers are placed there. The pose comes only from the text below: all four legs straight and parallel like pillars, the hind legs standing just as close together as the front legs, the antlers free in the air. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
 
 Paint ONE clean, sharp, high-resolution design image of my creature "Hollow Stag". Stay true to the concept - same character, silhouette, body parts and colors - but redraw it cleanly with these details:
 

@@ -201,6 +201,8 @@ bodyplan = "quadruped"
 biome = "highlands"
 hint = "gaunt stag with large antlers, four long legs"
 pose = """standing calmly on all four long legs, every leg straight and vertical directly under the body like pillars, front and hind legs equally close together with the hooves about hip-width apart and parallel, hind legs not splayed or bowed outward, head held high facing forward, mouth closed, tail hanging short behind (never between the legs), the antlers rising freely above the head without touching the back or the neck"""
+# 2026-11-20 (BACKLOG C12): ChatGPT kopiert sonst die Pose des Concept-Ausschnitts (alte Bilder: Breitbeine hinten)
+design_note = """Important: take only the look from image 1 (character, body shape, antlers, colors), NOT its pose or stance - ignore how its legs, head and antlers are placed there. The pose comes only from the text below: all four legs straight and parallel like pillars, the hind legs standing just as close together as the front legs, the antlers free in the air"""
 look = """A gaunt, haunted stag - eerie, silent and noble, like a deer that has been hollowed out. The body is tall and \
 thin, with a long, slender neck, a narrow chest and long, thin legs ending in small dark hooves. Its hide is \
 charcoal black with dark red, raw-looking streaks and patches on the neck, shoulders and flanks. The head is \
