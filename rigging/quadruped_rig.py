@@ -371,6 +371,44 @@ if RIG.get("exclusive_leg_pairs", False):
     allow[np.ix_(mid, body_names)] = True
 W = np.where(allow, 1.0 / (Dm + 1e-4) ** RIG["falloff"], 0.0)
 W[W.sum(1) == 0, :] = 1.0 / (Dm[W.sum(1) == 0] + 1e-4) ** RIG["falloff"]
+# C15 Fremdbereich-Sperre (nur mit zone_lock = true): ein Knochen wirkt nur in seinem Körperbereich, weich auslaufend.
+# Faktor je Vertex/Knochen (1 = unverändert), wird vor UND nach dem Glätten angewendet (Glätten trägt sonst zurück).
+TAPER = None
+if RIG.get("zone_lock", False):
+    TAPER = np.ones_like(W)
+    # (a) Unterbein (Leg_*_2..4) nicht über Knie/Ellbogen (Kopf von Leg_*_2): sonst zieht das Schienbein an Flanke und
+    #     Oberschenkel. Pfote/Sprunggelenk (unterhalb des Knies) bleiben unverändert.
+    lm = RIG.get("zone_leg_margin", 0.03) * H
+    for j, n in enumerate(names):
+        if n.startswith("Leg_") and int(n[-1]) >= 2:
+            hz = BONES[n[:7] + "2"][0][2]
+            TAPER[:, j] *= np.clip(1.0 - (V[:, 2] - hz) / lm, 0.0, 1.0)
+    # (b) Rückenlinie nur Wirbelkette/Schwanz: Schulterblatt/Bein nicht auf dem Rückenstreifen (oberhalb der Wirbelsäule,
+    #     nahe der Mittellinie) – sonst halten Schulterblätter den Widerrist fest, Oberschenkel ziehen die Kruppe
+    cx = np.array([BONES[c][0] for c in ("Hips", "Spine_1", "Chest", "Neck_1")] + [BONES["Neck_1"][1]])
+    zs = np.interp(V[:, 0], cx[:, 0], cx[:, 2])               # Wirbelsäulen-Höhe bei x (außerhalb: Endwert)
+    xb = np.linspace(M[:, 0].min(), M[:, 0].max(), 41)
+    hw_b = np.zeros(40)
+    for k in range(40):
+        s = M[(M[:, 0] >= xb[k]) & (M[:, 0] < xb[k + 1])]
+        s = s[s[:, 2] > np.interp(s[:, 0], cx[:, 0], cx[:, 2]) - 0.02 * H] if len(s) else s
+        hw_b[k] = np.percentile(np.abs(s[:, 1] - Y_MID), 90) if len(s) >= 5 else np.nan
+    ok_b = ~np.isnan(hw_b)
+    hw = np.interp(V[:, 0], ((xb[:-1] + xb[1:]) / 2)[ok_b], hw_b[ok_b])
+    rel_y = np.abs(V[:, 1] - Y_MID) / np.maximum(hw, 1e-6)
+    d0, d1 = RIG.get("zone_dorsal", 0.35), RIG.get("zone_dorsal_soft", 0.25)
+    f = np.clip((rel_y - d0) / d1, 0.0, 1.0)                  # quer: Mittellinie gesperrt, seitlich weich frei
+    s_z = np.clip((V[:, 2] - zs) / np.maximum(d1 * hw, 1e-6), 0.0, 1.0)   # hoch: ab Wirbelsäulen-Höhe weich zunehmend
+    f = np.where(V[:, 0] < BONES["Neck_2"][0][0], 1.0 - s_z * (1.0 - f), 1.0)
+    for j, n in enumerate(names):
+        if n.startswith(("Leg_", "Shoulder_")):
+            TAPER[:, j] *= f
+    lower = [j for j, n in enumerate(names) if n.startswith("Leg_") and int(n[-1]) >= 2]
+    n_low = int(((W[:, lower] > 0) & (TAPER[:, lower] < 1)).any(1).sum())
+    W *= TAPER
+    W[W.sum(1) == 0, :] = 1.0 / (Dm[W.sum(1) == 0] + 1e-4) ** RIG["falloff"] * (TAPER[W.sum(1) == 0] > 0)
+    print(f"RIG_INFO Fremdbereich-Sperre: Unterbein über seinem Gelenk {n_low} Vertices, "
+          f"Rückenstreifen (Bein/Schulterblatt gedämpft) {int((f < 1).sum())} Vertices")
 # Nebenteile: standardmäßig weiche Abstands-Gewichte wie der Hauptkörper (Pfoten gehen am Knöchel über,
 # Rückenflossen biegen mit). rigid_parts = true → starr am nächsten Knochen (für harte Panzerplatten).
 for pid in ids:
@@ -405,6 +443,71 @@ for _ in range(RIG["smooth_iterations"]):
     W = np.where(smooth_mask, (1 - RIG["smooth_factor"]) * W + RIG["smooth_factor"] * sm, W)
     W = np.where(allow | ~smooth_mask, W, 0.0)
     W = W / np.maximum(W.sum(1, keepdims=True), 1e-12)
+# C15 breiterer Übergang Bein → Rumpf (nur mit limb_blend > 0): zusätzliche Glätt-Runden NUR im Übergangsband zwischen
+# Oberschenkel/Oberarm/Schulterblatt und Rumpf (+ 1 Kanten-Ring). Der Oberschenkel schwingt im Galopp weit; ein schmaler
+# Übergang (Gewicht springt über eine lange Kante) dehnt genau diese Kante an Flanke/Bauchlinie.
+if RIG.get("limb_blend", 0) > 0:
+    lj = [j for j, n in enumerate(names) if n.startswith("Shoulder_") or (n.startswith("Leg_") and n.endswith("_1"))]
+    bj = [j for j in body_names if not names[j].startswith(("Tail", "Jaw", "Head"))]
+    ls, bs = W[:, lj].sum(1), W[:, bj].sum(1)
+    band = (ls > 0.02) & (bs > 0.02) & main & (V[:, 2] > min(lg["belly"] for lg in LEGS.values()) - RIG["below_belly"] * H)
+    for _ in range(2):                                   # 2 Kanten-Ringe Rand, damit das Band weich ausläuft
+        nb = np.zeros(N, bool)
+        nb[E[band[E[:, 0]] | band[E[:, 1]]].ravel()] = True
+        band |= nb & main
+    for _ in range(int(RIG["limb_blend"])):
+        acc = np.zeros_like(W)
+        cnt = np.zeros(N)
+        np.add.at(acc, E[:, 0], W[E[:, 1]])
+        np.add.at(acc, E[:, 1], W[E[:, 0]])
+        np.add.at(cnt, E[:, 0], 1)
+        np.add.at(cnt, E[:, 1], 1)
+        sm = np.where(cnt[:, None] > 0, acc / np.maximum(cnt, 1)[:, None], W)
+        W = np.where(band[:, None], 0.5 * W + 0.5 * sm, W)
+        W = np.where(allow, W, 0.0)
+        if TAPER is not None:
+            W = W * TAPER
+        W = W / np.maximum(W.sum(1, keepdims=True), 1e-12)
+    print(f"RIG_INFO Übergang Bein→Rumpf verbreitert: {int(band.sum())} Vertices, {int(RIG['limb_blend'])} Runden")
+if TAPER is not None:                                  # C15: Sperre nach dem Glätten erneut (Rest wird umverteilt)
+    Wt = W * TAPER
+    keep = Wt.sum(1) > 1e-9
+    W[keep] = Wt[keep] / Wt[keep].sum(1, keepdims=True)
+# C15 Glätten entlang der Wirbelkette (nur mit spine_chain_blend > 0): Der Anteil, den Hips/Spine_1/Chest/Neck_1/Neck_2
+# zusammen haben, wird nach der Lage ENTLANG der Kette neu verteilt (weiche lineare Rampe der Breite b um jedes Gelenk)
+# statt nach dem Abstand zu jedem einzelnen Knochen. Sonst greift z. B. beim steilen Hirsch-Hals der obere Halsknochen
+# auf den Widerrist durch (gleich weit entfernt wie Neck_1) → harter Wechsel, Widerrist reißt beim Senken des Kopfes.
+if RIG.get("spine_chain_blend", 0) > 0:
+    b = float(RIG["spine_chain_blend"])
+    chain = ["Hips", "Spine_1", "Chest", "Neck_1", "Neck_2"]
+    ci = [names.index(c) for c in chain]
+    tparts, wparts = [], []
+    for k, c in enumerate(chain + ["Head"]):
+        h_, t_ = np.array(BONES[c][0]), np.array(BONES[c][1])
+        ab = t_ - h_
+        u = np.clip(((V - h_) @ ab) / max(1e-12, ab @ ab), 0, 1)
+        d = np.linalg.norm(V - (h_ + u[:, None] * ab), axis=1)
+        tparts.append(k + u)
+        wparts.append(1.0 / (d + 1e-4) ** RIG["falloff"])
+    tparts, wparts = np.stack(tparts, 1), np.stack(wparts, 1)
+    tch = (tparts * wparts).sum(1) / wparts.sum(1)          # Lage entlang der Kette (0 = Becken … 5 = Kopfansatz)
+    nk = len(chain)
+    hat = np.zeros((N, nk))
+    for k in range(nk):                                     # Knochen k: Plateau, an jedem Gelenk lineare Rampe der Breite b
+        lo = np.clip((tch - (k - b / 2)) / b, 0, 1) if k > 0 else np.ones(N)
+        hi = np.clip(((k + 1 + b / 2) - tch) / b, 0, 1) if k < nk - 1 else np.ones(N)
+        hat[:, k] = np.minimum(lo, hi)
+    hat /= np.maximum(hat.sum(1, keepdims=True), 1e-12)
+    share = W[:, ci].sum(1)
+    newc = hat * share[:, None]
+    newc = np.where(allow[:, ci], newc, 0.0)
+    ok_c = newc.sum(1) > 1e-9
+    newc[ok_c] *= (share[ok_c] / newc[ok_c].sum(1))[:, None]
+    sel_c = ok_c & (share > 1e-6)
+    Wc = W[:, ci]
+    Wc[sel_c] = newc[sel_c]
+    W[:, ci] = Wc
+    print(f"RIG_INFO Wirbelkette entlang der Kette verteilt (Rampe {b}): {int(sel_c.sum())} Vertices")
 # Geweih/Hörner starr am Kopf: alles oberhalb des Kopf-Knochens (vor den Schultern) nur an "Head".
 # Sonst liegen die Geweihspitzen näher am Hals-Knochen und verbiegen sich bei jedem Schritt mit dem Hals.
 if RIG.get("rigid_head_above") is not None:
