@@ -58,7 +58,7 @@ for i, c in enumerate(R["c"], 2):
             f'[[concept]]\nfile = "{style.as_posix()}"\nrole = "style"\n', encoding="utf-8")
     elif not toml.exists():
         toml.write_text(
-            f'# {c["design"]} – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)\n'
+            f'# {c["design"]} – aus creatures/roster.toml erzeugt (docs/archiv/ROADMAP_20_KREATUREN.md)\n'
             f'name = "{c["id"]}"\nbodyplan = "{c["bodyplan"]}"\nstyle = "lowpoly_b"\n'
             f'description = "{c["design"]}: {c["hint"]}"   # Fallback – die Beschreibung steht in roster.toml (look)\n'
             f'design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and '

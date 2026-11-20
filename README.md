@@ -4,6 +4,8 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 
 ## Ablauf
 
+**Varianten zuerst (seit 2026-11-20, BACKLOG G8 d – Standard für neue Kreaturen, Schritt 0):** Pro Monster erst 5–6 Varianten designen/brainstormen (Grundform, Biome, Elite). Was alle gemeinsam haben (Silhouette, Körperbau, Gliedmaßen, Kopf-Grundform) wird die **Basis-Kreatur**; nur sie geht ohne variable Details durch die Schritte 1–5 (Tripo). Unterschiede: nur Farbe → Tönung · Teile dazu/weg (Stacheln, Eiszapfen, Moos, Kristalle …) → Anbauteile per Geometry Nodes mit Slidern · dicker/größer/längere Hörner → Proportions-Slider · Glut/Frost/Gift → Shader + Partikel in Unity · starke Silhouetten-Abweichung → eigene Basis-Kreatur. Alle Varianten teilen ein Rig und einen Clip-Satz. **Bestehende Modelle** bleiben: eingebrannte Details, Varianten nur über Tönung + Anbauteile. Ziel: 250–500 Varianten aus 50–100 Basis-Monstern. *Noch nicht gebaut:* Prompt-Schritt fürs Brainstorming (vor Stufe 1) und Varianten-Baukasten (BACKLOG G9, nach den Skeletten). Die Tabelle unten beschreibt Schritt 1–5 pro Basis-Kreatur.
+
 | # | Schritt | Wer | Kosten |
 |---|---|---|---|
 | 1 | Kreatur eintragen: `creatures/roster.toml` (Bauplan, Concept-Zelle, **`look`** = ausführliche Beschreibung, ggf. `pose`, Heimat-`biome`, bei neuen auch `role` + `varianten`) bzw. `creature.toml` | du / Claude | – |
@@ -22,10 +24,10 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 - **Ohne Concept Art** (Roster-Erweiterung 2026-11-18, 16 Kreaturen): Stufe 1 bekommt nur die Stil-Referenz und **entwirft** die Kreatur aus `look` – das Design-Bild ist dann der Design-Entwurf. Du prüfst, ob es dir gefällt, und lässt es ggf. neu generieren. Erkennung automatisch: kein `[[concept]]` mit `role = "design"`. Kreaturen mit Concept behalten exakt ihren Prompt-Text.
 - Quelle der Texte (erster Treffer gilt): `look`/`pose` in `creature.toml` → in `creatures/roster.toml` → `description` bzw. Bauplan-Pose (`templates/bodyplans.toml`). Vorhandene Bilder werden nie angefasst – fertige Kreaturen bleiben, wie sie sind; nur `prompts.md` wird neu geschrieben.
 
-**Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
+**Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](docs/MOVESET.md).
 **Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<NN_id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
-**Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md). **16 Ergänzungen** (ohne Concept, Claude hat ausgewählt): [ROSTER_ERWEITERUNG_VORSCHLAG.md](ROSTER_ERWEITERUNG_VORSCHLAG.md) → Abschnitt „Gewählt“.
-**Biome:** [templates/biomes.toml](templates/biomes.toml) – zentrale Liste mit 18 Biomen (Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta, Gras/Steppe, Stein, Kristall, Tempel/Ruinen, Oase, Dschungel, Pilzwald, Eis), je Stimmung, Tönungs-Palette, Akzent/Glühen, typische Anbauteile (Geometry Nodes) und Element-Effekt. Varianten pro Kreatur (Grundform + 4 Biome + Elite-Addon) stehen in `creatures/roster.toml` → `varianten`.
+**Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](docs/archiv/ROADMAP_20_KREATUREN.md). **16 Ergänzungen** (ohne Concept, Claude hat ausgewählt): [ROSTER_ERWEITERUNG_VORSCHLAG.md](docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md) → Abschnitt „Gewählt“.
+**Biome:** [templates/biomes.toml](templates/biomes.toml) – zentrale Liste mit 18 Biomen (Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta, Gras/Steppe, Stein, Kristall, Tempel/Ruinen, Oase, Dschungel, Pilzwald, Eis), je Stimmung, Tönungs-Palette, Akzent/Glühen, typische Anbauteile (Geometry Nodes) und Element-Effekt. Varianten pro Kreatur (Grundform + 4 Biome + Elite-Addon) stehen in `creatures/roster.toml` → `varianten` (Bestand; neue Kreaturen: „Varianten zuerst“, siehe oben).
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
 
 ## Stellschrauben

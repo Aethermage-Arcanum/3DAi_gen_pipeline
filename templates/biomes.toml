@@ -1,7 +1,7 @@
 # Zentrale Biom-Liste (seit 2026-11-18, Nutzer: „erweitere gern unsere Biome“).
 # Für ein düsteres Top-down-ARPG. Varianten entstehen NICHT durch neue Generierungen, sondern über
 # Tönung (Shader/Material-Instanz) + Anbauteile (Blender Geometry Nodes mit Slidern, starr am nächsten Knochen)
-# + ggf. Element-Effekt (VFX + Schadensart). Schema: RECHERCHE_MONSTERARTEN.md §6.2.
+# + ggf. Element-Effekt (VFX + Schadensart). Schema: docs/recherche/RECHERCHE_MONSTERARTEN.md §6.2.
 #
 # Felder:
 #   label    deutscher Name (so heißt das Biom in Doku und Gesprächen)

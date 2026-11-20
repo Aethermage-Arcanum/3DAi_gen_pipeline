@@ -1,6 +1,6 @@
 # Vorschlag: Roster-Erweiterung aus der Monster-Recherche
 
-Stand 2026-11-18. Grundlage: `RECHERCHE_MONSTERARTEN.md` (2.872 echte Monster ausgewertet) und `creatures/roster.toml`.
+Stand 2026-11-18. Grundlage: `docs/recherche/RECHERCHE_MONSTERARTEN.md` (2.872 echte Monster ausgewertet) und `creatures/roster.toml`.
 **Das sind Archetypen zur Auswahl, keine fertigen Designs.** Der Nutzer wählt aus, die konkreten Monster entstehen weiter aus seiner Concept Art.
 Biome wie im Roster: Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta.
 

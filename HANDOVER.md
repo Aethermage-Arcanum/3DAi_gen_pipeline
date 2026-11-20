@@ -1,4 +1,4 @@
-# Handover (Stand 2026-11-18 abends)
+# Handover (Stand 2026-11-20)
 
 Für die nächste Session lesen, in dieser Reihenfolge:
 1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer** (Hauptchat erkundet/schreibt nichts selbst, alles über Subagenten, Kontext sparen), Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
@@ -32,22 +32,22 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | bonepicker_vulture | winged/bird | `winged`; Federspitzen einseitig → `double_sided` |
 
 ### Weitere Eckdaten
-- **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell).
-- **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `RECHERCHE_MONSTERARTEN.md`.
+- **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
+- **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
 - **Noch keine Modelle:** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, void_manifestation (neu), sowie die übrigen 11 neuen (geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen). Die Prompts für alle sind fertig.
-- **Git:** zuletzt `2735b56`, alles committet. Push nur mit Freigabe des Nutzers.
+- **Git:** zuletzt `73990c3` (vor dem Doku-Commit), alles committet. Push nur mit Freigabe des Nutzers.
 
 ## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
-1. **Agent `upright`** (Bog Warden; später Flesh Titan und Golem). Wurde wegen des Kontext-/Nutzungslimits evtl. unterbrochen → per SendMessage fortsetzen lassen. Der Auftrag steht in BACKLOG G6. Danach seinen Bericht prüfen: Rig-Bild, `temp/review/upright_posetest.png`, `temp/review/upright_walk.png`.
-2. **Agent `winged`** (Cinder Wyvern + Bonepicker Vulture).
-3. **Baustein Gelenk-Verdichtung (C9)**: Dreiecke um stark beugende Gelenke unterteilen. Nötig vor dem Frosch, hilft auch dem Wolf.
-3b. ~~**Ordner-Nummerierung (BACKLOG G7)**~~ ✅ 2026-11-20: Ordner heißen jetzt `creatures/01_chitin_crawler/` … `37_mound_queen/`; IDs, Exportnamen, Clip- und Unity-Namen ohne Nummer. Skripte nehmen Ordner oder ID (`scripts/common.py` → `find_creature`).
-4. **Muster-Warteschlange**, immer nur ein Bau-Agent:
-   - **Spinne:** Agent existiert, ist am Limit abgebrochen → fortsetzen.
-   - danach Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer.
-5. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
+1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
+2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
+3. **Nächster Bau-Agent: `winged`** (Cinder Wyvern 14, Bonepicker Vulture 15), Auftrag in BACKLOG G6.
+4. Danach: **Hirsch C12** (neue Basisbilder durch den Nutzer, Geweih-Fix im Rig), **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
+6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
+7. **G9, nach den Skeletten:** Prompt-Schritt Varianten-Brainstorming + Varianten-Baukasten (Geometry Nodes).
 
 ## Ablauf pro Kreatur
+0. **Varianten zuerst (neue Kreaturen, Entscheidung 2026-11-20, BACKLOG G8 d/G9):** 5–6 Varianten brainstormen, Gemeinsames = Basis-Kreatur (nur sie geht ohne variable Details zu Tripo), Unterschiede → Tönung / Anbauteile (Geometry Nodes) / Proportions-Slider / Shader + Partikel in Unity; starke Silhouetten-Abweichung = eigene Basis-Kreatur; alle Varianten teilen Rig + Clips. Bestehende Modelle bleiben (eingebrannte Details, Varianten nur Tönung + Anbauteile). **Prompt-Schritt und Baukasten sind noch nicht gebaut** (nach den Skeletten); bis dahin Brainstorming von Hand mit dem Nutzer. Details: README „Ablauf“.
 1. **Bilder in zwei Stufen:** `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<NN_name>/prompts.md`.
    - Die Beschreibung ist `look` in `roster.toml`: qualitativ, keine Zahlen. Die Pose (`pose`) zeigt **alle Gliedmaßen in voller Länge**, nie sitzend oder gefaltet.
    - **Stufe 1:** Design-Bild → Nutzer prüft es gegen sein Concept → `input/design.png`. **Stufe 2:** 4 Ansichten aus design.png.
@@ -77,8 +77,8 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | legless | rigging/legless_rig.py | motions/legless/legless_kit.py | cobra (+ sandworm, centipede, viper geplant) |
 | floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle |
 | flyer | rigging/flyer_rig.py | motions/flyer/flyer_kit.py | wasp |
-| **upright** | rigging/upright_rig.py (in Arbeit) | motions/upright/upright_kit.py | treant (golem, brute geplant) |
-| **winged** | geplant | – | drake, bird |
+| **upright** | rigging/upright_rig.py ✅ | motions/upright/upright_kit.py | treant (golem, brute geplant) |
+| **winged** | geplant (nächster Bau-Agent) | – | drake, bird |
 | amorph, static | geplant | – | slime; turret/nest/plant |
 
 **Gemeinsame Bausteine:** `rig_common.py`, `gaps_defaults.toml`, `double_sided.py`, `dangling.py`, export_unity / verify_export / check_gaps, `pose_fingerprint.py`.

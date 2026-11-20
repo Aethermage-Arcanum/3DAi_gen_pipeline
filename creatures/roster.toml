@@ -1,5 +1,5 @@
 # Alle Kreaturen aus der Concept Art (_concept/monster_progression_A_vs_B.webp) mit den Entscheidungen
-# aus ROADMAP_20_KREATUREN.md §6. scripts/make_roster.py legt daraus Ordner + creature.toml + prompts.md an
+# aus docs/archiv/ROADMAP_20_KREATUREN.md §6. scripts/make_roster.py legt daraus Ordner + creature.toml + prompts.md an
 # (bestehende creature.toml werden NIE überschrieben) und schreibt PROMPTS_ALLE.md.
 # design = Name auf dem Concept-Sheet, artist = welche Version (A/B) als Design-Vorlage dient,
 # cell = Position auf dem Sheet (Artist, Reihe, Spalte) für den Ausschnitt (scripts/concept_crops.py).
@@ -11,7 +11,7 @@
 #   Körperbereich, Material. KEINE Zahlen/Maße/Verhältnisse (der KI Kreativität lassen). Nur, was im Concept zu sehen
 #   ist bzw. dazu passt. Steht vorn und dominant in beiden Prompt-Stufen (scripts/make_prompts.py).
 # pose = nur wenn die Neutralpose des Bauplans (templates/bodyplans.toml) nicht passt (z. B. Knöchelgang, Flügel).
-# biome = Heimat-Biom (Schlüssel aus templates/biomes.toml; bei den 20 aus ROADMAP_20_KREATUREN.md übernommen).
+# biome = Heimat-Biom (Schlüssel aus templates/biomes.toml; bei den 20 aus docs/archiv/ROADMAP_20_KREATUREN.md übernommen).
 # Die 16 Kreaturen OHNE Concept Art (Roster-Erweiterung 2026-11-18) stehen am Ende, mit eigenen Feldern (Kommentar dort).
 # Das Concept-Sheet hat immer Vorrang. Ein `look`/`pose` in der creature.toml überschreibt den Wert hier.
 
@@ -393,11 +393,11 @@ pose = "body level, standing on its four walking legs spread evenly to both side
 
 # =============================================================================================================
 # ROSTER-ERWEITERUNG (Nutzer 2026-11-18) – 16 Kreaturen OHNE Concept Art, je eine aus jeder Zeile von
-# ROSTER_ERWEITERUNG_VORSCHLAG.md (Feld `row`). Kein `cell`/`artist`: Stufe 1 entwirft das Design nur aus `look` +
+# docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md (Feld `row`). Kein `cell`/`artist`: Stufe 1 entwirft das Design nur aus `look` +
 # Stil-Referenz, der Nutzer prüft das Design-Bild (= Design-Entwurf). Zusätzliche Felder:
 #   biome      Heimat-Biom (Schlüssel aus templates/biomes.toml)
 #   role       Kampfrolle (Schwarm / Nahkampf / Fernkampf / Elite / Boss + Kurzmechanik)
-#   varianten  6er-Satz nach RECHERCHE_MONSTERARTEN.md §6.2: Grundform + 4 Biom-Varianten + Elite-Addon.
+#   varianten  6er-Satz nach docs/recherche/RECHERCHE_MONSTERARTEN.md §6.2: Grundform + 4 Biom-Varianten + Elite-Addon.
 #              tint = Tönung, addons = Anbauteile (Geometry Nodes), size = Skalierung, effect = Element/Fähigkeit.
 #              Gleicher Mesh, gleiches Rig, gleiche Clips – Varianten kosten keine Tripo-Credits.
 # motion = Skelett/Muster – Skelette upright, winged, amorph, static und viele Muster sind NOCH NICHT GEBAUT.

@@ -1,6 +1,6 @@
 # Autonomer Auftrag (2026-11-17, Nutzer mehrere Stunden abwesend)
 
-**Auftrag:** Die Kreaturen aus ROADMAP_20_KREATUREN.md §7 in dieser Reihenfolge gründlich durch die Pipeline bringen:
+**Auftrag:** Die Kreaturen aus docs/archiv/ROADMAP_20_KREATUREN.md §7 in dieser Reihenfolge gründlich durch die Pipeline bringen:
 1. Ravine Stalker (quadruped/wolf)
 2. Eel Stalker (legless/cobra)
 3. Dune Raptor (biped_raptor/raptor)

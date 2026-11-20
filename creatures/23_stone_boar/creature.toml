@@ -1,4 +1,4 @@
-# Stone Boar – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+# Stone Boar – aus creatures/roster.toml erzeugt (docs/archiv/ROADMAP_20_KREATUREN.md)
 name = "stone_boar"
 bodyplan = "quadruped"
 style = "lowpoly_b"
