@@ -8,7 +8,8 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 ## Stand
 
 ### Fertig (Mesh + UV + Rig + Clips + FBX/GLB)
-- **10 Kreaturen:** Chitin Crawler (hexapod/ant), Ravine Stalker (quadruped/wolf), Reef Snapper (quadruped/lizard), Hollow Stag (quadruped/deer), Dune Raptor (biped_raptor/raptor), Eel Stalker (legless/cobra), Scorpion Matriarch (multileg/scorpion), Needle Wasp (flyer/wasp), Void Manifestation (floater/tentacle).
+- **9 Kreaturen (Stand 17./18.11.):** Chitin Crawler (hexapod/ant), Ravine Stalker (quadruped/wolf), Reef Snapper (quadruped/lizard), Hollow Stag (quadruped/deer), Dune Raptor (biped_raptor/raptor), Eel Stalker (legless/cobra), Scorpion Matriarch (multileg/scorpion), Needle Wasp (flyer/wasp), Void Manifestation (floater/tentacle).
+- Seit dem 18.–20.11. sind außerdem fertig: Bog Warden (upright/treant, Commit 9686a8f), Cinder Wyvern und Bonepicker Vulture (winged, Commit 38ce1c7). Die Abnahme durch den Nutzer steht noch aus.
 - **Void Manifestation** wird neu gemacht. Ihr Tentakel-Agent hat nur die allgemeinen Learnings erarbeitet.
 - **Am 18.11. überarbeitet und von Claude geprüft:**
   - Vierbeiner weich: echter Wolfsgalopp statt Hoppeln, Turn-Vorzeichen behoben.
@@ -24,18 +25,18 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | sand_leviathan | legless/sandworm | rundes Maul (Nutzer bevorzugt) |
 | frost_colossus | quadruped/gorilla | – |
 | ruin_howler | quadruped/monkey | – |
-| oasis_gulper | quadruped/frog | **v2 aus der Sprung-Pose** (alle 4 Füße am Boden, Beine gestreckt); v1 liegt in `raw/_v1`. Die Hocke braucht ggf. **Gelenk-Verdichtung (C9, Baustein fertig)**. Rig bricht ab (C16). |
+| oasis_gulper | quadruped/frog | **v2 aus der Sprung-Pose** (alle 4 Füße am Boden, Beine gestreckt) ist Claudes Empfehlung. ❓ Der Nutzer hat **noch nicht zwischen v1 und v2 entschieden** (BACKLOG G5, Q5). v1 liegt in `raw/_v1`. Die Hocke braucht ggf. **Gelenk-Verdichtung (C9, Baustein fertig)**. Rig bricht ab (C16). |
 | reality_ripper | hexapod/mantis | Sensenklingen lose → starr an die Arm-Knochen; Hinterbeine per IK auf den Boden |
 | gloomfang_centipede | legless/centipede | aus dem Design-Bild allein generiert (`tripo_run.py --single design.png`); Beine stehen waagerecht ab → nach unten setzen |
-| bog_warden | upright/treant | **neues Skelett `upright`** – Agent läuft bzw. ist unterbrochen (siehe unten) |
+| bog_warden | upright/treant | **neues Skelett `upright`** ✅ fertig (Commit 9686a8f), offen: Moos (C13), Abnahme (BACKLOG Q4) |
 | cinder_wyvern | winged/drake | neues Skelett `winged`; Tripo hat die Flügel ungleich gestellt → Flügel-Haltung absolut vorgeben |
 | bonepicker_vulture | winged/bird | `winged`; Federspitzen einseitig → `double_sided` |
 
 ### Weitere Eckdaten
 - **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
 - **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
-- **Noch keine Modelle:** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, void_manifestation (neu), sowie die übrigen 11 neuen (geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen). Die Prompts für alle sind fertig.
-- **Git:** zuletzt `1d2305b` (C9 Gelenk-Verdichtung), alles committet. Push nur mit Freigabe des Nutzers.
+- **Noch keine Modelle (17, geprüft 2026-11-20: kein `raw/generate_model.glb`):** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen. Das wären 17 × 110 = 1.870 Credits. Die 155 Credits reichen für 1 Modell, und das ist für den Rimehide Bear vorgesehen (G10). Die Void Manifestation hat ein altes Modell und soll neu gemacht werden. Die Prompts für alle sind fertig.
+- **Git:** Abgeschlossene Schritte sind committet (vor der Backlog-Bereinigung zuletzt `5f94528`). Laufende C15-Arbeit ist noch nicht committet. Push nur mit Freigabe des Nutzers.
 
 ## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
@@ -45,9 +46,9 @@ Für die nächste Session lesen, in dieser Reihenfolge:
    - ✅ **C9 Gelenk-Verdichtung** als Baustein fertig (Commit 1d2305b, `rigging/joint_densify.py`, opt-in `[joint_densify]`, bei keiner Kreatur eingeschaltet). Wolf-Kopie: +800 Tris, Dehnung im Run 2,05 → 1,78, aus der Spielkamera kaum sichtbar, Raptor sogar schlechter. Nutzerkritik: am irrelevanten Sprunggelenk getestet.
    - 🔄 **jetzt C15: Rumpf/Hals-Dehnung** (Wolf Bauch/Rücken, Hirsch Hals), Build-Agent läuft. Ursache sind die Gewichte (Wolf Hüftflanke 2,89; Hirsch Tail_1 zieht mit 42 % am Knie; Raptor/Geier/Wyvern an der harten Sohle). **Regel: Prüfungen zuerst an dem, was die ARPG-Kamera sieht.**
    - Danach die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Spinne → Schildkröte → Sandwurm → Gorilla → Affe → Frosch (inkl. Rig-Fehler **C16**: `center_at` liefert None → TypeError in `quadruped_rig.py`, vor dem Frosch-Muster lösen) → Mantis → Tausendfüßer. Immer nur ein Bau-Agent.
-   - ⏭ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
+   - ⏸ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
-6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
+6. **Offene Fragen an den Nutzer:** Alle stehen gesammelt in `BACKLOG.md` → „❓ Offene Fragen an den Nutzer“ (Q1–Q9, je mit Fundstelle). Darunter fallen: Raptor-Arme (A11), Schwanz des Raptors im Attack, Sohlen bei Wolf und Echse, Bog Warden (Slam und Walk), Oasis Gulper v1/v2 (G5), Test der zweistufigen Prompts (A10), die 16 Ergänzungen (G2), die Bären-Varianten (G10) sowie die Abnahme der Roh-GIFs von winged (G6) und C14.
 7. **G9, nach den Skeletten:** Prompt-Schritt Varianten-Brainstorming + Varianten-Baukasten (Geometry Nodes).
 
 ## Ablauf pro Kreatur
