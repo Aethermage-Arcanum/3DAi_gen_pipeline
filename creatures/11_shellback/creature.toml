@@ -1,0 +1,21 @@
+# Shellback – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "shellback"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Shellback: coastal tortoise-like beast with a heavy shell, four legs"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_A.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/tortoise"
+variant = ""
+vorbild = ["Schnappschildkröte – Biss", "Landschildkröte – langsamer Gang, Kopf einziehen"]

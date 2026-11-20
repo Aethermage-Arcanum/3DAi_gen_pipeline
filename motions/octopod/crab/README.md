@@ -4,9 +4,9 @@
 
 Generator: `crab_clips.py` (nutzt `../octopod_kit.py`). Test auf einem Modell mit anderem eigenem Muster:
 ```
-python scripts/creature_pipeline.py creatures/<name> --style octopod/crab
+python scripts/creature_pipeline.py creatures/<NN_name> --style octopod/crab
 ```
-→ Ausgabe in `creatures/<name>/style_tests/crab/`
+→ Ausgabe in `creatures/<NN_name>/style_tests/crab/`
 
 ## Clips (Validierung 2026-11-17 auf dem Chitin Crawler, also einem Ameisenkörper!)
 | Clip | Dauer | Inhalt | Prüfung |

@@ -1,0 +1,18 @@
+# Gloomfang Centipede – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Höhle (cave) · Rolle: Nahkampf (schnell, Giftklauen) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "gloomfang_centipede"
+bodyplan = "serpentine"
+style = "lowpoly_b"
+description = "Gloomfang Centipede: giant blood-red cave centipede with a fringe of amber legs and huge venom claws"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "legless/centipede"
+variant = ""
+vorbild = ["Riesenläufer (Scolopendra) – metachrone Beinwelle", "Skolopender-Biss (Zeitlupe)", "Tausendfüßer – Kopf hebt sich, Körper folgt"]

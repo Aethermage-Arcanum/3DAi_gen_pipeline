@@ -16,19 +16,18 @@ Ohne Concept Art (seit 2026-11-18, Roster-Erweiterung: kein [[concept]] mit role
 Woher die Texte kommen (erster Treffer gilt):
   Beschreibung  `look` in creature.toml → `look` in creatures/roster.toml → `description` in creature.toml
   Pose          `pose` in creature.toml → `pose` in creatures/roster.toml → Bauplan (templates/bodyplans.toml)
-  Name          `title` in creature.toml → `design` in creatures/roster.toml → Ordnername
+  Name          `title` in creature.toml → `design` in creatures/roster.toml → `name` (Kreatur-ID)
 
-Aufruf:  python scripts/make_prompts.py creatures/<name>
-Ergebnis: creatures/<name>/prompts.md  (beide Prompts zum Kopieren + was anhängen + wie speichern)
+Aufruf:  python scripts/make_prompts.py creatures/<NN_name>   (oder nur die ID)
+Ergebnis: creatures/<NN_name>/prompts.md  (beide Prompts zum Kopieren + was anhängen + wie speichern)
 Alle Kreaturen auf einmal: python scripts/make_roster.py → PROMPTS_ALLE.md
 """
-import pathlib
 import sys
 import tomllib
 
 from PIL import Image
 
-from common import PIPELINE_DIR, load_creature
+from common import CREATURES_DIR, find_creature, load_creature
 
 DESIGN_FILE = "input/design.png"   # Ergebnis von Stufe 1 = Vorlage für Stufe 2
 LOWRES_PX = 800                    # Concept-Bild schmaler als das → "kleiner, unscharfer Ausschnitt"
@@ -44,7 +43,7 @@ ORDER = ["front", "left", "right", "back"]
 
 
 def roster_entry(name):
-    path = PIPELINE_DIR / "creatures" / "roster.toml"
+    path = CREATURES_DIR / "roster.toml"
     if not path.exists():
         return {}
     for c in tomllib.loads(path.read_text(encoding="utf-8")).get("c", []):
@@ -126,7 +125,7 @@ def prompt_views(title, look, pose, camera, views, cfg):
 
 def build(creature_dir):
     """Schreibt prompts.md und gibt die Bausteine zurück (für make_roster.py)."""
-    cdir = pathlib.Path(creature_dir).resolve()
+    cdir = find_creature(creature_dir)
     cfg, bp, st = load_creature(cdir)
     ros = roster_entry(cfg["name"])
     title = cfg.get("title") or ros.get("design") or cfg["name"].replace("_", " ").title()

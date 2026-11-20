@@ -38,7 +38,7 @@ Ausgegebene Credits gesamt: 880 / 1.500 (Guthaben 1.475)
 ## Ergebnis (2026-11-17, Lauf abgeschlossen)
 Alle 8 Kreaturen fertig, je 9 Clips grün, exportiert (FBX/GLB + Events), gepusht. Credits: 880 von 1.500 (Guthaben 1.475).
 
-**Neue Skelett-Familien** (alle per `python scripts/creature_pipeline.py creatures/<name>`):
+**Neue Skelett-Familien** (alle per `python scripts/creature_pipeline.py creatures/<NN_name>`):
 quadruped (wolf, lizard, deer) · legless (cobra) · biped_raptor (raptor) · floater (tentacle) · multileg (scorpion) · flyer (wasp).
 
 **Wichtigste Erkenntnisse:**

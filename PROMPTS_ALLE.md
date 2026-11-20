@@ -51,11 +51,11 @@ Kreaturen mit fertigem Tripo-Modell (markiert) brauchen das nur bei einem Neubau
 
 ## 2. Spore Drone
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\21_spore_drone\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\21_spore_drone\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -71,7 +71,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\spore_drone\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\21_spore_drone\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Spore Drone": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -94,11 +94,11 @@ Rules for the 3D model:
 
 ## 3. Needle Wasp
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\07_needle_wasp\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\neelde_wasp.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\concept\style_B_stalk_wasp.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\07_needle_wasp\input\concept\neelde_wasp.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\07_needle_wasp\input\concept\style_B_stalk_wasp.png`
 
 ```text
 Image 1 is my concept art of this creature: take its design, silhouette and colors; the description below adds the details. Image 1 is a concept sheet of this wasp: the big creature is the design, the small panels show details (head, stinger, wings, eggs) and views. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -114,7 +114,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\needle_wasp\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\07_needle_wasp\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Needle Wasp": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -137,11 +137,11 @@ Rules for the 3D model:
 
 ## 4. Broodling
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\10_broodling\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\10_broodling\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -157,7 +157,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\broodling\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\10_broodling\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Broodling": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -180,11 +180,11 @@ Rules for the 3D model:
 
 ## 5. Reef Snapper
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\08_reef_snapper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\08_reef_snapper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -200,7 +200,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reef_snapper\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\08_reef_snapper\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Reef Snapper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -223,11 +223,11 @@ Rules for the 3D model:
 
 ## 6. Shore Lurker
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\22_shore_lurker\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\22_shore_lurker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -243,7 +243,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shore_lurker\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\22_shore_lurker\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Shore Lurker": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -266,11 +266,11 @@ Rules for the 3D model:
 
 ## 7. Shellback
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\11_shellback\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\11_shellback\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -286,7 +286,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\shellback\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\11_shellback\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Shellback": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -309,11 +309,11 @@ Rules for the 3D model:
 
 ## 8. Eel Stalker
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\03_eel_stalker\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\03_eel_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -329,7 +329,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\eel_stalker\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\03_eel_stalker\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Eel Stalker": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -352,11 +352,11 @@ Rules for the 3D model:
 
 ## 9. Ravine Stalker
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\02_ravine_stalker\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\02_ravine_stalker\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -372,7 +372,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ravine_stalker\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\02_ravine_stalker\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Ravine Stalker": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -395,11 +395,11 @@ Rules for the 3D model:
 
 ## 10. Stone Boar
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\23_stone_boar\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\23_stone_boar\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -415,7 +415,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\stone_boar\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\23_stone_boar\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Stone Boar": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -438,11 +438,11 @@ Rules for the 3D model:
 
 ## 11. Hollow Stag
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\09_hollow_stag\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\09_hollow_stag\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -458,7 +458,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\hollow_stag\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\09_hollow_stag\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Hollow Stag": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -481,11 +481,11 @@ Rules for the 3D model:
 
 ## 12. Rock Hyena
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input`
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\24_rock_hyena\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\24_rock_hyena\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -501,7 +501,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rock_hyena\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\24_rock_hyena\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Rock Hyena": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -524,11 +524,11 @@ Rules for the 3D model:
 
 ## 13. Sand Leviathan
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\12_sand_leviathan\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\12_sand_leviathan\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -544,7 +544,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sand_leviathan\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\12_sand_leviathan\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Sand Leviathan": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -567,11 +567,11 @@ Rules for the 3D model:
 
 ## 14. Dune Raptor
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\04_dune_raptor\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\04_dune_raptor\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -587,7 +587,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\dune_raptor\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\04_dune_raptor\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Dune Raptor": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -610,11 +610,11 @@ Rules for the 3D model:
 
 ## 15. Glassback Colossus
 
-Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input`
+Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\25_glassback_colossus\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\25_glassback_colossus\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -630,7 +630,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\glassback_colossus\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\25_glassback_colossus\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Glassback Colossus": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -653,11 +653,11 @@ Rules for the 3D model:
 
 ## 16. Scorpion Matriarch
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\06_scorpion_matriarch\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\06_scorpion_matriarch\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -673,7 +673,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\scorpion_matriarch\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\06_scorpion_matriarch\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Scorpion Matriarch": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -696,11 +696,11 @@ Rules for the 3D model:
 
 ## 17. Frost Colossus
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\13_frost_colossus\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\13_frost_colossus\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -716,7 +716,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\frost_colossus\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\13_frost_colossus\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Frost Colossus": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -739,11 +739,11 @@ Rules for the 3D model:
 
 ## 18. Flesh Titan
 
-Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input`
+Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\26_flesh_titan\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\26_flesh_titan\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -759,7 +759,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\flesh_titan\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\26_flesh_titan\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Flesh Titan": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -782,11 +782,11 @@ Rules for the 3D model:
 
 ## 19. Void Manifestation
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\05_void_manifestation\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\05_void_manifestation\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -802,7 +802,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_manifestation\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\05_void_manifestation\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Void Manifestation": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -825,11 +825,11 @@ Rules for the 3D model:
 
 ## 20. Void Harbinger
 
-Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input`
+Artist B · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\27_void_harbinger\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\27_void_harbinger\input\concept\design_B.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -845,7 +845,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\void_harbinger\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\27_void_harbinger\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Void Harbinger": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -868,11 +868,11 @@ Rules for the 3D model:
 
 ## 21. Reality Ripper
 
-Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+Artist A · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\20_reality_ripper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\20_reality_ripper\input\concept\design_A.png`  2. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is my concept art of this creature - a small, blurry crop: take the overall design, silhouette and colors from it, the details from the description; do not copy its blur. Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept. Image 2 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -888,7 +888,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\reality_ripper\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\20_reality_ripper\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Reality Ripper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -911,11 +911,11 @@ Rules for the 3D model:
 
 ## 22. Geode Golem
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Kristall, Rolle Nahkampf (Tank) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\geode_golem\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Kristall, Rolle Nahkampf (Tank) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\28_geode_golem\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -931,7 +931,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\geode_golem\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\28_geode_golem\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Geode Golem": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -954,11 +954,11 @@ Rules for the 3D model:
 
 ## 23. Tomb Shroud
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Krypta, Rolle Nahkampf (Assassine, Teleport) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tomb_shroud\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Krypta, Rolle Nahkampf (Assassine, Teleport) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\29_tomb_shroud\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -974,7 +974,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tomb_shroud\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\29_tomb_shroud\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Tomb Shroud": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -997,11 +997,11 @@ Rules for the 3D model:
 
 ## 24. Idol Eye
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Fernkampf (Strahl) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\idol_eye\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Fernkampf (Strahl) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\30_idol_eye\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1017,7 +1017,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\idol_eye\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\30_idol_eye\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Idol Eye": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1040,11 +1040,11 @@ Rules for the 3D model:
 
 ## 25. Bonepicker Vulture
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Schwarm (kreist, Sturzflug) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bonepicker_vulture\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Schwarm (kreist, Sturzflug) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\15_bonepicker_vulture\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1060,7 +1060,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bonepicker_vulture\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\15_bonepicker_vulture\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Bonepicker Vulture": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1083,11 +1083,11 @@ Rules for the 3D model:
 
 ## 26. Cinder Wyvern
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Vulkan, Rolle Elite (landet zum Kämpfen, Feueratem) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Vulkan, Rolle Elite (landet zum Kämpfen, Feueratem) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\14_cinder_wyvern\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1103,7 +1103,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\cinder_wyvern\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\14_cinder_wyvern\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Cinder Wyvern": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1126,11 +1126,11 @@ Rules for the 3D model:
 
 ## 27. Umbral Panther
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Nahkampf (Assassine, Sprung aus dem Hinterhalt) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\umbral_panther\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Nahkampf (Assassine, Sprung aus dem Hinterhalt) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\31_umbral_panther\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1146,7 +1146,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\umbral_panther\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\31_umbral_panther\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Umbral Panther": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1169,11 +1169,11 @@ Rules for the 3D model:
 
 ## 28. Rimehide Bear
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Eis, Rolle Elite (Tank, richtet sich auf) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rimehide_bear\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Eis, Rolle Elite (Tank, richtet sich auf) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\32_rimehide_bear\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1189,7 +1189,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\rimehide_bear\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\32_rimehide_bear\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Rimehide Bear": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1212,11 +1212,11 @@ Rules for the 3D model:
 
 ## 29. Sporecap Mortar
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Pilzwald, Rolle Fernkampf (stationär, Bogenschuss) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sporecap_mortar\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Pilzwald, Rolle Fernkampf (stationär, Bogenschuss) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\33_sporecap_mortar\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1232,7 +1232,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\sporecap_mortar\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\33_sporecap_mortar\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Sporecap Mortar": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1255,11 +1255,11 @@ Rules for the 3D model:
 
 ## 30. Bog Ooze
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Schwarm (teilt sich beim Tod) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_ooze\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Schwarm (teilt sich beim Tod) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\34_bog_ooze\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1275,7 +1275,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_ooze\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\34_bog_ooze\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Bog Ooze": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1298,11 +1298,11 @@ Rules for the 3D model:
 
 ## 31. Oasis Gulper
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Oase, Rolle Nahkampf/Kontrolle (Zungenschlag zieht heran) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\oasis_gulper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Oase, Rolle Nahkampf/Kontrolle (Zungenschlag zieht heran) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\16_oasis_gulper\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1318,7 +1318,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\oasis_gulper\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\16_oasis_gulper\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Oasis Gulper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1341,11 +1341,11 @@ Rules for the 3D model:
 
 ## 32. Quillback Burrower
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Stein, Rolle Fernkampf (gräbt sich ein, Stachel-Salve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\quillback_burrower\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Stein, Rolle Fernkampf (gräbt sich ein, Stachel-Salve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\35_quillback_burrower\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1361,7 +1361,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\quillback_burrower\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\35_quillback_burrower\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Quillback Burrower": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1384,11 +1384,11 @@ Rules for the 3D model:
 
 ## 33. Ruin Howler
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Schwarm/Fernkampf (Rudel, wirft Steine) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Tempel/Ruinen, Rolle Schwarm/Fernkampf (Rudel, wirft Steine) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\17_ruin_howler\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1404,7 +1404,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\ruin_howler\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\17_ruin_howler\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Ruin Howler": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1427,11 +1427,11 @@ Rules for the 3D model:
 
 ## 34. Tallgrass Viper
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Nahkampf (Hinterhalt, Schlag aus der S-Kurve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tallgrass_viper\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Gras/Steppe, Rolle Nahkampf (Hinterhalt, Schlag aus der S-Kurve) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\36_tallgrass_viper\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1447,7 +1447,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\tallgrass_viper\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\36_tallgrass_viper\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Tallgrass Viper": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1470,11 +1470,11 @@ Rules for the 3D model:
 
 ## 35. Mound Queen
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Boss (legt Brut) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\mound_queen\input`
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Dschungel, Rolle Boss (legt Brut) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\37_mound_queen\input`
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1490,7 +1490,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\mound_queen\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\37_mound_queen\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Mound Queen": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1513,11 +1513,11 @@ Rules for the 3D model:
 
 ## 36. Bog Warden
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Elite (Tank, Wurzel-Slam) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_warden\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Sumpf, Rolle Elite (Tank, Wurzel-Slam) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\18_bog_warden\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1533,7 +1533,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\bog_warden\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\18_bog_warden\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Bog Warden": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.
@@ -1556,11 +1556,11 @@ Rules for the 3D model:
 
 ## 37. Gloomfang Centipede
 
-**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Höhle, Rolle Nahkampf (schnell, Giftklauen) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\gloomfang_centipede\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
+**Ohne Concept** – Design-Entwurf aus der Beschreibung, Heimat-Biom Höhle, Rolle Nahkampf (schnell, Giftklauen) · Ordner `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\19_gloomfang_centipede\input` · **Tripo-Modell vorhanden – nur bei Neubau nötig**
 
 ### Stufe 1 – Design-Bild → `input/design.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\01_chitin_crawler\input\concept\2_style_lowpoly_insects_B.png`
 
 ```text
 Image 1 is only an art-style reference: copy its rendering style, not the creatures in it.
@@ -1576,7 +1576,7 @@ Show the whole creature, uncropped, in a three-quarter view (from the front and 
 
 ### Stufe 2 – 4 Ansichten → `front.png`, `left.png`, `right.png`, `back.png`
 
-Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\gloomfang_centipede\input\design.png`
+Anhängen: 1. `H:\AIProjects\3D AI\01_kreatur_pipeline\creatures\19_gloomfang_centipede\input\design.png`
 
 ```text
 Image 1 is the approved, binding design of my creature "Gloomfang Centipede": keep its anatomy, shapes, colors, materials, style and the number of all parts exactly. Do not redesign, add or remove anything.

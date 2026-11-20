@@ -1,0 +1,30 @@
+# Oasis Gulper – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Oase (oasis) · Rolle: Nahkampf/Kontrolle (Zungenschlag zieht heran) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "oasis_gulper"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Oasis Gulper: huge bloated turquoise oasis toad with an enormous mouth and lily pads growing on its back"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/frog"
+variant = ""
+vorbild = ["Ochsenfrosch springt", "Chamäleon-Zunge (Zeitlupe)", "Aga-Kröte – Gang und Hocken"]
+
+# Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
+# Vorderbeine stehen im Tripo-Modell waagerecht zur Seite ab (aus den Referenzbildern, mit ChatGPT nicht besser zu bekommen – Nutzer).
+# → Der Frosch-Baukasten muss die Vorderbeine per IK auf den Boden setzen.
+# Freigaben für v1 (raw/_v1) – für den v2-Test deaktiviert:
+# [model_check.freigabe]
+# fussgruppen = "Vorderbeine stehen in Ruhe waagerecht ab (Tripo/Referenz), werden im Rig per IK auf den Boden gesetzt – Nutzer-Entscheidung 2026-11-18."
+# schwerpunkt = "Folge der abstehenden Vorderbeine (nur Hinterbeine am Boden); im Rig mit 4 Füßen am Boden behoben."
+# mesh_teile = "Seerosen/Rohrkolben auf dem Rücken sind getrennte Teile (gewollt, Design); das lose Teil beim Rig prüfen."
+# v2 (Sprung-Pose, 2026-11-18): Modellprüfung B – alle 4 Füße am Boden, Beine voll gestreckt; Vergleich mit v1 (raw/_v1) → v2 besser
+[model_check.freigabe]
+fussbreite = "Frosch liegt flach mit weit gespreizten, gestreckten Hinterbeinen (aus der Sprung-Pose) – froschtypisch, gewollt."

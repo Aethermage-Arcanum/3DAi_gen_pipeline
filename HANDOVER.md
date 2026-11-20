@@ -41,14 +41,14 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 1. **Agent `upright`** (Bog Warden; später Flesh Titan und Golem). Wurde wegen des Kontext-/Nutzungslimits evtl. unterbrochen → per SendMessage fortsetzen lassen. Der Auftrag steht in BACKLOG G6. Danach seinen Bericht prüfen: Rig-Bild, `temp/review/upright_posetest.png`, `temp/review/upright_walk.png`.
 2. **Agent `winged`** (Cinder Wyvern + Bonepicker Vulture).
 3. **Baustein Gelenk-Verdichtung (C9)**: Dreiecke um stark beugende Gelenke unterteilen. Nötig vor dem Frosch, hilft auch dem Wolf.
-3b. **Ordner-Nummerierung (BACKLOG G7)** – leichter Agent direkt nach dem upright-Agenten; vollständige Spezifikation in BACKLOG G7 (IDs/Exportnamen bleiben ohne Nummer).
+3b. ~~**Ordner-Nummerierung (BACKLOG G7)**~~ ✅ 2026-11-20: Ordner heißen jetzt `creatures/01_chitin_crawler/` … `37_mound_queen/`; IDs, Exportnamen, Clip- und Unity-Namen ohne Nummer. Skripte nehmen Ordner oder ID (`scripts/common.py` → `find_creature`).
 4. **Muster-Warteschlange**, immer nur ein Bau-Agent:
    - **Spinne:** Agent existiert, ist am Limit abgebrochen → fortsetzen.
    - danach Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer.
 5. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
 
 ## Ablauf pro Kreatur
-1. **Bilder in zwei Stufen:** `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<name>/prompts.md`.
+1. **Bilder in zwei Stufen:** `python scripts/make_roster.py` → `PROMPTS_ALLE.md` + `creatures/<NN_name>/prompts.md`.
    - Die Beschreibung ist `look` in `roster.toml`: qualitativ, keine Zahlen. Die Pose (`pose`) zeigt **alle Gliedmaßen in voller Länge**, nie sitzend oder gefaltet.
    - **Stufe 1:** Design-Bild → Nutzer prüft es gegen sein Concept → `input/design.png`. **Stufe 2:** 4 Ansichten aus design.png.
    - **Grenze der Bild-KI:** ChatGPT klebt an der Vorlage und übernimmt deren Pose. Die Pose muss also schon im Design-Bild stimmen. Trick des Nutzers für den Frosch: „mitten im Sprung“.
@@ -56,11 +56,11 @@ Für die nächste Session lesen, in dieser Reihenfolge:
    - Raster-Bilder nach Inhalt schneiden, mit gemeinsamem Maßstab (siehe Shellback).
    - **Pflichtprüfung A durch Claude** nach der README-Checkliste.
    - **Achtung Perspektive:** Die Kamera schaut leicht von oben. Ein gerade nach hinten gestreckter Schwanz wirkt in der Rückansicht wie ein herabhängender Streifen (Fehleinschätzungen bei Gorilla und Affe).
-2. **Tripo:** `python scripts/tripo_run.py creatures/<name> --steps generate --dry-run`, dann ohne `--dry-run`. Der Nutzer hat das Generieren für fertig geprüfte Bilder freigegeben, die Credits trotzdem im Blick behalten.
+2. **Tripo:** `python scripts/tripo_run.py creatures/<NN_name> --steps generate --dry-run`, dann ohne `--dry-run`. Der Nutzer hat das Generieren für fertig geprüfte Bilder freigegeben, die Credits trotzdem im Blick behalten.
    - Option `--single design.png` erzeugt das Modell aus einem einzigen Bild.
    - Neu generieren mit `--force generate`, die alte Fassung vorher nach `raw/_v1` sichern (raw nie überschreiben).
-3. **Prüfskript:** `python scripts/model_check.py creatures/<name>` – nur Frühwarnsystem, die **Sichtprüfung B ist Pflicht**. Gewollte Befunde kommen nach `[model_check.freigabe]` mit Begründung. Erlaubte Schlüssel: boden, dreiecke, fussbreite, fussgruppen, haengende_teile, mesh_teile, mittellinie, offene_flaechen, symmetrie.
-4. **Pipeline:** `python scripts/creature_pipeline.py creatures/<name> [--stage motion|full|check]`.
+3. **Prüfskript:** `python scripts/model_check.py creatures/<NN_name>` – nur Frühwarnsystem, die **Sichtprüfung B ist Pflicht**. Gewollte Befunde kommen nach `[model_check.freigabe]` mit Begründung. Erlaubte Schlüssel: boden, dreiecke, fussbreite, fussgruppen, haengende_teile, mesh_teile, mittellinie, offene_flaechen, symmetrie.
+4. **Pipeline:** `python scripts/creature_pipeline.py creatures/<NN_name> [--stage motion|full|check]`.
    - `motion` erzeugt Roh-GIFs in `rig/anim/raw/`, die der Nutzer abnimmt.
    - `full` macht den Export und die End-GIFs in `rig/anim/final/`.
 5. **Unity:** Projekt `Unity_Creature_Test/` (der Nutzer hat es meist offen → für Batch-Läufe eine Kopie verwenden, siehe dortige README). Menü **Kreaturen › Alle importieren + Szene bauen**.

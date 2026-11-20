@@ -7,11 +7,11 @@ Ziel: Aus einer kurzen Beschreibung wird eine fertige, performante Kreatur (Mesh
 | # | Schritt | Wer | Kosten |
 |---|---|---|---|
 | 1 | Kreatur eintragen: `creatures/roster.toml` (Bauplan, Concept-Zelle, **`look`** = ausführliche Beschreibung, ggf. `pose`, Heimat-`biome`, bei neuen auch `role` + `varianten`) bzw. `creature.toml` | du / Claude | – |
-| 2 | `python scripts/make_prompts.py creatures/<name>` (alle: `make_roster.py`) → `prompts.md` mit **zwei** Prompts | Skript | – |
+| 2 | `python scripts/make_prompts.py creatures/<NN_name>` (alle: `make_roster.py`) → `prompts.md` mit **zwei** Prompts | Skript | – |
 | 3a | **Stufe 1 – Design-Bild:** Concept-Ausschnitt + Stil-Referenz + Prompt 1 in ChatGPT → **ein** sauberes Bild. **Du prüfst es gegen dein Concept** und speicherst es als `input/design.png` | du | ChatGPT-Abo |
 | 3b | **Stufe 2 – 4 Ansichten:** `input/design.png` + Prompt 2 in einen neuen Chat → 4 Einzelbilder als `front/left/right/back.png` in `input/`. **Claude prüft** sie nach Checkliste Teil A | du, dann Claude | ChatGPT-Abo |
-| 4 | `python scripts/tripo_run.py creatures/<name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
-| 5 | `python scripts/creature_pipeline.py creatures/<name>` (jedes Skelett) → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
+| 4 | `python scripts/tripo_run.py creatures/<NN_name> --steps generate` → Mesh + Textur in `raw/` (Tripo-Rig/Animation für Krabbler nicht nutzen) | Skript | Tripo-Credits |
+| 5 | `python scripts/creature_pipeline.py creatures/<NN_name>` (jedes Skelett) → UV-Prüfung, eigenes Rig, alle Clips des Bewegungsmusters, Selbstprüfung, Vorschau-GIFs, FBX/GLB + Events | Skript | – |
 
 Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würde, und kostet nichts.
 
@@ -23,7 +23,7 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 - Quelle der Texte (erster Treffer gilt): `look`/`pose` in `creature.toml` → in `creatures/roster.toml` → `description` bzw. Bauplan-Pose (`templates/bodyplans.toml`). Vorhandene Bilder werden nie angefasst – fertige Kreaturen bleiben, wie sie sind; nur `prompts.md` wird neu geschrieben.
 
 **Moveset (welche Animationen jedes Monster braucht):** siehe [MOVESET.md](MOVESET.md).
-**Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
+**Alle Kreaturen-Prompts auf einmal:** `python scripts/make_roster.py` (Liste: `creatures/roster.toml`) → [PROMPTS_ALLE.md](PROMPTS_ALLE.md). Concept-Ausschnitt pro Kreatur: `python scripts/concept_crops.py` → `creatures/<NN_id>/input/concept/design_<A|B>.png`, Übersicht `creatures/concept_crops.png`.
 **Plan für alle 20 Kreaturen:** siehe [ROADMAP_20_KREATUREN.md](ROADMAP_20_KREATUREN.md). **16 Ergänzungen** (ohne Concept, Claude hat ausgewählt): [ROSTER_ERWEITERUNG_VORSCHLAG.md](ROSTER_ERWEITERUNG_VORSCHLAG.md) → Abschnitt „Gewählt“.
 **Biome:** [templates/biomes.toml](templates/biomes.toml) – zentrale Liste mit 18 Biomen (Wald, Küste, Highlands, Wüste, Schnee, Abyss, Höhle, Vulkan, Sumpf, Krypta, Gras/Steppe, Stein, Kristall, Tempel/Ruinen, Oase, Dschungel, Pilzwald, Eis), je Stimmung, Tönungs-Palette, Akzent/Glühen, typische Anbauteile (Geometry Nodes) und Element-Effekt. Varianten pro Kreatur (Grundform + 4 Biome + Elite-Addon) stehen in `creatures/roster.toml` → `varianten`.
 **Krabbler-Rig + Animation:** siehe [rigging/README.md](rigging/README.md).
@@ -35,12 +35,12 @@ Vor Schritt 4 immer zuerst `--dry-run` anhängen. Das zeigt, was passieren würd
 - `templates/bodyplans.toml`: Neutralpose (kompakt) + Kamera + Rig-Typ pro Bauplan (octopod, hexapod, quadruped, serpentine, avian, aquatic, biped; seit 2026-11-18 auch upright, winged, floater, amorph, static)
 - `templates/biomes.toml`: alle Biome mit Tönung, Anbauteilen und Effekt für die Varianten
 - `templates/styles.toml`: Stil-Vorlagen (dark_fantasy, stylized, realistic)
-- `creatures/<name>/creature.toml`: eine Kreatur; kann jeden Wert aus `pipeline.toml` überschreiben
+- `creatures/<NN_name>/creature.toml`: eine Kreatur; kann jeden Wert aus `pipeline.toml` überschreiben
 
 ## Ordner pro Kreatur
 
 ```
-creatures/<name>/
+creatures/<NN_name>/
   creature.toml     Eingabe
   prompts.md        generiert – zwei Prompts (Stufe 1 Design-Bild, Stufe 2 4 Ansichten) zum Kopieren in ChatGPT
   input/            deine Bilder aus ChatGPT: design.png (Stufe 1) + front/left/right/back.png (Stufe 2);
@@ -48,6 +48,8 @@ creatures/<name>/
   raw/              Tripo-Ergebnisse + tripo_state.json (Task-IDs, Credits) – nicht von Hand ändern
   output/           fertige Exporte (Schritt 5)
 ```
+
+**Laufende Nummer im Ordnernamen** (seit 2026-11-20, BACKLOG G7): `creatures/01_chitin_crawler/`, `02_ravine_stalker/` … in der Reihenfolge, in der die Kreaturen bearbeitet bzw. erstellt wurden (zuerst die fertigen, dann die Tripo-Modelle vom 18.11., dann der Rest in Roster-Reihenfolge). **Nur der Ordner trägt die Nummer.** Die Kreatur-ID (`id` im Roster, `name` in creature.toml), der Exportname (`ChitinCrawler.fbx`, abgeleitet aus `name`) sowie die Clip- und Unity-Namen bleiben ohne Nummer. Alle Skripte nehmen den Ordner oder nur die ID (`python scripts/creature_pipeline.py chitin_crawler` reicht). Die Übersetzung zwischen Ordner und ID steckt an einer einzigen Stelle: `scripts/common.py` (`find_creature`, `creature_id`, `export_name`, `creature_dir_for`). Eine neue Kreatur im Roster bekommt bei `make_roster.py` automatisch die nächste freie Nummer.
 
 ## Gut zu wissen
 
@@ -77,7 +79,7 @@ Bei einem Befund gilt: Bild neu machen lassen (kostet nichts) statt später im R
 9. Kein Glühen und keine Effekte im Bild, neutraler Hintergrund, keine Schrift.
 
 **B. Tripo-Modell (nach Tripo, vor dem Rig), Bilder ansehen und messen:**
-1. **Messung (Frühwarnsystem):** `python scripts/model_check.py creatures/<name>` (alle: `--all`) →
+1. **Messung (Frühwarnsystem):** `python scripts/model_check.py creatures/<NN_name>` (alle: `--all`) →
    `review/model_check.json` + `review/model_check.png` (vorn/Seite/oben/unten, Auffälligkeiten **rot**, mit Begründung freigegebene **orange**).
    Misst: einseitige Flächen, Fuß-Gruppen am Boden gegen die Beinzahl des Skeletts, Fußabstand hinten/vorne (Vierbeiner),
    hängende Teile unter der Bauchlinie zwischen den Beinen, Krümmung/Verdrehung der Mittellinie, Symmetrie, Schwerpunkt über den Füßen,
@@ -105,11 +107,11 @@ Ergebnis: Freigabe für das Rig **oder** neues Referenzbild bzw. neuer Tripo-Lau
 
 ## Zusammenarbeit (seit 2026-11-17)
 
-1. **Bewegung zuerst grob zeigen:** `python scripts/creature_pipeline.py creatures/<name> --stage motion` → Roh-GIFs in `rig/anim/raw/` (mit allen Dehnungen/Rissen, keine Prüfung bremst). Pro neuem Muster zuerst Walk + Attack, neben Standbildern aus dem Naturvideo. **Der Nutzer nimmt die Bewegung ab.**
+1. **Bewegung zuerst grob zeigen:** `python scripts/creature_pipeline.py creatures/<NN_name> --stage motion` → Roh-GIFs in `rig/anim/raw/` (mit allen Dehnungen/Rissen, keine Prüfung bremst). Pro neuem Muster zuerst Walk + Attack, neben Standbildern aus dem Naturvideo. **Der Nutzer nimmt die Bewegung ab.**
 2. **Danach bereinigen** – nur am Mesh/Rig/Gewichten, nie durch kleinere Bewegung. Muss die Bewegung doch geändert werden, wird das vorher gezeigt.
 3. **Endfassung:** `--stage full` → GIFs in `rig/anim/final/`, FBX/GLB, Gegentest, Fingerabdruck. Die Roh-Fassung bleibt liegen.
 4. **Begrenzt iterieren:** Sieht ein Clip nach ~3 Versuchen nicht gut aus → aufhören und fragen.
-5. **Freigabe durch den Nutzer:** `python scripts/approve.py creatures/<name>` → gesperrt. Ab dann `python scripts/regression.py` (schnell) bzw. `--deep` vor jedem Commit an gemeinsamem Code.
+5. **Freigabe durch den Nutzer:** `python scripts/approve.py creatures/<NN_name>` → gesperrt. Ab dann `python scripts/regression.py` (schnell) bzw. `--deep` vor jedem Commit an gemeinsamem Code.
 
 **Aufbau:** Die Ablaufsteuerung (`creature_pipeline.py`) ist für alle gleich und enthält kein Tierwissen. Pro Beinart gibt es ein eigenes Rig + einen eigenen Baukasten (`rigging/<skelett>_rig.py`, `motions/<skelett>/<skelett>_kit.py`), pro Muster eigenen Clip-Code. Gemeinsam sind nur Allzweck-Teile (UV-Prüfung, Lückenprüfung, Export, Gegentest, Fingerabdruck).
 

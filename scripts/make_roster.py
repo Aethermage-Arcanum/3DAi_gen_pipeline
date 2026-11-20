@@ -2,6 +2,7 @@
 und schreibt PROMPTS_ALLE.md (alle Prompts in einem Dokument zum Abarbeiten, je Kreatur 2 Stufen).
 
   python scripts/make_roster.py
+Ordner: creatures/<NN>_<id> (laufende Nummer, BACKLOG G7) – neue Kreaturen bekommen die nächste freie Nummer.
 Bestehende creature.toml werden nie überschrieben (eigene Anpassungen bleiben erhalten).
 Die Beschreibung (`look`) und Sonder-Posen (`pose`) stehen in creatures/roster.toml – make_prompts.py liest sie dort.
 Vorhandene Bilder (design.png, front/left/right/back.png) werden nie angefasst, nur die Prompts neu geschrieben.
@@ -12,6 +13,7 @@ import pathlib
 import tomllib
 
 import make_prompts
+from common import creature_dir_for
 
 PIPE = pathlib.Path(__file__).resolve().parent.parent
 R = tomllib.loads((PIPE / "creatures" / "roster.toml").read_text(encoding="utf-8"))
@@ -41,7 +43,7 @@ out = ["# Alle ChatGPT-Prompts – zwei Stufen pro Kreatur", "",
        "| # | Kreatur | Tripo-Modell | design.png |", "|---|---|---|---|"]
 body = []
 for i, c in enumerate(R["c"], 2):
-    d = PIPE / "creatures" / c["id"]
+    d = creature_dir_for(c["id"])                     # creatures/NN_<id>; neue Kreatur → nächste freie Nummer
     (d / "input").mkdir(parents=True, exist_ok=True)
     toml = d / "creature.toml"
     if not toml.exists() and not c.get("artist"):          # ohne Concept: nur Stil-Referenz

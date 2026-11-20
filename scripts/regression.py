@@ -5,9 +5,9 @@
   python scripts/regression.py --deep               betroffene Kreaturen in temp/regression/ neu bauen und ihren
                                                     Fingerabdruck mit der Freigabe vergleichen (Minuten)
   python scripts/regression.py --deep --all         alle freigegebenen, egal ob betroffen
-  python scripts/regression.py --deep --creatures a,b --against temp/base
+  python scripts/regression.py --deep --creatures a,b --against temp/base   (a,b = IDs oder Ordner)
                                                     beliebige Kreaturen gegen einen eigenen Vergleichsstand
-                                                    (<against>/<name>/rig/fingerprint.json.gz), z. B. vor/nach Umbau
+                                                    (<against>/<NN_name>/rig/fingerprint.json.gz), z. B. vor/nach Umbau
   python scripts/regression.py --compare A.json.gz B.json.gz
 
 Gleicher Fingerabdruck = Knochen und verformtes Mesh sind in jedem Clip an jedem geprüften Frame gleich (±0,1 mm).
@@ -27,6 +27,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_info  # noqa: E402
+from common import creature_id, find_creature  # noqa: E402
 
 TOL_POS = 1e-4      # m
 TOL_ROT = 1e-3      # Quaternion-Komponente
@@ -73,7 +74,7 @@ def compare(a, b):
 
 
 def approved_creatures():
-    return sorted(p.parent.parent for p in ROOT.glob("creatures/*/approved/approval.json"))
+    return sorted(p.parent.parent for p in ROOT.glob("creatures/*/approved/approval.json"))   # sortiert = nach Nummer
 
 
 def rebuild(c, work):
@@ -107,7 +108,7 @@ def main():
         sys.exit(0 if same else 1)
 
     if a.creatures:
-        todo = {ROOT / "creatures" / n: ["(manuell gewählt)"] for n in a.creatures.split(",")}
+        todo = {find_creature(n): ["(manuell gewählt)"] for n in a.creatures.split(",")}   # ID oder Ordner
     else:
         todo = {}
         for c in approved_creatures():
@@ -141,8 +142,12 @@ def main():
             bad = True
             continue
         new = load_fp(run_dir / c.name / "rig" / "fingerprint.json.gz")
-        ref_p = (pathlib.Path(a.against).resolve() / c.name / "rig" / "fingerprint.json.gz") if a.against \
-            else c / "approved" / "fingerprint.json.gz"
+        if a.against:                               # Vergleichsstand nach Ordner (01_x) oder alt nach ID (x, vor G7)
+            ag = pathlib.Path(a.against).resolve()
+            ref_p = next((ag / n / "rig" / "fingerprint.json.gz" for n in (c.name, creature_id(c))
+                          if (ag / n / "rig" / "fingerprint.json.gz").exists()), ag / c.name / "rig" / "fingerprint.json.gz")
+        else:
+            ref_p = c / "approved" / "fingerprint.json.gz"
         same, diffs = compare(load_fp(ref_p), new)
         print(f"{'✓' if same else '✗'} {c.name:22} {'identisch' if same else 'VERÄNDERT'}")
         for d in diffs:

@@ -5,7 +5,7 @@ Grund: Tripos Octopod-Rig war beim Chitin Crawler unbrauchbar (nur ~2 von 8 Bein
 
 **Ein Befehl für alles** (kostenlos, lokal):
 ```
-python scripts/creature_pipeline.py creatures/<name>
+python scripts/creature_pipeline.py creatures/<NN_name>
 ```
 Eingabe: `raw/generate_model.glb` von Tripo (nur Mesh + Textur, kein Tripo-Rig/Animation nötig → spart 35 Credits pro Monster).
 
@@ -51,7 +51,7 @@ Standard-Baustein für alle Skelette (Backlog C7). Kleine Teile, die frei schwin
 sondern eine Markierung im Mesh; der Unity-Shader `Creature/Standard Dangling` lässt sie dann weich pendeln –
 zusätzlich zu jeder Animation. Große, schwere Teile (lange Schwänze, Tentakel) brauchen weiterhin Knochenketten.
 
-**So markiert man eine Kreatur** – Abschnitt in `creatures/<name>/creature.toml` (Beispiel Eel Stalker):
+**So markiert man eine Kreatur** – Abschnitt in `creatures/<NN_name>/creature.toml` (Beispiel Eel Stalker):
 ```toml
 [dangling]
 amplitude = 0.025                 # optional: Ausschlag an der Spitze (Anteil der Größe)
@@ -61,7 +61,7 @@ below = 0.0                       # optional: nur unterhalb der Knochenlinie (An
 # above = 0.0                     # optional: nur oberhalb
 # thin_max = 0.04                 # optional: Dicke-Grenze für diesen Bereich
 ```
-Dann `python scripts/creature_pipeline.py creatures/<name>` – fertig. Prüfbild: `rig/dangling_preview.png`
+Dann `python scripts/creature_pipeline.py creatures/<NN_name>` – fertig. Prüfbild: `rig/dangling_preview.png`
 (blau = starr, rot = schwingt; Zahlen in `rig/dangling_report.json`). Ohne `[dangling]` passiert nichts.
 
 **Was das Skript macht** (`rigging/dangling.py`, Standardwerte `dangling_defaults.toml`, läuft direkt nach dem Rig):

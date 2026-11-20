@@ -1,0 +1,21 @@
+# Void Harbinger – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "void_harbinger"
+bodyplan = "biped"
+style = "lowpoly_b"
+description = "Void Harbinger: partly humanoid two-legged void creature with wings, wings clearly separated from the body"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_B.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "floater/harbinger"
+variant = ""
+vorbild = ["Weberknecht – lange dünne Beine (laut Concept)", "Fledermaus/Flughund – Flügel spreizen/schlagen", "teils humanoid (deine Notiz) – Design prüfen"]

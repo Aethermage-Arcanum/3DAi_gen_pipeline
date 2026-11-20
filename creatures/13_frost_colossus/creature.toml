@@ -1,0 +1,21 @@
+# Frost Colossus – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "frost_colossus"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Frost Colossus: huge gorilla-like ice beast standing on all fours on its knuckles, massive arms, frost armor"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_A.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/gorilla"
+variant = ""
+vorbild = ["Gorilla – Knöchelgang (vierbeinig)", "Gorilla – Aufrichten, Brusttrommeln, Schläge (Angriff eher humanoid)"]

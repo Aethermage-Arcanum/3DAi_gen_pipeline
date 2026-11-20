@@ -1,0 +1,39 @@
+# Hollow Stag – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "hollow_stag"
+bodyplan = "quadruped"
+style = "lowpoly_b"
+description = "Hollow Stag: gaunt stag with large antlers, four long legs"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_A.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "quadruped/deer"
+variant = ""
+vorbild = ["Hirsch – Galopp und Sprung", "Hirschkampf in der Brunft – Geweihstoß"]
+
+# Nutzer-Feedback Unity 2026-11-17: Vorderknie knickten nach innen (Vorderbeine stehen so eng, dass sie im
+# Bauch-Streifen lagen → Gelenke viel zu tief erkannt), Hinterhufe 2,4× so breit wie vorne (Tripo), Geweih wackelte
+# (hing am Hals-Knochen).
+[quadruped.rig]
+adaptive_belly_strip = true
+narrow_hind_legs = 0.8
+rigid_head_above = 0.02
+
+# 2026-11-18 (Orchestrator nach Sichtprüfung temp/agent_quad/sheets/deer_gap.png): Der große Schwanzstachel liegt in Ruhe
+# am rechten Hinterbein an und hebt sich bei Bein-/Beckenbewegung ab (bis 3,05 cm) – kein Gelenk, kein sichtbares Loch.
+[gaps]
+max_opening = 0.032
+
+# 2026-11-18 NEUE REFERENZBILDER NÖTIG (Nutzer, Unity-Play-Modus): Hinterbeine stehen gespreizt (Breitbeine) und etwas hält das
+# Geweih hinten fest. Ursache Breitbeine: input/back.png zeigt die Hinterbeine auswärts gebogen und weiter auseinander als
+# front.png -> Tripo-Modell 2,46x breit hinten (review/model_check.png). Neu: design.png mit neuer Pose (roster.toml `pose`),
+# dann 4 Ansichten, dann Tripo neu (alte Fassung vorher nach raw/_v1). Siehe BACKLOG C12.

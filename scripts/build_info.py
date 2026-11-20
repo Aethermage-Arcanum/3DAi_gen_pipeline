@@ -12,6 +12,8 @@ import re
 import subprocess
 import tomllib
 
+from common import creature_id
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SKIP_DIRS = {"creatures", "temp", "Unity", "__pycache__", ".git", "demo_output"}
 _IMPORT = re.compile(r"^\s*(?:from|import)\s+(\w+)", re.M)
@@ -77,7 +79,7 @@ def git_commit():
 def manifest(creature_dir, style=None):
     creature_dir = pathlib.Path(creature_dir).resolve()
     deps = dependencies(creature_dir, style)
-    return {"creature": creature_dir.name, "style": style_of(creature_dir, style), "commit": git_commit(),
+    return {"creature": creature_id(creature_dir), "style": style_of(creature_dir, style), "commit": git_commit(),
             "files": {d: sha(_path(d, creature_dir)) for d in deps}}
 
 

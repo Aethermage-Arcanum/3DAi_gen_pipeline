@@ -1,0 +1,18 @@
+# Geode Golem – aus creatures/roster.toml erzeugt (Roster-Erweiterung 2026-11-18, OHNE Concept Art:
+# das Design-Bild aus Stufe 1 ist der Design-Entwurf, der Nutzer prüft es).
+# Heimat-Biom: Kristall (crystal) · Rolle: Nahkampf (Tank) · Beschreibung (look), Pose und Varianten: creatures/roster.toml · Biome: templates/biomes.toml
+name = "geode_golem"
+bodyplan = "upright"
+style = "lowpoly_b"
+description = "Geode Golem: hulking stone golem cracked open like a geode, big crystal clusters on its back"   # Fallback – die Beschreibung steht in roster.toml (look)
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "upright/golem"
+variant = ""
+vorbild = ["Elefant – Gewicht, Stampfen", "Gorilla aufrecht – Doppelfaust-Slam", "Stop-Motion-Golems (Harryhausen) – steifer, schwerer Gang"]

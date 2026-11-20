@@ -1,0 +1,25 @@
+# Void Manifestation – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "void_manifestation"
+bodyplan = "aquatic"
+style = "lowpoly_b"
+description = "Void Manifestation: floating void orb with squid-like tentacles hanging below it, hovering above the ground"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_A.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "floater/tentacle"
+variant = ""
+vorbild = ["Oktopus – Tentakelwellen", "Qualle – Pulsieren beim Schweben", "Kalmar – Tentakel-Schlag"]
+
+# Tripo hat das Modell gedreht ausgegeben: das Auge schaut nach −Y (sonst +X) → Rig dreht es nach vorn.
+[floater]
+facing = "-y"

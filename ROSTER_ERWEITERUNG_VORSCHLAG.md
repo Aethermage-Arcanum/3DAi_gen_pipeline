@@ -50,7 +50,7 @@ Ziel sind 50–100 Basis-Monster mit je 5–6 Biom-Varianten oder Elite-Addons. 
 
 ## 5. Gewählt (2026-11-18)
 
-Der Nutzer hat Claude die Auswahl überlassen: **je Zeile genau eine Kreatur**, für alle 16 sind Ordner, `creature.toml` und `prompts.md` angelegt (`creatures/<id>/`). Kriterien: coolste Idee, gut lesbar von schräg oben (Silhouette + Oberseite), Stil Artist B, und **Abwechslung der Heimat-Biome** über alle Kreaturen – die neuen gehen bewusst in Biome, die bisher leer waren. Keine PoE-Namen oder -Designs übernommen.
+Der Nutzer hat Claude die Auswahl überlassen: **je Zeile genau eine Kreatur**, für alle 16 sind Ordner, `creature.toml` und `prompts.md` angelegt (`creatures/<NN_id>/`). Kriterien: coolste Idee, gut lesbar von schräg oben (Silhouette + Oberseite), Stil Artist B, und **Abwechslung der Heimat-Biome** über alle Kreaturen – die neuen gehen bewusst in Biome, die bisher leer waren. Keine PoE-Namen oder -Designs übernommen.
 
 **Ohne Concept Art:** Stufe 1 entwirft das Design aus der Beschreibung (`look`) + Stil-Referenz. Das Design-Bild ist der Design-Entwurf: **du prüfst es** und lässt es ggf. neu generieren (siehe `prompts.md` der Kreatur).
 Alle Daten (Beschreibung, Pose, Rolle, Varianten, Naturvorbilder): `creatures/roster.toml`. Biome: `templates/biomes.toml`.

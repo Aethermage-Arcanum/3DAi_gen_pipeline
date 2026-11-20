@@ -1,6 +1,7 @@
 # Unity-Testszene: Kreaturen-Viewer
 
 Zeigt alle fertigen Kreaturen der Pipeline (`../creatures/*/output/*.fbx`) in Unity 6 (6000.3.15f1, Built-in Render Pipeline).
+Der Name einer Kreatur in Unity (`Assets/Creatures/<Name>/`, Katalog, Dropdown) kommt aus dem FBX-Dateinamen (`ChitinCrawler.fbx`), nicht aus dem Pipeline-Ordner. Die Nummer im Ordner (`01_chitin_crawler`, BACKLOG G7) bestimmt nur die Reihenfolge im Katalog.
 
 ## Benutzen
 1. Unity Hub → **Add project from disk** → diesen Ordner (`01_kreatur_pipeline/Unity_Creature_Test`) wählen, mit 6000.3.15f1 öffnen.

@@ -2,7 +2,7 @@
 
 Rig: `rigging/biped_raptor_rig.py` (Werte `rigging/biped_raptor_defaults.toml`, pro Kreatur `[biped_raptor]`).
 Clips nutzen den **Beine-Baukasten** `motions/biped_raptor/biped_kit.py` (Blender-IK, Rumpf-Absenkung, Prüfung) – er liest die Beine aus dem Rig.
-Muster: `raptor/`. Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
+Muster: `raptor/`. Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Skelett (26 Knochen)
 `Root · Hips → Spine_1 → Chest → Neck_1 → Neck_2 → Head → Jaw · Hips → Tail_1..4 · Chest → Arm_L/R_1..3`

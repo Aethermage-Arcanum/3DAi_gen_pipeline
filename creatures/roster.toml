@@ -16,7 +16,7 @@
 # Das Concept-Sheet hat immer Vorrang. Ein `look`/`pose` in der creature.toml überschreibt den Wert hier.
 
 sheet = "../_concept/monster_progression_A_vs_B.webp"
-style_ref = "creatures/chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+style_ref = "creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
 
 [[c]]
 id = "spore_drone"

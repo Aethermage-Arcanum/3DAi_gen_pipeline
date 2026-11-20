@@ -2,7 +2,7 @@
 
 Rig: `rigging/quadruped_rig.py` (Werte: `rigging/quadruped_defaults.toml`, pro Kreatur `[quadruped.*]` in creature.toml).
 Baukasten: `quadruped_kit.py`. Muster: `wolf/` (weitere geplant: lizard, deer, boar, tortoise, behemoth, gorilla).
-Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
+Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Standard-Skelett (30 Knochen, Unity „Generic“)
 `Root · Hips → Spine_1 → Chest → Neck_1 → Neck_2 → Head → Jaw · Hips → Tail_1..4 · Chest → Shoulder_FL/FR`

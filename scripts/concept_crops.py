@@ -1,5 +1,5 @@
 """Schneidet pro Kreatur den Concept-Ausschnitt aus _concept/monster_progression_A_vs_B.webp
-→ creatures/<id>/input/concept/design_<A|B>.png (2× vergrößert) + Übersicht creatures/concept_crops.png
+→ creatures/<NN_id>/input/concept/design_<A|B>.png (2× vergrößert) + Übersicht creatures/concept_crops.png
 
   python scripts/concept_crops.py
 Zellen (Spalte 1-4, Reihe 1-5) und Version stehen in creatures/roster.toml (cell = "A r1c2").
@@ -8,6 +8,8 @@ import pathlib
 import tomllib
 
 from PIL import Image, ImageDraw
+
+from common import creature_dir_for
 
 PIPE = pathlib.Path(__file__).resolve().parent.parent
 R = tomllib.loads((PIPE / "creatures" / "roster.toml").read_text(encoding="utf-8"))
@@ -39,7 +41,7 @@ def main():
         if not c.get("cell"):          # Roster-Erweiterung ohne Concept Art
             continue
         im = crop(img, c["cell"])
-        out = PIPE / "creatures" / c["id"] / "input" / "concept" / f"design_{c['artist']}.png"
+        out = creature_dir_for(c["id"]) / "input" / "concept" / f"design_{c['artist']}.png"
         out.parent.mkdir(parents=True, exist_ok=True)
         im.save(out)
         tiles.append((c["design"], im))

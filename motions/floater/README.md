@@ -1,7 +1,7 @@
 # Skelett floater (Schweber: Orbs, Quallen, Kraken)
 
 Rig: `rigging/floater_rig.py` (Werte `rigging/floater_defaults.toml`, pro Kreatur `[floater]`). Baukasten: `floater_kit.py`. Muster: `tentacle/`.
-Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
+Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Skelett (automatisch, Anzahl hängt vom Modell ab)
 `Root (Boden) → Core (Kern) → Tent_<NN>_<k>` – jede Tentakel-/Stachel-Kette von der **echten Wurzel** zur Spitze (1–5 Knochen, nach Länge).

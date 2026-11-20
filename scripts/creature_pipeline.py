@@ -1,6 +1,6 @@
 """Komplette Nachbearbeitung einer Kreatur nach Tripo – für jedes Skelett, ein Befehl, kostenlos, lokal.
 
-  python scripts/creature_pipeline.py creatures/<name> [--stage motion|full|check] [--style skelett/muster]
+  python scripts/creature_pipeline.py creatures/<NN_name> [--stage motion|full|check] [--style skelett/muster]
                                       [--work <ordner>] [--name Export] [--no-preview] [--unlock]
 
 Stufen (siehe README "Zusammenarbeit"):
@@ -8,7 +8,8 @@ Stufen (siehe README "Zusammenarbeit"):
   full    UV → Rig → Clips → Lücken → GIFs in rig/anim/final/ → Export FBX/GLB → Gegentest → Fingerabdruck
   check   UV → Rig → Clips → Fingerabdruck   (für scripts/regression.py, nichts gerendert/exportiert)
 
-Freigegebene Kreaturen (creatures/<name>/approved/) sind gesperrt: die Pipeline schreibt nichts in ihren
+Kreatur-Ordner: creatures/01_chitin_crawler, 01_chitin_crawler oder nur die ID chitin_crawler (scripts/common.py).
+Freigegebene Kreaturen (creatures/<NN_name>/approved/) sind gesperrt: die Pipeline schreibt nichts in ihren
 Ordner, außer mit --unlock. Mit --work <ordner> landen alle Ausgaben dort (die Kreatur bleibt unberührt).
 Skelett/Muster aus creature.toml [motion] style = "<skelett>/<muster>":
   rigging/<skelett>_rig.py → motions/<skelett>/<muster>/<muster>_clips.py
@@ -26,6 +27,7 @@ import tomllib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_info  # noqa: E402
+from common import export_name, find_creature  # noqa: E402
 
 BLENDER = r"D:\Blender\blender.exe"
 
@@ -71,16 +73,16 @@ def main():
     ap.add_argument("--stage", choices=("motion", "full", "check"), default="full")
     ap.add_argument("--style", default=None, help="anderes Muster testen → Ausgabe in style_tests/<muster>/")
     ap.add_argument("--work", default=None, help="alle Ausgaben in diesen Ordner statt in die Kreatur")
-    ap.add_argument("--name", default=None)
+    ap.add_argument("--name", default=None, help="Exportname (Standard: aus `name` der creature.toml)")
     ap.add_argument("--no-preview", action="store_true")
     ap.add_argument("--unlock", action="store_true", help="freigegebene Kreatur trotzdem neu bauen (überschreibt!)")
     a = ap.parse_args()
-    c = pathlib.Path(a.creature_dir).resolve()
+    c = find_creature(a.creature_dir)
     ct = tomllib.loads((c / "creature.toml").read_text(encoding="utf-8"))
     own_style = ct.get("motion", {}).get("style", "hexapod/ant")
     style = a.style or own_style
     skel, muster = style.split("/")
-    name = a.name or "".join(p.capitalize() for p in c.name.split("_"))
+    name = a.name or export_name(c)                 # aus `name` der creature.toml, nie aus dem Ordner (Nummer!)
 
     # Ausgabeordner: Kreatur selbst, Stil-Test oder fremder Arbeitsordner
     base = pathlib.Path(a.work).resolve() if a.work else c

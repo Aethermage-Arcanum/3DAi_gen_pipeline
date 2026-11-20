@@ -1,10 +1,10 @@
 """Tripo-Schritt der Pipeline: Bilder → Mesh+Textur → Rig-Check → Rig → Animation.
 
 Aufruf:
-  python scripts/tripo_run.py creatures/spinne_01               # alle Schritte
-  python scripts/tripo_run.py creatures/spinne_01 --dry-run     # nur zeigen, was passieren würde (kostenlos)
-  python scripts/tripo_run.py creatures/spinne_01 --steps rig,animate
-  python scripts/tripo_run.py creatures/spinne_01 --force generate   # Schritt trotz Ergebnis neu ausführen
+  python scripts/tripo_run.py creatures/NN_name               # alle Schritte
+  python scripts/tripo_run.py creatures/NN_name --dry-run     # nur zeigen, was passieren würde (kostenlos)
+  python scripts/tripo_run.py creatures/NN_name --steps rig,animate
+  python scripts/tripo_run.py creatures/NN_name --force generate   # Schritt trotz Ergebnis neu ausführen
 
 Bereits erfolgreiche Schritte mit gleichen Einstellungen werden übersprungen (keine doppelten Kosten).
 Zustand + Task-IDs: <kreatur>/raw/tripo_state.json. Downloads: <kreatur>/raw/.
@@ -19,7 +19,7 @@ import urllib.parse
 
 import requests
 
-from common import load_creature, load_env
+from common import find_creature, load_creature, load_env
 
 # .ai = internationale Plattform (Keys von platform.tripo3d.ai). Die Doku zeigt .com – das ist
 # die China-Plattform und lehnt unsere Keys mit 401 ab.
@@ -114,7 +114,7 @@ def main():
     ap.add_argument("--single", default=None, help="nur dieses Bild aus input/ nutzen (image-to-model), z. B. design.png")
     a = ap.parse_args()
 
-    cdir = pathlib.Path(a.creature_dir).resolve()
+    cdir = find_creature(a.creature_dir)          # Ordner (creatures/NN_name) oder nur die ID
     cfg, bp, _ = load_creature(cdir)
     steps = [s for s in a.steps.split(",") if s]
     force = {s for s in a.force.split(",") if s}

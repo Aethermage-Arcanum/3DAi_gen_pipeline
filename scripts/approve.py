@@ -1,9 +1,9 @@
 """Freigabe einer Kreatur durch den Nutzer → sperrt sie gegen versehentliches Neu-Bauen.
 
-  python scripts/approve.py creatures/<name> [--note "Text"]
-  python scripts/approve.py creatures/<name> --revoke          Freigabe zurückziehen (Ordner approved/ löschen)
+  python scripts/approve.py creatures/<NN_name> [--note "Text"]
+  python scripts/approve.py creatures/<NN_name> --revoke          Freigabe zurückziehen (Ordner approved/ löschen)
 
-Legt creatures/<name>/approved/ an:
+Legt creatures/<NN_name>/approved/ an (Ordner auch per ID, z. B. chitin_crawler):
   approval.json        wann, welcher Git-Stand, Notiz
   manifest.json        Prüfsummen aller Dateien, die das Ergebnis bestimmen (scripts/build_info.py)
   fingerprint.json.gz  Knochen + verformtes Mesh aller Clips (Referenz für scripts/regression.py)
@@ -19,6 +19,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_info  # noqa: E402
+from common import find_creature  # noqa: E402
 
 
 def main():
@@ -27,7 +28,7 @@ def main():
     ap.add_argument("--note", default="")
     ap.add_argument("--revoke", action="store_true")
     a = ap.parse_args()
-    c = pathlib.Path(a.creature_dir).resolve()
+    c = find_creature(a.creature_dir)
     dst = c / "approved"
     if a.revoke:
         shutil.rmtree(dst, ignore_errors=True)

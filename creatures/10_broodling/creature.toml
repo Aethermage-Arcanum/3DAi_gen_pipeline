@@ -1,0 +1,26 @@
+# Broodling – aus creatures/roster.toml erzeugt (ROADMAP_20_KREATUREN.md)
+name = "broodling"
+bodyplan = "octopod"
+style = "lowpoly_b"
+description = "Broodling: small spider-like forest brood creature, eight legs"
+design_pick = "Recreate only the large creature in front; ignore the grey silhouettes, any text and the background of the concept."
+
+[[concept]]
+file = "input/concept/design_A.png"
+role = "design"
+
+[[concept]]
+file = "H:/AIProjects/3D AI/01_kreatur_pipeline/creatures/01_chitin_crawler/input/concept/2_style_lowpoly_insects_B.png"
+role = "style"
+
+# Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
+# Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
+[motion]
+style = "octopod/spider"   # Muster noch nicht gebaut (war Variante "spider" von ant; Spinne = Achtbeiner)
+variant = ""
+vorbild = ["Wolfsspinne mit Eikokon/Jungen auf dem Rücken", "Springspinne – Sprungbiss"]
+
+# Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
+[model_check.freigabe]
+fussgruppen = "Sichtprüfung: 8 Beine vorhanden (Draufsicht 4 je Seite); das vordere Paar ist spinnentypisch leicht angehoben und berührt den Boden nicht."
+symmetrie = "Sichtprüfung: Asymmetrie kommt vom unregelmäßigen Eierhaufen auf dem Rücken (gewollt, Concept); Körper und Beine sind symmetrisch."

@@ -2,7 +2,7 @@
 
 Rig: `rigging/legless_rig.py` (Werte `rigging/legless_defaults.toml`, pro Kreatur `[legless]`), gemeinsame Rig-Bausteine `rigging/rig_common.py`.
 Baukasten: `legless_kit.py`. Muster: `cobra/` (geplant: sandworm, Variante eel).
-Ein Befehl: `python scripts/creature_pipeline.py creatures/<name>`.
+Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Standard-Skelett (17 Knochen bei 14 Wirbeln, Unity „Generic“)
 `Root → Spine_01 (Schwanzspitze) → … → Spine_14 → Head → Jaw`. Wirbel liegen auf der Körpermittellinie (Querschnitte entlang X).

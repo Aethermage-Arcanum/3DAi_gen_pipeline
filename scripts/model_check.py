@@ -7,7 +7,8 @@
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 Aufruf:
-  python scripts/model_check.py creatures/<name>         → creatures/<name>/review/model_check.json + model_check.png
+  python scripts/model_check.py creatures/<NN_name>      → creatures/<NN_name>/review/model_check.json + model_check.png
+                                                           (Ordner oder nur die ID, z. B. chitin_crawler)
   python scripts/model_check.py --all                    → alle Kreaturen mit raw/generate_model.glb + Übersichtstabelle
 
 Messungen (erwartete Werte aus creature.toml: [motion] style → Skelett; Schwellen in scripts/model_check.toml,
@@ -39,7 +40,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from common import deep_merge, load_toml  # noqa: E402
+from common import creature_dirs, creature_id, deep_merge, find_creature, load_toml  # noqa: E402
 
 BLENDER = r"D:\Blender\blender.exe"
 BLENDER_PART = ROOT / "rigging" / "model_check_blender.py"
@@ -96,7 +97,7 @@ def resolve_config(creature_dir):
     unknown = set(freigabe) - set(TITEL)
     if unknown:
         raise SystemExit(f"[model_check.freigabe] unbekannte Prüfung(en) {sorted(unknown)}. Erlaubt: {sorted(TITEL)}")
-    meta = {"kreatur": c.name, "skelett": skel or "?", "muster": muster or "?", "facing": facing,
+    meta = {"kreatur": creature_id(c), "skelett": skel or "?", "muster": muster or "?", "facing": facing,
             "face_limit": full.get("tripo", {}).get("face_limit")}
     return cfg, freigabe, meta
 
@@ -674,7 +675,7 @@ def blender(args):
 
 
 def check(creature_dir, quiet=False):
-    c = pathlib.Path(creature_dir).resolve()
+    c = find_creature(creature_dir)
     src = c / "raw" / "generate_model.glb"
     if not src.exists():
         raise SystemExit(f"{src} fehlt – erst scripts/tripo_run.py --steps generate laufen lassen.")
@@ -764,7 +765,7 @@ def main():
     ap.add_argument("--all", action="store_true", help="alle Kreaturen mit raw/generate_model.glb prüfen + Tabelle")
     a = ap.parse_args()
     if a.all:
-        dirs = sorted(p.parent.parent for p in (ROOT / "creatures").glob("*/raw/generate_model.glb"))
+        dirs = [d for d in creature_dirs() if (d / "raw" / "generate_model.glb").exists()]   # nach Nummer
         reps = []
         for d in dirs:
             print(f"→ {d.name}", flush=True)
@@ -774,12 +775,12 @@ def main():
         print("\n" + "Kreatur".ljust(20) + "".join(k[:10].ljust(11) for k in keys))
         for r in reps:
             print(r["kreatur"][:19].ljust(20) + "".join(short[r["befunde"][k]["status"]].ljust(11) for k in keys))
-        print("\nDetails: creatures/<name>/review/model_check.json + model_check.png")
+        print("\nDetails: creatures/<NN_name>/review/model_check.json + model_check.png")
         print_hinweis()
     elif a.creature_dir:
         check(a.creature_dir)
     else:
-        ap.error("creatures/<name> oder --all angeben")
+        ap.error("creatures/<NN_name> (oder ID) oder --all angeben")
 
 
 if __name__ == "__main__":

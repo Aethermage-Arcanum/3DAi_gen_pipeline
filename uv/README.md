@@ -1,6 +1,6 @@
 # UV-Prüfung (Schritt 0 der Pipeline, direkt nach Tripo)
 
-`uv_check.py` misst Tripos UV-Map und eine Blender-**Smart-UV**-Alternative (kostenlos, lokal), wählt die bessere und rendert eine Sichtprüfung mit Test-Texturen. Ausgabe pro Kreatur in `creatures/<name>/uv/`:
+`uv_check.py` misst Tripos UV-Map und eine Blender-**Smart-UV**-Alternative (kostenlos, lokal), wählt die bessere und rendert eine Sichtprüfung mit Test-Texturen. Ausgabe pro Kreatur in `creatures/<NN_name>/uv/`:
 - `model_uv.glb`: Modell mit finaler UV, die Eingabe für das Rig
 - `uv_report.json`: Kennzahlen beider UV-Varianten + Entscheidung
 - `uv_preview.png`: **Prüfblatt** (`uv_sheet.py`), Tripo-UV und Smart UV untereinander:

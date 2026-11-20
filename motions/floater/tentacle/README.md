@@ -109,4 +109,4 @@ Vorher/Nachher-Bilder: `temp/review/tentacle.png` (Idle + Walk, Seite, mit Zwieb
   dieses Tripo-Meshes (wird ohnehin neu gemacht).
 - Der Kern selbst (Mantel) bleibt starr; ein „Atmen“ des Mantels gibt es noch nicht.
 - Hit ist mit 12 Frames kurz – das Nachschwingen wird von der Hüllkurve früh gedämpft.
-- Die Bewegung ist noch nicht vom Nutzer abgenommen (Roh-GIFs: `creatures/void_manifestation/rig/anim/raw/`).
+- Die Bewegung ist noch nicht vom Nutzer abgenommen (Roh-GIFs: `creatures/05_void_manifestation/rig/anim/raw/`).

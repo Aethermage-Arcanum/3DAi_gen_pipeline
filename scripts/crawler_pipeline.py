@@ -1,6 +1,6 @@
 """Alter Einstieg für Krabbler – leitet nur noch an scripts/creature_pipeline.py weiter (eine Pipeline für alle Skelette).
 
-  python scripts/crawler_pipeline.py creatures/chitin_crawler [gleiche Optionen wie creature_pipeline.py]
+  python scripts/crawler_pipeline.py creatures/01_chitin_crawler [gleiche Optionen wie creature_pipeline.py]
 """
 import pathlib
 import subprocess
