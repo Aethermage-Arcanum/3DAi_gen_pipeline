@@ -1,0 +1,187 @@
+# Bewegungsmuster upright/treant – wandelnder Sumpfbaum (Bog Warden): schwer, langsam, Äste/Krone schwingen nach.
+# Vorbilder (Videos/Quellen im README): Elefant (schwerer Schritt, Gewichtsverlagerung, kein Flug auch im Eiltempo),
+# Gorilla (aufgerichtet, Schlag auf den Boden), Elefantenrüssel (Peitsche: Welle von der Wurzel zur Spitze),
+# Baum im Sturm (Äste schwingen verzögert, gedämpft, mehrere Frequenzen).
+# Einheiten: Längen als Anteil der Hüfthöhe (Beinlänge, LEGLEN) bzw. der Körperhöhe (HGT, nur crouch/drop), Winkel in Grad.
+
+[meta]
+skeleton = "upright"
+style = "treant"
+clip_prefix = "Upright_Treant"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[stand]                  # Standhaltung ABSOLUT (Rumpf-Achse Becken → Brust-Oberkante gegen die Senkrechte)
+lean_deg = 9             # Tripo-Ruhepose ≈ 8,5° – gebückter Stamm bleibt, wird aber nicht zufällig übernommen
+side_deg = 0             # Ruhepose ist leicht schief → gerade stellen
+
+[walk]   # Elefant: langsamer Schritt, lange Doppelstütze, Gewicht pendelt seitlich übers Standbein, Rumpf sackt nach dem
+         # Aufsetzen ein (Last), Arme pendeln gegen die Beine und schwingen verzögert nach, Krone schwingt hinterher.
+cycle_frames = 38        # 0,79 Hz (Elefant langsam ≈ 0,6–0,8 Hz; schwer, aber nicht zäh)
+duty = 0.68              # Standanteil: Elefant geht mit 0,65–0,75 (Hutchinson 2006) → immer ein Fuß fest am Boden
+order = { L = 0.0, R = 0.5 }
+stride = 0.75            # Fußweg in der Standphase (Anteil Beinlänge) → ≈ 1,1 Hüfthöhen pro Zyklus (Elefant 1,0–1,5)
+speed_match = 1.0
+lift = 0.16              # Fußhub (Anteil Beinlänge) – Wurzelfüße werden deutlich angehoben (sonst schlurfen sie)
+lift_peak = 0.38         # Fuß früh hoch, dann vor und schwer absetzen
+heel_deg = 14            # Ferse löst sich zuerst (Abrollen über die Wurzelzehen) …
+heel_pre = 0.08          # … schon im letzten Stück der Standphase
+lean_deg = 11            # absolut (Stand 9°) – leicht vorgebeugt im Gehen
+bob = 0.012              # Rumpf federt 2× pro Zyklus (Anteil HGT) …
+settle = 0.07            # … tiefster Punkt kurz NACH dem Aufsetzen (Last sackt nach), höchster in der Standmitte
+sway = 0.018             # Gewicht seitlich übers Standbein (Anteil HGT) – Elefant/Riese watschelt
+sway_lag = 0.04
+roll_deg = 3.0           # Oberkörper kippt zum Standbein
+hip_yaw_deg = 6          # Becken dreht mit dem Schwungbein vor
+counter = 0.7            # Brust dreht verzögert dagegen
+counter_lag = 0.06
+chest_nod_deg = 2.0      # Brust nickt nach jedem Aufsetzen nach
+arm_swing_deg = 13       # Arme pendeln gegen die Beine (schwere Äste: wenig, dafür verzögert)
+arm_lag = 0.08           # Oberarm folgt dem Rumpf um 8 % Zyklus verzögert …
+elbow_lag = 0.07         # … Unterarm noch einmal später, Finger noch später (Welle zur Spitze)
+elbow_deg = 9
+elbow_base = 6
+finger_deg = 8
+arm_bounce_deg = 4       # Arme federn bei jedem Aufsetzen nach unten nach
+arm_out = 3
+crown_roll_k = 0.8       # Krone bleibt hinter der Rumpfbewegung zurück (Trägheit, Anteil) …
+crown_lag = 0.08         # … um so viel Zyklus verzögert
+crown_nod_deg = 1.5      # Krone nickt nach dem Aufsetzen (Äste federn)
+
+[run]    # schweres Eiltempo: wie Elefant schnell – Standanteil um 0,5, KEINE Flugphase, mehr Federn und Vorlage
+cycle_frames = 26        # 1,15 Hz
+duty = 0.52
+order = { L = 0.0, R = 0.5 }
+stride = 0.95
+speed_match = 1.0
+lift = 0.2
+lift_peak = 0.4
+heel_deg = 18
+heel_pre = 0.1
+lean_deg = 18
+bob = 0.022
+settle = 0.06
+sway = 0.012
+sway_lag = 0.04
+roll_deg = 2.5
+hip_yaw_deg = 8
+counter = 0.8
+counter_lag = 0.05
+chest_nod_deg = 3.5
+arm_swing_deg = 24
+arm_lag = 0.07
+elbow_lag = 0.06
+elbow_deg = 14
+elbow_base = 18
+finger_deg = 12
+arm_bounce_deg = 7
+arm_out = 6
+crown_roll_k = 0.9
+crown_lag = 0.07
+crown_nod_deg = 3
+
+[turn]   # erbt von walk: auf der Stelle drehen, Oberkörper führt in die Kurve, Krone und Arme schleppen nach
+cycle_frames = 36
+duty = 0.68
+turn_deg = 40            # pro Zyklus
+stride = 0.0
+lead_deg = 14            # Rumpf dreht der Drehung voraus (verteilt Becken → Brust)
+bend_deg = 5             # neigt sich in die Kurve
+crown_trail_deg = 4      # Krone bleibt zurück
+arm_trail_deg = 8        # Arme schleppen nach (schwingen gegen die Drehung)
+arm_swing_deg = 6
+hip_yaw_deg = 3
+sway = 0.014
+
+[idle]   # Baum im Wind: langsames Atmen (Stamm knarrt vor und zurück), Gewicht wandert, Krone schwingt mit zwei
+         # verschiedenen Frequenzen (wie Äste im Wind), Arme hängen schwer und schwingen verzögert, Finger kriechen
+frames = 120             # 4 s
+breathe_deg = 1.6        # 2 Atemzüge
+sway = 0.008
+roll_deg = 1.2
+look_deg = 9             # Oberkörper wendet sich langsam einmal links, einmal rechts
+crown_deg = 2.2          # Wind in der Krone (Frequenzen 2 und 3 pro Clip)
+arm_deg = 3
+finger_deg = 10
+
+[ready]  # Drohen: tiefer (Knie gebeugt), vorgebeugt, Arme vor und gespreizt, Krallen-Finger öffnen/schließen,
+         # Gewicht pendelt schwer links-rechts (Gorilla vor dem Angriff), schweres Atmen
+frames = 48
+crouch = 0.035           # Anteil HGT (Knie beugen per IK)
+lean_deg = 20
+sway = 0.012
+roll_deg = 2.5
+breathe_deg = 2.5
+arm_fwd_deg = 22
+arm_out_deg = 16
+elbow_deg = 28
+finger_spread_deg = -14
+finger_pulse_deg = 10
+crown_deg = 2.5
+
+[attack1] # Wurzel-Slam (Gorilla schlägt auf den Boden): Arme hoch über die Krone, Oberkörper zurück → Arme + ganzer
+          # Oberkörper schlagen nieder, Hände treffen den Boden (Event hit), Körper sackt ein und federt nach, Krone peitscht.
+frames = 62
+windup_end = 20          # Ausholen (langsam, 0,67 s) …
+strike_end = 26          # … Schlag in 6 Frames (0,2 s), beschleunigt
+hold_end = 36            # Hände bleiben am Boden (Hand-IK), Körper federt nach
+hit_frame = 26
+raise_deg = 135          # Arme nach vorn-oben (vom Hängen aus) – Hände über dem Gesicht VOR der Krone (aus der Spielkamera sichtbar)
+raise_out_deg = 0
+raise_in_deg = 28        # Arme beim Ausholen zur Mitte ziehen (sonst verschwinden sie seitlich in den Kronen-Ästen)
+raise_elbow_deg = 40     # Ellbogen beim Ausholen gebeugt
+lean_back_deg = -10      # Rumpf zurück (absolut, Stand 9°)
+slam_lean_deg = 56       # Rumpf beim Aufschlag (absolut)
+slam_swing_deg = 12      # Arm-Winkel beim Aufschlag (vom Hängen aus, mit Rumpf zusammen → Hände vorn am Boden)
+slam_drop = 0.07         # Körper sackt ein (Anteil HGT, Knie beugen)
+slam_lunge = 0.03        # Becken schiebt zurück (Anteil HGT) – Gewicht hinter den Händen
+shrug_deg = 14
+finger_spread_deg = -22
+hand_clear = 0.004       # Fingerspitzen so weit über dem Boden (Anteil HGT)
+crown_k = 0.9            # Krone bleibt bei schnellen Rumpf-Neigungen zurück und peitscht nach
+
+[attack2] # Ast-Peitsche (Elefantenrüssel): rechter Arm holt weit hinten-außen aus, dann Welle Becken → Brust → Oberarm →
+          # Unterarm → Hand → Finger, Arm fegt waagerecht von rechts über vorn nach links, Gewicht wandert mit.
+frames = 56
+windup_end = 18
+strike_end = 26
+hit_frame = 24
+side = "R"
+twist_wind_deg = -28     # Oberkörper dreht nach rechts (Ausholen) …
+twist_strike_deg = 30    # … und schwingt nach links durch
+yaw_wind_deg = -7
+yaw_strike_deg = 10
+shift = 0.014            # Gewicht seitlich (Anteil HGT)
+out_wind_deg = 55        # Arm abgespreizt beim Ausholen …
+out_strike_deg = 78      # … fast waagerecht beim Schlag
+sweep_wind_deg = -45     # nach hinten-rechts
+sweep_strike_deg = 75    # nach vorn-links
+elbow_wind_deg = 45
+elbow_strike_deg = 4
+finger_wind_deg = 18
+finger_strike_deg = -22
+lean_deg = 14
+other_arm_deg = -14      # anderer Arm schwingt zum Ausgleich zurück
+chain_lag = 1.6          # Frames Verzögerung je Glied der Kette (Peitsche)
+crown_k = 0.9
+
+[hit]
+frames = 22
+jolt = 0.022             # Anteil HGT nach hinten
+pitch_deg = 7
+roll_deg = 4
+arm_fling_deg = 16
+crown_k = 1.0
+
+[death]  # PLATZHALTER – Death-Clips sind vom Nutzer pausiert. Nur, damit die Clipliste vollständig ist.
+frames = 30
+sag = 0.02
+lean_deg = 16
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+max_stretch = 2.0
+stretch_every = 3
+stretch_min_edge = 0.004

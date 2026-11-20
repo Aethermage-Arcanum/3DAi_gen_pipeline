@@ -92,6 +92,10 @@ haengende_teile = { aktiv = true }
 fussgruppen = { erwartet = 2 }
 haengende_teile = { aktiv = true }
 
+[skelett.upright]
+# aufrechter Zweibeiner mit langen Armen (Treant, Golem, Brute): 2 Füße am Boden, Hände hängen frei darüber
+fussgruppen = { erwartet = 2 }
+
 [skelett.hexapod]
 # erwartet = 2 × Anzahl [motion.legs] walking_slots (Taster erreichen den Boden nicht), sonst 6
 fussgruppen = { erwartet = 6 }

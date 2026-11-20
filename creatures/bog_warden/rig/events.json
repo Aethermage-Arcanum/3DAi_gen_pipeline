@@ -1,0 +1,54 @@
+{
+  "fps": 30,
+  "clips": {
+    "Upright_Treant_Walk": [
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Upright_Treant_Run": [
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Upright_Treant_Idle": [],
+    "Upright_Treant_Ready": [],
+    "Upright_Treant_TurnLeft": [
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Upright_Treant_TurnRight": [
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "R"
+      }
+    ],
+    "Upright_Treant_Attack1": [
+      {
+        "frame": 26,
+        "event": "hit"
+      }
+    ],
+    "Upright_Treant_Attack2": [
+      {
+        "frame": 24,
+        "event": "hit"
+      }
+    ],
+    "Upright_Treant_Hit": [],
+    "Upright_Treant_Death": [
+      {
+        "frame": 30,
+        "event": "dead"
+      }
+    ]
+  }
+}

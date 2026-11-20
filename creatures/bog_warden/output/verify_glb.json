@@ -1,0 +1,126 @@
+{
+  "skeleton": "upright",
+  "file": "BogWarden.glb",
+  "meshes": 1,
+  "triangles": 4003,
+  "bones": 27,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_93e74c4e-9c20-4925-a801-f892ab1eeeae"
+  ],
+  "textures": [
+    [
+      "Color_93e74c4e-9c20-4925-a801-f892ab1eeeae",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_93e74c4e-9c20-4925-a801-f892ab1eeeae",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_93e74c4e-9c20-4925-a801-f892ab1eeeae",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Upright_Treant_Attack1",
+      [
+        0,
+        49
+      ]
+    ],
+    [
+      "Upright_Treant_Attack2",
+      [
+        0,
+        44
+      ]
+    ],
+    [
+      "Upright_Treant_Death",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Upright_Treant_Hit",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Upright_Treant_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Upright_Treant_Ready",
+      [
+        0,
+        38
+      ]
+    ],
+    [
+      "Upright_Treant_Run",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Upright_Treant_TurnLeft",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Upright_Treant_TurnRight",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Upright_Treant_Walk",
+      [
+        0,
+        30
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.25,
+    0.97
+  ],
+  "foot_moves_m": 0.1741,
+  "dimensions_m": [
+    1.016,
+    0.78,
+    0.966
+  ],
+  "dangling": {
+    "domain": "POINT",
+    "values": 11804,
+    "marked": 668,
+    "max": 1.0
+  },
+  "ok": true
+}

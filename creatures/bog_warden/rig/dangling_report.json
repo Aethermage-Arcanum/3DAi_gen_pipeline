@@ -1,0 +1,135 @@
+{
+  "size_m": 1.0,
+  "vertices": 5764,
+  "dangling_vertices": 256,
+  "full_vertices": 20,
+  "parts": 19,
+  "region_positions": [
+    279
+  ],
+  "thin_max_m": 0.03,
+  "longest_parts": [
+    {
+      "verts": 28,
+      "length_m": 0.1805,
+      "reach": 1.0,
+      "center": [
+        -0.031,
+        0.298,
+        0.08
+      ]
+    },
+    {
+      "verts": 28,
+      "length_m": 0.1805,
+      "reach": 1.0,
+      "center": [
+        -0.03,
+        0.297,
+        0.08
+      ]
+    },
+    {
+      "verts": 16,
+      "length_m": 0.1689,
+      "reach": 1.0,
+      "center": [
+        -0.216,
+        -0.185,
+        0.069
+      ]
+    },
+    {
+      "verts": 16,
+      "length_m": 0.1689,
+      "reach": 1.0,
+      "center": [
+        -0.217,
+        -0.184,
+        0.069
+      ]
+    },
+    {
+      "verts": 19,
+      "length_m": 0.1569,
+      "reach": 1.0,
+      "center": [
+        0.23,
+        0.377,
+        0.083
+      ]
+    },
+    {
+      "verts": 19,
+      "length_m": 0.1568,
+      "reach": 1.0,
+      "center": [
+        0.231,
+        0.376,
+        0.083
+      ]
+    },
+    {
+      "verts": 14,
+      "length_m": 0.1309,
+      "reach": 1.0,
+      "center": [
+        0.223,
+        -0.359,
+        0.09
+      ]
+    },
+    {
+      "verts": 14,
+      "length_m": 0.1309,
+      "reach": 1.0,
+      "center": [
+        0.222,
+        -0.359,
+        0.09
+      ]
+    },
+    {
+      "verts": 16,
+      "length_m": 0.1118,
+      "reach": 1.0,
+      "center": [
+        0.187,
+        -0.241,
+        0.113
+      ]
+    },
+    {
+      "verts": 16,
+      "length_m": 0.1118,
+      "reach": 1.0,
+      "center": [
+        0.186,
+        -0.241,
+        0.113
+      ]
+    },
+    {
+      "verts": 8,
+      "length_m": 0.0678,
+      "reach": 0.73,
+      "center": [
+        -0.038,
+        0.258,
+        0.13
+      ]
+    },
+    {
+      "verts": 9,
+      "length_m": 0.0625,
+      "reach": 0.61,
+      "center": [
+        0.172,
+        0.169,
+        0.143
+      ]
+    }
+  ],
+  "no_thickness_hit": 489,
+  "no_thickness_after_fill": 0
+}

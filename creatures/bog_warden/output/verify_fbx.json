@@ -1,0 +1,119 @@
+{
+  "skeleton": "upright",
+  "file": "BogWarden.fbx",
+  "meshes": 1,
+  "triangles": 4003,
+  "bones": 27,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_93e74c4e-9c20-4925-a801-f892ab1eeeae"
+  ],
+  "textures": [
+    [
+      "Color_93e74c4e-9c20-4925-a801-f892ab1eeeae",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_93e74c4e-9c20-4925-a801-f892ab1eeeae",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "BogWarden|BogWarden|Upright_Treant_Attack1",
+      [
+        1,
+        63
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Attack2",
+      [
+        1,
+        57
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Death",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Hit",
+      [
+        1,
+        23
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Ready",
+      [
+        1,
+        49
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Run",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_TurnLeft",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_TurnRight",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "BogWarden|BogWarden|Upright_Treant_Walk",
+      [
+        1,
+        39
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -0.25,
+    0.97
+  ],
+  "foot_moves_m": 0.1764,
+  "dimensions_m": [
+    1.016,
+    0.788,
+    0.965
+  ],
+  "dangling": {
+    "domain": "CORNER",
+    "values": 12009,
+    "marked": 691,
+    "max": 1.0
+  },
+  "ok": true
+}

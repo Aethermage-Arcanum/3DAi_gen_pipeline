@@ -85,3 +85,52 @@ Unity: der Importer gibt Kreaturen mit `_dangling.json` automatisch das Wabbel-M
 Vertex im Vertex-Shader (auch im Schatten-Durchgang). Bei 3.300 Vertices vernachlässigbar, auch bei vielen Gegnern.
 **Grenzen**: Der Shader kennt keine Trägheit (Lappen schwingen gleichmäßig, nicht stärker bei schnellen Bewegungen) und
 verbiegt nur (keine Kollision mit dem Körper). Für große Ausschläge lieber Knochen-/Federketten.
+
+## Skelett `upright` – aufrechter Zweibeiner mit langen Armen (seit 2026-11-18)
+Für Treant (Bog Warden), später Golem und Brute/Flesh Titan. Dateien (gekapselt, nur Allzweck-Bausteine importiert):
+`upright_rig.py` (Rig), `upright_detect.py` (Erkennung), `upright_defaults.toml` (Stellschrauben, pro Kreatur `[upright]`),
+`upright_review.py` (Prüfbilder). Baukasten: `motions/upright/upright_kit.py`, erstes Muster `motions/upright/treant/`.
+
+**27 Knochen, feste Namen (Unity „Generic“):**
+```
+Root └ Pelvis → Spine_1 → Spine_2 → Spine_3 → Chest
+          Chest → Neck → Head      Chest → Crown
+          Chest → Clavicle_{L,R} → UpperArm → Forearm → Hand → Fingers
+       Pelvis → Thigh_{L,R} → Shin → Foot → Toe
+```
+Fehlt ein Teil, bleibt der Knochen ein **Platzhalter ohne Gewicht** (Treant: Neck, Head – das Gesicht sitzt im Stamm = Chest).
+Crown = starrer Aufbau oben auf dem Rumpf (Treant: Astkrone; Golem: Kristalle; sonst Platzhalter).
+
+**Erkennung an der echten Geometrie** (Tripo baut diese Kreaturen als EIN verschmolzenes Mesh): Waagerechte Schnitte, und alles
+oberhalb eines Schnitts wird weggedacht. Die Stücke mit Bodenkontakt sind die **Beine**. Die höchste Höhe, bei der beide noch
+getrennt sind, ist der **Schritt**. Die beiden großen frei hängenden Stücke unterhalb des Schritts sind die **Arme**. Der Schnitt
+wird pro Arm hochgeschoben, bis der Arm mit dem Rumpf verschmilzt: das ist die **Achsel**. Die **Krone** beginnt dort, wo der
+Rumpf-Schnitt sprunghaft breiter wird. Die Gelenke folgen aus der Mittellinie (Schwerpunkt der Schnittkurven):
+- Knöchel: wo die Wurzel-/Zehenspreizung endet.
+- Knie: Engstelle, bei gleich dicken Stumpfbeinen 45 % (leicht nach vorn, damit die IK sicher nach vorn knickt).
+- Ellbogen: stärkste Biegung.
+- Handgelenk: wo die Hand breiter wird.
+- Fingeransatz: höchster Schnitt mit ≥ 3 getrennten Fingern.
+
+**Gewichte:** 1/Abstand⁴ mit Masken je Körperteil (Bein-/Arm-Stücke nur eigene Knochen, Übergänge an Schritt, Achsel und
+Schulter), danach Glätten über die Kanten (weiche Manschetten), max. 4 Einflüsse, UV-Naht-Duplikate identisch.
+- Fußsohle: nur Foot/Toe.
+- **Krone starr** an Crown. Dazu zählen Äste und daran hängende Strähnen, erkannt über den kürzesten Weg im Mesh: näher an
+  der Krone als am Rumpf-Kern. Am Stamm gibt es einen geglätteten Übergang (`crown_smooth`, sonst Riss an Strähnen, die
+  direkt am Stamm ansetzen).
+- Lose Mesh-Teile (Moos, Pilze) hängen starr an ihrer Ansatzstelle.
+- Einseitige Moos-Platten macht `[upright.double_sided]` doppelseitig. Das Schwingen kommt aus `[dangling]` (keine Knochen).
+
+**Baukasten** (`upright_kit.py`):
+- Bein-IK: Oberschenkel + Schienbein auf ein Ziel am Knöchel, Fuß-Ausrichtung vom Ziel. Abrollen: Ferse hebt um den Ballen,
+  Zehen bleiben flach.
+- Arme frei (FK) mit Federn/Verzögerung, für Bodenkontakt per Hand-IK (Einfluss pro Frame).
+- `posture()`: Rumpf-Neigung **absolut** statt auf die gebückte Ruhepose addiert.
+- Prüfungen beim Backen: Fußkontakt, Fußrutschen pro Frame, Schleife, Drehrichtung (`body_turns`, `upper_body_leads`),
+  Rückkehr in die Standhaltung, Dehnung (nur Info).
+
+**Prüfbilder:**
+```
+& "D:\Blender\blender.exe" -b <rig>/upright_rigged.blend -P rigging/upright_review.py -- rig <bild.png>
+& "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/upright_review.py -- strip <bild.png> Upright_Treant_Walk 0,5,10 side,front,arpg
+```

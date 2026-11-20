@@ -16,3 +16,23 @@ role = "style"
 style = "upright/treant"
 variant = ""
 vorbild = ["Baum im Sturm – Äste schwingen", "Elefantenrüssel – Ast-Peitsche", "Elefant – schwerer, langsamer Schritt"]
+
+# Modellprüfung (scripts/model_check.py): gewollte Befunde, mit Begründung (Sichtprüfung BACKLOG G5, Rig 2026-11-18)
+[model_check.freigabe]
+mittellinie = "Natürlich krummer, gebückter Baumstamm mit schiefer Astkrone (Tripo-Modell = Design). Das Rig misst die Rumpf-Mitte pro Höhe an der echten Geometrie (upright_detect), die Clips geben die Haltung absolut vor (posture) – die Krümmung stört die Animation nicht."
+symmetrie = "Astkrone, Moos-Strähnen und Baumpilze sind bewusst asymmetrisch (Baum, kein Tier). Rumpf, Arme und Beine sind paarig und werden je Seite eigenständig erkannt."
+
+# Frei hängende Teile (rigging/dangling.py): Moos-Strähnen unter der Astkrone schwingen per Shader nach, ohne Knochen.
+# Äste der Krone selbst bleiben starr (hängen zu 100 % an Crown): nur Vertices UNTERHALB der Kronen-Basis (below)
+# und nur dünne Teile (thin_max) schwingen.
+[dangling]
+amplitude = 0.018
+frequency = 0.6           # langsam, schwer (nasses Moos)
+[[dangling.region]]
+bones = ["Crown"]
+below = -0.02
+
+# Rig (rigging/upright_rig.py): Moos-Strähnen sind bei Tripo einseitige Platten (model_check: 22 kleine offene
+# Bereiche) → doppelseitig machen, sonst von hinten unsichtbar und für [dangling] ohne messbare Dicke.
+[upright.double_sided]
+enabled = true

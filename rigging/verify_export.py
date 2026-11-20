@@ -36,6 +36,10 @@ SKELETONS = {
     "biped_raptor": {"marker": "Leg_BL_1", "body": "Chest", "foot": "Leg_BL_4",
                      "std": {"Root", "Hips", "Spine_1", "Chest", "Neck_1", "Neck_2", "Head", "Jaw", "Tail_1", "Tail_4"}
                      | {f"Leg_{n}_{k}" for n in ("BL", "BR") for k in range(1, 5)}},
+    "upright": {"marker": "Thigh_L", "body": "Chest", "foot": "Foot_L",
+                "std": {"Root", "Pelvis", "Spine_1", "Spine_2", "Spine_3", "Chest", "Neck", "Head", "Crown"}
+                | {f"{b}_{s}" for s in "LR" for b in ("Clavicle", "UpperArm", "Forearm", "Hand", "Fingers",
+                                                     "Thigh", "Shin", "Foot", "Toe")}},
     "multileg": {"marker": "Leg_L1_1", "body": "Chest", "foot": "Leg_L1_4", "std": {"Root", "Hips", "Chest", "Head"}},
     "floater": {"marker": "Core", "body": None, "foot": None, "std": {"Root", "Core"}},
     "legless": {"marker": "Spine_01", "body": "Spine_01", "foot": None,

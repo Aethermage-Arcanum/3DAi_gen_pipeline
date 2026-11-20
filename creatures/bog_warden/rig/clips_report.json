@@ -1,0 +1,179 @@
+{
+  "style": "upright/treant",
+  "variant": null,
+  "clips": {
+    "Upright_Treant_Walk": {
+      "frames": 38,
+      "seconds": 1.267,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.033,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "foot_slip_per_frame_m": 0.0,
+      "stride_m": [
+        0.176,
+        0.232
+      ],
+      "move_speed_mps": 0.237,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.86,
+      "stretch_at": "Foot_R @ Frame 0",
+      "ok": true
+    },
+    "Upright_Treant_Run": {
+      "frames": 26,
+      "seconds": 0.867,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.036,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "foot_slip_per_frame_m": 2e-05,
+      "stride_m": [
+        0.292,
+        0.292
+      ],
+      "move_speed_mps": 0.648,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.96,
+      "stretch_at": "Foot_R @ Frame 0",
+      "ok": true
+    },
+    "Upright_Treant_Idle": {
+      "frames": 120,
+      "seconds": 4.0,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0055,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.23,
+      "stretch_at": "Foot_R @ Frame 90",
+      "ok": true
+    },
+    "Upright_Treant_Ready": {
+      "frames": 48,
+      "seconds": 1.6,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.62,
+      "stretch_at": "Foot_R @ Frame 39",
+      "ok": true
+    },
+    "Upright_Treant_TurnLeft": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0034,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "foot_slip_per_frame_m": 0.0,
+      "stride_m": [
+        0.092,
+        0.115
+      ],
+      "turn_speed_deg_s": 33.3,
+      "stance_foot_sweep_deg": -33.7,
+      "body_turns": "left",
+      "chest_lead_deg_mean": 13.9,
+      "upper_body_leads": true,
+      "turn_ok": true,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.55,
+      "stretch_at": "UpperArm_L @ Frame 3",
+      "ok": true
+    },
+    "Upright_Treant_TurnRight": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0076,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "foot_slip_per_frame_m": 0.0,
+      "stride_m": [
+        0.092,
+        0.113
+      ],
+      "turn_speed_deg_s": -33.3,
+      "stance_foot_sweep_deg": 33.9,
+      "body_turns": "right",
+      "chest_lead_deg_mean": -13.9,
+      "upper_body_leads": true,
+      "turn_ok": true,
+      "loop_jump": 0.0,
+      "loop_ok": true,
+      "max_stretch": 1.71,
+      "stretch_at": "Chest @ Frame 21",
+      "ok": true
+    },
+    "Upright_Treant_Attack1": {
+      "frames": 62,
+      "seconds": 2.067,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0007,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "hand_ground_m": {
+        "L": -0.019,
+        "R": -0.0086
+      },
+      "max_stretch": 2.49,
+      "stretch_at": "Chest @ Frame 21",
+      "ok": true
+    },
+    "Upright_Treant_Attack2": {
+      "frames": 56,
+      "seconds": 1.867,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0172,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "max_stretch": 2.91,
+      "stretch_at": "Chest @ Frame 21",
+      "ok": true
+    },
+    "Upright_Treant_Hit": {
+      "frames": 22,
+      "seconds": 0.733,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0081,
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "max_stretch": 1.23,
+      "stretch_at": "Chest @ Frame 3",
+      "ok": true
+    },
+    "Upright_Treant_Death": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": false,
+      "ik_reach_error_m": 0.0,
+      "body_lowered_max_m": 0.0,
+      "final_min_z_vs_ground_m": -0.0,
+      "no_ground_penetration": true,
+      "placeholder": "Death pausiert (Nutzer)",
+      "max_stretch": 1.27,
+      "stretch_at": "Foot_R @ Frame 30",
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

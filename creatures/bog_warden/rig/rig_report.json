@@ -1,0 +1,48 @@
+{
+  "vertices": 5324,
+  "parts": 30,
+  "height_m": 1.0,
+  "bones": 27,
+  "placeholders": [
+    "Neck",
+    "Head"
+  ],
+  "landmarks_rel_height": {
+    "crotch": 0.29,
+    "armpit": 0.49,
+    "crown": 0.69
+  },
+  "crown_vertices": 1238,
+  "double_sided": {
+    "faces_checked": 3666,
+    "open_back_faces": 552,
+    "regions": 22,
+    "region_areas_m2": [
+      0.0092,
+      0.0083,
+      0.0056,
+      0.0053,
+      0.0049,
+      0.0046,
+      0.0045,
+      0.0045,
+      0.0042,
+      0.004,
+      0.0038,
+      0.0033,
+      0.003,
+      0.0028,
+      0.0027,
+      0.0027,
+      0.0027,
+      0.0022,
+      0.0021,
+      0.0021,
+      0.002,
+      0.002
+    ],
+    "faces_added": 337,
+    "verts_total": 5764,
+    "faces_total": 4003
+  }
+}
