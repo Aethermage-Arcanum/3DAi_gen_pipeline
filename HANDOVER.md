@@ -41,7 +41,8 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
 2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
 3. **Nächster Bau-Agent: `winged`** (Cinder Wyvern 14, Bonepicker Vulture 15), Auftrag in BACKLOG G6.
-4. Danach: **Hirsch C12** (neue Basisbilder durch den Nutzer, Geweih-Fix im Rig), **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+4. Danach (Reihenfolge des Nutzers 2026-11-20): **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+   - ⏭ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nichts daran tun (keine Bilder, kein Tripo, kein Geweih-Fix `rigid_head_above`), bis der Nutzer es ausdrücklich aufruft.
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
 6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
 7. **G9, nach den Skeletten:** Prompt-Schritt Varianten-Brainstorming + Varianten-Baukasten (Geometry Nodes).
