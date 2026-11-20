@@ -38,7 +38,8 @@ creatures/*/uv/insp_*.png
 creatures/*/output/*.blend1
 
 # Arbeits-/Testordner (Regressions-Neubauten, Vergleichsstände)
-temp/
+temp/*
+
 # Bau-Nachweis + Fingerabdruck im rig/ sind reproduzierbar; versioniert wird nur approved/
 creatures/*/rig/build_manifest.json
 creatures/*/rig/fingerprint.json.gz
