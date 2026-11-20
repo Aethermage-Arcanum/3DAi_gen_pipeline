@@ -40,8 +40,8 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 ## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
 2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
-3. **Nächster Bau-Agent: `winged`** (Cinder Wyvern 14, Bonepicker Vulture 15), Auftrag in BACKLOG G6.
-4. Danach (Reihenfolge des Nutzers 2026-11-20): **Geweih-Fix Hollow Stag (C14)** als nächster Bau-Agent direkt nach winged (dringend; `rigid_head_above` in `rigging/quadruped_rig.py`, gekapselt, danach `regression.py --deep`, Roh- und End-GIFs), dann **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
+3. ✅ **`winged` fertig** (Commit 38ce1c7): Cinder Wyvern 14 (winged/drake, bleibt zweibeinig – Nutzer 2026-11-20) und Bonepicker Vulture 15 (winged/bird), je 14 Clips, Death nur Platzhalter. Bewegung muss der Nutzer noch per Roh-GIFs abnehmen. Reste (Vorschau-Kamera, Feueratem, Geier-Hinterzehe) in BACKLOG G12; echte Fledermaus = G11 (Todo, nicht vorziehen).
+4. 🔄 **Läuft jetzt: Geweih-Fix Hollow Stag (C14)** (Reihenfolge des Nutzers 2026-11-20, dringend; `rigid_head_above` in `rigging/quadruped_rig.py`, gekapselt, danach `regression.py --deep`, Roh- und End-GIFs), dann **C9** (Gelenk-Verdichtung, nötig vor dem Frosch), dann die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Schildkröte, Sandwurm, Gorilla, Affe, Frosch (nach C9), Mantis, Tausendfüßer. Immer nur ein Bau-Agent.
    - ⏭ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
 6. Offene Fragen an den Nutzer: Raptor-Arme ja/nein (A11) und Raptor-Attack-Schwanz zu hoch? Fußsohle schwebt bei Wolf/Echse?
@@ -79,7 +79,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle |
 | flyer | rigging/flyer_rig.py | motions/flyer/flyer_kit.py | wasp |
 | **upright** | rigging/upright_rig.py ✅ | motions/upright/upright_kit.py | treant (golem, brute geplant) |
-| **winged** | geplant (nächster Bau-Agent) | – | drake, bird |
+| **winged** | rigging/winged_rig.py ✅ | motions/winged/winged_kit.py | drake, bird (bat als Todo, G11) |
 | amorph, static | geplant | – | slime; turret/nest/plant |
 
 **Gemeinsame Bausteine:** `rig_common.py`, `gaps_defaults.toml`, `double_sided.py`, `dangling.py`, export_unity / verify_export / check_gaps, `pose_fingerprint.py`.
