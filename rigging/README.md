@@ -21,6 +21,14 @@ Root
 
 ## Wie es funktioniert
 1. **Erkennung** (`hexapod_detect.py`, gleich in `octopod_detect.py`): Tripo-Low-Poly-Meshes bestehen aus vielen Einzelteilen (Chitin-Segmenten). Die Teile werden über einen Spannbaum nach Nähe verbunden. Fußspitzen sind Teile mit Bodenkontakt, die Beinkette ist der Weg Fuß → Rumpf. Teile, die mehrere Beine teilen (Gelenkringe), zählen zum Rumpf.
+   **Ein-Mesh-Spinnen (octopod, seit 2026-11-21, Broodling):** Neuere Tripo-Spinnen sind EIN zusammenhängendes Mesh. Hat das
+   verschweißte Mesh höchstens 3 Teile, nimmt `octopod_detect.detect_single` den anderen Weg (`[detect] single_mesh = "auto"`,
+   Stellschrauben `sm_*` in `octopod_defaults.toml`): Fußspitzen = am weitesten entfernte Punkte über die Oberfläche nahe am
+   Boden; Beinwurzel = wo die Wand-Dicke (Shape Diameter, Strahl ins Innere) vom dünnen Bein auf Rumpf-Dicke springt;
+   Gelenkketten links/rechts gespiegelt gemittelt; Bein-Haut = dünn + nah an der Bein-Mittellinie; von Tripo verschmolzene
+   Flächen (Bein ↔ Rumpf weit weg von der Wurzel, Bein ↔ Bein) werden gelöscht (beim Broodling: keine nötig). Im Rig dazu:
+   Trennebene Vorderkörper/Hinterleib (`sm_abdomen_split`), alles dahinter (Eierhaufen!) **starr** an `Abdomen_1`, Rumpf-Mitnahme
+   nur an der Coxa. Mehrteilige Meshes (Chitin Crawler/Crab) laufen unverändert (Regression 2026-11-21: Fingerabdruck identisch).
 2. **Skelett** (`hexapod_rig.py` bzw. `octopod_rig.py`): Die Beingelenke liegen an den **echten Segment-Übergängen**, das Knie ist der höchste Übergang. Die Rumpfachse ergibt sich aus dem Breitenprofil (Engstellen = Taille/Petiolus und Hals).
 3. **Gewichte**: Beine nach Position entlang der Kette, starr innerhalb der Glieder, mit **weichen Gelenkmanschetten** um jedes Gelenk inklusive Beinansatz (`joint_blend`). Rumpf-Vertices nahe an Beinen übernehmen anteilig deren Gewichte (`root_blend`), sonst klaffen Ansätze auf. Der Rumpf hat weiche, positionsbasierte Übergänge, damit sich keine Risse zwischen Panzerplatten öffnen. Lose Teile neben einem Bein folgen dem Bein. Max. 4 Einflüsse pro Vertex.
 4. **Bewegung** → jetzt im Bewegungsmuster `motions/hexapod/ant/` (früher `crawler_walk.py`): zwei abwechselnde Beingruppen (L1,R2,L3,R4 gegen den Rest).

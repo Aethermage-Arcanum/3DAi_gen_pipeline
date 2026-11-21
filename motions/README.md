@@ -21,12 +21,12 @@ motions/
 - **Eigenes Muster**: Das Grundverhalten ist anders, also Laufrichtung, Bein-Koordination, Haltung oder vor allem **Angriffsmechanik**. Dann reicht eine Variable nicht.
   Beispiel: **Crab** läuft seitwärts. Die Beine der führenden und der nachziehenden Seite haben verschiedene Schrittfolgen (Winkerkrabbe: führend 2-4-3-5, nachziehend 2-5-3-4, im Mittel ≈ alternierender Vierfuß). Die Scheren werden beim Laufen vom Boden gehalten, und Angriffe kommen aus den Scheren statt aus dem Maul. → eigenes Muster `crawler/crab`.
 
-## Geplante Muster (Beispiele; gebaut: ant, crab)
+## Geplante Muster (Beispiele; gebaut: ant, crab, spider)
 | Skelett | Muster | Kern-Unterschied |
 |---|---|---|
 | hexapod | **ant** ✅ | Dreifuß vorwärts, Biss mit Mandibeln, Hinterleib für Stich/Säure. Variante: beetle |
 | hexapod | mantis | Fangschlag mit den Vorderbeinen, Wiegen |
-| octopod | spider | 8 Laufbeine, alternierender Vierfuß (war bis 2026-11-17 eine Variante von ant) |
+| octopod | **spider** ✅ (Broodling, 2026-11-21) | 8 Laufbeine vorwärts, alternierender Vierfuß + Welle, Hinterleib zieht nach, Ausfall mit Beinkäfig, Sprungbiss (Root Motion) |
 | octopod | **crab** ✅ (validiert) | Seitwärtsgang per Fuß-IK, eigene Schrittfolge je Seite, Scheren-Angriffe, Scheren beim Laufen erhoben |
 | quadruped | wolf | Trab/Galopp, Biss nach Anlauf, Rudel-Haltung |
 | quadruped | leopard | Schleichen, geduckt, Sprung-Angriff (Pounce), Prankenhieb |
