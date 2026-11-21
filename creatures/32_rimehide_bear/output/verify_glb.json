@@ -1,0 +1,120 @@
+{
+  "skeleton": "quadruped",
+  "file": "RimehideBear.glb",
+  "meshes": 1,
+  "triangles": 3944,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_a042c11f-9386-4198-a5f7-6075c89950c9"
+  ],
+  "textures": [
+    [
+      "Color_a042c11f-9386-4198-a5f7-6075c89950c9",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_a042c11f-9386-4198-a5f7-6075c89950c9",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_a042c11f-9386-4198-a5f7-6075c89950c9",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Quadruped_Bear_Attack1",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Quadruped_Bear_Attack2",
+      [
+        0,
+        46
+      ]
+    ],
+    [
+      "Quadruped_Bear_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Quadruped_Bear_Hit",
+      [
+        0,
+        12
+      ]
+    ],
+    [
+      "Quadruped_Bear_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Quadruped_Bear_Ready",
+      [
+        0,
+        48
+      ]
+    ],
+    [
+      "Quadruped_Bear_Run",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Quadruped_Bear_TurnLeft",
+      [
+        0,
+        27
+      ]
+    ],
+    [
+      "Quadruped_Bear_TurnRight",
+      [
+        0,
+        27
+      ]
+    ],
+    [
+      "Quadruped_Bear_Walk",
+      [
+        0,
+        32
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    0.04
+  ],
+  "foot_moves_m": 0.0522,
+  "dimensions_m": [
+    0.647,
+    0.999,
+    0.722
+  ],
+  "ok": true
+}

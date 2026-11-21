@@ -1,0 +1,99 @@
+{
+  "fps": 30,
+  "clips": {
+    "Quadruped_Bear_Walk": [
+      {
+        "frame": 6,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 20,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 26,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Bear_Run": [
+      {
+        "frame": 3,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Bear_Idle": [],
+    "Quadruped_Bear_Ready": [
+      {
+        "frame": 40,
+        "event": "slam"
+      }
+    ],
+    "Quadruped_Bear_TurnLeft": [
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 17,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Bear_TurnRight": [
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 17,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Bear_Attack1": [
+      {
+        "frame": 15,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Bear_Attack2": [
+      {
+        "frame": 32,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Bear_Hit": [],
+    "Quadruped_Bear_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

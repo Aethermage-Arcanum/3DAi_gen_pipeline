@@ -1,0 +1,113 @@
+{
+  "skeleton": "quadruped",
+  "file": "RimehideBear.fbx",
+  "meshes": 1,
+  "triangles": 3944,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_a042c11f-9386-4198-a5f7-6075c89950c9"
+  ],
+  "textures": [
+    [
+      "Color_a042c11f-9386-4198-a5f7-6075c89950c9",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_a042c11f-9386-4198-a5f7-6075c89950c9",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Attack1",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Attack2",
+      [
+        1,
+        59
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Hit",
+      [
+        1,
+        17
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Ready",
+      [
+        1,
+        61
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Run",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_TurnLeft",
+      [
+        1,
+        35
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_TurnRight",
+      [
+        1,
+        35
+      ]
+    ],
+    [
+      "RimehideBear|RimehideBear|Quadruped_Bear_Walk",
+      [
+        1,
+        41
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    0.04
+  ],
+  "foot_moves_m": 0.0522,
+  "dimensions_m": [
+    0.647,
+    0.999,
+    0.722
+  ],
+  "ok": true
+}

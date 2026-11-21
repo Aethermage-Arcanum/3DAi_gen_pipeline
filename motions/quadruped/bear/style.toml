@@ -1,0 +1,170 @@
+# Bewegungsmuster quadruped/bear – Bär (erstes Modell: Rimehide Bear, nackte Basis aller Bären-Varianten).
+# Schwerer Passgang-artiger Schritt mit rollenden Schultern und tief pendelndem Kopf, schwerer Galopp, Drohen (Kopf tief,
+# Kiefer klappt, Pranke schlägt auf den Boden), Prankenhieb, Aufrichten + Doppelpranken-Slam. Generator: bear_clips.py.
+# Winkel in Grad, Längen als Anteil der Körperlänge (stride, dx) bzw. Rumpfhöhe (lift, Höhen). Herleitung: README.md.
+# Alle Längen sind relativ (Körperlänge/Rumpfhöhe) → skalieren mit der Statur der Variante mit (siehe README „Statur“).
+[meta]
+skeleton = "quadruped"
+style = "bear"
+clip_prefix = "Quadruped_Bear"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[rig]
+scapula_stiffness = 0.45  # Bär: Schulterblatt gleitet sichtbar mit (rollende Schultern), weicher als Wolf (0,6)
+
+[walk]   # lateraler Viertakt, Passgang-artig: Vorderbein setzt kurz NACH dem gleichseitigen Hinterbein auf (Grizzly, Shine 2016)
+cycle_frames = 40     # 0,75 Schritte/s – langsamer, schwerer Takt
+duty = 0.68           # immer 3 Füße am Boden (Shine: Schritt = drei überlappende Füße)
+order = { BL = 0.0, FL = 0.86, BR = 0.5, FR = 0.36 }   # Aufsetzen HL 0 · VL 0,14 · HR 0,5 · VR 0,64 (lateral gekoppelt)
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.24
+lift_front = 0.12     # Pranken werden flach nach vorn geschwungen (schlurfend), Sohle setzt ganz auf (Sohlengänger)
+lift_back = 0.08
+toe_curl_deg = 18
+bob = 0.014
+hip_yaw_deg = 4
+shoulder_yaw_deg = 6  # Schultern rollen/gieren deutlich (aus der ARPG-Kamera gut sichtbar: Buckel schaukelt)
+hip_roll_deg = 4
+shoulder_roll_deg = 7
+sway = 0.014          # Rumpf schwankt seitlich zum Standbein (breite Vorderhand, hohe Seitenkräfte – Shine 2016)
+head_bob_deg = 3
+head_gain = 0.55
+neck_lag = 0.06
+neck_lift_deg = -10   # Kopf tief (unter der Buckel-Linie)
+head_swing_deg = 9    # Kopf pendelt tief seitlich, 1× pro Zyklus, verzögert gegen die Schultern
+head_swing_lag = 0.12
+tail_deg = 3
+tail_lift_deg = -6
+reach_smooth = 4
+reach_flat = 0.4
+
+[run]    # schwerer Galopp (rotierend HL → HR → VR → VL), eine gesammelte Schwebe, Rücken rund, Kopf bleibt tief und ruhig
+body = "gallop"
+cycle_frames = 20     # 1,5 Sprünge/s – schwerer als Wolf (16)
+duty = 0.36
+order = { BL = 0.0, BR = 0.88, FR = 0.5, FL = 0.38 }   # Aufsetzen HL 0 · HR 0,12 · VR 0,5 · VL 0,62
+foot_profile = "smooth"
+swing_match = 0.6
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.24
+swing_ext_front = 0.08
+swing_ext_back = 0.06
+reach_flat = 0.7
+lift_front = 0.20
+lift_back = 0.15
+toe_curl_deg = 35
+spine_flex_deg = 11   # Rücken rund beim Aufsetzen hinten (Kruppe hebt sich), gestreckt beim Abdruck
+flex_peak = 0.95
+pitch_deg = 7         # Buckel schaukelt: Brust hoch beim Abdruck hinten, tief beim Landen vorn
+pitch_peak = 0.30
+bob = 0.04
+bob_low = 0.2
+roll_deg = 3          # schwerer Körper rollt mit
+spine_side_deg = 3
+head_gain = 0.45      # Kopf bleibt ruhig (stabilisiert) …
+neck_lift_deg = -6    # … und tief
+neck_lag = 0.06
+tail_deg = 2
+tail_lift_deg = -2
+reach_smooth = 3
+
+[turn]   # auf der Stelle drehen; Körper biegt sich in die Kurve, Kopf führt (dreht zuerst und am weitesten)
+cycle_frames = 34
+duty = 0.62
+turn_deg = 32
+stride = 0.0
+turn_bend_deg = 16
+turn_head_deg = 30
+head_swing_deg = 3
+
+[idle]   # stehen, schwer atmen, Gewicht verlagern, Kopf tief: schnüffelt am Boden, hebt sich, schaut um (Kopf führt)
+frames = 120
+breathe_deg = 2.0
+look_deg = 26
+sniff_deg = 14
+reach_smooth = 3
+
+[ready]  # Drohen: Gewicht nach vorn, Kopf tief + pendelt, Kiefer klappt (Jaw-Popping), 1× Brüllen angedeutet,
+         # Vorderpranke schlägt auf den Boden (Warnsignal), Rumpf schaukelt. Schleife.
+frames = 60
+crouch = 0.08
+lean = 0.025          # Gewicht nach vorn (Anteil Länge)
+head_down_deg = 24
+sweep_deg = 14
+jaw_pop_deg = 12
+roar_deg = 34
+slap_leg = "FR"       # Kamera-Seite der Vorschau
+slap_lift = 0.30
+reach_smooth = 4
+
+[attack1] # Prankenhieb: Gewicht zur Gegenseite/nach hinten, Pranke hoch + außen → Hieb schräg von oben nach innen-vorn
+          # (Rumpf verdreht sich mit, Schulter rollt, Kopf geht in den Hieb) → Pranke landet → zurück
+frames = 36
+leg = "FR"            # rechts: in den Vorschau-GIFs (Kamera auf der rechten Körperseite) gut sichtbar; "FL" = gespiegelt
+windup_end = 11
+strike_end = 16
+hit_frame = 15
+rear_deg = 14         # Brust hebt sich beim Ausholen
+twist_deg = 20       # Rumpf verdreht sich (Schultergürtel gegen Becken)
+roll_deg = 7
+lean = 0.035          # Gewicht zur Gegenseite (Anteil Länge)
+lunge = 0.07
+paw_up = 0.75         # Pranke hoch (Anteil Rumpfhöhe)
+paw_out = 0.16      # nach außen (Anteil Länge)
+paw_back = 0.04
+paw_reach = 0.16      # Hieb endet so weit vorn …
+paw_across = 0.12     # … und so weit nach innen (Richtung Mitte)
+jaw_open_deg = 26
+reach_smooth = 3
+
+[attack2] # Aufrichten auf die Hinterbeine (Pivot an der Hüfte, Gewicht nach hinten) → oben kurz halten, Pranken erhoben,
+          # Brüllen → schwerer Doppelpranken-Slam nach vorn (hit) → Aufprall federt durch den Körper → zurück
+frames = 58
+crouch_end = 7
+rise_end = 21
+hold_end = 26
+slam_end = 32
+hit_frame = 32
+rear_deg = 52         # Rumpf-Neigung oben (Becken-Pivot)
+spine_rear_deg = 10   # zusätzlich streckt sich der Rücken (Brust höher als das Becken)
+sit_back = 0.05       # Hüfte geht beim Aufrichten nach hinten/unten (auf die Hinterbeine setzen)
+sit_down = 0.06
+paw_raise = 0.50      # Pranken oben angehoben, Ellbogen gebeugt (Anteil Rumpfhöhe)
+paw_curl_deg = 45     # erhobene Pranken: Handgelenk hängt so weit gegen den Unterarm (Pranke dreht sonst mit der Brust mit)
+slam_reach = 0.12     # Pranken schlagen so weit vor der Ruhe-Position auf (Anteil Länge)
+slam_lunge = 0.08     # Rumpf schiebt beim Slam nach vorn
+slam_pitch_deg = -7   # Brust tief nach dem Aufprall
+impact_crouch = 0.12
+jaw_open_deg = 34
+reach_smooth = 3
+
+[hit]
+frames = 16
+jolt = 0.04
+roll_deg = 6
+head_deg = 22
+reach_smooth = 2
+
+[death]  # PLATZHALTER (Nutzerregel: Death-Clips nicht anfassen) – zur Seite kippen wie quadruped/deer
+frames = 40
+collapse_start = 4
+collapse_end = 22
+side = 1
+legs_limp_deg = 25
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.05
+max_stretch = 1.9
+stretch_every = 3
+
+[ik]   # steifer Mittelfuß/Sohle (Sohlengänger: Sohle bleibt flach, beim Absenken beugen Hüfte/Knie)
+stiffness = { Leg_3 = 0.8 }
+

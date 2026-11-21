@@ -1,0 +1,81 @@
+{
+  "pairs_checked": 205,
+  "threshold_m": 0.015,
+  "max_opening_m": 0.0142,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Quadruped_Bear_Attack1": 0.0142,
+    "Quadruped_Bear_Attack2": 0.0137,
+    "Quadruped_Bear_Death": 0.005,
+    "Quadruped_Bear_Hit": 0.0036,
+    "Quadruped_Bear_Idle": 0.0008,
+    "Quadruped_Bear_Ready": 0.0101,
+    "Quadruped_Bear_Run": 0.0111,
+    "Quadruped_Bear_TurnLeft": 0.0072,
+    "Quadruped_Bear_TurnRight": 0.0067,
+    "Quadruped_Bear_Walk": 0.0072
+  },
+  "worst": [
+    [
+      "Quadruped_Bear_Attack1: Leg_FR_2 / Leg_FR_4",
+      0.0142,
+      11
+    ],
+    [
+      "Quadruped_Bear_Attack2: Leg_FL_2 / Leg_FL_4",
+      0.0137,
+      19
+    ],
+    [
+      "Quadruped_Bear_Attack2: Leg_FR_2 / Leg_FR_4",
+      0.0129,
+      19
+    ],
+    [
+      "Quadruped_Bear_Attack1: Leg_BL_3 / Leg_BL_4",
+      0.0111,
+      11
+    ],
+    [
+      "Quadruped_Bear_Run: Leg_FL_2 / Leg_FL_4",
+      0.0111,
+      5
+    ],
+    [
+      "Quadruped_Bear_Run: Leg_FR_2 / Leg_FR_4",
+      0.0109,
+      3
+    ],
+    [
+      "Quadruped_Bear_Run: Leg_BL_3 / Leg_BL_4",
+      0.0103,
+      15
+    ],
+    [
+      "Quadruped_Bear_Ready: Leg_FR_2 / Leg_FR_4",
+      0.0101,
+      36
+    ],
+    [
+      "Quadruped_Bear_TurnLeft: Leg_FL_2 / Leg_FL_4",
+      0.0072,
+      31
+    ],
+    [
+      "Quadruped_Bear_Walk: Leg_BL_3 / Leg_BL_4",
+      0.0072,
+      1
+    ],
+    [
+      "Quadruped_Bear_Run: Leg_BR_3 / Leg_BR_4",
+      0.0071,
+      3
+    ],
+    [
+      "Quadruped_Bear_Walk: Leg_FL_2 / Leg_FL_4",
+      0.0068,
+      38
+    ]
+  ],
+  "ok": true
+}

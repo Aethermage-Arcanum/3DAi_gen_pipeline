@@ -149,6 +149,21 @@ python rigging/joint_densify_review.py gif <aus.gif> <fps> "Vorher" "<a_*.png>" 
 sichtbar sind, je Bereich (Rücken, Flanke, Bauchlinie, Hals, Kopf, Schwanz, Schulter/Oberschenkel, Unterbein; Bereich
 geometrisch nach nächstem Knochen → vorher/nachher fair), dazu die 40 schlimmsten Kanten mit den Gewichten beider Enden.
 
+**Ergänzung Rimehide Bear (2026-11-21)** – drei neue, optionale Werte (ohne sie alles wie bisher; Regression `--deep`
+Wolf, Hirsch, Reef Snapper identisch):
+```toml
+[quadruped.detect]
+spine_slice = 0.06            # dickere Querschnitte nur für Wirbelsäule + Hals (grobes Low-Poly: im 3-cm-Schnitt fehlten
+                              # Rücken-Vertices → Wirbelsäulen-Mitte fiel auf Bauchhöhe, Zickzack)
+[quadruped.rig]
+chest_extend = 0.6            # Brust endet / Hals beginnt erst so weit vor dem Schultergelenk (Anteil bis Kopfansatz):
+                              # Bären-Buckel hing sonst am Hals und sackte beim Kopfsenken ein
+rigid_parts_exclude = ["Jaw"] # mit rigid_parts: lose Teile nie an diese Knochen (Oberkiefer-Fangzähne → Head)
+```
+Außerdem: leere Querschnitte in der Schwanzkette werden fortlaufend vom Vorgänger gefüllt (vorher nur eine Lücke →
+Absturz bei gestrecktem Bären-Mesh im Statur-Test). Dazu beim Bären nur Werte: `leg_x_reach`/`leg_capture` (schräge Vorderbeine, Pranken weit vor der Schulter),
+`tail_base` (Stummelschwanz ganz hinten → Kruppe an Hips statt an Tail_*). Details: `creatures/32_rimehide_bear/README.md`.
+
 ## Frei hängende Teile (Lappen, Fühler, Hautfahnen) – ohne Knochen
 Standard-Baustein für alle Skelette (Backlog C7). Kleine Teile, die frei schwingen sollen, bekommen **keine Knochen**,
 sondern eine Markierung im Mesh; der Unity-Shader `Creature/Standard Dangling` lässt sie dann weich pendeln –

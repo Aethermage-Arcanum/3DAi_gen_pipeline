@@ -16,3 +16,26 @@ role = "style"
 style = "quadruped/bear"
 variant = ""
 vorbild = ["Braunbär richtet sich auf", "Eisbär – schwerer Gang", "Grizzly-Angriff – Prankenhieb, Doppelschlag"]
+
+# Rig (Build-Agent 2026-11-21). C15-Regeln von Anfang an (Dehnung aus der Spielkamera: Buckel, Rücken, Nacken, Schultern).
+[quadruped.rig]
+zone_lock = true          # Fremdbereich-Sperre: Unterbein nicht über dem Knie, Bein/Schulterblatt nicht auf der Rückenlinie (Buckel!)
+spine_chain_blend = 1.0   # Wirbelkette Becken→Hals entlang der Kette weich verteilt (statt Abstand je Knochen)
+# Die zwei Säbel-Fangzähne sind lose Mesh-Teile (je 47 Vertices) im Oberkiefer → starr am Kopf, nie am Unterkiefer
+rigid_parts = true
+rigid_parts_exclude = ["Jaw"]
+# Vorderbeine schräg nach vorn (Pranken ~17 cm vor dem Schultergelenk, Krallen bis 25 cm): mit den Standardwerten lagen
+# die Pranken außerhalb der Bein-Reichweite (leg_x_reach 0,18·L) und außerhalb des Bein-Fangradius → Pranken hingen
+# an Neck_1/Chest (Dehnung bis 32× im Slam). Größere Reichweite + Fangradius → Pranken nur an den Beinknochen.
+leg_x_reach = 0.30
+leg_capture = 0.16
+# Buckel + Kruppe (Prüfung der Andock-Flächen, 2026-11-21): Der Muskelbuckel hing zu 58 % am Hals (Neck_1 begann am
+# Schultergelenk) und die Kruppe zu 87 % an den Schwanzknochen (Schwanzansatz direkt hinter der Hüfte, der Stummel
+# sitzt aber ganz hinten). → Hals beginnt vor dem Buckel, Schwanz erst am Stummel.
+chest_extend = 0.6
+tail_base = 0.6
+
+[quadruped.detect]
+# Rücken/Buckel sind grobe Low-Poly-Facetten mit wenigen Vertices: im 3-cm-Schnitt fiel die Wirbelsäulen-Mitte auf
+# Bauchhöhe (Spine_1 26 cm statt ~43 cm über dem Boden, Hals mit Knick) → 6-cm-Schnitte nur für Wirbelsäule + Hals.
+spine_slice = 0.06

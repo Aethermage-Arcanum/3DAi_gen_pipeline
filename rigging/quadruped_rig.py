@@ -204,8 +204,8 @@ for name, lg in LEGS.items():
 
 
 # ------------------------------------------------------------------ Wirbelsäule, Hals, Kopf, Schwanz
-def center_at(x, region=None):
-    s = M[np.abs(M[:, 0] - x) < D["slice"] * L]
+def center_at(x, region=None, sl=None):
+    s = M[np.abs(M[:, 0] - x) < (sl or D["slice"]) * L]
     if region == "body":
         s = s[s[:, 2] > max(LEGS["FL"]["belly"], LEGS["BL"]["belly"]) - 0.1 * H]
     if len(s) < 3:
@@ -218,16 +218,28 @@ def center_at(x, region=None):
 x_hip = (LEGS["BL"]["joint"][0] + LEGS["BR"]["joint"][0]) / 2
 x_sh = (LEGS["FL"]["joint"][0] + LEGS["FR"]["joint"][0]) / 2
 x_nose, x_tail = M[:, 0].max(), M[:, 0].min()
-spine = [center_at(x_hip + f * (x_sh - x_hip), "body") for f in (0, 1 / 3, 2 / 3, 1)]
+# spine_slice (optional, Rimehide Bear 2026-11-21): dickere Querschnitte nur für Wirbelsäule + Hals. Grobes Low-Poly mit
+# wenigen Vertices auf dem Rücken: im 3-cm-Schnitt fehlen Rücken-Vertices → Mitte fällt auf Bauchhöhe (Zickzack).
+# Schwanz/Kopf/Beine bleiben beim normalen `slice`. Ohne den Wert alles wie bisher.
+SSL = D.get("spine_slice")
 x_hb = x_nose - RIG["head_length"] * (x_nose - x_sh)
-neck = [spine[3], center_at(x_sh + 0.5 * (x_hb - x_sh)), center_at(x_hb)]
+# chest_extend (optional, Rimehide Bear 2026-11-21): Brust endet / Hals beginnt erst so weit (Anteil Schulter → Kopfansatz)
+# vor dem Schultergelenk. Bär: der Muskelbuckel sitzt über und vor den Schultern; mit dem Halsansatz am Schultergelenk
+# hing der Buckel zu 58 % am Hals (Neck_1) und sackte mit jedem Kopfsenken ein. Ohne den Wert (0) alles wie bisher.
+x_ce = x_sh + RIG.get("chest_extend", 0.0) * (x_hb - x_sh)
+spine = [center_at(x_hip + f * (x_ce - x_hip), "body", SSL) for f in (0, 1 / 3, 2 / 3, 1)]
+neck = [spine[3], center_at(x_ce + 0.5 * (x_hb - x_ce), sl=SSL), center_at(x_hb, sl=SSL)]
 nose_s = M[M[:, 0] > x_nose - 0.03 * L]
 nose = np.array([x_nose, Y_MID, float(np.median(nose_s[:, 2]))])
 x_tb = x_hip - RIG["tail_base"] * (x_sh - x_hip)
 tail = [center_at(x_tb + f * (x_tail - x_tb)) for f in (0, 0.25, 0.5, 0.75)]
 tail_tip = M[M[:, 0] < x_tail + 0.02 * L].mean(0)
 tail.append(np.array([x_tail, Y_MID, tail_tip[2]]))
-tail = [t if t is not None else tail[i - 1] for i, t in enumerate(tail)]
+# Lücken (Schnitt ohne Vertices, z. B. kurzer Stummelschwanz bei gestreckter Statur) vom Vorgänger füllen – fortlaufend,
+# damit auch mehrere Lücken hintereinander gefüllt werden (früher: nur eine, sonst None → Absturz). Ohne Lücken identisch.
+for i in range(len(tail)):
+    if tail[i] is None:
+        tail[i] = tail[i - 1]                                # i = 0: Schwanzspitze (wie bisher)
 root = np.array([(x_hip + x_sh) / 2, Y_MID, GROUND])
 head_s = M[M[:, 0] > x_hb]
 head_low = float(np.percentile(head_s[:, 2], 10))
@@ -418,6 +430,9 @@ for pid in ids:
     c = V[idx].mean(0, keepdims=True)
     dc = np.stack([seg_dist(c, np.array(BONES[n][0]), np.array(BONES[n][1])) for n in names], 1)[0]
     dc[[j for j, n in enumerate(names) if n.startswith("Leg_") and c[0, 2] > LEGS[n[4:6]]["belly"]]] = 1e9
+    # optional (Rimehide Bear 2026-11-21): diese Knochen nie für lose Teile wählen – z. B. ["Jaw"], damit Säbel-Fangzähne
+    # aus dem OBERkiefer starr am Kopf hängen statt am (näheren) Unterkiefer. Standard leer = Verhalten wie bisher.
+    dc[[j for j, n in enumerate(names) if n in RIG.get("rigid_parts_exclude", [])]] = 1e9
     W[idx] = 0.0
     W[idx, int(np.argmin(dc))] = 1.0
 # Glätten über Kanten (nur Hauptteil), danach max. 4 Einflüsse

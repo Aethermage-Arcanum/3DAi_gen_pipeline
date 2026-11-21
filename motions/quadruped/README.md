@@ -1,7 +1,8 @@
 # Skelett quadruped (Vierbeiner)
 
 Rig: `rigging/quadruped_rig.py` (Werte: `rigging/quadruped_defaults.toml`, pro Kreatur `[quadruped.*]` in creature.toml).
-Baukasten: `quadruped_kit.py`. Muster: `wolf/` (weitere geplant: lizard, deer, boar, tortoise, behemoth, gorilla).
+Baukasten: `quadruped_kit.py`. Muster: `wolf/`, `deer/`, `lizard/`, `bear/` (2026-11-21: Rimehide Bear, Basis aller
+Bären-Varianten; Aufrichten auf die Hinterbeine in Attack2) (weitere geplant: boar, tortoise, behemoth, gorilla).
 Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Standard-Skelett (30 Knochen, Unity „Generic“)
