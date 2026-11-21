@@ -1,6 +1,7 @@
 # Varianten-Spezifikation – alle Eigenschaften des Schichtmodells
 
-Stand 2026-11-21 · Status: **Spezifikation, noch nichts gebaut** (BACKLOG G9, Teil 2).
+Stand 2026-11-21 · Status: **Spezifikation entschieden (Nutzer 2026-11-21, E1–E8 siehe Abschnitt 7), noch nichts
+gebaut** (BACKLOG G9, Teil 2).
 Beispiel-Kreatur durchgehend: Rimehide Bear (`creatures/32_rimehide_bear/`, Skelett `quadruped`, Muster `quadruped/bear`)
 mit den 7 Varianten-Bildern des Nutzers in `creatures/32_rimehide_bear/input/Varianten/`.
 
@@ -8,7 +9,7 @@ mit den 7 Varianten-Bildern des Nutzers in `creatures/32_rimehide_bear/input/Var
 - Der Baukasten ist **hybrid**:
   - **Unity:** ein Regler-Fenster mit Live-Vorschau für Statur, Accessoires an Knochen und Material-Ebenen. Dazu der
     Knopf **„In Blender bauen“** für die Bedeckung (Blender headless, Geometry Nodes, Export, Auto-Import) und am Ende
-    **„Backen“** zu 1 Mesh + 1 Material pro Variante.
+    **„Backen“** zu 1 Mesh + standardmäßig 1 Material pro Variante (Material-Regel siehe 6.4).
   - **Blender** bekommt **zusätzlich Live-Regler** (eigenes Panel bzw. Geometry-Nodes-Eingänge), damit man ein Gefühl
     für die Werte bekommt, z. B. bei Platten.
 - **Eine gemeinsame Varianten-Datei pro Variante** ist die einzige Quelle der Wahrheit. Unity und Blender lesen und
@@ -16,9 +17,12 @@ mit den 7 Varianten-Bildern des Nutzers in `creatures/32_rimehide_bear/input/Var
 - **Zuerst die Eigenschaften durchdefinieren** (dieses Dokument), dann bauen.
 - **Umgebungs-Gruppen als Haupt-Achse** (Nutzer 2026-11-21, `docs/biome_uebersicht.webp`): 9 Gruppen A–I → pro
   Monster bis zu 9 Varianten, je über ein wiederverwendbares Gruppen-Preset. Sondervarianten (Kristall, Schwefel,
-  Vulkan, Hölle, Himmel, Abyss) später. Siehe Abschnitt 5.
+  Vulkan, Hölle, Himmel, Abyss) später. Schwefelebene, Hölle und Himmel sind zugleich **MVP-Biome** in H bzw. I
+  (bestätigt, Nutzer 2026-11-21). Siehe Abschnitt 5.
+- **Material-Regel** (Nutzer 2026-11-21, E5): Standard **1 Material** pro gebackener Variante, ein 2. Material nur für
+  echte Transparenz, additive Effekte oder Spezial-Shader, mehr als 2 nur bei Bossen. Siehe 6.4.
 
-Wer nur einen Überblick will: Abschnitt 0 lesen, dann die Tabellen in 1–4 überfliegen, dann 5 (Umgebungs-Gruppen) und 7 (offene Entscheidungen).
+Wer nur einen Überblick will: Abschnitt 0 lesen, dann die Tabellen in 1–4 überfliegen, dann 5 (Umgebungs-Gruppen) und 7 (Entscheidungen E1–E8).
 
 ---
 
@@ -56,7 +60,7 @@ Wer nur einen Überblick will: Abschnitt 0 lesen, dann die Tabellen in 1–4 üb
 | **Normal Map** | Textur, die feine Unebenheiten nur vortäuscht (Schuppen, Falten), ohne zusätzliche Dreiecke. |
 | **Emission** | Selbstleuchten, z. B. Glut. |
 | **Rim-Light** | heller Rand an der Silhouette, wie Gegenlicht. Macht Elite-Gegner von oben gut erkennbar. |
-| **Backen** | alles Live-Berechnete endgültig festschreiben: 1 Mesh, 1 Material, fertige Texturen. Danach kostet die Variante im Spiel nicht mehr als ein normales Modell. |
+| **Backen** | alles Live-Berechnete endgültig festschreiben: 1 Mesh, standardmäßig 1 Material (Ausnahmen siehe 6.4), fertige Texturen. Danach kostet die Variante im Spiel nicht mehr als ein normales Modell. |
 | **Seed** | Startzahl für den Zufall. Gleicher Seed = exakt gleiches Ergebnis, damit alles reproduzierbar bleibt. |
 | **LOD** | „Level of Detail“: vereinfachte Fassungen für große Entfernung (LOD1 ≈ halbe Tris, LOD2 ≈ ein Viertel). |
 | **dangling** | unser Baustein für frei schwingende Teile *ohne* Knochen (`rigging/dangling.py`, Unity-Shader `Creature/Standard Dangling`). |
@@ -414,11 +418,14 @@ Tris-Preis oben schon eingerechnet.
 - **In der Vorschau (Unity-Editor):** ein Vorschau-Shader rechnet alle Ebenen live. Das darf teuer sein, es läuft nur
   im Editor.
 - **Beim Backen:** Unity rendert den Ebenen-Stapel einmal im UV-Raum in die Texturen der Variante. Dadurch ist das
-  Ergebnis genau das, was die Vorschau zeigt. Im Spiel läuft danach ein **einfacher Shader mit 1 Material** und
-  festen Kosten, egal wie viele Ebenen es waren.
+  Ergebnis genau das, was die Vorschau zeigt. Im Spiel läuft danach ein **einfacher Shader mit standardmäßig
+  1 Material** und festen Kosten, egal wie viele Ebenen es waren. Matt, glänzend, leuchtend (Emission), Metall und
+  Muster laufen über Texturen und Masken im selben Shader: Beispiel Platten-Ebene matt + Kristall-Ebene leuchtend →
+  ein Material, die Masken beider Ebenen werden beim Backen in dieselben Texturen (Rauheit, Emission …) geschrieben.
+  Ausnahmen (2. Material) siehe Material-Regel in 6.4.
 - **Bleibt zur Laufzeit live** (zeit- oder blickabhängig, kann nicht eingebrannt werden): Emission-**Puls**,
   **Rim-Light**, **dangling**. Das sind 3 einfache Shader-Funktionen, alle im selben Material.
-- **Gebackener Textursatz pro Variante (1 Material):**
+- **Gebackener Textursatz pro Variante (Haupt-Material):**
   - `Albedo` (Farbe, RGB)
   - `Maske` (R = Rauheit, G = Emission-Maske, B = Glasigkeit/Nässe, A = frei)
   - `Normal` (nur, wenn Haut `leder`/`schuppen` oder eine Ebene Relief hat)
@@ -452,7 +459,7 @@ Felder pro Gruppe:
 | `helligkeit_zufall` | leichte Helligkeitsstreuung pro Facette (lebendiger Low-Poly-Look) | 0–0.3 | 0.08 |
 | `detail` | wie stark die Tripo-/Baustein-Textur (Schattierung, Kanten) durchscheint | 0–1 | 0.5 |
 | `rauheit` | matt (1) bis glänzend (0) | 0–1 | 0.8 |
-| `glasig` | **falsche Transparenz** für Eis/Kristall: Fresnel-Aufhellung + hellere innere Facetten. Echte Transparenz ist bei vielen Gegnern zu teuer und macht Sortierfehler. | 0–1 | 0 |
+| `glasig` | **falsche Transparenz** für Eis/Kristall: Fresnel-Aufhellung + hellere innere Facetten. Echte Transparenz ist bei vielen Gegnern zu teuer und macht Sortierfehler; wo sie wirklich nötig ist (Glaskristall), läuft sie über ein 2. Material (Material-Regel 6.4). | 0–1 | 0 |
 | `leuchten` | Selbstleuchten in `farbe` (Augen, Kristalle) | 0–8 | 0 |
 
 ### 4.3 Ebenen
@@ -513,8 +520,8 @@ Durchgestrichene Biome gehören nicht ins MVP. Die Kopfzahl im Bild, z. B. „(3
 | **E** Kalt | `kalt` | Taiga `taiga` · Eiswüste `eiswueste` | Tundra, Gletscherlandschaft | – |
 | **F** Küsten | `kueste` | Felsküste `felskueste` · Wattland/Gezeitenzone `wattland` | Sandküste, Tropenküste | – |
 | **G** Geologisch | `geologisch` | Thermalquellen `thermalquellen` | Versteinerter Wald, Kristallwildnis | – |
-| **H** Lebensfeindlich | `lebensfeindlich` | Obsidian-/Basalt-Ebene `basalt` · Schwefelebene `schwefel` ❓ | Vulkanische Ödnis, Kristallwüste | **bitte bestätigen:** Schwefelebene ist im Bild nicht durchgestrichen, steht aber auch auf der Liste der Sondervarianten („Schwefel“). |
-| **I** Außergewöhnlich | `aussergewoehnlich` | Hölle `hoelle` ❓ · Himmel `himmel` ❓ | Pilzwald/Leuchtflora, Abyss | **bitte bestätigen:** Hölle und Himmel sind im Bild nicht durchgestrichen, stehen aber auch bei den Sondervarianten. Außerdem zeigt die Kopfzeile „(5)“, im Bild sind aber nur 4 Biome zu sehen. |
+| **H** Lebensfeindlich | `lebensfeindlich` | Obsidian-/Basalt-Ebene `basalt` · Schwefelebene `schwefel` | Vulkanische Ödnis, Kristallwüste | **MVP bestätigt (Nutzer 2026-11-21).** „Schwefel“ bleibt zusätzlich als Vorlage für eine Sondervariante (5.5). |
+| **I** Außergewöhnlich | `aussergewoehnlich` | Hölle `hoelle` · Himmel `himmel` | Pilzwald/Leuchtflora, Abyss | **MVP bestätigt (Nutzer 2026-11-21).** Hölle und Himmel bleiben zusätzlich als Vorlage für Sondervarianten (5.5). **Offene Kleinigkeit:** Die Kopfzeile zeigt „(5)“, im Bild sind aber nur 4 Biome zu sehen. |
 
 **Abgleich mit `creatures/roster.toml`** (18 Biome aus `templates/biomes.toml`; Zahl = Einträge mit diesem Biom,
 Kreaturen + Varianten):
@@ -539,8 +546,9 @@ Kreaturen + Varianten):
 | – | B, D, F | Moor, Mesa, Salzwüste, Felsküste, Wattland fehlen als Biome im Roster |
 | – | I | Hölle und Himmel fehlen im Roster |
 
-Das Roster wird hier **nicht** geändert. Die Umstellung (`gruppe` pro Variante, Biome umhängen) ist ein eigener Schritt
-nach der Bestätigung des Nutzers.
+Das Roster wird hier **nicht** geändert. Die Umstellung (`gruppe` pro Variante, Biome umhängen, fehlende MVP-Biome,
+Achse „Ort“ für Höhle/Krypta/Tempel) ist ein eigener kleiner Punkt im BACKLOG (G9, Abgleich Roster ↔ Biome). Die
+Zeilen mit „bitte bestätigen“ in dieser Tabelle sind dort noch offen.
 
 ### 5.3 Gruppen-Presets
 
@@ -622,7 +630,8 @@ Gespeicherte Fassung des Slagback (Gruppe H) – nur Kopf, Statur und Abweichung
 Eigene Kategorie neben den 9 Gruppen, **noch nicht im MVP**: **Kristall · Schwefel · Vulkan · Hölle · Himmel ·
 Abyss.** Technisch genauso aufgebaut: ein Preset pro Sondervariante in `templates/umgebungs_gruppen/sonder/<name>.json`,
 in der Varianten-Datei `sonder: "kristall"` (dann `art: "sonder"`, `gruppe` optional als Grundlage).
-Überschneidungen (Schwefel, Hölle, Himmel stehen auch in H/I) siehe 5.2, **bitte bestätigen**.
+Überschneidungen: Schwefelebene, Hölle und Himmel sind **MVP-Biome in H/I** (bestätigt, Nutzer 2026-11-21). Als
+Sondervariante bleiben sie zusätzlich eine Vorlage für stärkere Ausprägungen später (5.2).
 
 ### 5.6 Die 7 Bär-Bilder nach Gruppen – Vorschlag
 
@@ -1009,7 +1018,8 @@ Geschätzte Kosten: Basis 4.000 + Fell 2.200 + Kristalle (9 + 10 + 5) × 15 + Ei
 - **„Backen“** (Unity): (1) Blender: Statur in die Ruhepose, Bedeckung + Accessoire-Instanzen zu **einem** Mesh
   zusammenführen, Gewichte (max. 4 pro Punkt), `_DANGLING`, gemeinsames UV-Atlas (Basis-UV + Baustein-Kacheln),
   LOD1/LOD2, Export FBX/GLB, Gegentest wie bei den Kreaturen. (2) Unity: Ebenen-Stapel per UV-Raum-Render in
-  Albedo/Maske/Normal (1024²) → Prefab mit 1 SkinnedMeshRenderer, 1 Material, Clip-Satz des Musters bzw. der
+  Albedo/Maske/Normal (1024²) → Prefab mit 1 SkinnedMeshRenderer, 1 Material (2. Material nur nach Material-Regel
+  6.4, als eigener Teilbereich desselben Meshes), Clip-Satz des Musters bzw. der
   Statur-Klasse. (3) Vorschau-Bild + `_gebaut` schreiben.
 - **Blender-Panel** (Sidebar „Variante“ im 3D-Fenster, Skript `procedural/variant_panel.py`, kein Plugin nötig):
   Laden/Speichern der Varianten-Datei, Statur-Regler, Lagen-Regler (live), Instanzen anzeigen, Baustein-Werkbank,
@@ -1017,7 +1027,8 @@ Geschätzte Kosten: Basis 4.000 + Fell 2.200 + Kristalle (9 + 10 + 5) × 15 + Ei
 
 ### 6.4 Performance-Budget pro gebackener Variante
 
-Top-down-ARPG mit vielen Gegnern gleichzeitig. Die Werte sind ein Vorschlag (→ E5):
+Top-down-ARPG mit vielen Gegnern gleichzeitig. **Entschieden (Nutzer 2026-11-21, E5):** Tris- und Texturbudgets wie
+vorgeschlagen, Materialien nach der Material-Regel unten.
 
 | | normal | elite | boss |
 |---|---|---|---|
@@ -1027,10 +1038,19 @@ Top-down-ARPG mit vielen Gegnern gleichzeitig. Die Werte sind ein Vorschlag (→
 | LOD1 / LOD2 | ≈ 50 % / 25 % | ≈ 50 % / 25 % | ≈ 50 % / 25 % |
 | **Texturen** | 1024² | 1024² | 2048² |
 | Texturen pro Variante | Albedo + Maske (+ Normal nur bei `leder`/`schuppen`) | gleich | gleich |
-| **Materialien / Draw Calls** | **1** (+ Schatten) | 1 | 1 |
+| **Materialien / Draw Calls** | **1** Standard, max. **2** (+ Schatten) | 1 Standard, max. 2 | 1 Standard, mehr als 2 erlaubt |
 | Knochen | die des Skeletts, **keine zusätzlichen** für Varianten | gleich | gleich |
 | Gewichte pro Punkt | max. 4 | max. 4 | max. 4 |
 | Partikel-Systeme | ≤ 1 | ≤ 2 | ≤ 3 |
+
+**Material-Regel (Nutzer 2026-11-21, E5):**
+- **Standard ist 1 Material** pro gebackener Variante. Matt, glänzend, leuchtend (Emission), Metall und Muster laufen
+  über Texturen und Masken im selben Shader. Beispiel: Platten-Ebene matt und Kristall-Ebene leuchtend gehen in einem
+  Material; die Masken beider Ebenen werden beim Backen in dieselben Texturen (Rauheit, Emission …) geschrieben.
+- **Ein 2. Material ist erlaubt**, wenn eine Variante echte **Transparenz** braucht (Glaskristall, Schleier), einen
+  **additiven Effekt** (Aura, Hitzeflimmern) oder einen **Spezial-Shader** (z. B. Fell mit mehreren Schichten).
+- **Mehr als 2 Materialien** nur bei **Bossen**.
+- Jedes zusätzliche Material kostet einen Draw Call pro Gegner. Die Budget-Ampel zählt die Materialien mit.
 
 - Die Bär-Basis hat ca. 4.000 Tris (Tripo `face_limit` 4000). Für Normal-Gegner bleiben also ~2.000 für alles
   Zusätzliche. Der Rimehide ist laut Roster Elite.
@@ -1086,19 +1106,22 @@ Varianten-Datei ist das **Bau-Rezept**.
 
 ---
 
-## 7. Offene Entscheidungen für den Nutzer
+## 7. Entscheidungen des Nutzers
 
-| # | Frage | Empfehlung Claude |
-|---|---|---|
-| **E1** | Format der Varianten-Datei: **JSON** oder TOML? | **JSON.** Unity und Blender lesen und schreiben es ohne Zusatzbibliothek. Die Kommentare von TOML gingen beim Schreiben durch die Programme ohnehin verloren. |
-| **E2** | Bedeckung: genau 1 Lage oder **Haut + bis zu 2 Lagen** mit getrennten Bereichen? | **Haut + bis zu 2 Lagen**, Standard 1. Der Quillback braucht Stacheln auf dem Rücken + kurzes Fell im Gesicht. Gemeinsames Tris-Budget. |
-| **E3** | Statur in der roten Zone: Regler hart begrenzen oder **Clip-Satz pro Statur-Klasse neu backen**? | **Neu backen erlauben** (unsere Clips sind prozedural, also ohne Handarbeit), aber nur als bewusste „Statur-Klasse“ mit eigener Abnahme. Sonst Regler auf Gelb begrenzen. |
-| **E4** | Accessoire-Bindung: Standard **`anker`** (Gewichte des Ansatzpunkts) oder streng 100 % am nächsten Knochen? | **`anker`**: bleibt genauso formstabil, sitzt aber auch zwischen zwei Knochen (Schulter, Buckel) sauber auf der Haut. `knochen` bleibt als Option. |
-| **E5** | Budget: **6.000 / 9.000 / 15.000 Tris** (normal/elite/boss), 1024² (Boss 2048²)? | **Ja.** Damit passt der Eisriese mit vollem Fell ins Elite-Budget, normale Gegner bleiben schlank. Nach dem ersten Unity-Test mit 30–50 Gegnern nachjustieren. |
-| **E6** | Accessoire-Platzierung und Material-Backen **nur in Unity** (Blender zeigt nur an), oder in beiden Programmen? | **Nur Unity.** Doppelte Umsetzung würde früher oder später auseinanderlaufen, und das gebackene Material ist dann exakt die Vorschau. Blender bekommt die Live-Regler dort, wo es selbst rechnet: Lagen der Bedeckung, Baustein-Formen (z. B. Platten), Statur. |
-| **E7** | Braucht **jedes Monster alle 9 Umgebungs-Gruppen** oder nur die passenden? | **Nur die passenden**, typischerweise 4–6 pro Monster. Sie stehen als Liste `gruppen` beim Monster im Roster. Ein Eis-Wesen in der Wüste wirkt beliebig, und 50–100 Basen × 5 ergeben genau die Zielgröße von 250–500 Varianten. Über die Presets ist eine weitere Gruppe später fast ohne Aufwand ergänzt. Für den Bären: A, B, D, E, H (+ F, falls der Lurker eine eigene Basis wird). |
-| *(nur bestätigen)* | Biom-Liste aus dem Bild: Schwefelebene, Hölle, Himmel MVP oder Sondervariante? Steppe → A, Highlands → D, `fungal`? Höhle/Krypta/Tempel als eigene Achse „Ort“? | siehe 5.2, Spalte „Unsicher“ und Abgleich-Tabelle |
-| **E8** | Quillback und Küstenlurker: auf der Bären-Basis oder eigene Basis? (ergänzt VARIANTEN.md Frage 4) | **Quillback** als Bären-Variante mit eigener Statur-Klasse `bear@flach` (E3). **Küstenlurker** eigene Basis: Haltung, Beinstellung und Schwanz liegen zu weit außerhalb. |
+Alle Punkte E1–E8 sind **entschieden (Nutzer 2026-11-21)**. E1–E4 und E6–E8 wie empfohlen, E5 mit geänderter
+Material-Regel (6.4).
+
+| # | Frage | Empfehlung Claude | Status |
+|---|---|---|---|
+| **E1** | Format der Varianten-Datei: **JSON** oder TOML? | **JSON.** Unity und Blender lesen und schreiben es ohne Zusatzbibliothek. Die Kommentare von TOML gingen beim Schreiben durch die Programme ohnehin verloren. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| **E2** | Bedeckung: genau 1 Lage oder **Haut + bis zu 2 Lagen** mit getrennten Bereichen? | **Haut + bis zu 2 Lagen**, Standard 1. Der Quillback braucht Stacheln auf dem Rücken + kurzes Fell im Gesicht. Gemeinsames Tris-Budget. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| **E3** | Statur in der roten Zone: Regler hart begrenzen oder **Clip-Satz pro Statur-Klasse neu backen**? | **Neu backen erlauben** (unsere Clips sind prozedural, also ohne Handarbeit), aber nur als bewusste „Statur-Klasse“ mit eigener Abnahme. Sonst Regler auf Gelb begrenzen. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| **E4** | Accessoire-Bindung: Standard **`anker`** (Gewichte des Ansatzpunkts) oder streng 100 % am nächsten Knochen? | **`anker`**: bleibt genauso formstabil, sitzt aber auch zwischen zwei Knochen (Schulter, Buckel) sauber auf der Haut. `knochen` bleibt als Option. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| **E5** | Budget: **6.000 / 9.000 / 15.000 Tris** (normal/elite/boss), 1024² (Boss 2048²)? | **Ja.** Damit passt der Eisriese mit vollem Fell ins Elite-Budget, normale Gegner bleiben schlank. Nach dem ersten Unity-Test mit 30–50 Gegnern nachjustieren. | **Entschieden (Nutzer 2026-11-21), geändert:** Tris- und Texturbudgets wie empfohlen. Material: Standard 1, ein 2. Material nur für echte Transparenz, additive Effekte oder Spezial-Shader, mehr als 2 nur bei Bossen (Material-Regel 6.4). |
+| **E6** | Accessoire-Platzierung und Material-Backen **nur in Unity** (Blender zeigt nur an), oder in beiden Programmen? | **Nur Unity.** Doppelte Umsetzung würde früher oder später auseinanderlaufen, und das gebackene Material ist dann exakt die Vorschau. Blender bekommt die Live-Regler dort, wo es selbst rechnet: Lagen der Bedeckung, Baustein-Formen (z. B. Platten), Statur. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| **E7** | Braucht **jedes Monster alle 9 Umgebungs-Gruppen** oder nur die passenden? | **Nur die passenden**, typischerweise 4–6 pro Monster. Sie stehen als Liste `gruppen` beim Monster im Roster. Ein Eis-Wesen in der Wüste wirkt beliebig, und 50–100 Basen × 5 ergeben genau die Zielgröße von 250–500 Varianten. Über die Presets ist eine weitere Gruppe später fast ohne Aufwand ergänzt. Für den Bären: A, B, D, E, H (+ F, falls der Lurker eine eigene Basis wird). | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
+| *(Biome)* | Biom-Liste aus dem Bild: Schwefelebene, Hölle, Himmel MVP oder Sondervariante? Steppe → A, Highlands → D, `fungal`? Höhle/Krypta/Tempel als eigene Achse „Ort“? | siehe 5.2, Abgleich-Tabelle | **Schwefelebene, Hölle, Himmel: MVP bestätigt (Nutzer 2026-11-21).** Steppe, Highlands, `fungal` und Achse „Ort“ sind Teil des Abgleichs Roster ↔ Biome (eigener Punkt im BACKLOG G9). Offene Kleinigkeit: Gruppe I zeigt „(5)“, im Bild nur 4 Biome. |
+| **E8** | Quillback und Küstenlurker: auf der Bären-Basis oder eigene Basis? (ergänzt VARIANTEN.md Frage 4) | **Quillback** als Bären-Variante mit eigener Statur-Klasse `bear@flach` (E3). **Küstenlurker** eigene Basis: Haltung, Beinstellung und Schwanz liegen zu weit außerhalb. | **Entschieden (Nutzer 2026-11-21):** wie empfohlen. |
 
 ---
 
