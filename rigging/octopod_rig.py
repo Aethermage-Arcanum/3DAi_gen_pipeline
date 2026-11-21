@@ -198,6 +198,27 @@ def build(mesh_path, out_dir, creature_toml=None):
         "neck": Vector((neck_x, 0, z_at(neck_x))),
         "head_tip": Vector((x1, 0, z_at(x1 - 0.02 * (x1 - x0)))),
     }
+    # Ein-Mesh-Spinne (detect_single, seit 2026-11-21): Der Hinterleib samt Eierhaufen ragt über den Vorderkörper,
+    # eine Einschnürung gibt es von außen nicht. → Trennebene zwischen Vorderkörper (Mitte der Beinwurzeln) und
+    # Hinterleib (Schwerpunkt hinter den hintersten Beinwurzeln); dahinter hängt alles STARR an Abdomen_1.
+    # Mehrteilige Meshes (Crab/Crawler) laufen unverändert über die Einschnürungen.
+    abd_plane = None
+    if d.get("single_mesh") and roots:
+        pro_c = sum(roots, Vector()) / len(roots)
+        bpts = [d["coords"][v] for v in d["islands"][0]["verts"]]
+        back = [p for p in bpts if p.x < min(r.x for r in roots)] or bpts
+        abd_c = sum(back, Vector()) / len(back)
+        n_ = pro_c - abd_c
+        n_.y = 0.0
+        n_.normalize()
+        p0 = pro_c.lerp(abd_c, rc["sm_abdomen_split"])
+        p0.y = 0.0
+        abd_plane = (p0, n_)
+        ax = Vector((abd_c.x, 0, abd_c.z)) - p0
+        reach = max((p - p0).dot(ax.normalized()) for p in bpts)
+        P["petiole"], P["abd_mid"] = p0, p0 + ax
+        P["tail"] = p0 + ax.normalized() * max(reach, ax.length * 1.2)
+        report["abdomen_plane"] = {"point": [round(c, 3) for c in p0], "normal": [round(c, 3) for c in n_]}
     report["spine"] = {k: [round(c, 3) for c in v] for k, v in P.items()}
 
     # ---------- Armature ----------
@@ -382,6 +403,17 @@ def build(mesh_path, out_dir, creature_toml=None):
             for v in isl["verts"]:
                 assigned[v] = [(n, 1.0)]
             continue
+        if abd_plane:                   # Ein-Mesh-Spinne: Hinterleib starr, schmale Überblendung an der Trennebene
+            band = rc["sm_abdomen_band"] * d["size"]
+            for v in isl["verts"]:
+                s_ = (co[v] - abd_plane[0]).dot(abd_plane[1])
+                front = blended(co[v], ["Thorax", "Head"], blend)
+                k_ = smooth((s_ + band) / (2 * band))
+                mix = {"Abdomen_1": 1 - k_}
+                for n_, x_ in front:
+                    mix[n_] = mix.get(n_, 0) + x_ * k_
+                assigned[v] = [(n_, x_) for n_, x_ in mix.items() if x_ > 1e-3]
+            continue
         for v in isl["verts"]:
             assigned[v] = blended(co[v], spine, blend)
 
@@ -390,15 +422,21 @@ def build(mesh_path, out_dir, creature_toml=None):
     if rc["leg_weight_mode"] == "positional":
         from mathutils.kdtree import KDTree
         leg_vs = [v for v, ws in assigned.items() if any(n.startswith("Leg_") for n, _ in ws)]
+        leg_set = set(leg_vs)
+        if abd_plane:
+            # Ein-Mesh-Spinne: Rumpf nur am echten Beinansatz (Coxa) mitnehmen – nicht dort, wo ein Bein weiter außen
+            # nah am Kopf/Rumpf vorbeiläuft (sonst zieht das Knie die Kopf-Haut mit)
+            leg_vs = [v for v in leg_vs if any(n.endswith("_Coxa") for n, _ in assigned[v])]
         kd = KDTree(len(leg_vs))
         for idx, v in enumerate(leg_vs):
             kd.insert(co[v], idx)
         kd.balance()
-        leg_set = set(leg_vs)
         root_r = rc["root_blend"] * d["size"]
         for v, ws in list(assigned.items()):
             if v in leg_set:
                 continue
+            if abd_plane and dict(ws).get("Abdomen_1", 0.0) > 0.5:
+                continue                # Ein-Mesh-Spinne: Hinterleib/Eierhaufen über den Beinwurzeln bleibt starr
             near = [(p_, idx, dist) for (p_, idx, dist) in kd.find_range(co[v], root_r)]
             if near:
                 # Gewichte der nahen Bein-Vertices (auch verschiedener Beine) anteilig übernehmen,
@@ -422,6 +460,8 @@ def build(mesh_path, out_dir, creature_toml=None):
             groups[n].add([v], w, "REPLACE")
 
     report["loose_parts_to_legs"] = moved_to_leg
+    if d.get("fused_faces_cut"):
+        report["fused_faces_cut"] = d["fused_faces_cut"]
     unweighted = len(obj.data.vertices) - len(assigned)
     if unweighted:
         report["warnings"].append(f"{unweighted} Vertices ohne Gewicht")

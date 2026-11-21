@@ -1,0 +1,141 @@
+# Bewegungsmuster octopod/spider – eigenes Muster (Recherche: RESEARCH.md, Entscheidungen Nutzer 2026-11-21):
+# Vorwärtsgang als alternierender Vierfuß (zwei Vierergruppen im Gegentakt, Welle hinten → vorn), Vorderkörper führt,
+# Hinterleib samt Aufsatz (Eierhaufen) zieht verzögert nach. Angriffe aus dem ganzen Körper: Ausfall mit Beinkäfig,
+# Sprungbiss mit Root Motion. Winkel in Grad, Längen als Anteil der Körpergröße (SIZE), Zeiten in Frames bei 30 fps.
+
+[meta]
+skeleton = "octopod"
+style = "spider"
+clip_prefix = "Octopod_Spider"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death"]
+inherit = { run = "walk", turn = "walk" }
+
+[legs]
+walking_slots = [1, 2, 3, 4]   # alle 8 Beine laufen (Nutzer 2026-11-21: vorderes Paar läuft mit, setzt kurz auf)
+feeler_slots = []              # keine Taster-Beine; Taster/Fänge sind am Broodling Teil des Kopfes (unsichtbar von oben)
+feet_to_ground = true          # Standfüße immer auf den Boden (im Modell schweben einzelne Spitzen 1–3 % über dem Boden)
+
+[walk]   # Spagna 2011 (Gruppen + Welle), Silva-Pereyra 2019 (Duty 0,6). Tempo lebhafter als Vogelspinne (Nutzer: ~1,3 Hz)
+cycle_frames = 22              # 1,36 Hz
+duty = 0.60                    # Anteil Bodenkontakt (Laufbeine II–IV)
+ripple = 0.04                  # Welle innerhalb einer Gruppe: Bein 4 setzt zuerst auf, je Paar +0,04 Zyklus nach vorn
+stride = 0.18                  # Schrittlänge (Fußweg im Stand, Anteil Größe)
+lift = 0.06                    # Fußhöhe im Schwung
+duty_front = 0.35              # Bein I: tippt nur kurz auf (Tast- und Lenkbein) …
+lift_front = 0.10              # … schwebt im Schwung höher …
+front_reach = 0.03             # … und greift weiter nach vorn
+spread = 0.0                   # Füße zusätzlich nach außen (Run: breiter)
+body_drop = 0.0                # Körper tiefer (Anteil der Rumpfhöhe über dem Boden)
+body_bob = 0.004               # senkrechtes Wippen (≤ 1 % der Höhe, Spinnen federn kaum)
+body_yaw_deg = 2.5             # Vorderkörper giert im Takt der Gruppen
+abdomen_sway_deg = 3.5         # Hinterleib + Eierhaufen pendeln seitlich (Welt-Ausschlag) …
+abdomen_lag = 0.12             # … um diesen Anteil des Zyklus verzögert (Follow-Through, ≈ 2–3 Frames)
+abdomen_bob_deg = 1.0          # Hinterleib nickt leicht nach
+
+[run]    # Hololena: Duty 0,53–0,58, schneller über Frequenz UND Schrittlänge; Wolfsspinne huscht tief und flach
+cycle_frames = 11              # 2,7 Hz
+duty = 0.52
+duty_front = 0.30
+stride = 0.26                  # 1,45 × Walk
+lift = 0.07
+lift_front = 0.09
+spread = 0.025                 # Beine weiter gespreizt …
+body_drop = 0.13               # … Körper 13 % tiefer
+body_bob = 0.005
+body_yaw_deg = 3.0
+abdomen_sway_deg = 5.0
+abdomen_lag = 0.15
+
+[turn]   # auf der Stelle: Außenbeine treten vor, Innenbeine zurück; Vorderkörper führt, Hinterleib hängt nach
+cycle_frames = 20
+duty = 0.55
+duty_front = 0.35
+turn_deg_cycle = 52            # Drehung je Zyklus → 78 °/s (Recherche: 90–120 °/s, begrenzt durch Beinreichweite)
+lift = 0.06
+lift_front = 0.09
+front_reach = 0.0
+lead_deg = 4.0                 # Vorderkörper dreht voraus in die Kurve
+abdomen_trail_deg = 5.0        # Hinterleib hängt hinterher (biegt am Stiel in die Kurve)
+
+[idle]   # lauernde Jägerin: fast reglos, Bein I tastet/tippt, ein Bein wird nachgesetzt, Hinterleib "atmet"
+frames = 75
+breath_deg = 1.2               # Hinterleib hebt/senkt sich
+body_sway = 0.003              # Vorderkörper minimal
+tap_lift = 0.07                # Bein I tippt: Höhe
+tap_reach = 0.04               # … und tastet nach vorn
+step_leg = "R3"                # dieses Bein wird einmal pro Loop nachgesetzt
+step_lift = 0.05
+
+[ready]  # Drohgebärde Vogelspinne: steil aufgebäumt auf III/IV, I+II hoch und weit seitlich gespreizt, Zittern
+frames = 36
+rear_pitch_deg = 34            # gewünscht (wird auf die Reichweite der tragenden Beine III/IV begrenzt)
+body_raise = 0.03              # Körper zusätzlich heben
+abdomen_counter = 0.55         # Hinterleib dreht gegen (Anteil vom Kippwinkel), bleibt tief, ohne den Boden zu berühren
+front_up = 0.30                # Bein I: Fuß hoch (Körper-Raum, Anteil Größe) …
+front_out = 0.12               # … weit nach außen …
+front_fwd = 0.04               # … etwas nach vorn
+second_up = 0.20               # Bein II: etwas weniger
+second_out = 0.14
+second_fwd = 0.0
+tremble_deg = 1.5
+tremble_speed = 4              # Zitter-Perioden pro Loop
+
+[attack1] # Ausfall-Biss: ausholen (Telegraph) → nach vorn schnellen, Bein I+II schließen als Käfig, Biss nach unten
+frames = 26
+windup_end = 9
+strike_end = 12                # 3 Frames Zustoß
+hold_end = 17
+hit_frame = 12
+windup_pitch_deg = 24          # ausholen: aufbäumen …
+windup_back = 0.05             # … und zurück über III/IV
+strike_lunge = 0.16            # Zustoß: Körper nach vorn (begrenzt durch die Reichweite von III/IV)
+strike_pitch_deg = -10         # … und nach vorn-unten gekippt (Fänge stechen nach unten)
+strike_drop = 0.03
+cage_fwd = 0.10                # Käfig: Füße I vor dem Kopf …
+cage_close = 0.55              # … zur Mitte zusammengezogen (Anteil des Ruhe-Seitenabstands)
+cage2_fwd = 0.04               # Beine II mit, weiter außen
+cage2_close = 0.25
+shake_deg = 3.0                # Festhalten: Schütteln
+abdomen_counter = 0.5
+
+[attack2] # Sprungbiss (Springspinne): Hocke → flacher Satz → Landung auf I/II → Biss. Root Motion nach vorn.
+frames = 33
+crouch_end = 9
+takeoff_end = 12
+land_frame = 21
+bite_end = 25
+crouch = 0.22                  # Körper tiefer (Anteil Rumpfhöhe über dem Boden)
+crouch_pitch_deg = 6           # beim Hocken vorn leicht hoch
+jump_distance = 1.6            # Weite in Körpergrößen (Recherche 2–4; begrenzt wegen Lesbarkeit/Rückkehr ins Bild)
+apex = 0.28                    # Scheitel (Anteil Größe)
+flight_pitch_deg = 8           # im Flug Kopf leicht hoch
+front_fwd = 0.14               # Flug: Bein I+II nach vorn-oben gestreckt
+front_up = 0.12
+rear_back = 0.12               # Flug: Bein III/IV nach hinten gestreckt
+rear_up = 0.04
+land_reach = 0.06              # Landung: Füße I weiter vorn
+bite_pitch_deg = -9
+bite_drop = 0.05
+
+[hit]    # Zusammenzucken: Körper sackt, Beine I ziehen an, Hinterleib ruckt nach
+frames = 10
+body_drop = 0.035
+front_tuck = 0.06
+abdomen_jerk_deg = 5
+
+[death]  # gemeinsamer Tod aus dem Baukasten (Platzhalter; Death-Clips gesperrt, Nutzer 2026-11-17)
+frames = 36
+collapse_start = 4
+collapse_end = 18
+flip_side = 1
+flip_hop = 0.12
+femur_curl_deg = 0
+tibia_curl_deg = 55
+twitch_frame = 27
+twitch_deg = 10
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.03

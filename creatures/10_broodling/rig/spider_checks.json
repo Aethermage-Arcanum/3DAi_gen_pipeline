@@ -1,0 +1,138 @@
+{
+  "Octopod_Spider_Walk": {
+    "thorax_z_min_max_m": [
+      0.0127,
+      0.0206
+    ],
+    "stance_height_above_ground_m": {
+      "L1": 0.0,
+      "R1": 0.0,
+      "L2": 0.0,
+      "R2": 0.0,
+      "L3": 0.0,
+      "R3": 0.0,
+      "L4": 0.0,
+      "R4": 0.0
+    },
+    "body_speed_mps": 0.406,
+    "body_speed_size_per_s": 0.409
+  },
+  "Octopod_Spider_Run": {
+    "thorax_z_min_max_m": [
+      -0.0278,
+      -0.0179
+    ],
+    "stance_height_above_ground_m": {
+      "L1": 0.0,
+      "R1": 0.0,
+      "L2": 0.0,
+      "R2": 0.0,
+      "L3": 0.0,
+      "R3": 0.0,
+      "L4": 0.0,
+      "R4": 0.0
+    },
+    "body_speed_mps": 1.352,
+    "body_speed_size_per_s": 1.364
+  },
+  "Octopod_Spider_TurnLeft": {
+    "thorax_z_min_max_m": [
+      0.0129,
+      0.0204
+    ],
+    "stance_height_above_ground_m": {
+      "L1": 0.0,
+      "R1": 0.0,
+      "L2": 0.0,
+      "R2": 0.0,
+      "L3": 0.0,
+      "R3": 0.0,
+      "L4": 0.0,
+      "R4": 0.0
+    },
+    "turn_rate_deg_s_signed": 78.0,
+    "turn_direction": "links (gegen Uhrzeigersinn von oben)",
+    "turn_direction_ok": true
+  },
+  "Octopod_Spider_TurnRight": {
+    "thorax_z_min_max_m": [
+      0.0129,
+      0.0204
+    ],
+    "stance_height_above_ground_m": {
+      "L1": 0.0,
+      "R1": 0.0,
+      "L2": 0.0,
+      "R2": 0.0,
+      "L3": 0.0,
+      "R3": 0.0,
+      "L4": 0.0,
+      "R4": 0.0
+    },
+    "turn_rate_deg_s_signed": -78.0,
+    "turn_direction": "rechts (im Uhrzeigersinn)",
+    "turn_direction_ok": true
+  },
+  "Octopod_Spider_Idle": {
+    "thorax_z_min_max_m": [
+      0.0137,
+      0.0196
+    ]
+  },
+  "Octopod_Spider_Ready": {
+    "pitch_deg": 34.0,
+    "abdomen_counter": 0.55,
+    "thorax_z_min_max_m": [
+      0.0227,
+      0.0236
+    ]
+  },
+  "Octopod_Spider_Attack1": {
+    "windup_pitch_deg": 24.0,
+    "lunge_size": 0.16,
+    "thorax_z_min_max_m": [
+      -0.0089,
+      0.0166
+    ]
+  },
+  "Octopod_Spider_Attack2": {
+    "root_motion_m": 1.587,
+    "root_motion_size": 1.6,
+    "thorax_z_min_max_m": [
+      -0.0614,
+      0.2963
+    ],
+    "feet_final_offset_x_m": {
+      "L1": 1.587,
+      "R1": 1.587,
+      "L2": 1.587,
+      "R2": 1.587,
+      "L3": 1.587,
+      "R3": 1.587,
+      "L4": 1.587,
+      "R4": 1.587
+    },
+    "feet_final_height_m": {
+      "L1": 0.0,
+      "R1": 0.0,
+      "L2": 0.0,
+      "R2": -0.0,
+      "L3": -0.0,
+      "R3": 0.0,
+      "L4": -0.0,
+      "R4": 0.0
+    }
+  },
+  "Octopod_Spider_Hit": {
+    "thorax_z_min_max_m": [
+      -0.0054,
+      0.0166
+    ]
+  },
+  "Octopod_Spider_Death": {
+    "thorax_z_min_max_m": [
+      -0.0166,
+      0.119
+    ]
+  }
+}

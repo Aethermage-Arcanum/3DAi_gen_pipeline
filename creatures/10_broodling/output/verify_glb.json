@@ -1,0 +1,120 @@
+{
+  "skeleton": "crawler",
+  "file": "Broodling.glb",
+  "meshes": 1,
+  "triangles": 4218,
+  "bones": 43,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_3372dd67-640a-4543-be02-71e1a3687dfd"
+  ],
+  "textures": [
+    [
+      "Color_3372dd67-640a-4543-be02-71e1a3687dfd",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_3372dd67-640a-4543-be02-71e1a3687dfd",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_3372dd67-640a-4543-be02-71e1a3687dfd",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Octopod_Spider_Attack1",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Octopod_Spider_Attack2",
+      [
+        0,
+        26
+      ]
+    ],
+    [
+      "Octopod_Spider_Death",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Octopod_Spider_Hit",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Octopod_Spider_Idle",
+      [
+        0,
+        60
+      ]
+    ],
+    [
+      "Octopod_Spider_Ready",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Octopod_Spider_Run",
+      [
+        0,
+        8
+      ]
+    ],
+    [
+      "Octopod_Spider_TurnLeft",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Octopod_Spider_TurnRight",
+      [
+        0,
+        16
+      ]
+    ],
+    [
+      "Octopod_Spider_Walk",
+      [
+        0,
+        17
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -0.99,
+    -0.15
+  ],
+  "foot_moves_m": 0.1572,
+  "dimensions_m": [
+    1.001,
+    0.962,
+    0.709
+  ],
+  "ok": true
+}

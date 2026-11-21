@@ -1,0 +1,163 @@
+{
+  "style": "octopod/spider",
+  "variant": "",
+  "walking_legs": [
+    "L1",
+    "R1",
+    "L2",
+    "R2",
+    "L3",
+    "R3",
+    "L4",
+    "R4"
+  ],
+  "feelers": [],
+  "clips": {
+    "Octopod_Spider_Walk": {
+      "frames": 22,
+      "seconds": 0.733,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.095,
+        0.162
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.33,
+      "move_axis": "x",
+      "ok": true
+    },
+    "Octopod_Spider_Run": {
+      "frames": 11,
+      "seconds": 0.367,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.09,
+        0.225
+      ],
+      "moves_ok": true,
+      "move_speed_mps": 0.946,
+      "move_axis": "x",
+      "ok": true
+    },
+    "Octopod_Spider_Idle": {
+      "frames": 75,
+      "seconds": 2.5,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "planted_legs": [
+        "L2",
+        "R2",
+        "L3",
+        "L4",
+        "R4"
+      ],
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "ok": true
+    },
+    "Octopod_Spider_Ready": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "planted_legs": [
+        "L3",
+        "R3",
+        "L4",
+        "R4"
+      ],
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "ok": true
+    },
+    "Octopod_Spider_TurnLeft": {
+      "frames": 20,
+      "seconds": 0.667,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.133,
+        0.244
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 64.4,
+      "ok": true
+    },
+    "Octopod_Spider_TurnRight": {
+      "frames": 20,
+      "seconds": 0.667,
+      "loop": true,
+      "loop_max_jump_m": 0.0,
+      "loop_ok": true,
+      "foot_contact_max_m": 0.0,
+      "foot_contact_ok": true,
+      "stride_m": [
+        0.133,
+        0.244
+      ],
+      "moves_ok": true,
+      "turn_speed_deg_s": 64.4,
+      "ok": true
+    },
+    "Octopod_Spider_Attack1": {
+      "frames": 26,
+      "seconds": 0.867,
+      "loop": false,
+      "planted_legs": [
+        "L3",
+        "R3",
+        "L4",
+        "R4"
+      ],
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "ok": true
+    },
+    "Octopod_Spider_Attack2": {
+      "frames": 33,
+      "seconds": 1.1,
+      "loop": false,
+      "ok": true
+    },
+    "Octopod_Spider_Hit": {
+      "frames": 10,
+      "seconds": 0.333,
+      "loop": false,
+      "planted_legs": [
+        "L2",
+        "R2",
+        "L3",
+        "R3",
+        "L4",
+        "R4"
+      ],
+      "feet_moved_max_m": 0.0,
+      "feet_planted_ok": true,
+      "returns_to_rest": true,
+      "ok": true
+    },
+    "Octopod_Spider_Death": {
+      "frames": 36,
+      "seconds": 1.2,
+      "loop": false,
+      "final_min_z_vs_ground_m": 0.0304,
+      "no_ground_penetration": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

@@ -1,0 +1,20 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.015,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Octopod_Spider_Attack1": 0.0,
+    "Octopod_Spider_Attack2": 0.0,
+    "Octopod_Spider_Death": 0.0,
+    "Octopod_Spider_Hit": 0.0,
+    "Octopod_Spider_Idle": 0.0,
+    "Octopod_Spider_Ready": 0.0,
+    "Octopod_Spider_Run": 0.0,
+    "Octopod_Spider_TurnLeft": 0.0,
+    "Octopod_Spider_TurnRight": 0.0,
+    "Octopod_Spider_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

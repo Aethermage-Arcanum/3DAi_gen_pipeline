@@ -24,6 +24,8 @@ Dehnung auf den aus der SPIELKAMERA sichtbaren Flächen (C15, schräg von oben w
     Bereich = nächster Knochen in Ruhe (geometrisch, unabhängig von den Gewichten → vorher/nachher fair) + Normale:
       Rücken (Rumpf, Normale nach oben) · Flanke oben · Bauchlinie (Rumpf unter der Wirbelsäulen-Mitte) ·
       Hals/Nacken · Kopf · Schwanz · Schulter/Oberschenkel (Leg_*_1, Shoulder_*) · Unterbein
+      Achtbeiner (octopod): Thorax wie Rumpf, Abdomen_* → Hinterleib_oben (Normale nach oben) / Hinterleib,
+      Leg_*_Coxa/_Femur → Schulter/Oberschenkel
     Dehnung = Kantenlänge/Ruhelänge wie "orig" (verdichtete Kanten als Kette gemessen). Je Clip und Bereich:
     max, p99, Kanten > 1,5 / > 2,0, Frame; dazu die 40 schlimmsten sichtbaren Kanten aller Clips mit Gewichten
     beider Enden (für die Ursache).
@@ -275,22 +277,25 @@ elif MODE == "visible":
 
     def region(i):
         n = bname[i]
-        if n in ("Hips", "Spine_1", "Chest"):
+        if n in ("Hips", "Spine_1", "Chest", "Thorax"):        # Thorax = Achtbeiner (octopod, seit 2026-11-21)
             if en[i, 2] > 0.55:
                 return "Ruecken"
             return "Bauchlinie" if mid[i, 2] < spine_z[i] else "Flanke"
+        if n.startswith("Abdomen_"):                            # octopod: Hinterleib (Spinne: samt Eierhaufen)
+            return "Hinterleib_oben" if en[i, 2] > 0.3 else "Hinterleib"
         if n.startswith("Neck"):
             return "Hals"
         if n in ("Head", "Jaw"):
             return "Kopf"
         if n.startswith("Tail"):
             return "Schwanz"
-        if n.startswith("Shoulder_") or n.endswith("_1"):
+        if n.startswith("Shoulder_") or n.endswith(("_1", "_Coxa", "_Femur")):
             return "Schulter_Oberschenkel"
         return "Unterbein"
     reg = np.array([region(i) for i in range(len(E0))])
     evis = vis[E0[:, 0]] & vis[E0[:, 1]] & ok
-    REG = ["Ruecken", "Flanke", "Bauchlinie", "Hals", "Kopf", "Schwanz", "Schulter_Oberschenkel", "Unterbein"]
+    REG = ["Ruecken", "Flanke", "Bauchlinie", "Hals", "Kopf", "Schwanz", "Schulter_Oberschenkel", "Unterbein",
+           "Hinterleib_oben", "Hinterleib"]
     gname = {g.index: g.name for g in body.vertex_groups}
 
     def wstr(i):

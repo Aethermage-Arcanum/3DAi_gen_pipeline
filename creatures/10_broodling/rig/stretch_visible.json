@@ -1,0 +1,1719 @@
+{
+ "blend": "H:\\AIProjects\\3D AI\\01_kreatur_pipeline\\creatures\\10_broodling\\rig\\octopod_clips.blend",
+ "verts": 2830,
+ "visible_verts": 1991,
+ "edges": 6998,
+ "visible_edges": {
+  "Ruecken": 307,
+  "Flanke": 220,
+  "Bauchlinie": 2,
+  "Hals": 0,
+  "Kopf": 41,
+  "Schwanz": 0,
+  "Schulter_Oberschenkel": 1311,
+  "Unterbein": 1292,
+  "Hinterleib_oben": 883,
+  "Hinterleib": 380
+ },
+ "clips": {
+  "Octopod_Spider_Attack1": {
+   "Ruecken": {
+    "max": 1.33,
+    "p99": 1.31,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 13,
+    "edge": 3117
+   },
+   "Flanke": {
+    "max": 1.31,
+    "p99": 1.24,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 18,
+    "edge": 1844
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 8,
+    "edge": 5751
+   },
+   "Schulter_Oberschenkel": {
+    "max": 2.64,
+    "p99": 1.4,
+    "n_gt_1_5": 7,
+    "n_gt_2": 5,
+    "frame": 13,
+    "edge": 2552
+   },
+   "Unterbein": {
+    "max": 1.17,
+    "p99": 1.11,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 12,
+    "edge": 6098
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 12,
+    "edge": 6938
+   }
+  },
+  "Octopod_Spider_Attack2": {
+   "Ruecken": {
+    "max": 1.34,
+    "p99": 1.29,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 27,
+    "edge": 3853
+   },
+   "Flanke": {
+    "max": 1.23,
+    "p99": 1.22,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 27,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 17,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 21,
+    "edge": 1102
+   },
+   "Schulter_Oberschenkel": {
+    "max": 1.56,
+    "p99": 1.38,
+    "n_gt_1_5": 2,
+    "n_gt_2": 0,
+    "frame": 0,
+    "edge": 1438
+   },
+   "Unterbein": {
+    "max": 1.1,
+    "p99": 1.07,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 7,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 29,
+    "edge": 1556
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 22,
+    "edge": 6938
+   }
+  },
+  "Octopod_Spider_Death": {
+   "Ruecken": {
+    "max": 1.89,
+    "p99": 1.77,
+    "n_gt_1_5": 11,
+    "n_gt_2": 0,
+    "frame": 18,
+    "edge": 3853
+   },
+   "Flanke": {
+    "max": 1.62,
+    "p99": 1.57,
+    "n_gt_1_5": 4,
+    "n_gt_2": 0,
+    "frame": 18,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 1844
+   },
+   "Kopf": {
+    "max": 1.02,
+    "p99": 1.02,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 19,
+    "edge": 6377
+   },
+   "Schulter_Oberschenkel": {
+    "max": 1.64,
+    "p99": 1.26,
+    "n_gt_1_5": 2,
+    "n_gt_2": 0,
+    "frame": 22,
+    "edge": 385
+   },
+   "Unterbein": {
+    "max": 1.32,
+    "p99": 1.22,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 20,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 18,
+    "edge": 2222
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 461
+   }
+  },
+  "Octopod_Spider_Hit": {
+   "Ruecken": {
+    "max": 1.3,
+    "p99": 1.26,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 3853
+   },
+   "Flanke": {
+    "max": 1.25,
+    "p99": 1.19,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 1732
+   },
+   "Schulter_Oberschenkel": {
+    "max": 1.56,
+    "p99": 1.11,
+    "n_gt_1_5": 2,
+    "n_gt_2": 0,
+    "frame": 0,
+    "edge": 1438
+   },
+   "Unterbein": {
+    "max": 1.32,
+    "p99": 1.2,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 2,
+    "edge": 6352
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 1911
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 2,
+    "edge": 5073
+   }
+  },
+  "Octopod_Spider_Idle": {
+   "Ruecken": {
+    "max": 1.11,
+    "p99": 1.09,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 19,
+    "edge": 3853
+   },
+   "Flanke": {
+    "max": 1.08,
+    "p99": 1.07,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 20,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 38,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 6377
+   },
+   "Schulter_Oberschenkel": {
+    "max": 1.63,
+    "p99": 1.12,
+    "n_gt_1_5": 2,
+    "n_gt_2": 0,
+    "frame": 19,
+    "edge": 2552
+   },
+   "Unterbein": {
+    "max": 1.08,
+    "p99": 1.05,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 49,
+    "edge": 6352
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 47,
+    "edge": 6098
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 47,
+    "edge": 6938
+   }
+  },
+  "Octopod_Spider_Ready": {
+   "Ruecken": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 6,
+    "edge": 2703
+   },
+   "Flanke": {
+    "max": 1.01,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 8,
+    "edge": 186
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 2,
+    "edge": 1844
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 1,
+    "edge": 3467
+   },
+   "Schulter_Oberschenkel": {
+    "max": 1.98,
+    "p99": 1.27,
+    "n_gt_1_5": 6,
+    "n_gt_2": 0,
+    "frame": 2,
+    "edge": 2352
+   },
+   "Unterbein": {
+    "max": 1.02,
+    "p99": 1.01,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 8,
+    "edge": 3239
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 1578
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 0,
+    "edge": 6095
+   }
+  },
+  "Octopod_Spider_Run": {
+   "Ruecken": {
+    "max": 1.13,
+    "p99": 1.11,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 10,
+    "edge": 398
+   },
+   "Flanke": {
+    "max": 1.11,
+    "p99": 1.08,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 4,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 4,
+    "edge": 1844
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 6377
+   },
+   "Schulter_Oberschenkel": {
+    "max": 2.03,
+    "p99": 1.38,
+    "n_gt_1_5": 6,
+    "n_gt_2": 1,
+    "frame": 10,
+    "edge": 6024
+   },
+   "Unterbein": {
+    "max": 1.41,
+    "p99": 1.25,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 8,
+    "edge": 6098
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 8,
+    "edge": 6938
+   }
+  },
+  "Octopod_Spider_TurnLeft": {
+   "Ruecken": {
+    "max": 1.46,
+    "p99": 1.36,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 398
+   },
+   "Flanke": {
+    "max": 1.37,
+    "p99": 1.15,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 1167
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 1105
+   },
+   "Schulter_Oberschenkel": {
+    "max": 2.41,
+    "p99": 1.4,
+    "n_gt_1_5": 10,
+    "n_gt_2": 1,
+    "frame": 17,
+    "edge": 6024
+   },
+   "Unterbein": {
+    "max": 1.2,
+    "p99": 1.13,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 4,
+    "edge": 6352
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 7,
+    "edge": 6098
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 7,
+    "edge": 6938
+   }
+  },
+  "Octopod_Spider_TurnRight": {
+   "Ruecken": {
+    "max": 1.39,
+    "p99": 1.29,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 5906
+   },
+   "Flanke": {
+    "max": 1.4,
+    "p99": 1.17,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 4,
+    "edge": 2233
+   },
+   "Schulter_Oberschenkel": {
+    "max": 2.04,
+    "p99": 1.51,
+    "n_gt_1_5": 14,
+    "n_gt_2": 1,
+    "frame": 9,
+    "edge": 6024
+   },
+   "Unterbein": {
+    "max": 1.2,
+    "p99": 1.13,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 14,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 1051
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 17,
+    "edge": 4845
+   }
+  },
+  "Octopod_Spider_Walk": {
+   "Ruecken": {
+    "max": 1.09,
+    "p99": 1.08,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 5,
+    "edge": 3853
+   },
+   "Flanke": {
+    "max": 1.07,
+    "p99": 1.06,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 15,
+    "edge": 652
+   },
+   "Bauchlinie": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 12,
+    "edge": 146
+   },
+   "Kopf": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 9,
+    "edge": 5751
+   },
+   "Schulter_Oberschenkel": {
+    "max": 2.05,
+    "p99": 1.26,
+    "n_gt_1_5": 4,
+    "n_gt_2": 2,
+    "frame": 11,
+    "edge": 1438
+   },
+   "Unterbein": {
+    "max": 1.32,
+    "p99": 1.2,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 12,
+    "edge": 1377
+   },
+   "Hinterleib_oben": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 3,
+    "edge": 1924
+   },
+   "Hinterleib": {
+    "max": 1.0,
+    "p99": 1.0,
+    "n_gt_1_5": 0,
+    "n_gt_2": 0,
+    "frame": 0,
+    "edge": 4481
+   }
+  }
+ },
+ "worst": [
+  {
+   "stretch": 2.64,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 13,
+   "edge": 2552,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Coxa",
+   "rest_len_cm": 1.4,
+   "mid": [
+    -0.084,
+    -0.21,
+    0.01
+   ],
+   "verts": [
+    714,
+    2227
+   ],
+   "w_a": {
+    "Leg_R3_Femur": 1.0
+   },
+   "w_b": {
+    "Leg_R3_Coxa": 0.81,
+    "Thorax": 0.19
+   }
+  },
+  {
+   "stretch": 2.64,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 14,
+   "edge": 1438,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Coxa",
+   "rest_len_cm": 1.4,
+   "mid": [
+    -0.084,
+    0.21,
+    0.01
+   ],
+   "verts": [
+    713,
+    2228
+   ],
+   "w_a": {
+    "Leg_L3_Femur": 1.0
+   },
+   "w_b": {
+    "Leg_L3_Coxa": 0.81,
+    "Thorax": 0.19
+   }
+  },
+  {
+   "stretch": 2.41,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 17,
+   "edge": 6024,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R4_Femur",
+   "rest_len_cm": 1.72,
+   "mid": [
+    -0.177,
+    -0.163,
+    -0.065
+   ],
+   "verts": [
+    1054,
+    2430
+   ],
+   "w_a": {
+    "Leg_R4_Femur": 0.83,
+    "Leg_R4_Coxa": 0.17
+   },
+   "w_b": {
+    "Abdomen_1": 0.66,
+    "Thorax": 0.34
+   }
+  },
+  {
+   "stretch": 2.23,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 14,
+   "edge": 6252,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Coxa",
+   "rest_len_cm": 1.26,
+   "mid": [
+    -0.107,
+    0.209,
+    -0.003
+   ],
+   "verts": [
+    2231,
+    2743
+   ],
+   "w_a": {
+    "Leg_L3_Femur": 1.0
+   },
+   "w_b": {
+    "Leg_L3_Coxa": 0.85,
+    "Thorax": 0.15
+   }
+  },
+  {
+   "stretch": 2.1,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 14,
+   "edge": 5207,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Coxa",
+   "rest_len_cm": 1.76,
+   "mid": [
+    -0.16,
+    0.184,
+    -0.054
+   ],
+   "verts": [
+    253,
+    2200
+   ],
+   "w_a": {
+    "Leg_L4_Femur": 1.0
+   },
+   "w_b": {
+    "Leg_L4_Coxa": 1.0
+   }
+  },
+  {
+   "stretch": 2.1,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 14,
+   "edge": 4327,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Coxa",
+   "rest_len_cm": 1.76,
+   "mid": [
+    -0.16,
+    0.184,
+    -0.054
+   ],
+   "verts": [
+    252,
+    2199
+   ],
+   "w_a": {
+    "Leg_L4_Femur": 1.0
+   },
+   "w_b": {
+    "Leg_L4_Coxa": 1.0
+   }
+  },
+  {
+   "stretch": 1.98,
+   "clip": "Octopod_Spider_Ready",
+   "frame": 2,
+   "edge": 2352,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Femur",
+   "rest_len_cm": 2.59,
+   "mid": [
+    -0.186,
+    0.169,
+    -0.063
+   ],
+   "verts": [
+    42,
+    1052
+   ],
+   "w_a": {
+    "Abdomen_1": 0.98,
+    "Thorax": 0.02
+   },
+   "w_b": {
+    "Leg_L4_Femur": 0.29,
+    "Thorax": 0.24,
+    "Leg_L4_Coxa": 0.24,
+    "Abdomen_1": 0.22
+   }
+  },
+  {
+   "stretch": 1.89,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 3853,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.55,
+   "mid": [
+    0.002,
+    -0.024,
+    0.203
+   ],
+   "verts": [
+    1172,
+    2039
+   ],
+   "w_a": {
+    "Abdomen_1": 0.75,
+    "Thorax": 0.25
+   },
+   "w_b": {
+    "Thorax": 0.83,
+    "Abdomen_1": 0.17
+   }
+  },
+  {
+   "stretch": 1.83,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 6432,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.41,
+   "mid": [
+    0.001,
+    -0.019,
+    0.203
+   ],
+   "verts": [
+    767,
+    1172
+   ],
+   "w_a": {
+    "Thorax": 0.79,
+    "Abdomen_1": 0.21
+   },
+   "w_b": {
+    "Abdomen_1": 0.75,
+    "Thorax": 0.25
+   }
+  },
+  {
+   "stretch": 1.8,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 8,
+   "edge": 2351,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Femur",
+   "rest_len_cm": 3.88,
+   "mid": [
+    -0.176,
+    0.172,
+    -0.054
+   ],
+   "verts": [
+    42,
+    2200
+   ],
+   "w_a": {
+    "Abdomen_1": 0.98,
+    "Thorax": 0.02
+   },
+   "w_b": {
+    "Leg_L4_Coxa": 1.0
+   }
+  },
+  {
+   "stretch": 1.8,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 8,
+   "edge": 1692,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Femur",
+   "rest_len_cm": 3.88,
+   "mid": [
+    -0.176,
+    0.172,
+    -0.054
+   ],
+   "verts": [
+    41,
+    2201
+   ],
+   "w_a": {
+    "Abdomen_1": 0.98,
+    "Thorax": 0.02
+   },
+   "w_b": {
+    "Leg_L4_Coxa": 1.0
+   }
+  },
+  {
+   "stretch": 1.77,
+   "clip": "Octopod_Spider_Death",
+   "frame": 19,
+   "edge": 2528,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 1.89,
+   "mid": [
+    -0.007,
+    0.012,
+    0.209
+   ],
+   "verts": [
+    634,
+    1226
+   ],
+   "w_a": {
+    "Abdomen_1": 0.51,
+    "Thorax": 0.49
+   },
+   "w_b": {
+    "Abdomen_1": 0.9,
+    "Thorax": 0.1
+   }
+  },
+  {
+   "stretch": 1.77,
+   "clip": "Octopod_Spider_Death",
+   "frame": 19,
+   "edge": 903,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 1.89,
+   "mid": [
+    -0.007,
+    0.012,
+    0.209
+   ],
+   "verts": [
+    633,
+    1225
+   ],
+   "w_a": {
+    "Abdomen_1": 0.51,
+    "Thorax": 0.49
+   },
+   "w_b": {
+    "Abdomen_1": 0.9,
+    "Thorax": 0.1
+   }
+  },
+  {
+   "stretch": 1.76,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 6430,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.52,
+   "mid": [
+    0.004,
+    -0.031,
+    0.202
+   ],
+   "verts": [
+    2039,
+    2474
+   ],
+   "w_a": {
+    "Thorax": 0.83,
+    "Abdomen_1": 0.17
+   },
+   "w_b": {
+    "Abdomen_1": 0.69,
+    "Thorax": 0.31
+   }
+  },
+  {
+   "stretch": 1.75,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 45,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 3.13,
+   "mid": [
+    -0.012,
+    0.024,
+    0.19
+   ],
+   "verts": [
+    160,
+    1831
+   ],
+   "w_a": {
+    "Abdomen_1": 0.9,
+    "Thorax": 0.1
+   },
+   "w_b": {
+    "Thorax": 0.78,
+    "Abdomen_1": 0.22
+   }
+  },
+  {
+   "stretch": 1.75,
+   "clip": "Octopod_Spider_Attack1",
+   "frame": 14,
+   "edge": 6022,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R4_Coxa",
+   "rest_len_cm": 1.76,
+   "mid": [
+    -0.16,
+    -0.184,
+    -0.054
+   ],
+   "verts": [
+    254,
+    2203
+   ],
+   "w_a": {
+    "Leg_R4_Femur": 1.0
+   },
+   "w_b": {
+    "Thorax": 0.46,
+    "Abdomen_1": 0.21,
+    "Leg_R4_Femur": 0.19,
+    "Leg_R4_Coxa": 0.13
+   }
+  },
+  {
+   "stretch": 1.72,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 46,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.99,
+   "mid": [
+    -0.015,
+    0.032,
+    0.188
+   ],
+   "verts": [
+    160,
+    1355
+   ],
+   "w_a": {
+    "Abdomen_1": 0.9,
+    "Thorax": 0.1
+   },
+   "w_b": {
+    "Thorax": 0.74,
+    "Abdomen_1": 0.26
+   }
+  },
+  {
+   "stretch": 1.72,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 19,
+   "edge": 2350,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Femur",
+   "rest_len_cm": 1.33,
+   "mid": [
+    -0.18,
+    0.175,
+    -0.073
+   ],
+   "verts": [
+    202,
+    1052
+   ],
+   "w_a": {
+    "Leg_L4_Femur": 0.99,
+    "Leg_L4_Coxa": 0.01
+   },
+   "w_b": {
+    "Leg_L4_Femur": 0.29,
+    "Thorax": 0.24,
+    "Leg_L4_Coxa": 0.24,
+    "Abdomen_1": 0.22
+   }
+  },
+  {
+   "stretch": 1.68,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 5,
+   "edge": 2167,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Coxa",
+   "rest_len_cm": 3.07,
+   "mid": [
+    -0.084,
+    -0.203,
+    0.07
+   ],
+   "verts": [
+    794,
+    1281
+   ],
+   "w_a": {
+    "Thorax": 0.83,
+    "Abdomen_1": 0.17
+   },
+   "w_b": {
+    "Abdomen_1": 0.77,
+    "Thorax": 0.23
+   }
+  },
+  {
+   "stretch": 1.64,
+   "clip": "Octopod_Spider_Death",
+   "frame": 19,
+   "edge": 3117,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.52,
+   "mid": [
+    -0.026,
+    -0.075,
+    0.167
+   ],
+   "verts": [
+    251,
+    2062
+   ],
+   "w_a": {
+    "Abdomen_1": 0.82,
+    "Thorax": 0.18
+   },
+   "w_b": {
+    "Thorax": 0.73,
+    "Abdomen_1": 0.27
+   }
+  },
+  {
+   "stretch": 1.64,
+   "clip": "Octopod_Spider_Death",
+   "frame": 22,
+   "edge": 385,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Femur",
+   "rest_len_cm": 2.08,
+   "mid": [
+    -0.117,
+    -0.304,
+    0.066
+   ],
+   "verts": [
+    552,
+    992
+   ],
+   "w_a": {
+    "Leg_R3_Femur": 0.82,
+    "Leg_R3_Tibia": 0.18
+   },
+   "w_b": {
+    "Leg_R3_Femur": 0.5,
+    "Leg_R3_Tibia": 0.5
+   }
+  },
+  {
+   "stretch": 1.64,
+   "clip": "Octopod_Spider_Death",
+   "frame": 20,
+   "edge": 6255,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Femur",
+   "rest_len_cm": 2.08,
+   "mid": [
+    -0.117,
+    0.304,
+    0.066
+   ],
+   "verts": [
+    551,
+    990
+   ],
+   "w_a": {
+    "Leg_L3_Femur": 0.82,
+    "Leg_L3_Tibia": 0.18
+   },
+   "w_b": {
+    "Leg_L3_Femur": 0.5,
+    "Leg_L3_Tibia": 0.5
+   }
+  },
+  {
+   "stretch": 1.64,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 5,
+   "edge": 4441,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Coxa",
+   "rest_len_cm": 3.01,
+   "mid": [
+    -0.086,
+    -0.207,
+    0.094
+   ],
+   "verts": [
+    2133,
+    2134
+   ],
+   "w_a": {
+    "Thorax": 0.54,
+    "Abdomen_1": 0.46
+   },
+   "w_b": {
+    "Abdomen_1": 0.99
+   }
+  },
+  {
+   "stretch": 1.63,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 0,
+   "edge": 6497,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R2_Coxa",
+   "rest_len_cm": 2.65,
+   "mid": [
+    -0.041,
+    -0.161,
+    -0.073
+   ],
+   "verts": [
+    55,
+    1479
+   ],
+   "w_a": {
+    "Leg_R3_Coxa": 1.0
+   },
+   "w_b": {
+    "Thorax": 0.74,
+    "Leg_R3_Coxa": 0.24,
+    "Leg_R3_Femur": 0.02
+   }
+  },
+  {
+   "stretch": 1.63,
+   "clip": "Octopod_Spider_Death",
+   "frame": 19,
+   "edge": 3681,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 1.96,
+   "mid": [
+    -0.023,
+    0.052,
+    0.193
+   ],
+   "verts": [
+    2196,
+    2311
+   ],
+   "w_a": {
+    "Abdomen_1": 0.97,
+    "Thorax": 0.03
+   },
+   "w_b": {
+    "Abdomen_1": 0.61,
+    "Thorax": 0.39
+   }
+  },
+  {
+   "stretch": 1.62,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 652,
+   "region": "Flanke",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.85,
+   "mid": [
+    -0.026,
+    0.067,
+    0.173
+   ],
+   "verts": [
+    736,
+    1467
+   ],
+   "w_a": {
+    "Abdomen_1": 0.91,
+    "Thorax": 0.09
+   },
+   "w_b": {
+    "Thorax": 0.68,
+    "Abdomen_1": 0.32
+   }
+  },
+  {
+   "stretch": 1.62,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 10,
+   "edge": 815,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L2_Coxa",
+   "rest_len_cm": 2.68,
+   "mid": [
+    -0.041,
+    0.161,
+    -0.073
+   ],
+   "verts": [
+    56,
+    1474
+   ],
+   "w_a": {
+    "Leg_L3_Coxa": 1.0
+   },
+   "w_b": {
+    "Thorax": 0.73,
+    "Leg_L3_Coxa": 0.25,
+    "Leg_L3_Femur": 0.02
+   }
+  },
+  {
+   "stretch": 1.6,
+   "clip": "Octopod_Spider_Death",
+   "frame": 20,
+   "edge": 1168,
+   "region": "Flanke",
+   "near_bone": "Thorax",
+   "rest_len_cm": 3.52,
+   "mid": [
+    0.003,
+    -0.04,
+    0.195
+   ],
+   "verts": [
+    289,
+    2474
+   ],
+   "w_a": {
+    "Thorax": 0.94,
+    "Abdomen_1": 0.06
+   },
+   "w_b": {
+    "Abdomen_1": 0.69,
+    "Thorax": 0.31
+   }
+  },
+  {
+   "stretch": 1.58,
+   "clip": "Octopod_Spider_Run",
+   "frame": 5,
+   "edge": 5581,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R1_Coxa",
+   "rest_len_cm": 1.14,
+   "mid": [
+    0.102,
+    -0.111,
+    -0.099
+   ],
+   "verts": [
+    374,
+    892
+   ],
+   "w_a": {
+    "Thorax": 0.69,
+    "Leg_R1_Coxa": 0.31
+   },
+   "w_b": {
+    "Thorax": 0.79,
+    "Leg_R2_Coxa": 0.09,
+    "Leg_R2_Femur": 0.09,
+    "Leg_R1_Coxa": 0.03
+   }
+  },
+  {
+   "stretch": 1.57,
+   "clip": "Octopod_Spider_Death",
+   "frame": 20,
+   "edge": 1167,
+   "region": "Flanke",
+   "near_bone": "Thorax",
+   "rest_len_cm": 2.39,
+   "mid": [
+    0.002,
+    -0.051,
+    0.186
+   ],
+   "verts": [
+    289,
+    477
+   ],
+   "w_a": {
+    "Thorax": 0.94,
+    "Abdomen_1": 0.06
+   },
+   "w_b": {
+    "Thorax": 0.52,
+    "Abdomen_1": 0.48
+   }
+  },
+  {
+   "stretch": 1.57,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 653,
+   "region": "Flanke",
+   "near_bone": "Thorax",
+   "rest_len_cm": 3.68,
+   "mid": [
+    -0.028,
+    0.069,
+    0.163
+   ],
+   "verts": [
+    736,
+    1014
+   ],
+   "w_a": {
+    "Abdomen_1": 0.91,
+    "Thorax": 0.09
+   },
+   "w_b": {
+    "Thorax": 0.84,
+    "Abdomen_1": 0.16
+   }
+  },
+  {
+   "stretch": 1.56,
+   "clip": "Octopod_Spider_Run",
+   "frame": 0,
+   "edge": 2285,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L2_Coxa",
+   "rest_len_cm": 2.69,
+   "mid": [
+    0.071,
+    0.112,
+    -0.065
+   ],
+   "verts": [
+    2738,
+    2789
+   ],
+   "w_a": {
+    "Thorax": 0.74,
+    "Leg_L2_Coxa": 0.26
+   },
+   "w_b": {
+    "Leg_L2_Coxa": 0.98,
+    "Leg_L2_Femur": 0.02
+   }
+  },
+  {
+   "stretch": 1.55,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 398,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 3.3,
+   "mid": [
+    -0.022,
+    -0.101,
+    0.153
+   ],
+   "verts": [
+    520,
+    691
+   ],
+   "w_a": {
+    "Abdomen_1": 0.68,
+    "Thorax": 0.32
+   },
+   "w_b": {
+    "Thorax": 0.97,
+    "Abdomen_1": 0.03
+   }
+  },
+  {
+   "stretch": 1.55,
+   "clip": "Octopod_Spider_Death",
+   "frame": 18,
+   "edge": 2810,
+   "region": "Ruecken",
+   "near_bone": "Thorax",
+   "rest_len_cm": 1.88,
+   "mid": [
+    -0.009,
+    0.043,
+    0.184
+   ],
+   "verts": [
+    1355,
+    2311
+   ],
+   "w_a": {
+    "Thorax": 0.74,
+    "Abdomen_1": 0.26
+   },
+   "w_b": {
+    "Abdomen_1": 0.61,
+    "Thorax": 0.39
+   }
+  },
+  {
+   "stretch": 1.55,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 10,
+   "edge": 1448,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L4_Femur",
+   "rest_len_cm": 4.27,
+   "mid": [
+    -0.175,
+    0.172,
+    -0.048
+   ],
+   "verts": [
+    41,
+    879
+   ],
+   "w_a": {
+    "Abdomen_1": 0.98,
+    "Thorax": 0.02
+   },
+   "w_b": {
+    "Leg_L4_Coxa": 0.56,
+    "Thorax": 0.25,
+    "Abdomen_1": 0.18
+   }
+  },
+  {
+   "stretch": 1.54,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 5,
+   "edge": 3590,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Coxa",
+   "rest_len_cm": 2.85,
+   "mid": [
+    -0.059,
+    -0.192,
+    0.108
+   ],
+   "verts": [
+    1500,
+    2723
+   ],
+   "w_a": {
+    "Abdomen_1": 0.76,
+    "Thorax": 0.24
+   },
+   "w_b": {
+    "Thorax": 0.82,
+    "Abdomen_1": 0.18
+   }
+  },
+  {
+   "stretch": 1.54,
+   "clip": "Octopod_Spider_TurnLeft",
+   "frame": 5,
+   "edge": 3075,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_R3_Coxa",
+   "rest_len_cm": 2.85,
+   "mid": [
+    -0.059,
+    -0.192,
+    0.108
+   ],
+   "verts": [
+    1499,
+    2722
+   ],
+   "w_a": {
+    "Abdomen_1": 0.76,
+    "Thorax": 0.24
+   },
+   "w_b": {
+    "Thorax": 0.82,
+    "Abdomen_1": 0.18
+   }
+  },
+  {
+   "stretch": 1.52,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 10,
+   "edge": 557,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Coxa",
+   "rest_len_cm": 3.32,
+   "mid": [
+    -0.053,
+    0.162,
+    -0.06
+   ],
+   "verts": [
+    56,
+    529
+   ],
+   "w_a": {
+    "Leg_L3_Coxa": 1.0
+   },
+   "w_b": {
+    "Thorax": 0.87,
+    "Leg_L3_Coxa": 0.13
+   }
+  },
+  {
+   "stretch": 1.52,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 15,
+   "edge": 4342,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Coxa",
+   "rest_len_cm": 2.86,
+   "mid": [
+    -0.079,
+    0.185,
+    0.093
+   ],
+   "verts": [
+    1276,
+    1428
+   ],
+   "w_a": {
+    "Thorax": 0.65,
+    "Abdomen_1": 0.35
+   },
+   "w_b": {
+    "Abdomen_1": 0.92,
+    "Thorax": 0.08
+   }
+  },
+  {
+   "stretch": 1.52,
+   "clip": "Octopod_Spider_TurnRight",
+   "frame": 15,
+   "edge": 3350,
+   "region": "Schulter_Oberschenkel",
+   "near_bone": "Leg_L3_Coxa",
+   "rest_len_cm": 2.86,
+   "mid": [
+    -0.079,
+    0.185,
+    0.093
+   ],
+   "verts": [
+    1275,
+    1427
+   ],
+   "w_a": {
+    "Thorax": 0.65,
+    "Abdomen_1": 0.35
+   },
+   "w_b": {
+    "Abdomen_1": 0.92,
+    "Thorax": 0.08
+   }
+  }
+ ]
+}

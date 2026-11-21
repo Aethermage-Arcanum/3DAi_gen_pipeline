@@ -16,7 +16,7 @@ role = "style"
 # Bewegung: Skelett/Muster (motions/<skelett>/<muster>), Variante, Vorbild-Tiere für die
 # Naturbeobachtung (Videos werden VOR dem Animieren dazu gesucht) – bitte prüfen/korrigieren
 [motion]
-style = "octopod/spider"   # Muster noch nicht gebaut (war Variante "spider" von ant; Spinne = Achtbeiner)
+style = "octopod/spider"   # gebaut 2026-11-21 (motions/octopod/spider), Ein-Mesh-Erkennung in rigging/octopod_detect.py
 variant = ""
 vorbild = ["Wolfsspinne mit Eikokon/Jungen auf dem Rücken", "Springspinne – Sprungbiss"]
 

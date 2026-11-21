@@ -1,0 +1,115 @@
+{
+  "source": "generate_model.glb",
+  "mode": "auto",
+  "chosen": "tripo_uv",
+  "rebaked": [],
+  "tripo": {
+    "uv_map": "UVMap",
+    "islands": 50,
+    "coverage": 0.595,
+    "overlap": 0.0,
+    "density_outlier_fraction": 0.0,
+    "density_cv": 0.162,
+    "angle_distortion_deg": 8.78,
+    "mirrored_fraction": 0.0,
+    "out_of_bounds_tris": 0,
+    "checks": {
+      "overlap": true,
+      "density": true,
+      "angles": false,
+      "coverage": true
+    },
+    "error_score": 1.115,
+    "seam_penalty": 0.409
+  },
+  "smart": {
+    "uv_map": "UVSmart",
+    "islands": 777,
+    "coverage": 0.247,
+    "overlap": 0.0003,
+    "density_outlier_fraction": 0.0,
+    "density_cv": 0.062,
+    "angle_distortion_deg": 5.59,
+    "mirrored_fraction": 0.0,
+    "out_of_bounds_tris": 0,
+    "checks": {
+      "overlap": true,
+      "density": true,
+      "angles": true,
+      "coverage": false
+    },
+    "error_score": 2.4211,
+    "seam_penalty": 1.6254
+  },
+  "renders": [
+    "uv_original_arpg.png",
+    "uv_original_side.png",
+    "uv_checker_arpg.png",
+    "uv_checker_side.png",
+    "uv_forest_arpg.png",
+    "uv_forest_side.png",
+    "uv_abyss_arpg.png",
+    "uv_abyss_side.png"
+  ],
+  "inspect": {
+    "tripo": {
+      "metrics": {
+        "parts": 1,
+        "uv_islands": 50,
+        "parts_in_one_island": 0.0,
+        "parts_split_max": 50,
+        "big_parts_split_mean": 50.0,
+        "seam_length_per_size": 20.45,
+        "seams_on_top_fraction": 0.308,
+        "part_density_min_max": [
+          1.0,
+          1.0
+        ],
+        "parts_density_outside_0.6_1.6": 0,
+        "head_density": 1.0
+      },
+      "images": {
+        "islands_arpg": "insp_tripo_islands_arpg.png",
+        "islands_side": "insp_tripo_islands_side.png",
+        "islands_head": "insp_tripo_islands_head.png",
+        "seams_arpg": "insp_tripo_seams_arpg.png",
+        "seams_head": "insp_tripo_seams_head.png",
+        "density_arpg": "insp_tripo_density_arpg.png",
+        "layout": "insp_tripo_layout.png"
+      }
+    },
+    "smart": {
+      "metrics": {
+        "parts": 1,
+        "uv_islands": 777,
+        "parts_in_one_island": 0.0,
+        "parts_split_max": 777,
+        "big_parts_split_mean": 777.0,
+        "seam_length_per_size": 81.27,
+        "seams_on_top_fraction": 0.313,
+        "part_density_min_max": [
+          1.0,
+          1.0
+        ],
+        "parts_density_outside_0.6_1.6": 0,
+        "head_density": 1.0
+      },
+      "images": {
+        "islands_arpg": "insp_smart_islands_arpg.png",
+        "islands_side": "insp_smart_islands_side.png",
+        "islands_head": "insp_smart_islands_head.png",
+        "seams_arpg": "insp_smart_seams_arpg.png",
+        "seams_head": "insp_smart_seams_head.png",
+        "density_arpg": "insp_smart_density_arpg.png",
+        "layout": "insp_smart_layout.png"
+      }
+    }
+  },
+  "warnings": [
+    "UV-Grenzwert verletzt: angles"
+  ],
+  "export_vertices": {
+    "before": 2830,
+    "after": 2830
+  }
+}

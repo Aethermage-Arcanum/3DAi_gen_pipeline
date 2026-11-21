@@ -1,0 +1,163 @@
+{
+  "fps": 30,
+  "clips": {
+    "Octopod_Spider_Walk": [
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 20,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 21,
+        "event": "footstep",
+        "leg": "L3"
+      }
+    ],
+    "Octopod_Spider_Run": [
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 6,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 6,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R4"
+      }
+    ],
+    "Octopod_Spider_Idle": [],
+    "Octopod_Spider_Ready": [],
+    "Octopod_Spider_TurnLeft": [
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "L3"
+      }
+    ],
+    "Octopod_Spider_TurnRight": [
+      {
+        "frame": 8,
+        "event": "footstep",
+        "leg": "L4"
+      },
+      {
+        "frame": 9,
+        "event": "footstep",
+        "leg": "R3"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "R1"
+      },
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "L2"
+      },
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "R4"
+      },
+      {
+        "frame": 19,
+        "event": "footstep",
+        "leg": "L3"
+      }
+    ],
+    "Octopod_Spider_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Octopod_Spider_Attack2": [
+      {
+        "frame": 12,
+        "event": "takeoff"
+      },
+      {
+        "frame": 21,
+        "event": "hit"
+      },
+      {
+        "frame": 21,
+        "event": "land"
+      },
+      {
+        "frame": 33,
+        "event": "root_motion",
+        "distance_m": 1.5867,
+        "axis": "x"
+      }
+    ],
+    "Octopod_Spider_Hit": [],
+    "Octopod_Spider_Death": [
+      {
+        "frame": 36,
+        "event": "dead"
+      }
+    ]
+  }
+}

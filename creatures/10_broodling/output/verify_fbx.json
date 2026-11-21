@@ -1,0 +1,113 @@
+{
+  "skeleton": "crawler",
+  "file": "Broodling.fbx",
+  "meshes": 1,
+  "triangles": 4218,
+  "bones": 43,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_3372dd67-640a-4543-be02-71e1a3687dfd"
+  ],
+  "textures": [
+    [
+      "Color_3372dd67-640a-4543-be02-71e1a3687dfd",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_3372dd67-640a-4543-be02-71e1a3687dfd",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Broodling|Broodling|Octopod_Spider_Attack1",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Attack2",
+      [
+        1,
+        34
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Death",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Hit",
+      [
+        1,
+        11
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Idle",
+      [
+        1,
+        76
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Ready",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Run",
+      [
+        1,
+        12
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_TurnLeft",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_TurnRight",
+      [
+        1,
+        21
+      ]
+    ],
+    [
+      "Broodling|Broodling|Octopod_Spider_Walk",
+      [
+        1,
+        23
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -0.99,
+    -0.16
+  ],
+  "foot_moves_m": 0.1752,
+  "dimensions_m": [
+    1.0,
+    0.97,
+    0.714
+  ],
+  "ok": true
+}
