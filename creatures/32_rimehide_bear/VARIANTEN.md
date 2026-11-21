@@ -7,9 +7,15 @@ Varianten entstehen. Skelett `quadruped`, neues Bewegungsmuster `quadruped/bear`
 Ablauf: **Nutzer legt die Varianten fest** → Basis eindampfen → Design-Bild → 4 Ansichten → Prüfung A → Tripo
 (erst `--dry-run`, dann nach OK). `roster.toml` und Prompts werden erst danach angepasst.
 
-Kurz erklärt: *Tönung* = nur Farbe ändern · *Anbauteile* = Zusatzteile (Platten, Stacheln, Moos …), per Blender
-Geometry Nodes mit Schiebereglern erzeugt und starr an einen Knochen gehängt · *Proportions-Slider* = Teile dicker,
-länger, größer ziehen · *Shader/Partikel* = Leuchten, Glut, Frost-Nebel in Unity.
+Kurz erklärt – Varianten sind ein **Schichtmodell** (Nutzer 2026-11-21, am Beispiel Bär; Tabelle unten am
+2026-11-21 danach umsortiert, Inhalt unverändert):
+1. *Statur* = Standard-Statur plus Regler für Größe, Proportionen (länger, gestauchter) und Gewicht (dick/dünn).
+2. *Bedeckung* = Haupt-Oberfläche (Fell, Federn, Leder, Platten …) mit eigenen Einstellungen: Länge, Dichte, Form,
+   Farbe.
+3. *Accessoires* = Zusatzteile (Hörner, Schuppen, Pilze, Rücken-Aufsätze, Gehänge …): erst die Körperstellen wählen,
+   dann die Einstellungen pro Accessoire. Per Blender Geometry Nodes mit Schiebereglern, starr am nächsten Knochen.
+4. *Material/Textur-Ebenen* = färbt bzw. stilisiert alles Vorherige, auch mehrere Ebenen übereinander (Farbe, Eis,
+   Glut, Nässe); Partikel (Frost-Atem, Funken, Staub) in Unity.
 
 ## 1. Varianten-Entwurf
 
@@ -32,19 +38,21 @@ geplanten Muster (Dachs, Eber, Echse) entfielen dann oder bräuchten Zusatz-Clip
 
 ## 2. Einsortier-Tabelle
 
-> **Vorschlag Claude, Nutzer entscheidet.**
+> **Vorschlag Claude, Nutzer entscheidet.** Nur nach den 4 Schichten umsortiert (2026-11-21), nichts neu
+> entschieden. Spalte 4 = bisherige Tönung + Shader/Partikel. Spalte 2: Die Bedeckung war bisher kein eigener Punkt;
+> „?“ = bisheriger Eintrag, der eher Bedeckung als Accessoire sein könnte. Körperstelle „–“ = bisher nicht genannt.
 
-| Variante | Tönung | Anbauteile (Geometry Nodes) | Proportions-Slider | Shader/Partikel (Unity) | Eigene Basis nötig? |
+| Variante | 1 Statur-Regler | 2 Bedeckung (+ Einstellungen) | 3 Accessoires (Körperstelle + Einstellungen) | 4 Material/Textur-Ebenen | Eigene Basis? |
 |---|---|---|---|---|---|
-| Rimehide Bear | Weiß/Stahlblau | Eisplatten Rücken/Schultern/Unterarme, Eissplitter-Kamm | – (Referenz 1,0) | Eis halbtransparent, Frost-Atem | nein |
-| Mossback Bear | Dunkelbraun/Moosgrün | Moospolster, Pilze | – | Gift-Sporen | nein |
-| Cave Bear | Schwarzbraun | Tropfstein-Platten, kleine Kristalle | etwas schwerer Kopf | Kristall-Glimmen schwach | nein |
-| Slagback Bear | Rußschwarz | Basaltplatten, Schlackebrocken | – | Glutrisse (Emission), Funken | nein |
-| Cragplate Bear | Steingrau/Braun | Steinplatten, Felszacken | Größe 1,05, Buckel höher | Staub beim Stampfen | nein |
-| Elder Rimehide | Biom-Farbe + Rim-Light | Eiszacken-Krone, Schulterdornen | Größe 1,5, Schultern breiter | Frost-Aura | nein |
-| Quillback Burrower | Steingrau/Dunkelbraun, heller Nasenstreifen | Stachelmantel, Steinplatten Schulter | Beine kürzer, Körper länger/flacher, Vorderkrallen größer, Kopf spitzer | Stachel-Salve, Erdbrocken beim Eingraben | eher nein |
-| Stone Boar | Schiefergrau/Violettschwarz, rostrote Haut | Steinplatten, Knochenzacken auf dem Buckel, **Hauer** | Schnauze länger, Hinterbeine kürzer, Buckel höher | Staub beim Rammen | Grenzfall (Schnauze + Hufe) |
-| Shore Lurker | Anthrazit/Schiefer, nass | Hauer, Stachelmähne, Knochenplatten | Beine viel kürzer, Körper flacher, Kopf breiter, Schwanz länger | nasser Glanz, Tropfen | **wahrscheinlich ja** (liegende Haltung, seitliche Beine) |
+| Rimehide Bear | – (Referenz 1,0) | wie Basis (Frage 5) | Eisplatten (Rücken, Schultern, Unterarme), Eissplitter-Kamm (–) | Weiß/Stahlblau · Eis halbtransparent · Partikel: Frost-Atem | nein |
+| Mossback Bear | – | wie Basis (Frage 5) | Moospolster (–), Pilze (–) | Dunkelbraun/Moosgrün · Partikel: Gift-Sporen | nein |
+| Cave Bear | etwas schwerer Kopf | wie Basis (Frage 5) | Tropfstein-Platten (–), kleine Kristalle (–) | Schwarzbraun · Kristall-Glimmen schwach | nein |
+| Slagback Bear | – | wie Basis (Frage 5) | Basaltplatten (–), Schlackebrocken (–) | Rußschwarz · Glutrisse (Emission) · Partikel: Funken | nein |
+| Cragplate Bear | Größe 1,05, Buckel höher | wie Basis (Frage 5) | Steinplatten (–), Felszacken (–) | Steingrau/Braun · Partikel: Staub beim Stampfen | nein |
+| Elder Rimehide | Größe 1,5, Schultern breiter | wie Basis (Frage 5) | Eiszacken-Krone (Kopf), Schulterdornen (Schultern) | Biom-Farbe + Rim-Light · Frost-Aura | nein |
+| Quillback Burrower | Beine kürzer, Körper länger/flacher, Vorderkrallen größer, Kopf spitzer | Stachelmantel? | Steinplatten (Schulter) | Steingrau/Dunkelbraun, heller Nasenstreifen · Partikel: Stachel-Salve, Erdbrocken beim Eingraben | eher nein |
+| Stone Boar | Schnauze länger, Hinterbeine kürzer, Buckel höher | rostrote Haut? | Steinplatten (–), Knochenzacken (Buckel), **Hauer** (Maul) | Schiefergrau/Violettschwarz · Partikel: Staub beim Rammen | Grenzfall (Schnauze + Hufe) |
+| Shore Lurker | Beine viel kürzer, Körper flacher, Kopf breiter, Schwanz länger | wie Basis (Frage 5) | Hauer (Maul), Stachelmähne (Nacken), Knochenplatten (–) | Anthrazit/Schiefer · nasser Glanz · Partikel: Tropfen | **wahrscheinlich ja** (liegende Haltung, seitliche Beine) |
 
 ## 3. Basis-Kreatur (Vorschlag)
 
@@ -57,6 +65,7 @@ Was alle gemeinsam haben – nur das geht zu Tripo (P-Serie, Low-Poly):
   sichtbaren Fängen (Ausprägung siehe Frage 1).
 - **Schwanz:** kurzer Stummel (siehe Frage 2).
 - **Oberfläche:** einheitliches, kurzes, grobes Fell bzw. Haut in neutralem Mittelgrau, damit Tönung greift.
+  *(Nach dem Schichtmodell vermutlich „nackte“ neutrale Haut, Fell als eigene Schicht – siehe Frage 5.)*
 
 Bewusst **NICHT** im Mesh: Eis, Stacheln, Platten, Moos, Pilze, Kristalle, Hauer, Mähne, zottelige Fellbüschel.
 **Rücken und Schultern bleiben glatte Ansatzflächen** für die Anbauteile.
@@ -74,5 +83,7 @@ Kopf gerade nach vorn, Schwanz gerade nach hinten, Körper symmetrisch und nicht
 3. **Größen-Slider:** welche Spanne? Vorschlag 0,8–1,5 (Jungtier bis Elite), Beinlänge ±25 %.
 4. **Grenzfälle:** Sollen Quillback Burrower, Stone Boar und Shore Lurker wirklich auf diese Basis – und dann den
    Bären-Clip-Satz teilen statt eigener Muster (Dachs, Eber, Echse)?
-5. **Oberfläche der Basis:** Fell-Textur (passt zu Bär/Burrower) oder neutrale ledrige Haut (passt besser zu
-   Eber/Lurker)? Tönung ändert nur die Farbe, nicht Fell zu Stein.
+5. **Oberfläche der Basis** (seit dem Schichtmodell 2026-11-21 nur noch eine Bestätigung): **Vermutung Claude:**
+   Die Basis bleibt ein „nackter“ Grundkörper mit neutraler, glatter Haut; Fell (Bär, Burrower), Leder/Haut (Eber,
+   Lurker) oder Platten sind eine eigene Schicht (Bedeckung) und kommen nicht ins Tripo-Mesh. Passt das?
+   *(Bisherige Frage: Fell-Textur oder neutrale ledrige Haut als Basis?)*
