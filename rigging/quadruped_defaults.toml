@@ -43,3 +43,13 @@ adaptive_belly_strip = false # Bauch-Streifen schmaler als der Fußabstand (eng 
 # rigid_head_connected = true   # starr = über der Kopf-Oberkante UND mit dem Schädel verbunden (statt nur vor der
 #                               # Schulter) → auch Geweihsprossen, die nach hinten über die Schulter ragen
 # rigid_head_blend_rings = 2    # weicher Übergang starr → Hals über so viele Kanten-Ringe unter der starren Zone
+# C15 Gewichte nach Körperbereichen (Wolf, Hirsch) – ohne die Zeilen bleibt alles wie bisher (Regression identisch):
+# zone_lock = true           # Fremdbereich-Sperre, weich auslaufend, vor UND nach dem Glätten:
+#                            #  (a) Unterbein (Leg_*_2..4) nicht über Knie/Ellbogen (+ zone_leg_margin · H)
+#                            #  (b) Bein/Schulterblatt nicht auf dem Rückenstreifen über der Wirbelsäule
+#                            #      (zone_dorsal = Anteil der halben Rumpfbreite gesperrt, zone_dorsal_soft = weicher Rand)
+# zone_leg_margin = 0.03     # Anteil H; tiefe Knie (Wolf) brauchen mehr (0.12), sonst harte Kante am Knie
+# zone_dorsal = 0.35
+# zone_dorsal_soft = 0.25
+# spine_chain_blend = 1.0    # 0 = aus; Anteil der Wirbelkette (Hips…Neck_2) nach Lage ENTLANG der Kette verteilen,
+#                            # lineare Rampe dieser Breite (in Knochenlängen) um jedes Gelenk; 1 = Mitte zu Mitte

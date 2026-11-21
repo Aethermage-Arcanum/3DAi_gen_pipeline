@@ -407,7 +407,7 @@ if RIG.get("zone_lock", False):
     n_low = int(((W[:, lower] > 0) & (TAPER[:, lower] < 1)).any(1).sum())
     W *= TAPER
     W[W.sum(1) == 0, :] = 1.0 / (Dm[W.sum(1) == 0] + 1e-4) ** RIG["falloff"] * (TAPER[W.sum(1) == 0] > 0)
-    print(f"RIG_INFO Fremdbereich-Sperre: Unterbein über seinem Gelenk {n_low} Vertices, "
+    print(f"RIG_INFO Fremdbereich-Sperre: Unterbein über Knie/Ellbogen gedämpft {n_low} Vertices, "
           f"Rückenstreifen (Bein/Schulterblatt gedämpft) {int((f < 1).sum())} Vertices")
 # Nebenteile: standardmäßig weiche Abstands-Gewichte wie der Hauptkörper (Pfoten gehen am Knöchel über,
 # Rückenflossen biegen mit). rigid_parts = true → starr am nächsten Knochen (für harte Panzerplatten).
@@ -443,32 +443,6 @@ for _ in range(RIG["smooth_iterations"]):
     W = np.where(smooth_mask, (1 - RIG["smooth_factor"]) * W + RIG["smooth_factor"] * sm, W)
     W = np.where(allow | ~smooth_mask, W, 0.0)
     W = W / np.maximum(W.sum(1, keepdims=True), 1e-12)
-# C15 breiterer Übergang Bein → Rumpf (nur mit limb_blend > 0): zusätzliche Glätt-Runden NUR im Übergangsband zwischen
-# Oberschenkel/Oberarm/Schulterblatt und Rumpf (+ 1 Kanten-Ring). Der Oberschenkel schwingt im Galopp weit; ein schmaler
-# Übergang (Gewicht springt über eine lange Kante) dehnt genau diese Kante an Flanke/Bauchlinie.
-if RIG.get("limb_blend", 0) > 0:
-    lj = [j for j, n in enumerate(names) if n.startswith("Shoulder_") or (n.startswith("Leg_") and n.endswith("_1"))]
-    bj = [j for j in body_names if not names[j].startswith(("Tail", "Jaw", "Head"))]
-    ls, bs = W[:, lj].sum(1), W[:, bj].sum(1)
-    band = (ls > 0.02) & (bs > 0.02) & main & (V[:, 2] > min(lg["belly"] for lg in LEGS.values()) - RIG["below_belly"] * H)
-    for _ in range(2):                                   # 2 Kanten-Ringe Rand, damit das Band weich ausläuft
-        nb = np.zeros(N, bool)
-        nb[E[band[E[:, 0]] | band[E[:, 1]]].ravel()] = True
-        band |= nb & main
-    for _ in range(int(RIG["limb_blend"])):
-        acc = np.zeros_like(W)
-        cnt = np.zeros(N)
-        np.add.at(acc, E[:, 0], W[E[:, 1]])
-        np.add.at(acc, E[:, 1], W[E[:, 0]])
-        np.add.at(cnt, E[:, 0], 1)
-        np.add.at(cnt, E[:, 1], 1)
-        sm = np.where(cnt[:, None] > 0, acc / np.maximum(cnt, 1)[:, None], W)
-        W = np.where(band[:, None], 0.5 * W + 0.5 * sm, W)
-        W = np.where(allow, W, 0.0)
-        if TAPER is not None:
-            W = W * TAPER
-        W = W / np.maximum(W.sum(1, keepdims=True), 1e-12)
-    print(f"RIG_INFO Übergang Bein→Rumpf verbreitert: {int(band.sum())} Vertices, {int(RIG['limb_blend'])} Runden")
 if TAPER is not None:                                  # C15: Sperre nach dem Glätten erneut (Rest wird umverteilt)
     Wt = W * TAPER
     keep = Wt.sum(1) > 1e-9

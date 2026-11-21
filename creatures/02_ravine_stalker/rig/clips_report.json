@@ -18,7 +18,7 @@
       "moves_ok": true,
       "move_speed_mps": 0.319,
       "loop_ok": true,
-      "max_stretch": 2.3,
+      "max_stretch": 2.08,
       "stretch_at": "Leg_BR_1 @ Frame 6",
       "stretch_ok": false,
       "ok": true
@@ -39,8 +39,8 @@
       "moves_ok": true,
       "move_speed_mps": 1.25,
       "loop_ok": true,
-      "max_stretch": 2.7,
-      "stretch_at": "Leg_BL_1 @ Frame 9",
+      "max_stretch": 2.54,
+      "stretch_at": "Neck_1 @ Frame 0",
       "stretch_ok": false,
       "ok": true
     },
@@ -54,8 +54,8 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.35,
-      "stretch_at": "Leg_FR_1 @ Frame 36",
+      "max_stretch": 1.36,
+      "stretch_at": "Neck_1 @ Frame 36",
       "stretch_ok": true,
       "ok": true
     },
@@ -69,8 +69,8 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 1.9,
-      "stretch_at": "Neck_1 @ Frame 9",
+      "max_stretch": 1.63,
+      "stretch_at": "Leg_BL_1 @ Frame 15",
       "stretch_ok": true,
       "ok": true
     },
@@ -90,7 +90,7 @@
       "moves_ok": true,
       "turn_speed_deg_s": 32.1,
       "loop_ok": true,
-      "max_stretch": 1.85,
+      "max_stretch": 1.86,
       "stretch_at": "Leg_FL_1 @ Frame 9",
       "stretch_ok": true,
       "ok": true
@@ -140,7 +140,7 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "returns_to_rest": true,
-      "max_stretch": 1.38,
+      "max_stretch": 1.4,
       "stretch_at": "Leg_BR_1 @ Frame 3",
       "stretch_ok": true,
       "ok": true

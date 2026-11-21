@@ -46,3 +46,35 @@ Versuche mit exklusiven Beinpaaren / Brücken-Schnitt haben beim Hirsch die Dehn
 - Erneut prüfen: `& "D:\Blender\blender.exe" -b creatures/09_hollow_stag/rig/clips.blend -P rigging/check_rigid_head.py -- temp/rigid_head.json creatures/09_hollow_stag/creature.toml`
 - Gilt automatisch auch für das spätere neue Hirsch-Modell (C12), da die Optionen in der `creature.toml` stehen.
 - Neu gebaut (`--stage motion` → Roh-GIFs `rig/anim/raw/`, dann `--stage full`): alle 9 Clips ✓, Gegentest FBX/GLB ✓, Gelenk-Lücken max. 3,0 cm (Grenze 3,2, Schwanzstachel, unverändert). Death-Clip nicht angefasst (nur das Rig wirkt mit).
+
+**2026-11-21 – C15 Dehnung am Hals aus der Spielkamera** (Nutzer: gemeldet war der **Hals**, nicht die Fußgelenke):
+Gemessen nur auf den aus der Spielkamera sichtbaren Flächen (`rigging/joint_densify_review.py visible`,
+`rigging/README.md` → „Gewichte nach Körperbereichen“).
+- **Schlimmste sichtbare Stellen vorher:** Widerrist/Halsansatz oben im Geweihstoß **3,92** (29 Kanten > 1,5) und in
+  Ready **3,60** (30); Kruppe/Schwanzansatz Run **2,99**, Attack 2,73; Rücken über dem Becken Attack 2,27; Hals unten
+  (Brust) Run 2,17.
+- **Ursachen (Fehlerklassen):** *Fremder Körperbereich* – beide Schulterblätter hatten 17–29 % auf dem Widerrist
+  (halten ihn fest, während der Hals nach unten geht), die Oberschenkel bis 22 % auf der Kruppe (Abstands-Grenzen sind
+  Anteile der Höhe, der Hirsch ist hoch → Bein-Gewichte reichen über den ganzen Rumpf). *Falscher Wirbelknochen* – der
+  Hals steigt steil, der obere Halsknochen Neck_2 ist vom Widerrist so weit entfernt wie Neck_1 → 43 % Neck_2 am
+  Widerrist. *Rig-Aufbau* – die Schwanzkette läuft im Zickzack durch die Hinterbeine (Mittelpunkt-Suche greift die weit
+  hinten stehenden Beine): Tail_3/Tail_4 je 25 % auf der Kruppe.
+- **Fix** (`creature.toml [quadruped.rig]`, Bewegung unverändert – Knochen 0,0 mm / 0,0°): `zone_lock = true`,
+  `spine_chain_blend = 1.0`. Kein Gelenk-Verdichten (Widerrist-Kanten 3,5–4,2 cm lang, nach dem Fix aber ≤ 1,46) →
+  Dreiecke unverändert.
+- **Messwerte sichtbare Flächen, vorher → nachher** (max · Kanten > 1,5):
+  Hals: Attack 3,92 · 29 → **1,40 · 0**, Ready 3,60 · 30 → **1,28 · 0**, Run 2,17 · 19 → 1,46 · 0, Walk 1,84 → 1,42,
+  Turn 1,79/1,88 → 1,46/1,47 · Rücken: Attack 2,27 · 9 → 1,48 · 0, Run 1,80 → 1,26 · Schwanz/Kruppe: Run 2,99 · 9 →
+  1,50 · 0, Attack 2,73 · 18 → 1,85 · 1, Idle 2,17 → 1,05 · Flanke ≤ 1,43, Schulter/Oberschenkel Attack 1,99 · 13 →
+  1,62 · 2, Run 1,77 · 3 → 1,73 · 7. Anteil je Regel: `zone_lock` allein Hals Attack 3,92 → 2,16; `spine_chain_blend`
+  allein nur 3,92 → 3,54; erst beide zusammen 1,40 (nach der Schulterblatt-Sperre bleibt Neck_2 die Ursache).
+- **Rest:** Schwanzansatz im Geweihstoß 1,85 (Zickzack-Schwanzkette – Knochen umsetzen würde die Schwanzbewegung ändern,
+  Entscheidung Nutzer); Unterbein/Hinterhufe unverändert (C12, tabu).
+- Geweih weiterhin starr: `rigging/check_rigid_head.py` → 0,0 cm Abweichung in allen 9 Clips, 0 Geweih-Vertices mit
+  Fremd-Gewicht. Neu gebaut (`--stage motion`, dann `--stage full`): alle 9 Clips ✓, Gegentest FBX/GLB ✓, 4.243 Tris,
+  Gelenk-Lücken max 3,1 cm (vorher 3,05, Schwanzstachel). Die Gesamt-Dehnung im Clip-Bericht (Run 4,0, Attack 3,92)
+  liegt jetzt am Hinterbein innen (Leg_BR_2, C12-Breitbeine, tabu) bzw. zwischen den Vorderbeinen (Leg_FR_1) – beides
+  aus der Spielkamera verdeckt.
+- Prüfbogen ARPG-Ansicht: `review/c15_hirsch_hals_vorher_nachher.png`, Geweihstoß über den ganzen Clip:
+  `review/c15_hirsch_attack_dehnung_vorher_nachher.gif`. Roh-GIFs `rig/anim/raw/` (vorherige Fassung als Kopie in
+  `temp/rd_before/09_hollow_stag/anim/`, nicht versioniert).

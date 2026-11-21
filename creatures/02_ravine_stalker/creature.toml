@@ -19,3 +19,10 @@ role = "style"
 style = "quadruped/wolf"
 variant = ""
 vorbild = ["Wolf – Trab und Galopp (Muybridge-Sequenzen)", "Wolf – Drohhaltung, Anspringen"]
+
+# C15 (Nutzer 2026-11-20: Dehnung an Bauch/Rücken aus der Spielkamera): Gewichte nach Körperbereichen (Messung, Ursache,
+# Werte: README "C15"). Bewegung unverändert (Knochen identisch), nur die Haut-Gewichte ändern sich.
+[quadruped.rig]
+zone_lock = true          # Fremdbereich-Sperre: Unterbein nicht über dem Knie, Bein/Schulterblatt nicht auf der Rückenlinie
+zone_leg_margin = 0.12    # Unterbein läuft bis 12 % Höhe über dem Knie weich aus (Wolf-Knie sitzt tief; enger = harte Knie-Kante)
+spine_chain_blend = 1.0   # Wirbelkette Becken→Hals entlang der Kette weich verteilt (statt Abstand je Knochen)

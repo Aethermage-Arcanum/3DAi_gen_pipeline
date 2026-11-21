@@ -77,6 +77,7 @@ if len(sys.argv) > 2 and sys.argv[1] == "gif":             # ohne Blender: Bildr
     frames = []
     for i in range(n):
         ims = [Image.open(f[i]).convert("RGB") for _, f in cols]
+        ims = [im.resize((1040, round(im.height * 1040 / im.width))) if im.width > 1040 else im for im in ims]
         w, h = ims[0].size
         fr = Image.new("RGB", (w, sum(im.height for im in ims) + 30 * len(ims)), (40, 41, 44))
         d = ImageDraw.Draw(fr)

@@ -104,6 +104,43 @@ Was das heißt:
 - Raptor wird schlechter: das Glätten des Rigs zählt Kanten-Schritte; im verdichteten Ring wird der Übergang in Metern
   schmaler. Nur einschalten, wo der Vergleich (stretch + Prüfbild) eine Verbesserung zeigt.
 
+## Gewichte nach Körperbereichen – Dehnung aus der Spielkamera (Backlog C15, seit 2026-11-21)
+Nutzer-Kritik: Dehnung wird dort geprüft, wo man sie im Spiel sieht – Silhouette und Oberseite (Rücken, Widerrist,
+Hals, Kruppe, Flanke), nicht Fußgelenke. Messung und Prüfbilder deshalb immer in der ARPG-Ansicht (s. u.).
+
+**Optionen im Vierbeiner-Rig** (`creature.toml [quadruped.rig]`, ohne die Zeilen ändert sich nichts – Regression
+identisch für Reef Snapper; Raptor/Bog Warden/Geier nutzen andere Rigs, ebenfalls identisch):
+```toml
+zone_lock = true          # Fremdbereich-Sperre (weich auslaufend, vor UND nach dem Glätten):
+                          #  (a) Unterbein Leg_*_2..4 nicht über Knie/Ellbogen (+ zone_leg_margin · H, Standard 0.03)
+                          #  (b) Bein/Schulterblatt nicht auf dem Rückenstreifen über der Wirbelsäule
+                          #      (zone_dorsal 0.35 der halben Rumpfbreite gesperrt, zone_dorsal_soft 0.25 weicher Rand)
+spine_chain_blend = 1.0   # Anteil der Wirbelkette (Hips…Neck_2) nach Lage ENTLANG der Kette verteilen
+                          # (lineare Rampe dieser Breite in Knochenlängen um jedes Gelenk) statt nach Abstand je Knochen
+```
+Die Knochen und damit die Bewegung bleiben exakt gleich (Fingerabdruck: Knochen 0,0 mm / 0,0° in allen Clips), nur die
+Haut-Gewichte ändern sich. Eingeschaltet: Ravine Stalker (Wolf, mit `zone_leg_margin = 0.12`), Hollow Stag.
+
+**Fehlerklassen** (gemessen an Wolf und Hirsch, Details + Zahlen in den READMEs der Kreaturen):
+| Fehlerklasse | Beispiel | per Regel? | Regel |
+|---|---|---|---|
+| Fremder Körperbereich zieht mit | Hirsch: beide Schulterblätter auf dem Widerrist, Oberschenkel auf der Kruppe; Wolf: Schienbein (Leg_B*_2) an der Bauchlinie, Mittelfuß am Oberschenkel | ja | `zone_lock` |
+| Falscher Wirbelknochen / harter Übergang in der Kette | Hirsch: steiler Hals → oberer Halsknochen Neck_2 gleich weit vom Widerrist wie Neck_1 (43 % Neck_2) | ja | `spine_chain_blend` (wirkt voll erst zusammen mit `zone_lock`) |
+| Schmaler Übergang Bein → Rumpf | Wolf: Flanke 13 cm vor der Hüfte, Oberschenkel-Anteil springt 0,43 → 0,24 über eine 2-cm-Kante, Galopp | nein (getestet: mehr Glätten im Übergang, Reichweiten-Grenze für den Oberschenkel → Dehnung wandert nur auf Flanke/Oberschenkel) | Rest, iterativ |
+| Rig-Aufbau | Hirsch: Schwanzkette läuft im Zickzack durch die Hinterbeine (Mittelpunkt-Suche greift die weit hinten stehenden Beine) | nur gemildert | Knochen umsetzen würde die Schwanzbewegung ändern → Entscheidung Nutzer |
+| Zu grobes Mesh | Hirsch: Widerrist-Kanten 3,5–4,2 cm | nach den Gewichtsregeln nicht mehr nötig (max 1,46) | `[joint_densify]` bei Bedarf |
+
+**Messen und Prüfbilder** (`joint_densify_review.py`, siehe Kopf der Datei):
+```
+& "D:\Blenderlender.exe" -b <rig>/clips.blend -P rigging/joint_densify_review.py -- visible <aus.json> [every]
+& "D:\Blenderlender.exe" -b <rig>/clips.blend -P rigging/joint_densify_review.py -- arpg <bild.png> <Action> <frames> [az] [scale]
+python rigging/joint_densify_review.py sheet <bogen.png> "Vorher" <a.png> "Nachher" <b.png> …
+python rigging/joint_densify_review.py gif <aus.gif> <fps> "Vorher" "<a_*.png>" "Nachher" "<b_*.png>"
+```
+`visible` = Dehnung nur auf Flächen, die aus der Spielkamera (50° von oben, 8 Richtungen rundum, Verdeckung per Strahl)
+sichtbar sind, je Bereich (Rücken, Flanke, Bauchlinie, Hals, Kopf, Schwanz, Schulter/Oberschenkel, Unterbein; Bereich
+geometrisch nach nächstem Knochen → vorher/nachher fair), dazu die 40 schlimmsten Kanten mit den Gewichten beider Enden.
+
 ## Frei hängende Teile (Lappen, Fühler, Hautfahnen) – ohne Knochen
 Standard-Baustein für alle Skelette (Backlog C7). Kleine Teile, die frei schwingen sollen, bekommen **keine Knochen**,
 sondern eine Markierung im Mesh; der Unity-Shader `Creature/Standard Dangling` lässt sie dann weich pendeln –

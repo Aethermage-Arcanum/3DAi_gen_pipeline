@@ -39,7 +39,7 @@
       "moves_ok": true,
       "move_speed_mps": 0.988,
       "loop_ok": true,
-      "max_stretch": 3.98,
+      "max_stretch": 4.0,
       "stretch_at": "Leg_BR_2 @ Frame 3",
       "stretch_ok": false,
       "ok": true
@@ -54,9 +54,9 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 2.35,
-      "stretch_at": "Hips @ Frame 51",
-      "stretch_ok": false,
+      "max_stretch": 1.37,
+      "stretch_at": "Leg_BR_2 @ Frame 51",
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_Ready": {
@@ -69,9 +69,9 @@
       "feet_moved_max_m": 0.0,
       "feet_planted_ok": true,
       "loop_ok": true,
-      "max_stretch": 3.82,
+      "max_stretch": 2.75,
       "stretch_at": "Leg_FR_1 @ Frame 6",
-      "stretch_ok": false,
+      "stretch_ok": true,
       "ok": true
     },
     "Quadruped_Deer_TurnLeft": {
@@ -90,7 +90,7 @@
       "moves_ok": true,
       "turn_speed_deg_s": 32.1,
       "loop_ok": true,
-      "max_stretch": 2.74,
+      "max_stretch": 2.64,
       "stretch_at": "Leg_FR_1 @ Frame 0",
       "stretch_ok": true,
       "ok": true
@@ -126,7 +126,7 @@
       "feet_moved_max_m": 0.0002,
       "feet_planted_ok": true,
       "max_stretch": 3.92,
-      "stretch_at": "Neck_2 @ Frame 12",
+      "stretch_at": "Leg_BR_2 @ Frame 9",
       "stretch_ok": true,
       "ok": true
     },
@@ -153,7 +153,7 @@
       "body_lowered_max_m": 0.0,
       "final_min_z_vs_ground_m": -0.0,
       "no_ground_penetration": true,
-      "max_stretch": 3.53,
+      "max_stretch": 3.55,
       "stretch_at": "Leg_BR_2 @ Frame 24",
       "stretch_ok": false,
       "ok": true
