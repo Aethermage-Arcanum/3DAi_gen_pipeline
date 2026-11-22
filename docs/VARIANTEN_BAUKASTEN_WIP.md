@@ -48,3 +48,22 @@ Stand vor dem Limit-Reset: noch nichts gebaut (Arbeitsbaum war sauber). Neustart
 - [x] Doku `VARIANTEN_BAUKASTEN.md` Teil E, `VARIANTEN_SPEC.md` 2.2/2.4/3.3 (weichheit statt schwingen/bewegung).
 **Hinweise:** Batch `temp/g14_work/run_g14.sh <log> VariantKit.VkSwingBatch.Run …`, GIFs `python temp/g14_work/make_gifs.py <ordner>`.
 C13 im echten Projekt: beim nächsten Öffnen importiert der CreatureImporter den Bog Warden, `VkDangleSwing` schaltet ein.
+
+## Zwei Ebenen-Gruppen (Körper / Accessoires) – FERTIG 2026-11-22, NICHT committet (Commit macht der Hauptchat)
+**Meldung Nutzer:** Ebenen mit allen Zonen ab / „ohne“ alles wirkten weiter auf allen Accessoires; eine Liste für Körper und
+Accessoires. **Ursache belegt** (`VkLayerBatch.Diagnose`, `temp/mg_diag/`): Accessoire = Masken-Wert am Ansatzpunkt (Reste
+0,3–0,7 an weichen Rändern/Lücken), leere Zonen-Liste = ganzer Körper.
+**Fortschritt**
+- [x] Shader: `VKLayer()` + zwei Schleifen (`_L0..7` Körper, `_A0..3` Accessoires, Bits über TEXCOORD2.w = −(1+n));
+      Bake-Shader Maske A = Rim × Stärke/4; Spiel-Shader Rim pro Vertex (Vertex-Farbe, `_RimAn`).
+- [x] C#: VkSpec (Format 2, Limits, Ziel-Helfer, `MigrateMaterialV1`), VkDoc (Format-1-Laden gegen `_v1/`-Presets,
+      Hinweis + dirty), VkBuilder (leere Zonen = nirgends, Accessoire-Index, `ApplyMaterial` beide Gruppen, `RimColors`),
+      VkTexBake (Emission/Puls beide Gruppen, Rim-Vertexfarben), Fenster (zwei Bereiche, „gilt für“, Shader-null robust).
+- [x] Python `vk_json.py`: Format 1 gegen `_v1/`, `ebenen_accessoires` normalisieren (Rundlauf byte-gleich geprüft).
+- [x] Presets A–I Format 2 (+ eingefrorene Fassung `templates/umgebungs_gruppen/_v1/`), Slagback/Cragplate/Quillback auf
+      Format 2 gespeichert. Eisriese + Nutzer-Testdateien unverändert (laden über Migration; Sicherung `temp/mg_work/backup_nutzer/`).
+- [x] Selbstprüfung a–e (Teil F4), Doku Teil F + Spec 4.3/2.5/6.2.
+**Zwischenfall:** Während des Umbaus hatte der Nutzer Unity offen. `[Header(Accessoire-Ebene 0)]` (Bindestrich) brach das
+Parsen von VariantLayered.shader → Shader.Find null → „Value cannot be null (shader)“. Behoben, Fenster meldet das jetzt
+verständlich. **Hinweise:** Batch `temp/mg_work/run.sh <log> <methode> …`, Kopien `temp/mg_work/make_copies.py <ordner>`,
+Vergleich `python temp/mg_work/cmp.py temp/mg_vorher temp/mg_nachher`.

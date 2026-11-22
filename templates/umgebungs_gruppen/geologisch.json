@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "geologisch",
   "buchstabe": "G",
   "name": "Geologisch (Thermalquellen)",
@@ -108,7 +108,7 @@
         "mischung": "ueberlagern",
         "seed": null,
         "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut", "accessoire_a"] }
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
       },
       {
         "id": "mineralkruste",
@@ -133,6 +133,51 @@
         "abdunkeln": 0.3,
         "staerke": 1.0,
         "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0 }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
+        "id": "sinter_ringe",
+        "typ": "muster",
+        "an": true,
+        "art": "ringe",
+        "farbe": "#D8CBB0",
+        "skala": 0.05,
+        "dichte": 0.5,
+        "kontrast": 0.6,
+        "richtung": "quer",
+        "verzerrung": 0.3,
+        "mischung": "ueberlagern",
+        "seed": null,
+        "staerke": 1.0,
+        "ziel": {"typen": ["sinterplatte"], "eintraege": []},
+        "maske": {"oben": 0.0, "rauschen": 0.2}
+      },
+      {
+        "id": "mineralkruste",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "staub",
+        "farbe": "#E0D6C0",
+        "menge": 0.25,
+        "kanten": 0.6,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": 0.0, "rauschen": 0.2}
+      },
+      {
+        "id": "feucht",
+        "typ": "naesse",
+        "an": true,
+        "menge": 0.3,
+        "glanz": 0.8,
+        "abdunkeln": 0.3,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": 0.0, "rauschen": 0.2}
       }
     ]
   },

@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "aussergewoehnlich",
   "buchstabe": "I",
   "name": "Aussergewoehnlich (Hoelle, Himmel)",
@@ -16,7 +16,8 @@
       "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
       "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 }
     },
-    "ebenen": []
+    "ebenen": [],
+    "ebenen_accessoires": []
   },
   "effekte": {},
   "biome": {
@@ -193,6 +194,19 @@
             "breite": 0.35,
             "staerke": 1.0,
             "maske": { "zonen": ["ganzer_koerper"] }
+          }
+        ],
+        "ebenen_accessoires": [
+          {
+            "id": "rim_gold",
+            "typ": "rim",
+            "an": true,
+            "farbe": "#FFD080",
+            "intensitaet": 1.5,
+            "breite": 0.35,
+            "staerke": 1.0,
+            "ziel": "alle",
+            "maske": { "oben": 0.0, "rauschen": 0.2 }
           }
         ]
       },

@@ -1,6 +1,6 @@
 // Varianten-Baukasten – Textur-Backen (Spec 4.1): rendert den Ebenen-Stapel im UV-Raum der Atlas-UV (TEXCOORD7).
-// Gleiche Rechnung wie die Vorschau (VariantLayers.cginc). Ausgabe je nach _VKBakeOut:
-//   0 Albedo (rgb, a = 1 = belegt)   1 Maske (R Rauheit, G Puls-Anteil, B Glasig, A Rim-Maske)
+// Gleiche Rechnung wie die Vorschau (VariantLayers.cginc), beide Ebenen-Gruppen. Ausgabe je nach _VKBakeOut:
+//   0 Albedo (rgb, a = 1 = belegt)   1 Maske (R Rauheit, G Puls-Anteil, B Glasig, A Rim-Maske × Stärke / 4)
 //   2 Leuchten (rgb komprimiert / 1.25)   3 Normal (Tangentenraum der Basis-UV, 0.5 + 0.5·n)
 Shader "Hidden/VariantKit/Bake"
 {
@@ -72,7 +72,8 @@ Shader "Hidden/VariantKit/Bake"
                 if (_VKBakeOut < 1.5)
                 {
                     float lp = dot(r.emisPuls, float3(0.3, 0.6, 0.1)), la = dot(eAll, float3(0.3, 0.6, 0.1));
-                    return float4(saturate(r.rough), saturate(lp / max(la, 1e-4)), saturate(r.glasig), saturate(r.rimMask));
+                    // A = Rim-Maske × Stärke / 4 (Farbe + Breite stehen pro Vertex im Spiel-Mesh: Körper und Accessoires getrennt)
+                    return float4(saturate(r.rough), saturate(lp / max(la, 1e-4)), saturate(r.glasig), saturate(r.rimMask * r.rimC.a * 0.25));
                 }
                 if (_VKBakeOut < 2.5) return float4(saturate(VKCompressEmission(eAll) / 1.25), 1);
                 return float4(normalize(r.nTS) * 0.5 + 0.5, 1);

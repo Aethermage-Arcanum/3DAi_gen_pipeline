@@ -8,8 +8,10 @@ namespace VariantKit
     /// Eine Stelle für alles, damit Fenster, Builder und Batch dieselben Zahlen benutzen.</summary>
     public static class VkSpec
     {
-        public const string ToolVersion = "0.3.0";   // 0.3.0 = G14 Nachschwingen (weichheit, TEXCOORD1)
-        public const int FormatVersion = 1;
+        public const string ToolVersion = "0.4.0";   // 0.3.0 = G14 Nachschwingen (weichheit, TEXCOORD1), 0.4.0 = zwei Ebenen-Gruppen
+        /// <summary>2 = Material-Ebenen in zwei Gruppen: „ebenen“ wirken nur auf Haut + Bedeckung, „ebenen_accessoires“ nur auf
+        /// Accessoires (Format 1: eine Liste für alles, Accessoires bekamen die Maske ihres Ansatzpunkts).</summary>
+        public const int FormatVersion = 2;
 
         // ------------------------------------------------------------------ Schicht 1: Statur (Spec 1.2 / 1.3)
         public enum Typ { G, K, S }
@@ -197,10 +199,14 @@ namespace VariantKit
         };
 
         public static readonly string[] EbenenTypen = { "verlauf", "muster", "risse", "ueberzug", "naesse", "rim" };
-        public const int MaxEbenen = 8;
+        public const int MaxEbenen = 8;          // Körper-Ebenen
+        public const int MaxAccEbenen = 4;       // Accessoire-Ebenen (Shader-Slots _A0.._A3)
+        public const int MaxAccEintraege = 24;   // gezielt ansprechbare Accessoire-Einträge (Bits im float); „alle“ gilt für jede Anzahl
+        /// <summary>Farbgruppen, die zum Körper gehören (Körper-Ebenen filtern nur diese).</summary>
+        public static readonly string[] KoerperGruppen = { "haut", "bedeckung_1", "bedeckung_2", "horn", "akzent", "augen" };
 
-        /// <summary>Neue Ebene mit Standardwerten (Spec 4.3).</summary>
-        public static JObj NeueEbene(string id, string typ)
+        /// <summary>Neue Ebene mit Standardwerten (Spec 4.3). acc = Accessoire-Ebene: Ziel „alle“, Maske ohne Zonen.</summary>
+        public static JObj NeueEbene(string id, string typ, bool acc = false)
         {
             var e = new JObj { ["id"] = id, ["typ"] = typ, ["an"] = true };
             switch (typ)
@@ -223,8 +229,135 @@ namespace VariantKit
                     e["farbe"] = "#FFD080"; e["intensitaet"] = 1.5; e["breite"] = 0.35; break;
             }
             e["staerke"] = 1.0;
-            e["maske"] = new JObj { ["zonen"] = new List<object> { "ganzer_koerper" } };
+            if (acc) { e["ziel"] = "alle"; e["maske"] = new JObj { ["oben"] = 0.0, ["rauschen"] = 0.0 }; }
+            else e["maske"] = new JObj { ["zonen"] = new List<object> { "ganzer_koerper" } };
             return e;
+        }
+
+        // ------------------------------------------------------------------ Accessoire-Ebenen: Ziel
+        /// <summary>Ziel einer Accessoire-Ebene: "alle" oder { typen: [...], eintraege: [...] } (Vereinigung).</summary>
+        public static bool ZielAlle(JObj e) => !(e["ziel"] is JObj) && e.S("ziel", "alle") == "alle";
+
+        /// <summary>Aktive Accessoire-Einträge in der Reihenfolge der aufgelösten Liste (Index = Eintrags-Nummer im Shader).</summary>
+        public static List<JObj> AktiveAccessoires(JObj resolved) =>
+            (resolved.L("accessoires") ?? new List<object>()).OfType<JObj>().Where(a => a.B("an", true) && a["id"] is string).ToList();
+
+        /// <summary>Trifft die Accessoire-Ebene diesen Eintrag?</summary>
+        public static bool ZielTrifft(JObj e, JObj acc)
+        {
+            if (ZielAlle(e)) return true;
+            var z = e["ziel"] as JObj;
+            if (z == null) return false;
+            return z.Strs("typen").Contains(acc.S("typ", "")) || z.Strs("eintraege").Contains(acc.S("id", ""));
+        }
+
+        /// <summary>Kurzer Text für das Fenster: „alle“, „Typen: kristall · Einträge: eis_kamm“, „– (keins)“.</summary>
+        public static string ZielText(JObj e)
+        {
+            if (ZielAlle(e)) return "alle Accessoires";
+            var z = e["ziel"] as JObj;
+            var t = z?.Strs("typen") ?? new List<string>(); var n = z?.Strs("eintraege") ?? new List<string>();
+            if (t.Count + n.Count == 0) return "– (keins: Ebene wirkt nirgends)";
+            var parts = new List<string>();
+            if (t.Count > 0) parts.Add("Typen: " + string.Join(", ", t));
+            if (n.Count > 0) parts.Add("Einträge: " + string.Join(", ", n));
+            return string.Join(" · ", parts);
+        }
+
+        // ------------------------------------------------------------------ Migration Format 1 → 2 (zwei Ebenen-Gruppen)
+        /// <summary>Format 1 → 2 auf der AUFGELÖSTEN Fassung (Preset + Biom + Datei, alte Bedeutung). Bisher wirkte jede Ebene
+        /// auch auf die Accessoires (Maske des Ansatzpunkts, nur durch die Farbgruppen gefiltert). Jetzt:
+        ///  • jede alte Ebene bleibt Körper-Ebene (gleiche id), der Farbgruppen-Filter behält nur Körper-Gruppen. Hatte sie nur
+        ///    Accessoire-Gruppen (z. B. „glut_fugen“ nur accessoire_a), wirkte sie nie auf den Körper → keine Körper-Ebene.
+        ///  • wirkte sie sichtbar auf Accessoires, entsteht eine Accessoire-Ebene mit derselben id (→ gleicher Seed, gleiches
+        ///    Muster) und denselben Werten. Ziel „alle“, wenn sie alle aktiven Einträge traf, sonst genau die getroffenen.
+        ///    „Getroffen“ = Farbgruppe des Eintrags passt zum Filter und der Eintrag sitzt in einer Zone der Ebene (Sammelnamen
+        ///    aufgelöst, „ohne“ abgezogen) – Näherung der alten Ansatzpunkt-Maske ohne deren weiche Ränder.
+        /// Liefert die Zahl der angelegten Accessoire-Ebenen.</summary>
+        public static int MigrateMaterialV1(JObj resolved)
+        {
+            var mat = resolved?.O("material");
+            if (mat == null) { if (resolved != null) resolved["format_version"] = (long)FormatVersion; return 0; }
+            var old = (mat.L("ebenen") ?? new List<object>()).OfType<JObj>().ToList();
+            var accs = AktiveAccessoires(resolved);
+            var byId = new Dictionary<string, JObj>();
+            foreach (var a in accs) byId[a.S("id", "")] = a;
+            var body = new List<object>(); var accL = new List<object>();
+            int n = 0;
+            foreach (var e in old)
+            {
+                n++;
+                if (!(e["id"] is string)) e.Insert(0, "id", $"{e.S("typ", "ebene")}#{n}");
+                var mk = e.O("maske") ?? new JObj();
+                // Format 1: eine leere Zonen-Liste galt als ganzer Körper (Fehler, seit Format 2 heißt leer „nirgends“)
+                if (mk.L("zonen") is List<object> zl0 && zl0.Count == 0) { mk = (JObj)Json.Clone(mk); mk["zonen"] = new List<object> { "ganzer_koerper" }; e["maske"] = mk; }
+                var gr = mk.Strs("gruppen");
+                bool alleGruppen = gr.Count == 0;
+                var bodyGr = gr.Where(g => KoerperGruppen.Contains(g)).ToList();
+                if (alleGruppen || bodyGr.Count > 0)
+                {
+                    var be = (JObj)Json.Clone(e);
+                    if (!alleGruppen) be.Obj("maske")["gruppen"] = bodyGr.Cast<object>().ToList();
+                    body.Add(be);
+                }
+                if (!e.B("an", true) || e.F("staerke", 1) <= 0.001f || accL.Count >= MaxAccEbenen) continue;
+                var passend = accs.Where(a => alleGruppen || gr.Contains(a.S("farbgruppe", "accessoire_a"))).ToList();
+                var hit = passend.Where(a => InZonen(a, mk, byId)).ToList();
+                // Kein passendes Accessoire in der Variante (z. B. alle abgeschaltet): unbeschränkte Ebene trotzdem als „alle“
+                // übernehmen – wirkt jetzt auf nichts (kein sichtbarer Unterschied) und gilt wie früher für später ergänzte Teile.
+                bool unbeschraenkt = passend.Count == 0 && (alleGruppen || gr.Any(g => g.StartsWith("accessoire_"))) && (mk.Strs("zonen").Count == 0 || mk.Strs("zonen").Contains("ganzer_koerper")) && mk.Strs("ohne").Count == 0;
+                if (hit.Count == 0 && !unbeschraenkt) continue;
+                var ae = (JObj)Json.Clone(e);
+                ae["maske"] = new JObj { ["oben"] = (double)mk.F("oben", 0), ["rauschen"] = (double)mk.F("rauschen", 0.2f) };
+                if (hit.Count == accs.Count || unbeschraenkt) ae["ziel"] = "alle";
+                else ae["ziel"] = new JObj { ["typen"] = new List<object>(), ["eintraege"] = hit.Select(a => (object)a.S("id", "")).ToList() };
+                accL.Add(ae);
+            }
+            mat["ebenen"] = body;
+            mat["ebenen_accessoires"] = accL;
+            resolved["format_version"] = (long)FormatVersion;
+            return accL.Count;
+        }
+
+        /// <summary>Sitzt der Eintrag (Format 1) in einer Zone der Ebene? Zonen-Namen über die Sammelnamen der Zonen-Definition
+        /// aufgelöst; „auf“ (sitzt auf einem anderen Accessoire) nimmt die Zonen des Trägers, „spiegeln“ die Gegenseite.</summary>
+        static bool InZonen(JObj acc, JObj mk, Dictionary<string, JObj> byId)
+        {
+            var zl = mk.Strs("zonen");
+            if (zl.Count == 0) zl.Add("ganzer_koerper");   // Format 1: fehlend oder leer = ganzer Körper
+            var ohne = Leaves(mk.Strs("ohne"));
+            if (ohne.Contains("ganzer_koerper")) return false;
+            var a = acc;
+            for (int k = 0; k < 4 && a["auf"] is string auf && byId.TryGetValue(auf, out var t); k++) a = t;
+            var ez = a.Strs("zonen");
+            if (a.B("spiegeln", false)) ez = ez.Concat(ez.Where(z => z.EndsWith("_l")).Select(z => z.Substring(0, z.Length - 2) + "_r")).ToList();
+            var el = Leaves(ez);
+            el.ExceptWith(ohne);
+            if (el.Count == 0) return false;
+            if (zl.Contains("ganzer_koerper")) return true;
+            return el.Overlaps(Leaves(zl));
+        }
+
+        static JObj zonenDef;
+        /// <summary>Zonen-Namen in Einzelzonen auflösen (Sammelnamen aus rigging/quadruped_zonen.json, rueckenlinie).</summary>
+        static HashSet<string> Leaves(IEnumerable<string> names)
+        {
+            if (zonenDef == null)
+            {
+                try { zonenDef = Json.ParseObj(System.IO.File.ReadAllText(VkZones.DefPath("quadruped"))); }
+                catch (System.Exception) { zonenDef = new JObj(); }
+            }
+            var sammel = zonenDef.O("sammel") ?? new JObj();
+            var res = new HashSet<string>();
+            void Add(string nm, int depth)
+            {
+                if (depth > 6) return;
+                if (nm == "rueckenlinie") { Add("ruecken_gesamt", depth + 1); Add("nacken", depth + 1); return; }
+                if (sammel.Has(nm)) { foreach (var s2 in sammel.Strs(nm)) Add(s2, depth + 1); return; }
+                res.Add(nm);
+            }
+            foreach (var nm in names ?? Enumerable.Empty<string>()) Add(nm, 0);
+            return res;
         }
 
         public static readonly Dictionary<string, (string farbe, float intensitaet)> Elemente = new Dictionary<string, (string, float)>

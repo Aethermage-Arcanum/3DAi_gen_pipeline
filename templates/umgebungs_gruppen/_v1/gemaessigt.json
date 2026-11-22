@@ -1,0 +1,150 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "gemaessigt",
+  "buchstabe": "A",
+  "name": "Gemaessigt (Grasland, Wald)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen. Platzhalter-Werte (M2) - Look ueber die Regler einstellen.",
+  "bedeckung": {
+    "haut": { "typ": "leder", "rauheit": 0.85, "falten": 0.3, "narben": 0.0, "skala": 0.05 },
+    "lagen": [
+      {
+        "id": "fell_kurz",
+        "typ": "fell",
+        "an": false,
+        "modus": "silhouette",
+        "anzahl": 250,
+        "laenge": 0.035,
+        "farbgruppe": "bedeckung_1",
+        "maske": { "zonen": ["ganzer_koerper"], "ohne": ["schnauze", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.2 }
+      }
+    ]
+  },
+  "accessoires": [
+    {
+      "id": "moos_ruecken",
+      "typ": "moospolster",
+      "formen": ["moos_a", "moos_flach"],
+      "zonen": ["ruecken_gesamt"],
+      "spiegeln": false,
+      "verteilung": "streuen",
+      "anzahl": 3,
+      "teile": 4,
+      "groesse": 0.16,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": -5.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.35,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "gras_ruecken",
+      "typ": "grasbueschel",
+      "formen": ["gras_a"],
+      "zonen": ["ruecken_gesamt"],
+      "spiegeln": false,
+      "verteilung": "streuen",
+      "anzahl": 5,
+      "teile": 4,
+      "groesse": 0.05,
+      "groesse_zufall": 0.4,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_b",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "pilze_buckel",
+      "typ": "pilze",
+      "formen": ["pilze_a", "pilze_glocke"],
+      "zonen": ["buckel", "schulter_l"],
+      "spiegeln": true,
+      "verteilung": "cluster",
+      "anzahl": 1,
+      "teile": 2,
+      "groesse": 0.05,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_c",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#5A4632", "rauheit": 0.85 },
+      "bedeckung_1": { "farbe": "#4A3A2A", "farbe_2": "#7A6248", "verlauf": "ansatz_spitze" },
+      "accessoire_a": { "farbe": "#4F6B35", "farbe_2": "#6E8A45", "farb_zufall": 0.3, "rauheit": 0.95 },
+      "accessoire_b": { "farbe": "#5E7F3A", "farbe_2": "#8FA85A", "verlauf": "ansatz_spitze" },
+      "accessoire_c": { "farbe": "#B89A70", "farbe_2": "#8A5A3A", "farb_zufall": 0.4 },
+      "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 },
+      "augen": { "farbe": "#C8A040", "leuchten": 0.3 }
+    },
+    "ebenen": [
+      {
+        "id": "ruecken_dunkler",
+        "typ": "verlauf",
+        "an": true,
+        "richtung": "oben_unten",
+        "farbe_a": "#8A8070",
+        "farbe_b": "#E0D8CC",
+        "mischung": "multiplizieren",
+        "mitte": 0.5,
+        "weichheit": 0.5,
+        "staerke": 0.35,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
+      },
+      {
+        "id": "moos_flecken",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "moos",
+        "farbe": "#4F6B35",
+        "menge": 0.2,
+        "kanten": 0.4,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["haut"] }
+      }
+    ]
+  },
+  "effekte": { "element": "physisch", "partikel": ["blaetter"] },
+  "biome": {
+    "grasland": {},
+    "wald": {
+      "material": {
+        "farbgruppen": {
+          "accessoire_a": { "farbe": "#3E5A2C" }
+        }
+      }
+    }
+  }
+}

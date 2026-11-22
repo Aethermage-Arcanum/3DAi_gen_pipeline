@@ -1,0 +1,66 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "lebensfeindlich",
+  "buchstabe": "H",
+  "name": "Lebensfeindlich (Obsidian-/Basalt-Ebene, Schwefelebene)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen.",
+  "bedeckung": {
+    "haut": { "typ": "leder", "rauheit": 0.9, "falten": 0.15, "narben": 0.0, "skala": 0.05 },
+    "lagen": []
+  },
+  "accessoires": [
+    {
+      "id": "basalt_buckel", "typ": "basaltbrocken", "formen": ["basalt_a", "basalt_b", "basalt_c"],
+      "zonen": ["ruecken_gesamt"], "spiegeln": false, "verteilung": "cluster", "anzahl": 1, "teile": 10,
+      "groesse": 0.18, "groesse_zufall": 0.4, "streckung": [1.0, 0.85, 0.75], "abstand_min": 0.015,
+      "ausrichtung": "normale", "neigung": -10, "drehung_zufall": 180, "kipp_zufall": 15, "einsinken": 0.35,
+      "bindung": "anker", "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": null, "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#645E6E", "rauheit": 0.9, "helligkeit_zufall": 0.08, "detail": 0.5 },
+      "accessoire_a": { "farbe": "#4C4754", "farbe_2": "#6A6274", "verlauf": "keiner", "farb_zufall": 0.2, "rauheit": 0.95, "detail": 0.6, "helligkeit_zufall": 0.12 },
+      "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 },
+      "augen": { "farbe": "#FF7A1A", "leuchten": 3.0 }
+    },
+    "ebenen": [
+      {
+        "id": "dunkel_oben", "typ": "verlauf", "an": true, "richtung": "oben_unten", "farbe_a": "#8A8494", "farbe_b": "#D6D0DC",
+        "mischung": "multiplizieren", "mitte": 0.5, "weichheit": 0.5, "staerke": 0.4,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
+      },
+      {
+        "id": "glut_risse", "typ": "risse", "an": true, "element": "glut", "art": "risse", "farbe": "#FF6A10", "intensitaet": 4.0,
+        "breite": 0.006, "dichte": 0.45, "verzweigung": 0.5, "hof": 0.4, "puls_frequenz": 0.4, "puls_staerke": 0.35, "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "ohne": ["bauch", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.5, "gruppen": ["haut"] }
+      },
+      {
+        "id": "glut_fugen", "typ": "risse", "an": true, "element": "glut", "art": "zellfugen", "farbe": "#FF8A20", "intensitaet": 3.0,
+        "breite": 0.008, "dichte": 0.7, "verzweigung": 0.2, "hof": 0.5, "puls_frequenz": 0.4, "puls_staerke": 0.35, "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.4, "rand": 0.05, "gruppen": ["accessoire_a"] }
+      },
+      {
+        "id": "asche", "typ": "ueberzug", "an": true, "art": "asche", "farbe": "#6B6266", "menge": 0.25, "kanten": 0.4,
+        "rauschen_skala": 0.08, "rauheit": 1.0, "seed": null, "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.6, "gruppen": ["haut", "accessoire_a"] }
+      }
+    ]
+  },
+  "effekte": { "element": "feuer", "partikel": ["funken"] },
+  "biome": {
+    "basalt": {},
+    "schwefel": {
+      "material": {
+        "farbgruppen": { "accessoire_a": { "farbe": "#3A3428", "farbe_2": "#C8B030", "farb_zufall": 0.3 } },
+        "ebenen": [ { "id": "glut_risse", "farbe": "#E8D040", "intensitaet": 2.5 }, { "id": "asche", "farbe": "#B8A848" } ]
+      },
+      "effekte": { "element": "gift", "partikel": ["rauch"] }
+    }
+  }
+}

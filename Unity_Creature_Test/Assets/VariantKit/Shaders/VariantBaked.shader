@@ -1,6 +1,7 @@
 // Varianten-Baukasten – Spiel-Shader der gebackenen Variante (Spec 4.1, E5): EIN Material, feste Kosten, egal wie viele
 // Ebenen die Variante hatte. Texturen (je 1024²): Albedo, Maske (R Rauheit, G Puls-Anteil, B Glasig, A Rim-Maske),
-// optional Leuchten und Normal. Live bleiben nur: Facetten-Look (Flächen-Ableitung), Glasig-Fresnel, Rim-Light, Puls und
+// optional Leuchten und Normal. Rim: Stärke × Maske in Maske A, Farbe + Breite als Vertex-Farbe (Körper und Accessoires
+// können verschiedene Rim-Ebenen haben). Live bleiben nur: Facetten-Look (Flächen-Ableitung), Glasig-Fresnel, Rim-Light, Puls und
 // seit G14 das Nachschwingen der Bedeckung/Gehänge (VariantSwing.cginc, Werte per MaterialPropertyBlock von VariantSchwingen).
 Shader "VariantKit/Baked"
 {
@@ -14,8 +15,7 @@ Shader "VariantKit/Baked"
         _EmissionScale ("Leuchten-Faktor", Float) = 1.25
         _PulsFreq ("Puls (Hz)", Float) = 0
         _PulsStaerke ("Puls-Stärke", Range(0,1)) = 0
-        _RimColor ("Rim Farbe (rgb) + Stärke (a)", Vector) = (0,0,0,0)
-        _RimBreite ("Rim Breite", Range(0,1)) = 0.35
+        _RimAn ("Rim an (Farbe + Breite pro Vertex, Stärke in Maske A)", Float) = 0
     }
     SubShader
     {
@@ -25,16 +25,16 @@ Shader "VariantKit/Baked"
         #pragma surface surf Standard fullforwardshadows addshadow vertex:vert
         #pragma target 3.5
         sampler2D _MainTex, _MaskTex, _EmissionTex, _BumpMap;
-        half _Facetten, _EmissionScale, _PulsFreq, _PulsStaerke, _RimBreite;
-        float4 _RimColor;
+        half _Facetten, _EmissionScale, _PulsFreq, _PulsStaerke, _RimAn;
         float _VKTime, _VKUseTime;
         #include "VariantSwing.cginc"
-        struct Input { float2 uv_MainTex; float3 worldPos; float3 worldNormal; INTERNAL_DATA float swf; };
+        struct Input { float2 uv_MainTex; float3 worldPos; float3 worldNormal; INTERNAL_DATA float swf; float4 rimV; };
 
         void vert(inout appdata_full v, out Input o)
         {
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.swf = step(1e-4, v.texcoord1.y);
+            o.rimV = v.color;   // Rim pro Vertex (rgb Farbe, a Breite): Körper- und Accessoire-Rim getrennt
             v.vertex.xyz += VKSwingOffsetOS(v.vertex.xyz, v.tangent, v.texcoord1, lerp(_Time.y, _VKTime, _VKUseTime));
         }
 
@@ -55,7 +55,7 @@ Shader "VariantKit/Baked"
             float t = lerp(_Time.y, _VKTime, _VKUseTime);
             float puls = 1 - _PulsStaerke * 0.5 + _PulsStaerke * 0.5 * sin(6.28318 * _PulsFreq * t);
             float3 emis = tex2D(_EmissionTex, IN.uv_MainTex).rgb * _EmissionScale * lerp(1, puls, m.g);
-            emis += _RimColor.rgb * _RimColor.a * pow(nv, lerp(6, 1.5, _RimBreite)) * m.a;
+            if (_RimAn > 0.5) emis += IN.rimV.rgb * (m.a * 4) * pow(nv, lerp(6, 1.5, IN.rimV.a));
             o.Albedo = saturate(col);
             o.Normal = normalize(float3(dot(nW, wT), dot(nW, wB), dot(nW, wN)));
             o.Metallic = 0;

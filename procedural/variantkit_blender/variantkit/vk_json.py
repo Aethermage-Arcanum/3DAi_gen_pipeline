@@ -263,10 +263,16 @@ def migrate(o):
         migrate(v)
 
 
-def load_preset(gruppe, biom):
+def load_preset(gruppe, biom, format_v1=False):
+    """Preset + Biom-Block. format_v1: die eingefrorene Fassung (templates/umgebungs_gruppen/_v1/), gegen die eine
+    Varianten-Datei im Format 1 gespeichert wurde. Blender liest Material-Ebenen nicht; Unity stellt Format 1 auf 2 um
+    (zwei Ebenen-Gruppen, VkSpec.MigrateMaterialV1). So bleibt eine alte Datei auch nach Speichern in Blender stimmig."""
     if not gruppe:
         return {}
     p = os.path.join(preset_dir(), gruppe + ".json")
+    p1 = os.path.join(preset_dir(), "_v1", gruppe + ".json")
+    if format_v1 and os.path.exists(p1):
+        p = p1
     if not os.path.exists(p):
         return {}
     pr = read_file(p)
@@ -307,7 +313,7 @@ class VariantDoc:
         stored = read_file(path)
         migrate(stored)
         d = VariantDoc(path)
-        d.preset_resolved = load_preset(stored.get("gruppe"), stored.get("biom"))
+        d.preset_resolved = load_preset(stored.get("gruppe"), stored.get("biom"), int(stored.get("format_version", 1) or 1) < 2)
         d.resolved = merge(d.preset_resolved, stored)
         d.normalize()
         d.loaded_revision = int(stored.get("revision", 0) or 0)
@@ -337,14 +343,17 @@ class VariantDoc:
         mat = R.setdefault("material", {})
         mat.setdefault("stil", {})
         mat.setdefault("farbgruppen", {})
-        if not isinstance(mat.get("ebenen"), list):
-            mat["ebenen"] = []
-        for n, e in enumerate([e for e in mat["ebenen"] if isinstance(e, dict)], 1):
-            if not isinstance(e.get("id"), str):
-                ne = {"id": f"{e.get('typ', 'ebene')}#{n}"}
-                ne.update(e)
-                e.clear()
-                e.update(ne)
+        fv = int(R.get("format_version", 1) or 1)
+        keys = ("ebenen", "ebenen_accessoires") if fv >= 2 else ("ebenen",)   # Format 2: zweite Ebenen-Gruppe (Accessoires)
+        for key in keys:
+            if not isinstance(mat.get(key), list):
+                mat[key] = []
+            for n, e in enumerate([e for e in mat[key] if isinstance(e, dict)], 1):
+                if not isinstance(e.get("id"), str):
+                    ne = {"id": f"{e.get('typ', 'ebene')}#{n}"}
+                    ne.update(e)
+                    e.clear()
+                    e.update(ne)
         R.setdefault("effekte", {})
         R.setdefault("_gebaut", None)
         self.resolved = _ordered(R)

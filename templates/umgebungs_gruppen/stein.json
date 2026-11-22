@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "stein",
   "buchstabe": "D",
   "name": "Steinlandschaften (Mesa/Tafelberge, Salzwueste)",
@@ -41,14 +41,21 @@
         "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
       },
       {
+        "id": "staub", "typ": "ueberzug", "an": true, "art": "staub", "farbe": "#B8A890", "menge": 0.25, "kanten": 0.5,
+        "rauschen_skala": 0.06, "rauheit": 1.0, "seed": null, "staerke": 0.8,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["haut"] }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
         "id": "gesteinsschichten", "typ": "muster", "an": true, "art": "streifen", "farbe": "#5E5A58", "skala": 0.025, "dichte": 0.35,
-        "kontrast": 0.35, "richtung": "quer", "verzerrung": 0.4, "mischung": "ueberlagern", "seed": null, "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["accessoire_a"] }
+        "kontrast": 0.35, "richtung": "quer", "verzerrung": 0.4, "mischung": "ueberlagern", "seed": null, "staerke": 1.0, "ziel": "alle",
+        "maske": { "oben": 0.0, "rauschen": 0.2 }
       },
       {
         "id": "staub", "typ": "ueberzug", "an": true, "art": "staub", "farbe": "#B8A890", "menge": 0.25, "kanten": 0.5,
-        "rauschen_skala": 0.06, "rauheit": 1.0, "seed": null, "staerke": 0.8,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["haut", "accessoire_a"] }
+        "rauschen_skala": 0.06, "rauheit": 1.0, "seed": null, "staerke": 0.8, "ziel": "alle",
+        "maske": { "oben": 0.5, "rauschen": 0.2 }
       }
     ]
   },
@@ -58,7 +65,8 @@
     "salzwueste": {
       "material": {
         "farbgruppen": { "accessoire_a": { "farbe": "#A8A6A2", "farbe_2": "#E8E4DC" } },
-        "ebenen": [ { "id": "staub", "farbe": "#F0ECE4", "menge": 0.35 } ]
+        "ebenen": [ { "id": "staub", "farbe": "#F0ECE4", "menge": 0.35 } ],
+        "ebenen_accessoires": [ { "id": "staub", "farbe": "#F0ECE4", "menge": 0.35 } ]
       }
     }
   }

@@ -286,7 +286,9 @@ nicht).
 | `oben` | > 0 bevorzugt nach oben zeigende Flächen, < 0 die Unterseite, 0 = egal | −1…1 | 0 |
 | `rand` | Breite des weichen Übergangs am Maskenrand (Anteil Größe) | 0–0.2 | 0.05 |
 | `rauschen` | unregelmäßiger, fleckiger Rand statt glatter Linie | 0–1 | 0.2 |
-| `gruppen` | nur Schicht 4: auf welche Farbgruppen die Ebene wirkt | Liste | alle |
+| `gruppen` | nur Schicht 4, Körper-Ebenen: auf welche Körper-Farbgruppen die Ebene wirkt (Accessoires haben eigene Ebenen, 4.3) | Liste | alle |
+
+Material-Ebenen: `zonen` fehlt = `["ganzer_koerper"]`, `zonen: []` = nirgends (seit Format 2, 4.3).
 
 ---
 
@@ -476,9 +478,44 @@ Felder pro Gruppe:
 
 ### 4.3 Ebenen
 
-Die Ebenen werden in der Reihenfolge der Liste übereinander gelegt. **Höchstens 8 Einträge**, jeder Typ höchstens
-2× (`naesse` und `rim` je 1×). **Empfehlung: 3–5 Ebenen.** Mehr bringt aus der Spielkamera kaum etwas und macht die
-Variante unruhig. Jede Ebene hat zusätzlich `maske` (2.5, mit `gruppen`), `staerke` (0–1, Std 1) und `an` (bool).
+**Zwei Ebenen-Gruppen (Nutzer 2026-11-22, `format_version` 2):**
+
+| Gruppe (Feld in `material`) | wirkt auf | Maske | Limit |
+|---|---|---|---|
+| **Körper-Ebenen** `ebenen` | Haut und Bedeckung (Lagen), **nie auf Accessoires** | Zonen + `ohne` (pro Vertex), `oben`, `rauschen`, `gruppen` (nur Körper-Gruppen: `haut`, `bedeckung_1/2`, `horn`, `akzent`, `augen`) | **8**, Empfehlung 3–5 |
+| **Accessoire-Ebenen** `ebenen_accessoires` | nur Accessoires, liegen **immer obenauf** | `ziel` + innerhalb des Teils `oben`, `rauschen` (Körper-Zonen gelten hier nicht) | **4**, Empfehlung 1–3 |
+
+- Beide Gruppen kennen dieselben Typen und Felder (Tabelle unten). Innerhalb einer Gruppe gilt die Reihenfolge der Liste.
+  Jeder Typ höchstens 2× pro Gruppe (`naesse` und `rim` je 1× pro Gruppe).
+- **`ziel`** einer Accessoire-Ebene: `"alle"` oder `{ "typen": ["kristall"], "eintraege": ["eis_kamm"] }` (Vereinigung:
+  Typen und/oder einzelne Accessoire-Einträge). Beide Listen leer = Ebene wirkt nirgends (das Fenster warnt). Typisch:
+  Platten-Ebene matt (`typen: ["steinplatte"]`) + Kristall-Ebene leuchtend (`typen: ["kristall"]`), unabhängig vom Körper.
+- **Zonen:** Fehlt `zonen`, gilt `["ganzer_koerper"]`. Eine **leere** Liste heißt „nirgends“ (bis Format 1 galt leer als
+  ganzer Körper, siehe unten).
+- **Weiterhin 1 Material (E5).** Die Zuordnung läuft im Shader: Jeder Accessoire-Vertex trägt die Nummer seines Eintrags
+  (`TEXCOORD2.w = −(1 + n)`, Basis 1, Bedeckung 0), jede Accessoire-Ebene eine Bit-Tabelle der getroffenen Einträge
+  (`−1` = alle). Gezielt wählbar sind die ersten **24 Einträge** einer Variante, „alle“ gilt für jede Anzahl.
+  Accessoire-Vertices haben keine Körper-Masken (0), Bedeckung bleibt Körper.
+
+**Warum (Fehler bis Format 1):** Es gab eine Liste für alles. Ein Accessoire hatte keine eigene Maske, sondern übernahm
+den Masken-Wert der Haut an seinem **Ansatzpunkt** für alle seine Vertices, nur die Farbgruppe filterte. Weiche
+Zonenränder, Lücken zwischen den Zonen und das multiplikative `ohne` ließen dort 0,3–0,7 stehen → das ganze Teil bekam
+die Ebene. Zusätzlich galt eine leere Zonen-Liste als ganzer Körper. Belegt mit `VkLayerBatch.Diagnose`
+(`temp/mg_diag/diagnose.txt`): Slagback, alle Einzelzonen in `ohne` → Körper im Mittel 0,13, Basaltbrocken an der
+Schulter weiter 0,67. Zonen leer → unverändert wie „ganzer Körper“.
+
+**Migration Format 1 → 2** (beim Laden, Unity `VkSpec.MigrateMaterialV1`; Speichern schreibt Format 2): Die alte Datei
+wird gegen das eingefrorene Preset `templates/umgebungs_gruppen/_v1/<gruppe>.json` aufgelöst (alte Bedeutung). Jede alte
+Ebene bleibt Körper-Ebene (gleiche id, Farbgruppen-Filter ohne Accessoire-Gruppen; hatte sie nur Accessoire-Gruppen, entfällt
+sie im Körper). Wirkte sie sichtbar auf Accessoires (an, Stärke > 0, Farbgruppe passt, Eintrag sitzt in einer ihrer Zonen),
+entsteht eine Accessoire-Ebene mit **derselben id** (gleicher Seed → gleiches Muster) und denselben Werten, Ziel `"alle"`,
+wenn sie alle Einträge traf, sonst genau die getroffenen Einträge. Begründung: Die id-Gleichheit hält Muster und Risse
+deckungsgleich, „alle“ entspricht dem alten Verhalten in allen bisherigen Dateien (dort lagen die Ansatzpunkte bei Maske 1).
+Ergebnis: Slagback, Cragplate, Quillback, Eisriese und die Testdateien des Nutzers sehen nach der Migration gleich aus
+(mittlere Abweichung ≤ 0,02 von 255). Blender liest Format-1-Dateien ebenfalls gegen `_v1/` und schreibt sie unverändert
+im Format 1 zurück (Material-Ebenen bearbeitet Blender nicht).
+
+Jede Ebene hat zusätzlich `maske` (2.5 bzw. oben), `staerke` (0–1, Std 1) und `an` (bool).
 
 | Ebene (`typ`) | Wofür | Felder (Bereich, Std) | Gebacken? |
 |---|---|---|---|
@@ -815,15 +852,22 @@ Fugen, je ein großer Brocken auf den Schultern, glühende Augen):
         "maske": { "zonen": ["ganzer_koerper"], "ohne": ["bauch", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.5, "gruppen": ["haut"] }
       },
       {
-        "typ": "risse", "an": true, "element": "glut", "art": "zellfugen", "farbe": "#FF8A20", "intensitaet": 3.0,
-        "breite": 0.008, "dichte": 0.7, "verzweigung": 0.2, "hof": 0.5, "puls_frequenz": 0.4, "puls_staerke": 0.35,
-        "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.4, "rand": 0.05, "gruppen": ["accessoire_a"] }
-      },
-      {
         "typ": "ueberzug", "an": true, "art": "asche", "farbe": "#6B6266", "menge": 0.25, "kanten": 0.4,
         "rauschen_skala": 0.08, "rauheit": 1.0, "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.6, "gruppen": ["haut", "accessoire_a"] }
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.6, "gruppen": ["haut"] }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
+        "id": "glut_fugen", "typ": "risse", "an": true, "element": "glut", "art": "zellfugen", "farbe": "#FF8A20", "intensitaet": 3.0,
+        "breite": 0.008, "dichte": 0.7, "verzweigung": 0.2, "hof": 0.5, "puls_frequenz": 0.4, "puls_staerke": 0.35,
+        "staerke": 1.0, "ziel": "alle",
+        "maske": { "oben": 0.4, "rauschen": 0.2 }
+      },
+      {
+        "id": "asche", "typ": "ueberzug", "an": true, "art": "asche", "farbe": "#6B6266", "menge": 0.25, "kanten": 0.4,
+        "rauschen_skala": 0.08, "rauheit": 1.0, "staerke": 1.0, "ziel": { "typen": ["basaltbrocken"], "eintraege": [] },
+        "maske": { "oben": 0.6, "rauschen": 0.2 }
       }
     ]
   },
@@ -990,6 +1034,9 @@ Geschätzte Kosten: Basis 4.000 + Fell 2.200 + Kristalle (9 + 10 + 5) × 15 + Ei
 - **`format_version`** (Ganzzahl): ändert sich, wenn Felder umbenannt oder entfernt werden. Neue *optionale* Felder
   brauchen keine neue Version. Werkzeuge lesen alte Versionen über ein Migrationsskript
   (`scripts/variant_migrate.py`, später) und schreiben immer die neueste.
+  **Version 2 (2026-11-22):** Material-Ebenen in zwei Gruppen (`ebenen` = Körper, `ebenen_accessoires`), Migration beim
+  Laden in Unity (4.3). Presets tragen ebenfalls `format_version: 2`; die Fassung 1 liegt eingefroren in
+  `templates/umgebungs_gruppen/_v1/` (nur zum Lesen alter Dateien, nicht bearbeiten).
 - **`revision`**: +1 bei jedem Speichern. **Gleichzeitiges Bearbeiten:** Jedes Werkzeug merkt sich die Revision
   beim Laden. Ist die Datei beim Speichern neuer (das andere Programm hat gespeichert), wird nicht überschrieben.
   Stattdessen kommt die Meldung „Datei wurde geändert – neu laden?“. Unity und Blender beobachten die Datei und laden

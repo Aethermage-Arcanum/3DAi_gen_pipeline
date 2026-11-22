@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "gemaessigt",
   "buchstabe": "A",
   "name": "Gemaessigt (Grasland, Wald)",
@@ -134,7 +134,8 @@
         "staerke": 1.0,
         "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["haut"] }
       }
-    ]
+    ],
+    "ebenen_accessoires": []
   },
   "effekte": { "element": "physisch", "partikel": ["blaetter"] },
   "biome": {

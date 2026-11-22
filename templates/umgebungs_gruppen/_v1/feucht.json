@@ -1,0 +1,135 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "feucht",
+  "buchstabe": "B",
+  "name": "Feucht (Sumpf, Moor)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen. Platzhalter-Werte (M2) - Look ueber die Regler einstellen.",
+  "bedeckung": {
+    "haut": { "typ": "leder", "rauheit": 0.7, "falten": 0.3, "narben": 0.0, "skala": 0.05 },
+    "lagen": []
+  },
+  "accessoires": [
+    {
+      "id": "fransen_seiten",
+      "typ": "moosfransen",
+      "formen": ["fransen_a"],
+      "zonen": ["flanke_l"],
+      "spiegeln": true,
+      "verteilung": "streuen",
+      "anzahl": 3,
+      "teile": 4,
+      "groesse": 0.08,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "unten",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "ranken_nacken",
+      "typ": "gehaenge",
+      "formen": ["ranke_a"],
+      "zonen": ["nacken"],
+      "spiegeln": false,
+      "verteilung": "streuen",
+      "anzahl": 2,
+      "teile": 4,
+      "groesse": 0.1,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "unten",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_b",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "pilze_kruppe",
+      "typ": "pilze",
+      "formen": ["pilze_a", "pilze_glocke"],
+      "zonen": ["kruppe", "schulter_l"],
+      "spiegeln": true,
+      "verteilung": "cluster",
+      "anzahl": 1,
+      "teile": 3,
+      "groesse": 0.05,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_c",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#3E3326", "rauheit": 0.7 },
+      "accessoire_a": { "farbe": "#4A5A2A", "farbe_2": "#6A7A3A", "verlauf": "ansatz_spitze" },
+      "accessoire_b": { "farbe": "#3A4A22", "rauheit": 0.6 },
+      "accessoire_c": { "farbe": "#9A8A5A", "farbe_2": "#6A8A3A", "farb_zufall": 0.4 },
+      "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 },
+      "augen": { "farbe": "#9BFF3A", "leuchten": 0.8 }
+    },
+    "ebenen": [
+      {
+        "id": "nass",
+        "typ": "naesse",
+        "an": true,
+        "menge": 0.6,
+        "glanz": 0.8,
+        "abdunkeln": 0.3,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0 }
+      },
+      {
+        "id": "schleim_unten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "schleim",
+        "farbe": "#5A6B3A",
+        "menge": 0.35,
+        "kanten": 0.4,
+        "rauschen_skala": 0.08,
+        "rauheit": 0.3,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": -0.5 }
+      }
+    ]
+  },
+  "effekte": { "element": "gift", "partikel": ["tropfen", "sporen"] },
+  "biome": {
+    "sumpf": {},
+    "moor": {
+      "material": {
+        "farbgruppen": {
+          "haut": { "farbe": "#2E2620" }
+        }
+      }
+    }
+  }
+}

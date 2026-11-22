@@ -141,7 +141,7 @@ namespace VariantKit
             bool linear = QualitySettings.activeColorSpace == ColorSpace.Linear;
             var M = doc.resolved.Obj("material");
             bool anyEmission = M.Obj("farbgruppen").Select(kv => kv.Value as JObj).Any(o => o != null && o.F("leuchten", 0) > 0.001f)
-                               || res.ebenen.Any(e => e.S("typ", "") == "risse" && e.F("intensitaet", 0) > 0.001f);
+                               || res.AlleEbenen.Any(e => e.S("typ", "") == "risse" && e.F("intensitaet", 0) > 0.001f);
             r.emission = anyEmission;
             r.normal = M.Obj("stil").F("facetten", 1f) < 0.99f && b.normal != null;
             var outs = new List<(int pass, string suffix, bool srgb)> { (0, "Albedo", true), (1, "Maske", false) };
@@ -213,6 +213,10 @@ namespace VariantKit
                 for (int i = 0; i < sw.Count; i++) if (sw[i].y > 0) tgG[i] = tgA[i];
                 gm.SetTangents(tgG);
             }
+            // Rim pro Vertex (Körper- und Accessoire-Rim getrennt; Stärke × Maske steht in Maske A)
+            var grpA = new List<Vector4>(); atlasMesh.GetUVs(2, grpA);
+            var rimCol = grpA.Count == v.Count ? VkBuilder.RimColors(grpA, doc, res) : null;
+            if (rimCol != null) gm.colors = rimCol;
             gm.RecalculateBounds();
             r.mesh = gm;
             UnityEngine.Object.DestroyImmediate(atlasMesh);
@@ -224,17 +228,11 @@ namespace VariantKit
             if (r.emission) mat.SetTexture("_EmissionTex", AssetDatabase.LoadAssetAtPath<Texture2D>(paths["Leuchten"]));
             if (r.normal) mat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(paths["Normal"]));
             mat.SetFloat("_Facetten", M.Obj("stil").F("facetten", 1f));
-            var puls = res.ebenen.FirstOrDefault(e => e.S("typ", "") == "risse" && e.F("puls_staerke", 0) > 0.001f && e.F("puls_frequenz", 0) > 0.001f);
+            // Puls: ein Wert pro Material (erste pulsierende Risse-Ebene, Körper vor Accessoires)
+            var puls = res.AlleEbenen.FirstOrDefault(e => e.S("typ", "") == "risse" && e.F("puls_staerke", 0) > 0.001f && e.F("puls_frequenz", 0) > 0.001f);
             mat.SetFloat("_PulsFreq", puls?.F("puls_frequenz", 0) ?? 0);
             mat.SetFloat("_PulsStaerke", puls?.F("puls_staerke", 0) ?? 0);
-            var rim = res.ebenen.FirstOrDefault(e => e.S("typ", "") == "rim");
-            if (rim != null)
-            {
-                var c = VkBuilder.Hex(rim.S("farbe", "#FFD080"), Color.white);
-                if (linear) c = c.linear;
-                mat.SetVector("_RimColor", new Vector4(c.r, c.g, c.b, rim.F("intensitaet", 1.5f)));
-                mat.SetFloat("_RimBreite", rim.F("breite", 0.35f));
-            }
+            mat.SetFloat("_RimAn", rimCol != null ? 1 : 0);
             r.material = mat;
             return r;
         }

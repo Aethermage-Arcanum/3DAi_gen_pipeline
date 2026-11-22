@@ -16,7 +16,8 @@ namespace VariantKit
         public BoneWeight anchor;
         public string bindung;
         public float rand, farbZufall, size;
-        public float[] layerMask;    // Masken der Material-Ebenen am Ansatzpunkt
+        public float[] layerMask;    // Masken der Körper-Ebenen am Ansatzpunkt (nur Bedeckung; Accessoires: 0)
+        public int accIndex = -1;    // Nummer des Accessoire-Eintrags (Ziel der Accessoire-Ebenen), -1 = Bedeckung
         public int vStart, vCount;   // Bereich im kombinierten Mesh
         // M2: Teil der Bedeckung (Geometrie aus Blender statt Baustein-Bibliothek)
         public bool cover; public int lage;
@@ -73,7 +74,10 @@ namespace VariantKit
         public Vector3[] dv; public Vector3[] dn;  // verformte Basis (Mesh-Raum)
         public int trisCover; public VkCover cover; public bool coverFresh, coverWanted;
         public Dictionary<int, int> trisCoverLage = new Dictionary<int, int>();
-        public List<JObj> ebenen = new List<JObj>();
+        public List<JObj> ebenen = new List<JObj>();      // Körper-Ebenen (aktiv, höchstens 8)
+        public List<JObj> ebenenAcc = new List<JObj>();   // Accessoire-Ebenen (aktiv, höchstens 4)
+        public List<string> accIds = new List<string>();  // aktive Accessoire-Einträge, Index = Eintrags-Nummer im Shader
+        public IEnumerable<JObj> AlleEbenen => ebenen.Concat(ebenenAcc);
     }
 
     /// <summary>Baut aus Basis + Varianten-Datei das kombinierte Mesh (1 SkinnedMesh: Körper + Accessoires mit Gewichten
@@ -89,10 +93,16 @@ namespace VariantKit
             ApplyShape(b, R.Obj("statur"), out r.dv);
             r.dn = FaceAwareNormals(b, r.dv);
             r.ebenen = R.Obj("material").List("ebenen").OfType<JObj>().Where(e => e.B("an", true)).Take(VkSpec.MaxEbenen).ToList();
+            r.ebenenAcc = R.Obj("material").List("ebenen_accessoires").OfType<JObj>().Where(e => e.B("an", true)).Take(VkSpec.MaxAccEbenen).ToList();
+            r.accIds = VkSpec.AktiveAccessoires(R).Select(a => a.S("id", "")).ToList();
+            if (r.accIds.Count > VkSpec.MaxAccEintraege && r.ebenenAcc.Any(e => !VkSpec.ZielAlle(e)))
+                r.warnings.Add($"Mehr als {VkSpec.MaxAccEintraege} Accessoire-Einträge: Einträge ab Nr. {VkSpec.MaxAccEintraege + 1} erreicht nur eine Accessoire-Ebene mit Ziel „alle“.");
+            // Körper-Ebenen: Zonen-Maske pro Vertex. Fehlt „zonen“ → ganzer Körper (Standard); eine LEERE Liste heißt „nirgends“
+            // (bis Format 1 galt leer als ganzer Körper – „alle Zonen abwählen“ wirkte deshalb nicht).
             var layerMasks = r.ebenen.Select(e =>
             {
                 var m = e.O("maske") ?? new JObj();
-                var z = m.Strs("zonen"); if (z.Count == 0) z.Add("ganzer_koerper");
+                var z = m.L("zonen") == null ? new List<string> { "ganzer_koerper" } : m.Strs("zonen");
                 return b.zones.Mask(z, m.Strs("ohne"));
             }).ToList();
             // Accessoires mit `auf` (sitzen auf einem anderen Accessoire) nach den übrigen platzieren
@@ -614,10 +624,11 @@ namespace VariantKit
                 var form = VkParts.Get(inst.typ).First(f => f.name == inst.form);
                 inst.vStart = V.Count; inst.vCount = form.v.Length;
                 int g = VkSpec.GruppeIndex(inst.farbgruppe);
-                var am = new float[8];
-                for (int li = 0; li < 8; li++)
-                    am[li] = li < layerMasks.Count ? layerMasks[li][b.tris[inst.tri * 3]] * inst.bary.x + layerMasks[li][b.tris[inst.tri * 3 + 1]] * inst.bary.y + layerMasks[li][b.tris[inst.tri * 3 + 2]] * inst.bary.z : 0;
-                inst.layerMask = am;
+                // Accessoires: KEINE Körper-Masken (Körper-Ebenen wirken nie auf Accessoires). Stattdessen die Eintrags-Nummer in
+                // TEXCOORD2.w = −(1 + n) → die Accessoire-Ebenen wählen ihr Ziel über eine Bit-Tabelle (Material, _A#M.y).
+                inst.layerMask = new float[8];
+                inst.accIndex = r.accIds.IndexOf(inst.acc);
+                float accW = -(1 + Mathf.Max(0, inst.accIndex));
                 float[] near = null;
                 if (inst.bindung == "haut")
                 {
@@ -630,12 +641,12 @@ namespace VariantKit
                     var wp = inst.m.MultiplyPoint3x4(pv);
                     V.Add(wp);
                     UV0.Add(new Vector2(pv.x * 0.5f + 0.5f, pv.y * 0.5f + 0.5f));
-                    G.Add(new Vector4(g, inst.farbZufall, inst.rand, 0));
+                    G.Add(new Vector4(g, inst.farbZufall, inst.rand, accW));
                     var bp = b.Body(wp) / L;
                     P.Add(new Vector4(bp.x, bp.y, bp.z, Mathf.Clamp01(pv.z / Mathf.Max(1e-6f, form.height))));
                     SW.Add(Swing(inst, Mathf.Clamp01(pv.z / Mathf.Max(1e-6f, form.height))));
                     N.Add(Vector4.zero);   // unten nach dem Normalen-Rechnen gesetzt
-                    M0.Add(new Vector4(am[0], am[1], am[2], am[3])); M1.Add(new Vector4(am[4], am[5], am[6], am[7]));
+                    M0.Add(Vector4.zero); M1.Add(Vector4.zero);
                     if (near != null)
                     {
                         var c = Closest(b, r.dv, r.dn, wp, near);
@@ -769,65 +780,133 @@ namespace VariantKit
             float L = b.L;
             var bys = b.verts.Select(v => b.Body(v) / L).ToArray();
             mat.SetVector("_VKBounds", new Vector4(bys.Min(v => v.y), bys.Max(v => v.y), bys.Min(v => v.x), bys.Max(v => v.x)));
+            // Körper-Ebenen (_L0.._L7): Zonen-Maske pro Vertex (TEXCOORD5/6) × Farbgruppen-Bits (nur Körper-Gruppen wirken)
             for (int i = 0; i < VkSpec.MaxEbenen; i++)
             {
-                var T = Vector4.zero; var C = Vector4.zero; var C2 = Vector4.zero; var A = Vector4.zero; var B = Vector4.zero; var MM = Vector4.zero;
+                var P = new Vector4[5]; var MM = Vector4.zero;
                 if (i < res.ebenen.Count)
                 {
                     var e = res.ebenen[i];
-                    string typ = e.S("typ", "");
                     var mk = e.O("maske") ?? new JObj();
                     int bits = 0;
                     var gr = mk.Strs("gruppen");
                     if (gr.Count == 0) bits = 511; else foreach (var g in gr) bits |= 1 << VkSpec.GruppeIndex(g);
                     MM = new Vector4(e.F("staerke", 1), bits, mk.F("oben", 0), mk.F("rauschen", 0.2f));
-                    float seedOff = (Json.Fnv1a($"{doc.resolved.I("seed", 0)}:{e.S("id", typ + "#" + i)}") % 997) * 0.173f;
-                    if (e["seed"] != null) seedOff = (e.I("seed", 0) % 997) * 0.173f;
-                    switch (typ)
-                    {
-                        case "verlauf":
-                            T = new Vector4(1, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"), Idx(e.S("richtung", "oben_unten"), "oben_unten", "vorn_hinten", "ansatz_spitze"), 0);
-                            var ca = Hex(e.S("farbe_a", "#FFFFFF"), Color.white); var cb = Hex(e.S("farbe_b", "#808080"), Color.gray);
-                            C = Lin(ca, 0); C2 = Lin(cb, 0);
-                            A = new Vector4(e.F("mitte", 0.5f), e.F("weichheit", 0.5f), 0, 0);
-                            break;
-                        case "muster":
-                            T = new Vector4(2, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"),
-                                Idx(e.S("art", "flecken"), "streifen", "flecken", "tupfen", "ringe", "marmor", "zellen"), Idx(e.S("richtung", "quer"), "quer", "laengs", "knochen"));
-                            var cm = Hex(e.S("farbe", "#404040"), Color.gray); C = Lin(cm, 0);
-                            A = new Vector4(e.F("skala", 0.08f), e.F("dichte", 0.5f), e.F("kontrast", 0.7f), e.F("verzerrung", 0.3f));
-                            B = new Vector4(seedOff, 0, 0, 0);
-                            break;
-                        case "risse":
-                            var el = VkSpec.Elemente.TryGetValue(e.S("element", "glut"), out var ev) ? ev : ("#FF6A10", 4f);
-                            var cr = Hex(e.S("farbe", el.Item1), Color.red);
-                            T = new Vector4(3, Idx(e.S("art", "risse"), "risse", "adern", "zellfugen", "runen"), 0, 0);
-                            C = Lin(cr, e.F("intensitaet", el.Item2));
-                            A = new Vector4(e.F("breite", 0.005f), e.F("dichte", 0.4f), e.F("verzweigung", 0.5f), e.F("hof", 0.3f));
-                            B = new Vector4(e.F("puls_frequenz", 0), e.F("puls_staerke", 0), seedOff, 0);
-                            break;
-                        case "ueberzug":
-                            var cu = Hex(e.S("farbe", "#A89A88"), Color.gray);
-                            T = new Vector4(4, Idx(e.S("art", "staub"), "schmutz", "frost", "asche", "schleim", "staub", "moos"), 0, 0);
-                            C = Lin(cu, 0);
-                            A = new Vector4(e.F("menge", 0.3f), e.F("kanten", 0.4f), e.F("rauschen_skala", 0.08f), e.F("rauheit", 1f));
-                            B = new Vector4(seedOff, 0, 0, 0);
-                            break;
-                        case "naesse":
-                            T = new Vector4(5, 0, 0, 0);
-                            A = new Vector4(e.F("menge", 0.5f), e.F("glanz", 0.8f), e.F("abdunkeln", 0.3f), 0);
-                            break;
-                        case "rim":
-                            var ci = Hex(e.S("farbe", "#FFD080"), Color.white);
-                            T = new Vector4(6, 0, 0, 0);
-                            C = Lin(ci, e.F("intensitaet", 1.5f));
-                            A = new Vector4(e.F("breite", 0.35f), 0, 0, 0);
-                            break;
-                    }
+                    P = LayerParams(e, doc, i);
                 }
-                mat.SetVector($"_L{i}T", T); mat.SetVector($"_L{i}C", C); mat.SetVector($"_L{i}D", C2);
-                mat.SetVector($"_L{i}A", A); mat.SetVector($"_L{i}B", B); mat.SetVector($"_L{i}M", MM);
+                SetLayer(mat, "L", i, P, MM);
             }
+            // Accessoire-Ebenen (_A0.._A3): Ziel als Bit-Tabelle über die Eintrags-Nummer (−1 = alle), oben/rauschen pro Pixel
+            for (int j = 0; j < VkSpec.MaxAccEbenen; j++)
+            {
+                var P = new Vector4[5]; var MM = Vector4.zero;
+                if (j < res.ebenenAcc.Count)
+                {
+                    var e = res.ebenenAcc[j];
+                    var mk = e.O("maske") ?? new JObj();
+                    MM = new Vector4(e.F("staerke", 1), AccBits(e, doc.resolved, res), mk.F("oben", 0), mk.F("rauschen", 0f));
+                    P = LayerParams(e, doc, j);
+                }
+                SetLayer(mat, "A", j, P, MM);
+            }
+        }
+
+        /// <summary>Bit-Tabelle einer Accessoire-Ebene: −1 = alle Accessoires, sonst Bit n gesetzt = Eintrag n (res.accIds) getroffen.</summary>
+        public static float AccBits(JObj e, JObj resolved, VkBuildResult res)
+        {
+            if (VkSpec.ZielAlle(e)) return -1;
+            var accs = VkSpec.AktiveAccessoires(resolved);
+            int bits = 0;
+            for (int n = 0; n < Mathf.Min(res.accIds.Count, VkSpec.MaxAccEintraege); n++)
+            {
+                var a = accs.FirstOrDefault(x => x.S("id", "") == res.accIds[n]);
+                if (a != null && VkSpec.ZielTrifft(e, a)) bits |= 1 << n;
+            }
+            return bits;
+        }
+
+        static void SetLayer(Material mat, string pre, int i, Vector4[] P, Vector4 M)
+        {
+            mat.SetVector($"_{pre}{i}T", P[0]); mat.SetVector($"_{pre}{i}C", P[1]); mat.SetVector($"_{pre}{i}D", P[2]);
+            mat.SetVector($"_{pre}{i}A", P[3]); mat.SetVector($"_{pre}{i}B", P[4]); mat.SetVector($"_{pre}{i}M", M);
+        }
+
+        /// <summary>Werte einer Ebene (gleich für Körper- und Accessoire-Ebenen): T Typ/Art, C Farbe + Intensität, D Farbe B,
+        /// A/B Werte. Der Seed hängt an der id → eine Accessoire-Ebene mit derselben id hat dasselbe Muster wie die Körper-Ebene.</summary>
+        static Vector4[] LayerParams(JObj e, VkDoc doc, int i)
+        {
+            var T = Vector4.zero; var C = Vector4.zero; var C2 = Vector4.zero; var A = Vector4.zero; var B = Vector4.zero;
+            string typ = e.S("typ", "");
+            float seedOff = (Json.Fnv1a($"{doc.resolved.I("seed", 0)}:{e.S("id", typ + "#" + i)}") % 997) * 0.173f;
+            if (e["seed"] != null) seedOff = (e.I("seed", 0) % 997) * 0.173f;
+            switch (typ)
+            {
+                case "verlauf":
+                    T = new Vector4(1, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"), Idx(e.S("richtung", "oben_unten"), "oben_unten", "vorn_hinten", "ansatz_spitze"), 0);
+                    var ca = Hex(e.S("farbe_a", "#FFFFFF"), Color.white); var cb = Hex(e.S("farbe_b", "#808080"), Color.gray);
+                    C = Lin(ca, 0); C2 = Lin(cb, 0);
+                    A = new Vector4(e.F("mitte", 0.5f), e.F("weichheit", 0.5f), 0, 0);
+                    break;
+                case "muster":
+                    T = new Vector4(2, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"),
+                        Idx(e.S("art", "flecken"), "streifen", "flecken", "tupfen", "ringe", "marmor", "zellen"), Idx(e.S("richtung", "quer"), "quer", "laengs", "knochen"));
+                    var cm = Hex(e.S("farbe", "#404040"), Color.gray); C = Lin(cm, 0);
+                    A = new Vector4(e.F("skala", 0.08f), e.F("dichte", 0.5f), e.F("kontrast", 0.7f), e.F("verzerrung", 0.3f));
+                    B = new Vector4(seedOff, 0, 0, 0);
+                    break;
+                case "risse":
+                    var el = VkSpec.Elemente.TryGetValue(e.S("element", "glut"), out var ev) ? ev : ("#FF6A10", 4f);
+                    var cr = Hex(e.S("farbe", el.Item1), Color.red);
+                    T = new Vector4(3, Idx(e.S("art", "risse"), "risse", "adern", "zellfugen", "runen"), 0, 0);
+                    C = Lin(cr, e.F("intensitaet", el.Item2));
+                    A = new Vector4(e.F("breite", 0.005f), e.F("dichte", 0.4f), e.F("verzweigung", 0.5f), e.F("hof", 0.3f));
+                    B = new Vector4(e.F("puls_frequenz", 0), e.F("puls_staerke", 0), seedOff, 0);
+                    break;
+                case "ueberzug":
+                    var cu = Hex(e.S("farbe", "#A89A88"), Color.gray);
+                    T = new Vector4(4, Idx(e.S("art", "staub"), "schmutz", "frost", "asche", "schleim", "staub", "moos"), 0, 0);
+                    C = Lin(cu, 0);
+                    A = new Vector4(e.F("menge", 0.3f), e.F("kanten", 0.4f), e.F("rauschen_skala", 0.08f), e.F("rauheit", 1f));
+                    B = new Vector4(seedOff, 0, 0, 0);
+                    break;
+                case "naesse":
+                    T = new Vector4(5, 0, 0, 0);
+                    A = new Vector4(e.F("menge", 0.5f), e.F("glanz", 0.8f), e.F("abdunkeln", 0.3f), 0);
+                    break;
+                case "rim":
+                    var ci = Hex(e.S("farbe", "#FFD080"), Color.white);
+                    T = new Vector4(6, 0, 0, 0);
+                    C = Lin(ci, e.F("intensitaet", 1.5f));
+                    A = new Vector4(e.F("breite", 0.35f), 0, 0, 0);
+                    break;
+            }
+            return new[] { T, C, C2, A, B };
+        }
+
+        /// <summary>Rim pro Vertex für das Spiel-Mesh (rgb = Farbe linear wie im Material, a = Breite): Körper-Vertices die
+        /// Körper-Rim-Ebene, Accessoire-Vertices die letzte Accessoire-Rim-Ebene, die ihren Eintrag trifft. null = kein Rim.</summary>
+        public static Color[] RimColors(List<Vector4> grp, VkDoc doc, VkBuildResult res)
+        {
+            var bodyRim = res.ebenen.LastOrDefault(e => e.S("typ", "") == "rim");
+            var accRims = res.ebenenAcc.Where(e => e.S("typ", "") == "rim").ToList();
+            if (bodyRim == null && accRims.Count == 0) return null;
+            Color RC(JObj e) { var c = LayerParams(e, doc, 0)[1]; return new Color(c.x, c.y, c.z, e.F("breite", 0.35f)); }
+            var bodyC = bodyRim != null ? RC(bodyRim) : new Color(0, 0, 0, 0.35f);
+            var accC = new Dictionary<int, Color>();
+            var accs = VkSpec.AktiveAccessoires(doc.resolved);
+            for (int n = 0; n < res.accIds.Count; n++)
+            {
+                var a = accs.FirstOrDefault(x => x.S("id", "") == res.accIds[n]);
+                var hit = accRims.LastOrDefault(e => (VkSpec.ZielAlle(e) || (n < VkSpec.MaxAccEintraege && a != null && VkSpec.ZielTrifft(e, a))));
+                accC[n] = hit != null ? RC(hit) : new Color(0, 0, 0, 0.35f);
+            }
+            var col = new Color[grp.Count];
+            for (int v = 0; v < grp.Count; v++)
+            {
+                float w = grp[v].w;
+                col[v] = w < -0.5f && accC.TryGetValue(Mathf.RoundToInt(-w - 1), out var c) ? c : w < -0.5f ? new Color(0, 0, 0, 0.35f) : bodyC;
+            }
+            return col;
         }
 
         // ------------------------------------------------------------------ Statur Typ K/G (Knochen) → VariantStatur

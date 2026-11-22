@@ -34,25 +34,57 @@ namespace VariantKit
             ? Directory.GetFiles(PresetDir, "*.json").Select(Path.GetFileNameWithoutExtension).OrderBy(x => x).ToList()
             : new List<string>();
 
-        public static JObj LoadPreset(string gruppe, string biom)
+        /// <summary>Eingefrorene Presets im Format 1 (Stand vor den zwei Ebenen-Gruppen). Varianten-Dateien im Format 1 speichern
+        /// ihre Abweichungen gegen DIESE Fassung → zum Lesen alter Dateien nötig (templates/umgebungs_gruppen/_v1/).</summary>
+        public static string PresetPathV1(string gruppe) => Path.Combine(PresetDir, "_v1", gruppe + ".json");
+
+        /// <summary>Preset + Biom-Block, immer im aktuellen Format. formatV1 = die Fassung, gegen die eine Format-1-Datei
+        /// gespeichert wurde (eingefrorene Kopie, alte Bedeutung, noch NICHT migriert).</summary>
+        public static JObj LoadPreset(string gruppe, string biom, bool formatV1 = false)
         {
-            if (string.IsNullOrEmpty(gruppe) || !File.Exists(PresetPath(gruppe))) return new JObj();
-            var p = Json.ParseObj(File.ReadAllText(PresetPath(gruppe)));
+            if (string.IsNullOrEmpty(gruppe)) return new JObj();
+            var path = formatV1 && File.Exists(PresetPathV1(gruppe)) ? PresetPathV1(gruppe) : PresetPath(gruppe);
+            if (!File.Exists(path)) return new JObj();
+            var p = Json.ParseObj(File.ReadAllText(path));
             var r = new JObj();
             foreach (var k in new[] { "bedeckung", "accessoires", "material", "effekte" }) if (p.Has(k)) r[k] = Json.Clone(p[k]);
             var bb = p.O("biome")?.O(biom ?? "");
             if (bb != null) r = (JObj)Json.Merge(r, bb);
             VkSpec.Migrate(r);   // G14: schwingen/bewegung → weichheit
+            bool v1 = p.I("format_version", 1) < 2;
+            if (formatV1)
+            {
+                // alte Datei, aber das Preset ist schon Format 2 (keine eingefrorene Kopie): Accessoire-Ebenen weglassen,
+                // die Körper-Ebenen sind die beste Näherung der alten Liste
+                if (!v1) r.O("material")?.Remove("ebenen_accessoires");
+            }
+            else if (v1) VkSpec.MigrateMaterialV1(r);
+            if (!formatV1) r.Remove("format_version");
             return r;
         }
+
+        /// <summary>Format, aus dem die Datei beim Laden umgestellt wurde (1), sonst 0. Die Zahl der dabei angelegten
+        /// Accessoire-Ebenen steht in migratedAccLayers (das Fenster zeigt einen Hinweis, Speichern schreibt Format 2).</summary>
+        public int migratedFrom, migratedAccLayers;
 
         public static VkDoc Load(string path)
         {
             var stored = Json.ParseObj(File.ReadAllText(path));
             VkSpec.Migrate(stored);   // G14: schwingen/bewegung → weichheit
             var d = new VkDoc { path = path };
-            d.presetResolved = LoadPreset(stored.S("gruppe", null), stored.S("biom", null));
-            d.resolved = (JObj)Json.Merge(d.presetResolved, stored);
+            string g = stored.S("gruppe", null), bi = stored.S("biom", null);
+            d.presetResolved = LoadPreset(g, bi);
+            if (stored.I("format_version", 1) < 2)
+            {
+                // Format 1 → 2: alte Bedeutung auflösen (gegen das eingefrorene Preset), dann umstellen (VkSpec.MigrateMaterialV1)
+                var old = (JObj)Json.Merge(LoadPreset(g, bi, true), stored);
+                d.migratedAccLayers = VkSpec.MigrateMaterialV1(old);
+                d.migratedFrom = 1;
+                d.dirty = true;   // Fenster zeigt „*“: Speichern schreibt die Datei im Format 2
+                d.resolved = old;
+            }
+            else d.resolved = (JObj)Json.Merge(d.presetResolved, stored);
+            d.resolved["format_version"] = (long)VkSpec.FormatVersion;
             d.Normalize();
             d.loadedRevision = stored.I("revision", 0);
             return d;
@@ -101,8 +133,12 @@ namespace VariantKit
             mat.Obj("stil");
             mat.Obj("farbgruppen");
             mat.List("ebenen");
-            int n = 0;
-            foreach (JObj e in mat.List("ebenen").OfType<JObj>()) { n++; if (!(e["id"] is string)) e.Insert(0, "id", $"{e.S("typ", "ebene")}#{n}"); }
+            mat.List("ebenen_accessoires");
+            foreach (var key in new[] { "ebenen", "ebenen_accessoires" })
+            {
+                int n = 0;
+                foreach (JObj e in mat.List(key).OfType<JObj>()) { n++; if (!(e["id"] is string)) e.Insert(0, "id", $"{e.S("typ", "ebene")}#{n}"); }
+            }
             if (!resolved.Has("effekte")) resolved["effekte"] = new JObj();
             if (!resolved.Has("_gebaut")) resolved["_gebaut"] = null;
             Order(resolved);

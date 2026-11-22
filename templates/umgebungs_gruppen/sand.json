@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "sand",
   "buchstabe": "C",
   "name": "Sandlandschaften (Wueste, Oase)",
@@ -120,6 +120,23 @@
         "seed": null,
         "staerke": 1.0,
         "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0 }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
+        "id": "sand_kanten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "staub",
+        "farbe": "#D8C098",
+        "menge": 0.3,
+        "kanten": 0.7,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": 0.0, "rauschen": 0.2}
       }
     ]
   },

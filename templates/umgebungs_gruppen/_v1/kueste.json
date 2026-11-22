@@ -1,0 +1,126 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "kueste",
+  "buchstabe": "F",
+  "name": "Kuesten (Felskueste, Wattland)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen. Platzhalter-Werte (M2) - Look ueber die Regler einstellen.",
+  "bedeckung": {
+    "haut": { "typ": "schuppen", "rauheit": 0.6, "schuppen_groesse": 0.015, "form": "rhombus", "relief": 0.5, "rand_dunkel": 0.3 },
+    "lagen": []
+  },
+  "accessoires": [
+    {
+      "id": "seepocken_ruecken",
+      "typ": "seepocken",
+      "formen": ["seepocke_a", "seepocke_b"],
+      "zonen": ["ruecken_gesamt", "flanke_l"],
+      "spiegeln": true,
+      "verteilung": "cluster",
+      "anzahl": 3,
+      "teile": 5,
+      "groesse": 0.035,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.3,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "tang_seiten",
+      "typ": "tang",
+      "formen": ["tang_a"],
+      "zonen": ["flanke_l"],
+      "spiegeln": true,
+      "verteilung": "streuen",
+      "anzahl": 3,
+      "teile": 4,
+      "groesse": 0.1,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "unten",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_b",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#5A6E78", "rauheit": 0.6 },
+      "accessoire_a": { "farbe": "#C8C0B0", "farbe_2": "#8A8478", "farb_zufall": 0.4, "rauheit": 0.9 },
+      "accessoire_b": { "farbe": "#3F6B45", "farbe_2": "#6A8A4A", "verlauf": "ansatz_spitze", "rauheit": 0.4 },
+      "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 },
+      "augen": { "farbe": "#E0E8A0", "leuchten": 0.3 }
+    },
+    "ebenen": [
+      {
+        "id": "nass",
+        "typ": "naesse",
+        "an": true,
+        "menge": 0.5,
+        "glanz": 0.8,
+        "abdunkeln": 0.3,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0 }
+      },
+      {
+        "id": "flecken",
+        "typ": "muster",
+        "an": true,
+        "art": "flecken",
+        "farbe": "#3A4A52",
+        "skala": 0.06,
+        "dichte": 0.45,
+        "kontrast": 0.6,
+        "richtung": "quer",
+        "verzerrung": 0.3,
+        "mischung": "ueberlagern",
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
+      },
+      {
+        "id": "salz_kanten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "staub",
+        "farbe": "#E8E8E0",
+        "menge": 0.25,
+        "kanten": 0.8,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0, "gruppen": ["haut", "accessoire_a"] }
+      }
+    ]
+  },
+  "effekte": { "element": "wasser", "partikel": ["tropfen"] },
+  "biome": {
+    "felskueste": {},
+    "wattland": {
+      "material": {
+        "farbgruppen": {
+          "haut": { "farbe": "#5A5448" }
+        }
+      }
+    }
+  }
+}

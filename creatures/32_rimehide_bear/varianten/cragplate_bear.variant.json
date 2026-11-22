@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
-  "format_version": 1,
-  "revision": 24,
+  "format_version": 2,
+  "revision": 25,
   "id": "cragplate_bear",
   "name": "Cragplate Bear",
   "basis": "rimehide_bear",

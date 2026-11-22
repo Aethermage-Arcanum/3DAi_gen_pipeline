@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "kueste",
   "buchstabe": "F",
   "name": "Kuesten (Felskueste, Wattland)",
@@ -108,7 +108,35 @@
         "rauheit": 1.0,
         "seed": null,
         "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0, "gruppen": ["haut", "accessoire_a"] }
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0, "gruppen": ["haut"] }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
+        "id": "nass",
+        "typ": "naesse",
+        "an": true,
+        "menge": 0.5,
+        "glanz": 0.8,
+        "abdunkeln": 0.3,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": 0.0, "rauschen": 0.2}
+      },
+      {
+        "id": "salz_kanten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "staub",
+        "farbe": "#E8E8E0",
+        "menge": 0.25,
+        "kanten": 0.8,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "ziel": {"typen": ["seepocken"], "eintraege": []},
+        "maske": {"oben": 0.0, "rauschen": 0.2}
       }
     ]
   },

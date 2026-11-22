@@ -51,7 +51,7 @@ namespace VariantKit
         string newId = "neue_variante", newName = "Neue Variante";
         int newPreset;
         string addAccTyp = "basaltbrocken";
-        int addLayerTyp = 2;
+        int addLayerTyp = 2, addAccLayerTyp = 3;
         VkBlenderJob job;          // „In Blender bauen“ (läuft im Hintergrund)
 
         void OnEnable()
@@ -144,7 +144,17 @@ namespace VariantKit
             var gm = new Material(Shader.Find("Standard")) { color = new Color(0.26f, 0.26f, 0.27f), hideFlags = HideFlags.HideAndDontSave };
             ground.GetComponent<Renderer>().sharedMaterial = gm;
             pru.AddSingleGO(ground);
-            mat = new Material(Shader.Find(VkBake.ShaderName)) { hideFlags = HideFlags.HideAndDontSave };
+            var sh = Shader.Find(VkBake.ShaderName);
+            if (sh == null)
+            {
+                Cleanup();
+                // z. B. beim Editor-Start vor dem Import oder bei einem Syntaxfehler im Shader: verständlich melden statt Null-Exception.
+                // Die Varianten-Datei bleibt geladen (Regler, Speichern), nur die Vorschau fehlt; „Neu laden“ versucht es erneut.
+                error = $"Vorschau-Shader „{VkBake.ShaderName}“ nicht gefunden (noch nicht importiert oder Shader-Fehler, siehe Console). " +
+                        "Die Datei ist geladen, nur die Vorschau fehlt. Nach dem Import „Laden“ drücken.";
+                return;
+            }
+            mat = new Material(sh) { hideFlags = HideFlags.HideAndDontSave };
             Rebuild();
         }
 
@@ -153,7 +163,7 @@ namespace VariantKit
         void Rebuild()
         {
             rebuild = false;
-            if (cur == null || inst == null || doc == null) return;
+            if (cur == null || inst == null || doc == null || mat == null) return;
             try
             {
                 var old = res?.mesh;
@@ -496,13 +506,15 @@ namespace VariantKit
         }
 
         /// <summary>Zonen-Liste mit Auswahlmenü (Andock-Zonen, Sammelnamen).</summary>
-        void ZoneList(JObj o, string k, string label, bool withLine = false)
+        void ZoneList(JObj o, string k, string label, bool withLine = false, bool layerZones = false)
         {
             var list = o.Strs(k);
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField(label, GUILayout.Width(EditorGUIUtility.labelWidth));
-                EditorGUILayout.LabelField(list.Count == 0 ? "–" : string.Join(", ", list), EditorStyles.wordWrappedLabel);
+                string txt = list.Count > 0 ? string.Join(", ", list)
+                           : layerZones ? (o.L(k) == null ? "ganzer_koerper (Standard)" : "– keine: Ebene wirkt nirgends") : "–";
+                EditorGUILayout.LabelField(txt, EditorStyles.wordWrappedLabel);
                 if (GUILayout.Button("Wählen…", GUILayout.Width(64)))
                 {
                     var menu = new GenericMenu();
@@ -609,8 +621,29 @@ namespace VariantKit
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField($"Ebenen (max. {VkSpec.MaxEbenen}, empfohlen 3–5, oben = zuerst)", EditorStyles.boldLabel);
-            var eb = m.List("ebenen");
+            if (doc.migratedFrom == 1)
+                EditorGUILayout.HelpBox($"Datei im alten Format 1 geladen und umgestellt: Die bisherigen Ebenen sind jetzt Körper-Ebenen, " +
+                    $"{doc.migratedAccLayers} Accessoire-Ebene(n) wurden aus Ebenen angelegt, die bisher auch auf die Accessoires wirkten. " +
+                    "„Speichern“ schreibt Format 2.", MessageType.Info);
+            // ---- Gruppe 1: Körper (Haut + Bedeckung)
+            EditorGUILayout.LabelField($"Körper-Ebenen (max. {VkSpec.MaxEbenen}, empfohlen 3–5, oben = zuerst)", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("wirken auf Haut und Bedeckung, gesteuert über die Zonen – nie auf Accessoires", EditorStyles.miniLabel);
+            LayerList(m.List("ebenen"), false);
+            EditorGUILayout.Space(8);
+            // ---- Gruppe 2: Accessoires (immer obenauf)
+            EditorGUILayout.LabelField($"Accessoire-Ebenen – liegen immer obenauf (max. {VkSpec.MaxAccEbenen}, empfohlen 1–3)", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("wirken nur auf Accessoires; jede Ebene wählt ihr Ziel (alle, Typen oder einzelne Einträge)", EditorStyles.miniLabel);
+            LayerList(m.List("ebenen_accessoires"), true);
+            EditorGUILayout.HelpBox("„rand“ der Masken wirkt als fester weicher Übergang; Rim-Light und Puls bleiben zur Laufzeit live. " +
+                                    "Rim höchstens 1× pro Gruppe, Puls: ein Wert pro Material (erste pulsierende Risse-Ebene).", MessageType.None);
+        }
+
+        /// <summary>Liste einer Ebenen-Gruppe mit an/aus, ▲ ▼ ✕ und „Ebene hinzufügen“.</summary>
+        void LayerList(List<object> eb, bool acc)
+        {
+            string pre = acc ? "ea_" : "eb_";
+            int max = acc ? VkSpec.MaxAccEbenen : VkSpec.MaxEbenen;
+            if (eb.Count == 0) EditorGUILayout.LabelField("   (keine)", EditorStyles.miniLabel);
             for (int i = 0; i < eb.Count; i++)
             {
                 if (!(eb[i] is JObj e)) continue;
@@ -619,35 +652,86 @@ namespace VariantKit
                     EditorGUI.BeginChangeCheck();
                     bool an = EditorGUILayout.Toggle(e.B("an", true), GUILayout.Width(16));
                     if (EditorGUI.EndChangeCheck()) { e["an"] = an; Changed(); }
-                    bool open = Fold("eb_" + e.S("id", i.ToString()), $"{e.S("id", "?")}  ({e.S("typ", "?")})");
+                    string extra = acc ? "  → " + VkSpec.ZielText(e) : "";
+                    bool open = Fold(pre + e.S("id", i.ToString()), $"{e.S("id", "?")}  ({e.S("typ", "?")}){extra}");
                     if (GUILayout.Button("▲", GUILayout.Width(22)) && i > 0) { eb.RemoveAt(i); eb.Insert(i - 1, e); Changed(); GUIUtility.ExitGUI(); }
                     if (GUILayout.Button("▼", GUILayout.Width(22)) && i < eb.Count - 1) { eb.RemoveAt(i); eb.Insert(i + 1, e); Changed(); GUIUtility.ExitGUI(); }
                     if (GUILayout.Button("✕", GUILayout.Width(22))) { eb.RemoveAt(i); Changed(); GUIUtility.ExitGUI(); }
                     if (!open) continue;
                 }
                 EditorGUI.indentLevel++;
-                LayerFields(e);
+                LayerFields(e, acc);
                 EditorGUI.indentLevel--;
                 EditorGUILayout.Space(4);
             }
+            if (eb.OfType<JObj>().Count(x => x.B("an", true)) > max)
+                EditorGUILayout.HelpBox($"Mehr als {max} aktive Ebenen: nur die ersten {max} wirken.", MessageType.Warning);
+            foreach (var t in new[] { "naesse", "rim" })
+                if (eb.OfType<JObj>().Count(x => x.B("an", true) && x.S("typ", "") == t) > 1)
+                    EditorGUILayout.HelpBox($"„{t}“ ist in dieser Gruppe mehrfach an – nur die letzte zählt (Spec 4.3: je 1×).", MessageType.Warning);
             using (new EditorGUILayout.HorizontalScope())
             {
-                addLayerTyp = EditorGUILayout.Popup(addLayerTyp, VkSpec.EbenenTypen);
-                GUI.enabled = eb.Count < VkSpec.MaxEbenen;
-                if (GUILayout.Button("Ebene hinzufügen"))
+                int sel = acc ? addAccLayerTyp : addLayerTyp;
+                sel = EditorGUILayout.Popup(sel, VkSpec.EbenenTypen);
+                if (acc) addAccLayerTyp = sel; else addLayerTyp = sel;
+                GUI.enabled = eb.Count < max;
+                if (GUILayout.Button(acc ? "Accessoire-Ebene hinzufügen" : "Ebene hinzufügen"))
                 {
-                    var typ = VkSpec.EbenenTypen[addLayerTyp];
-                    int n = 1; while (eb.OfType<JObj>().Any(x => x.S("id", "") == $"{typ}_{n}")) n++;
-                    eb.Add(VkSpec.NeueEbene($"{typ}_{n}", typ));
-                    fold[$"eb_{typ}_{n}"] = true;
+                    var typ = VkSpec.EbenenTypen[sel];
+                    string baseId = acc ? $"acc_{typ}" : typ;
+                    int n = 1; while (eb.OfType<JObj>().Any(x => x.S("id", "") == $"{baseId}_{n}")) n++;
+                    eb.Add(VkSpec.NeueEbene($"{baseId}_{n}", typ, acc));
+                    fold[$"{pre}{baseId}_{n}"] = true;
                     Changed();
                 }
                 GUI.enabled = true;
             }
-            EditorGUILayout.HelpBox("„rand“ der Masken wirkt in M1 als fester weicher Übergang; Rim-Light und Puls bleiben zur Laufzeit live.", MessageType.None);
         }
 
-        void LayerFields(JObj e)
+        /// <summary>„gilt für“ einer Accessoire-Ebene: alle, oder Typen/Einträge, die in der Variante vorkommen.</summary>
+        void ZielField(JObj e)
+        {
+            var accs = VkSpec.AktiveAccessoires(doc.resolved);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField("gilt für", GUILayout.Width(EditorGUIUtility.labelWidth));
+                EditorGUILayout.LabelField(VkSpec.ZielText(e), EditorStyles.wordWrappedLabel);
+                if (GUILayout.Button("Wählen…", GUILayout.Width(64)))
+                {
+                    var menu = new GenericMenu();
+                    bool alle = VkSpec.ZielAlle(e);
+                    var z = e["ziel"] as JObj;
+                    var typen = z?.Strs("typen") ?? new List<string>();
+                    var eint = z?.Strs("eintraege") ?? new List<string>();
+                    menu.AddItem(new GUIContent("alle Accessoires"), alle, () => { e["ziel"] = "alle"; Changed(); });
+                    menu.AddSeparator("");
+                    foreach (var t in accs.Select(a => a.S("typ", "")).Where(t => t.Length > 0).Distinct().OrderBy(t => t))
+                        menu.AddItem(new GUIContent("Typen/" + t), !alle && typen.Contains(t), () => ToggleZiel(e, "typen", t));
+                    foreach (var a in accs)
+                        menu.AddItem(new GUIContent($"Einträge/{a.S("id", "")}  ({a.S("typ", "?")})"), !alle && eint.Contains(a.S("id", "")), () => ToggleZiel(e, "eintraege", a.S("id", "")));
+                    if (accs.Count == 0) menu.AddDisabledItem(new GUIContent("(die Variante hat keine Accessoires)"));
+                    menu.ShowAsContext();
+                }
+            }
+            if (!VkSpec.ZielAlle(e) && accs.All(a => !VkSpec.ZielTrifft(e, a)))
+                EditorGUILayout.HelpBox("Diese Ebene trifft kein Accessoire der Variante.", MessageType.Warning);
+            if (!VkSpec.ZielAlle(e) && accs.Count > VkSpec.MaxAccEintraege)
+                EditorGUILayout.HelpBox($"Nur die ersten {VkSpec.MaxAccEintraege} Einträge lassen sich gezielt wählen, „alle“ gilt für jede Anzahl.", MessageType.Warning);
+        }
+
+        void ToggleZiel(JObj e, string key, string val)
+        {
+            var z = e["ziel"] as JObj ?? new JObj { ["typen"] = new List<object>(), ["eintraege"] = new List<object>() };
+            var l = z.Strs(key);
+            if (l.Contains(val)) l.Remove(val); else l.Add(val);
+            z[key] = l.Cast<object>().ToList();
+            if (!z.Has("typen")) z["typen"] = new List<object>();
+            if (!z.Has("eintraege")) z["eintraege"] = new List<object>();
+            e["ziel"] = z;
+            Changed();
+        }
+
+        void LayerFields(JObj e, bool acc = false)
         {
             switch (e.S("typ", ""))
             {
@@ -696,8 +780,16 @@ namespace VariantKit
                     if (GUILayout.Button("Neu würfeln", GUILayout.Width(90))) { e["seed"] = (long)UnityEngine.Random.Range(1, 99999); Changed(); }
                 }
             var mk = e.Obj("maske");
-            EditorGUILayout.LabelField("Maske (wo die Ebene wirkt)", EditorStyles.miniBoldLabel);
-            ZoneList(mk, "zonen", "Zonen");
+            if (acc)
+            {
+                ZielField(e);
+                EditorGUILayout.LabelField("Maske innerhalb der Teile (Körper-Zonen gelten hier nicht)", EditorStyles.miniBoldLabel);
+                F(mk, "oben", "Oben (+) / Unterseite (−)", -1, 1, 0);
+                F(mk, "rauschen", "Fleckiger Rand", 0, 1, 0);
+                return;
+            }
+            EditorGUILayout.LabelField("Maske (wo die Ebene auf dem Körper wirkt)", EditorStyles.miniBoldLabel);
+            ZoneList(mk, "zonen", "Zonen", false, true);
             ZoneList(mk, "ohne", "ohne");
             F(mk, "oben", "Oben (+) / Unterseite (−)", -1, 1, 0);
             F(mk, "rauschen", "Fleckiger Rand", 0, 1, 0.2f);
@@ -705,11 +797,11 @@ namespace VariantKit
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField("Farbgruppen", GUILayout.Width(EditorGUIUtility.labelWidth));
-                EditorGUILayout.LabelField(gr.Count == 0 ? "alle" : string.Join(", ", gr), EditorStyles.wordWrappedLabel);
+                EditorGUILayout.LabelField(gr.Count == 0 ? "alle (Körper)" : string.Join(", ", gr), EditorStyles.wordWrappedLabel);
                 if (GUILayout.Button("Wählen…", GUILayout.Width(64)))
                 {
                     var menu = new GenericMenu();
-                    foreach (var g in VkSpec.Gruppen)
+                    foreach (var g in VkSpec.KoerperGruppen)
                         menu.AddItem(new GUIContent(g), gr.Contains(g), () =>
                         {
                             var l = mk.Strs("gruppen");

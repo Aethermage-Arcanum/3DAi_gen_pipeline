@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
-  "format_version": 1,
-  "revision": 20,
+  "format_version": 2,
+  "revision": 21,
   "id": "slagback_bear",
   "name": "Slagback Bear",
   "basis": "rimehide_bear",

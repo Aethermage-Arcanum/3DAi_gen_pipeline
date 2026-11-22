@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "lebensfeindlich",
   "buchstabe": "H",
   "name": "Lebensfeindlich (Obsidian-/Basalt-Ebene, Schwefelebene)",
@@ -40,15 +40,22 @@
         "maske": { "zonen": ["ganzer_koerper"], "ohne": ["bauch", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.5, "gruppen": ["haut"] }
       },
       {
+        "id": "asche", "typ": "ueberzug", "an": true, "art": "asche", "farbe": "#6B6266", "menge": 0.25, "kanten": 0.4,
+        "rauschen_skala": 0.08, "rauheit": 1.0, "seed": null, "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.6, "gruppen": ["haut"] }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
         "id": "glut_fugen", "typ": "risse", "an": true, "element": "glut", "art": "zellfugen", "farbe": "#FF8A20", "intensitaet": 3.0,
         "breite": 0.008, "dichte": 0.7, "verzweigung": 0.2, "hof": 0.5, "puls_frequenz": 0.4, "puls_staerke": 0.35, "seed": null,
-        "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.4, "rand": 0.05, "gruppen": ["accessoire_a"] }
+        "staerke": 1.0, "ziel": "alle",
+        "maske": { "oben": 0.4, "rauschen": 0.2 }
       },
       {
         "id": "asche", "typ": "ueberzug", "an": true, "art": "asche", "farbe": "#6B6266", "menge": 0.25, "kanten": 0.4,
-        "rauschen_skala": 0.08, "rauheit": 1.0, "seed": null, "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.6, "gruppen": ["haut", "accessoire_a"] }
+        "rauschen_skala": 0.08, "rauheit": 1.0, "seed": null, "staerke": 1.0, "ziel": "alle",
+        "maske": { "oben": 0.6, "rauschen": 0.2 }
       }
     ]
   },
@@ -58,7 +65,8 @@
     "schwefel": {
       "material": {
         "farbgruppen": { "accessoire_a": { "farbe": "#3A3428", "farbe_2": "#C8B030", "farb_zufall": 0.3 } },
-        "ebenen": [ { "id": "glut_risse", "farbe": "#E8D040", "intensitaet": 2.5 }, { "id": "asche", "farbe": "#B8A848" } ]
+        "ebenen": [ { "id": "glut_risse", "farbe": "#E8D040", "intensitaet": 2.5 }, { "id": "asche", "farbe": "#B8A848" } ],
+        "ebenen_accessoires": [ { "id": "asche", "farbe": "#B8A848" } ]
       },
       "effekte": { "element": "gift", "partikel": ["rauch"] }
     }

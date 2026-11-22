@@ -1,0 +1,137 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "sand",
+  "buchstabe": "C",
+  "name": "Sandlandschaften (Wueste, Oase)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen. Platzhalter-Werte (M2) - Look ueber die Regler einstellen.",
+  "bedeckung": {
+    "haut": { "typ": "leder", "rauheit": 0.95, "falten": 0.3, "narben": 0.0, "skala": 0.05 },
+    "lagen": []
+  },
+  "accessoires": [
+    {
+      "id": "knochen_ruecken",
+      "typ": "knochenplatte",
+      "formen": ["knochen_a", "knochen_b"],
+      "zonen": ["ruecken_mitte", "kruppe"],
+      "spiegeln": false,
+      "verteilung": "streuen",
+      "anzahl": 3,
+      "teile": 4,
+      "groesse": 0.09,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": -10.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_b",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "stein_schulter",
+      "typ": "steinplatte",
+      "formen": ["stein_a", "stein_b"],
+      "zonen": ["schulter_l"],
+      "spiegeln": true,
+      "verteilung": "einzeln",
+      "anzahl": 1,
+      "teile": 4,
+      "groesse": 0.14,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "aussen",
+      "neigung": 0.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    },
+    {
+      "id": "dornen_nacken",
+      "typ": "dorn",
+      "formen": ["dorn_a", "dorn_b"],
+      "zonen": ["nacken"],
+      "spiegeln": false,
+      "verteilung": "streuen",
+      "anzahl": 3,
+      "teile": 4,
+      "groesse": 0.06,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": -35.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "farbgruppe": "horn",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#A88A5C", "rauheit": 0.95 },
+      "accessoire_a": { "farbe": "#C8A878", "farbe_2": "#A88A5C", "farb_zufall": 0.3 },
+      "accessoire_b": { "farbe": "#E6DCC4", "rauheit": 0.8 },
+      "horn": { "farbe": "#5A4A38", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1C1A1C", "rauheit": 0.7 },
+      "augen": { "farbe": "#E0B040", "leuchten": 0.4 }
+    },
+    "ebenen": [
+      {
+        "id": "oben_gebleicht",
+        "typ": "verlauf",
+        "an": true,
+        "richtung": "oben_unten",
+        "farbe_a": "#FFF4DC",
+        "farbe_b": "#B89A70",
+        "mischung": "ueberlagern",
+        "mitte": 0.5,
+        "weichheit": 0.5,
+        "staerke": 0.4,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
+      },
+      {
+        "id": "sand_kanten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "staub",
+        "farbe": "#D8C098",
+        "menge": 0.3,
+        "kanten": 0.7,
+        "rauschen_skala": 0.08,
+        "rauheit": 1.0,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.0 }
+      }
+    ]
+  },
+  "effekte": { "element": "blendung", "partikel": ["sandstaub"] },
+  "biome": {
+    "wueste": {},
+    "oase": {
+      "material": {
+        "farbgruppen": {
+          "haut": { "farbe": "#8A7250" }
+        }
+      }
+    }
+  }
+}

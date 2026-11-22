@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "feucht",
   "buchstabe": "B",
   "name": "Feucht (Sumpf, Moor)",
@@ -118,6 +118,34 @@
         "seed": null,
         "staerke": 1.0,
         "maske": { "zonen": ["ganzer_koerper"], "oben": -0.5 }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
+        "id": "nass",
+        "typ": "naesse",
+        "an": true,
+        "menge": 0.6,
+        "glanz": 0.8,
+        "abdunkeln": 0.3,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": 0.0, "rauschen": 0.2}
+      },
+      {
+        "id": "schleim_unten",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "schleim",
+        "farbe": "#5A6B3A",
+        "menge": 0.35,
+        "kanten": 0.4,
+        "rauschen_skala": 0.08,
+        "rauheit": 0.3,
+        "seed": null,
+        "staerke": 1.0,
+        "ziel": "alle",
+        "maske": {"oben": -0.5, "rauschen": 0.2}
       }
     ]
   },

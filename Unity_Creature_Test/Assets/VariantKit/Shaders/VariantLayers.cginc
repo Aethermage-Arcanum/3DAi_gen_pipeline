@@ -13,6 +13,9 @@ float4 _VKBounds;
 GDECL(0) GDECL(1) GDECL(2) GDECL(3) GDECL(4) GDECL(5) GDECL(6) GDECL(7) GDECL(8)
 #define LDECL(n) float4 _L##n##T, _L##n##C, _L##n##D, _L##n##A, _L##n##B, _L##n##M;
 LDECL(0) LDECL(1) LDECL(2) LDECL(3) LDECL(4) LDECL(5) LDECL(6) LDECL(7)
+// Accessoire-Ebenen (eigene Gruppe, liegen immer über den Körper-Ebenen). _A#M = (Stärke, Einträge-Bits | −1 = alle, oben, rauschen)
+#define ADECL(n) float4 _A##n##T, _A##n##C, _A##n##D, _A##n##A, _A##n##B, _A##n##M;
+ADECL(0) ADECL(1) ADECL(2) ADECL(3)
 
 // ---------------------------------------------------------------- Rauschen (Ruhe-Raum)
 float hash13(float3 p) { p = frac(p * 0.1031); p += dot(p, p.zyx + 31.32); return frac((p.x + p.y) * p.z); }
@@ -48,10 +51,10 @@ float3 mixmode(float3 col, float3 c, float m, float mode)
 struct VKIn
 {
     float2 uv;          // Basis-UV (Tripo-Textur)
-    float4 grp;         // Gruppe hell, Gruppe dunkel | Farb-Zufall Teil, Zufall pro Teil, 1 = Basis / 0 = Teil
+    float4 grp;         // Gruppe hell, Gruppe dunkel | Farb-Zufall Teil, Zufall pro Teil, w: 1 = Basis · 0 = Bedeckung · −(1+n) = Accessoire-Eintrag n
     float4 rest;        // Ruhe-Position im Körperraum / Kreaturgröße, w = Höhe im Teil (Ansatz → Spitze)
     float3 rnrm;        // Ruhe-Normale
-    float4 m0, m1;      // Masken der 8 Ebenen
+    float4 m0, m1;      // Masken der 8 Körper-Ebenen (Accessoire-Vertices: 0)
     float3 restFlat;    // Flächen-Normale (Ruhe-Raum, zur Ruhe-Normale ausgerichtet)
     float edgeTerm;     // Kanten/Facettenwechsel (für Überzug „kanten“)
     float t;            // Zeit (Puls)
@@ -71,6 +74,105 @@ struct VKOut
     int g;
 };
 
+// Zustand, den die Ebenen verändern
+struct VKState { float3 col; float rough; float3 emisC, emisP, emisNow; float rimMask; float4 rimC; float rimBreite; };
+
+// Eine Ebene (Körper oder Accessoire) mit Maske m anwenden – gleiche Rechnung für beide Gruppen
+void VKLayer(inout VKState s, float4 T, float4 LCi, float4 LDi, float4 A, float4 B, float m, float3 p, float restW, float isBase, float edgeTerm, float t)
+{
+    float typ = T.x;
+    if (typ < 1.5)            // verlauf
+    {
+        float ty = T.z < 0.5 ? (p.y - _VKBounds.x) / max(1e-4, _VKBounds.y - _VKBounds.x)
+                 : T.z < 1.5 ? (p.x - _VKBounds.z) / max(1e-4, _VKBounds.w - _VKBounds.z) : restW;
+        float tt = smoothstep(A.x - A.y * 0.5 - 1e-3, A.x + A.y * 0.5 + 1e-3, ty);
+        s.col = mixmode(s.col, lerp(LDi.rgb, LCi.rgb, tt), m, T.y);
+    }
+    else if (typ < 2.5)       // muster
+    {
+        float3 q = p / max(0.005, A.x) + B.x;
+        float art = T.z, v = 0;
+        float warp = fbm(q * 0.7) * A.w * 4;
+        float coord = T.w < 0.5 ? q.y : q.x;
+        if (art < 0.5) v = smoothstep(0.1, -0.1, sin((coord + warp) * 3.14159) + (1 - 2 * A.y));
+        else if (art < 1.5) v = smoothstep(1 - A.y - 0.06, 1 - A.y + 0.06, fbm(q + warp * 0.3));
+        else if (art < 2.5) v = 1 - smoothstep(A.y * 0.45, A.y * 0.45 + 0.08, voronoi(q).x);
+        else if (art < 3.5) v = smoothstep(0.1, -0.1, sin((length(q.xz) + warp) * 3.14159) + (1 - 2 * A.y));
+        else if (art < 4.5) v = smoothstep(0.2, -0.2, sin((q.x + q.y * 0.5 + warp * 2) * 3.14159) + (1 - 2 * A.y));
+        else v = 1 - smoothstep(0.02, 0.06 + A.y * 0.05, voronoi(q).y);
+        s.col = mixmode(s.col, LCi.rgb, v * A.z * m, T.y);
+    }
+    else if (typ < 3.5)       // risse / adern / zellfugen
+    {
+        float freq = lerp(4, 16, A.y);
+        float3 q = p * freq + B.z;
+        float art = T.y;
+        float wL = max(A.x, 0.0005);
+        float ln = 0, e = 1, gate = 1;
+        if (art < 0.5 || art > 2.5)      // risse (+ Runen = Risse)
+        {
+            e = voronoi(q + fbm(q * 0.8) * 0.6).y / freq;
+            ln = 1 - smoothstep(wL * 0.5, wL, e);
+            float2 v2 = voronoi(q * 2.3 + 11.0);
+            float e2 = v2.y / (freq * 2.3);
+            ln = max(ln, (1 - smoothstep(wL * 0.3, wL * 0.6, e2)) * A.z * step(0.55, hash13(floor(q * 2.3 + 11.0))));
+            gate = smoothstep(0.54, 0.66, fbm(q * 0.4 + 5.0)); ln *= gate;
+        }
+        else if (art < 1.5)              // adern
+        {
+            float n = fbm(q * 0.7 + fbm(q * 0.35) * A.z * 2);
+            e = abs(n - 0.5) / freq;
+            ln = 1 - smoothstep(wL * 0.4, wL, e);
+        }
+        else                              // zellfugen (große Zellen, alle Fugen)
+        {
+            e = voronoi(q * 0.35).y / (freq * 0.35);
+            gate = smoothstep(0.4, 0.55, fbm(q * 0.3 + 2.0)); ln = (1 - smoothstep(wL * 0.4, wL, e)) * gate;
+        }
+        float halo = (1 - smoothstep(0, wL * 2.5, e)) * A.w * gate;
+        float baseGlow = A.w * (1 - isBase) * (1 - smoothstep(0.0, 0.35, restW));   // Glut am Ansatz der Teile (Fugen)
+        float puls = 1 - B.y * 0.5 + B.y * 0.5 * sin(6.28318 * B.x * t);
+        s.col = lerp(s.col, LCi.rgb * 0.55 + 0.08, saturate(ln) * m);
+        float3 em = LCi.rgb * LCi.a * (ln + halo * 0.5 + baseGlow) * m;
+        s.emisNow += em * puls;
+        if (B.y > 0.001 && B.x > 0.001) s.emisP += em; else s.emisC += em;
+        s.rough = lerp(s.rough, 1, ln * m);
+    }
+    else if (typ < 4.5)       // ueberzug
+    {
+        float n = fbm(p / max(0.005, A.z) + B.x);
+        float cov = smoothstep(1 - A.x - 0.12, 1 - A.x + 0.12, n * 0.85 + edgeTerm * A.y * 0.6 + 0.05);
+        s.col = lerp(s.col, LCi.rgb, cov * m);
+        s.rough = lerp(s.rough, A.w, cov * m);
+    }
+    else if (typ < 5.5)       // naesse
+    {
+        s.col *= 1 - A.z * A.x * m;
+        s.rough = lerp(s.rough, 1 - A.y, A.x * m);
+    }
+    else                      // rim (bleibt live)
+    {
+        s.rimMask = m; s.rimC = LCi; s.rimBreite = A.x;
+    }
+}
+
+// Maske „oben/unten“ und „fleckiger Rand“ (pro Pixel, beide Gruppen)
+float VKMaskPix(float m, float oben, float rauschen, float up01, float3 p, float salt)
+{
+    if (oben > 0) m *= lerp(1, smoothstep(0.45, 0.85, up01), oben);
+    if (oben < 0) m *= lerp(1, smoothstep(0.45, 0.85, 1 - up01), -oben);
+    if (rauschen > 0) m *= saturate(1 - rauschen + rauschen * 2.2 * fbm(p * 14 + salt * 3.1));
+    return m;
+}
+
+// Trifft eine Accessoire-Ebene diesen Eintrag? bits < 0 = alle Accessoires, sonst Bit n = Eintrag n (höchstens 24)
+float VKAccHit(float bits, float idx)
+{
+    if (bits < 0) return 1;
+    if (idx > 23.5) return 0;
+    return fmod(floor(bits / exp2(idx) + 1e-3), 2.0);
+}
+
 VKOut VKEval(VKIn IN)
 {
     float4 GC[9] = { _G0C, _G1C, _G2C, _G3C, _G4C, _G5C, _G6C, _G7C, _G8C };
@@ -84,6 +186,12 @@ VKOut VKEval(VKIn IN)
     float4 LB[8] = { _L0B, _L1B, _L2B, _L3B, _L4B, _L5B, _L6B, _L7B };
     float4 LM[8] = { _L0M, _L1M, _L2M, _L3M, _L4M, _L5M, _L6M, _L7M };
     float LMask[8] = { IN.m0.x, IN.m0.y, IN.m0.z, IN.m0.w, IN.m1.x, IN.m1.y, IN.m1.z, IN.m1.w };
+    float4 AT[4] = { _A0T, _A1T, _A2T, _A3T };
+    float4 AC[4] = { _A0C, _A1C, _A2C, _A3C };
+    float4 AD[4] = { _A0D, _A1D, _A2D, _A3D };
+    float4 AA[4] = { _A0A, _A1A, _A2A, _A3A };
+    float4 AB[4] = { _A0B, _A1B, _A2B, _A3B };
+    float4 AM[4] = { _A0M, _A1M, _A2M, _A3M };
 
     VKOut o;
     float isBase = step(0.5, IN.grp.w);
@@ -116,97 +224,36 @@ VKOut VKEval(VKIn IN)
     float3 emisNow = 0;
     o.glasig = Q.x;
     rough = lerp(rough, 0.1, Q.x * 0.5);
-    o.rimMask = 0; o.rimC = 0; o.rimBreite = 0.35;
 
     float up01 = rn.y * 0.5 + 0.5;
 
-    // ---- Ebenen
+    // ---- Ebenen: zuerst die Körper-Ebenen (nur Haut + Bedeckung), dann die Accessoire-Ebenen (nur Accessoires, obenauf)
+    float isAcc = step(IN.grp.w, -0.5);
+    float accIdx = -IN.grp.w - 1;
+    VKState s;
+    s.col = col; s.rough = rough; s.emisC = emisC; s.emisP = emisP; s.emisNow = emisNow;
+    s.rimMask = 0; s.rimC = 0; s.rimBreite = 0.35;
     [loop] for (int i = 0; i < 8; i++)
     {
-        float typ = LT[i].x;
-        if (typ < 0.5) continue;
+        if (LT[i].x < 0.5 || isAcc > 0.5) continue;
         float4 M = LM[i];
         float m = LMask[i] * M.x;
         m *= fmod(floor(M.y / exp2((float)g) + 1e-3), 2.0);
-        if (M.z > 0) m *= lerp(1, smoothstep(0.45, 0.85, up01), M.z);
-        if (M.z < 0) m *= lerp(1, smoothstep(0.45, 0.85, 1 - up01), -M.z);
-        if (M.w > 0) m *= saturate(1 - M.w + M.w * 2.2 * fbm(p * 14 + i * 3.1));
+        m = VKMaskPix(m, M.z, M.w, up01, p, i);
         if (m <= 0.001) continue;
-        float4 A = LA[i], B = LB[i], LCi = LC[i];
-        if (typ < 1.5)            // verlauf
-        {
-            float ty = LT[i].z < 0.5 ? (p.y - _VKBounds.x) / max(1e-4, _VKBounds.y - _VKBounds.x)
-                     : LT[i].z < 1.5 ? (p.x - _VKBounds.z) / max(1e-4, _VKBounds.w - _VKBounds.z) : IN.rest.w;
-            float tt = smoothstep(A.x - A.y * 0.5 - 1e-3, A.x + A.y * 0.5 + 1e-3, ty);
-            col = mixmode(col, lerp(LD[i].rgb, LCi.rgb, tt), m, LT[i].y);
-        }
-        else if (typ < 2.5)       // muster
-        {
-            float3 q = p / max(0.005, A.x) + B.x;
-            float art = LT[i].z, v = 0;
-            float warp = fbm(q * 0.7) * A.w * 4;
-            float coord = LT[i].w < 0.5 ? q.y : q.x;
-            if (art < 0.5) v = smoothstep(0.1, -0.1, sin((coord + warp) * 3.14159) + (1 - 2 * A.y));
-            else if (art < 1.5) v = smoothstep(1 - A.y - 0.06, 1 - A.y + 0.06, fbm(q + warp * 0.3));
-            else if (art < 2.5) v = 1 - smoothstep(A.y * 0.45, A.y * 0.45 + 0.08, voronoi(q).x);
-            else if (art < 3.5) v = smoothstep(0.1, -0.1, sin((length(q.xz) + warp) * 3.14159) + (1 - 2 * A.y));
-            else if (art < 4.5) v = smoothstep(0.2, -0.2, sin((q.x + q.y * 0.5 + warp * 2) * 3.14159) + (1 - 2 * A.y));
-            else v = 1 - smoothstep(0.02, 0.06 + A.y * 0.05, voronoi(q).y);
-            col = mixmode(col, LCi.rgb, v * A.z * m, LT[i].y);
-        }
-        else if (typ < 3.5)       // risse / adern / zellfugen
-        {
-            float freq = lerp(4, 16, A.y);
-            float3 q = p * freq + B.z;
-            float art = LT[i].y;
-            float wL = max(A.x, 0.0005);
-            float ln = 0, e = 1, gate = 1;
-            if (art < 0.5 || art > 2.5)      // risse (+ Runen = Risse)
-            {
-                e = voronoi(q + fbm(q * 0.8) * 0.6).y / freq;
-                ln = 1 - smoothstep(wL * 0.5, wL, e);
-                float2 v2 = voronoi(q * 2.3 + 11.0);
-                float e2 = v2.y / (freq * 2.3);
-                ln = max(ln, (1 - smoothstep(wL * 0.3, wL * 0.6, e2)) * A.z * step(0.55, hash13(floor(q * 2.3 + 11.0))));
-                gate = smoothstep(0.54, 0.66, fbm(q * 0.4 + 5.0)); ln *= gate;
-            }
-            else if (art < 1.5)              // adern
-            {
-                float n = fbm(q * 0.7 + fbm(q * 0.35) * A.z * 2);
-                e = abs(n - 0.5) / freq;
-                ln = 1 - smoothstep(wL * 0.4, wL, e);
-            }
-            else                              // zellfugen (große Zellen, alle Fugen)
-            {
-                e = voronoi(q * 0.35).y / (freq * 0.35);
-                gate = smoothstep(0.4, 0.55, fbm(q * 0.3 + 2.0)); ln = (1 - smoothstep(wL * 0.4, wL, e)) * gate;
-            }
-            float halo = (1 - smoothstep(0, wL * 2.5, e)) * A.w * gate;
-            float baseGlow = A.w * (1 - isBase) * (1 - smoothstep(0.0, 0.35, IN.rest.w));   // Glut am Ansatz der Teile (Fugen)
-            float puls = 1 - B.y * 0.5 + B.y * 0.5 * sin(6.28318 * B.x * IN.t);
-            col = lerp(col, LCi.rgb * 0.55 + 0.08, saturate(ln) * m);
-            float3 em = LCi.rgb * LCi.a * (ln + halo * 0.5 + baseGlow) * m;
-            emisNow += em * puls;
-            if (B.y > 0.001 && B.x > 0.001) emisP += em; else emisC += em;
-            rough = lerp(rough, 1, ln * m);
-        }
-        else if (typ < 4.5)       // ueberzug
-        {
-            float n = fbm(p / max(0.005, A.z) + B.x);
-            float cov = smoothstep(1 - A.x - 0.12, 1 - A.x + 0.12, n * 0.85 + IN.edgeTerm * A.y * 0.6 + 0.05);
-            col = lerp(col, LCi.rgb, cov * m);
-            rough = lerp(rough, A.w, cov * m);
-        }
-        else if (typ < 5.5)       // naesse
-        {
-            col *= 1 - A.z * A.x * m;
-            rough = lerp(rough, 1 - A.y, A.x * m);
-        }
-        else                      // rim (bleibt live)
-        {
-            o.rimMask = m; o.rimC = LCi; o.rimBreite = A.x;
-        }
+        VKLayer(s, LT[i], LC[i], LD[i], LA[i], LB[i], m, p, IN.rest.w, isBase, IN.edgeTerm, IN.t);
     }
+    [loop] for (int j = 0; j < 4; j++)
+    {
+        if (AT[j].x < 0.5 || isAcc < 0.5) continue;
+        float4 M = AM[j];
+        float m = M.x * VKAccHit(M.y, accIdx);
+        m = VKMaskPix(m, M.z, M.w, up01, p, j + 8);
+        if (m <= 0.001) continue;
+        VKLayer(s, AT[j], AC[j], AD[j], AA[j], AB[j], m, p, IN.rest.w, isBase, IN.edgeTerm, IN.t);
+    }
+    col = s.col; rough = s.rough; emisC = s.emisC; emisP = s.emisP; emisNow = s.emisNow;
+    o.rimMask = s.rimMask; o.rimC = s.rimC; o.rimBreite = s.rimBreite;
     o.col = col;
     o.rough = rough;
     o.emisConst = emisC;

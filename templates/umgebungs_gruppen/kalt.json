@@ -1,6 +1,6 @@
 {
   "format": "umgebungs_gruppe",
-  "format_version": 1,
+  "format_version": 2,
   "gruppe": "kalt",
   "buchstabe": "E",
   "name": "Kalt (Taiga, Eiswueste)",
@@ -141,6 +141,22 @@
         "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut", "bedeckung_1"] }
       },
       {
+        "id": "frost_oben",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "frost",
+        "farbe": "#E8F4FF",
+        "menge": 0.2,
+        "kanten": 0.5,
+        "rauschen_skala": 0.08,
+        "rauheit": 0.6,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["bedeckung_1", "horn"] }
+      }
+    ],
+    "ebenen_accessoires": [
+      {
         "id": "frost_adern",
         "typ": "risse",
         "an": true,
@@ -156,21 +172,8 @@
         "puls_staerke": 0.0,
         "seed": null,
         "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["accessoire_a"] }
-      },
-      {
-        "id": "frost_oben",
-        "typ": "ueberzug",
-        "an": true,
-        "art": "frost",
-        "farbe": "#E8F4FF",
-        "menge": 0.2,
-        "kanten": 0.5,
-        "rauschen_skala": 0.08,
-        "rauheit": 0.6,
-        "seed": null,
-        "staerke": 1.0,
-        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["bedeckung_1", "horn"] }
+        "ziel": "alle",
+        "maske": { "oben": 0.0, "rauschen": 0.2 }
       }
     ]
   },

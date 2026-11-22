@@ -1,13 +1,15 @@
-# Varianten-Baukasten (Unity + Blender) – Meilensteine 1 und 2, G14 Nachschwingen
+# Varianten-Baukasten (Unity + Blender) – Meilensteine 1 und 2, G14 Nachschwingen, zwei Ebenen-Gruppen
 
-Stand 2026-11-22 · Werkzeug-Version 0.3.0 · Grundlage: `docs/VARIANTEN_SPEC.md` (Entscheidungen E1–E8).
+Stand 2026-11-22 · Werkzeug-Version 0.4.0 · Varianten-Format 2 · Grundlage: `docs/VARIANTEN_SPEC.md` (Entscheidungen E1–E8).
 - **M1:** Unity-Fenster für Statur, Accessoires und Material-Ebenen, Backen zu 1 Mesh + 1 Material (Teile A und B).
 - **M2:** Blender-Panel mit Live-Reglern (Statur, Bedeckungs-Lagen Fell/Federn/Stacheln/Platten, Baustein-Werkbank),
   Unity-Knopf **„In Blender bauen“**, **Textur-Backen** (Albedo, Maske, Leuchten, Normal → Spiel-Shader „VariantKit/Baked“),
   Gruppen-Presets A–I und 15 neue Bausteintypen (Teile C und D).
 - **G14:** Nachschwingen von Fell, Federn, Stacheln, Fransen, Tang und Ketten im Shader („Foliage-Trick“), Regler
   `weichheit`, hängende Gehänge (`auf`/`stelle`, Ausrichtung `unten`), Schalter im Dangling-Shader für den Bog Warden (Teil E).
-Die Reste stehen am Ende von Teil D bzw. E.
+- **Zwei Ebenen-Gruppen:** Körper-Ebenen wirken nur auf Haut + Bedeckung, Accessoire-Ebenen liegen obenauf und wählen ihr
+  Ziel (alle, Typen, Einträge). Varianten-Format 2 mit Migration (Teil F).
+Die Reste stehen am Ende von Teil D, E bzw. F.
 
 ---
 
@@ -31,7 +33,7 @@ Die Reste stehen am Ende von Teil D bzw. E.
 | Reiter | Was man dort tut |
 |---|---|
 | **Statur** | 17 Regler für Größe und Proportionen, dazu „Masse“ (Rumpf- und Gliederdicke zusammen). Jeder Regler hat ein Lämpchen: grün = Clips passen, gelb = Clips passen mit Korrektur. Die Regler gehen nur bis Gelb. „1“ setzt einen Regler zurück. **Rutschen die Füße in der Vorschau, ist das normal.** Die fertige Variante muss später mit angepassten Clips neu gebacken werden (Blender, Meilenstein 2). |
-| **Material** | *Farbgruppen*: Farbe von Haut, Accessoires, Krallen/Zähnen (horn), Nase/Maul (akzent) und Augen, jeweils mit matt ↔ glänzend, Leuchten usw. *Ebenen*: Verlauf, Muster, Risse (Glut, Frost … mit Leuchten und Puls), Überzug (Staub, Asche …), Nässe, Rim-Licht. Pro Ebene gibt es eine **Maske**: auf welchen Körperzonen sie wirkt, „ohne“ welche Zonen, oben/unten, fleckiger Rand und welche Farbgruppen. Mit ▲ ▼ ändert man die Reihenfolge, mit ✕ löscht man eine Ebene. |
+| **Material** | *Farbgruppen*: Farbe von Haut, Accessoires, Krallen/Zähnen (horn), Nase/Maul (akzent) und Augen, jeweils mit matt ↔ glänzend, Leuchten usw. *Ebenen* in **zwei Bereichen** (Teil F): **Körper-Ebenen** (Haut + Bedeckung, nie Accessoires; Maske = Körperzonen, „ohne“, oben/unten, fleckiger Rand, Körper-Farbgruppen) und darunter **Accessoire-Ebenen – liegen immer obenauf** (Maske = „gilt für: alle / Typen / Einträge“ + oben/unten + fleckiger Rand). Typen in beiden: Verlauf, Muster, Risse (Glut, Frost … mit Leuchten und Puls), Überzug (Staub, Asche …), Nässe, Rim-Licht. Mit ▲ ▼ ändert man die Reihenfolge, mit ✕ löscht man eine Ebene. |
 | **Accessoires** | Pro Eintrag zuerst die **Zonen** wählen („Wählen…“, z. B. `buckel`, `schulter_l`), dann den **Typ** (Basaltbrocken, Steinplatte, Felszacke) und die Einstellungen: Anzahl, Größe (in cm angezeigt), Größen-Zufall, Ausrichtung, Neigung, Einsinken, Seed („Neu würfeln“ = andere Verteilung). Bei `_l`-Zonen setzt **Spiegeln** automatisch das Gegenstück rechts. Unten wählt man einen Typ und klickt „Accessoire hinzufügen“. |
 | **Datei & Kennzahlen** | Name, **Umgebungs-Gruppe** (z. B. `H lebensfeindlich`, `D stein`) und Biom, Budget-Klasse, Seed der Variante, „Freigegeben“. Darunter die Kennzahlen: Tris (Basis + Accessoires), Materialien, Texturen, Knochen. Ganz unten steht, ob die gebackene Fassung noch aktuell ist. |
 
@@ -74,7 +76,7 @@ Unity_Creature_Test/Assets/
     VkBatch.cs                  Selbstprüfung headless (Bilder + Sitz-Messung)
   VariantKit/
     Scripts/VariantStatur.cs    Laufzeit-Komponente (Assembly „VariantKit.Runtime“): Knochen-Statur nach der Animation
-    Shaders/VariantLayered.shader  „VariantKit/Layered“: Farbgruppen + bis zu 8 Ebenen, Built-in RP, Surface-Shader
+    Shaders/VariantLayered.shader  „VariantKit/Layered“: Farbgruppen + bis zu 8 Körper- und 4 Accessoire-Ebenen (Teil F), Built-in RP
     Generated/Bases/<Name>/     Kopien der Basis-FBX + Texturen (erzeugt, nicht versioniert)
     Baked/<Name>/               gebackene Varianten (erzeugt, nicht versioniert; Spec 6.2)
 ```
@@ -103,7 +105,8 @@ procedural/bausteine/make_bausteine.py                   Baustein-Bibliothek (Bl
    Gewichte des Ansatzpunkts (baryzentrisch aus dem Dreieck, auf 4 Knochen gekürzt). `knochen` = 100 % am stärksten Knochen,
    `haut` = jeder Vertex die Gewichte des nächsten Hautpunkts.
 5. **Zusammenführen**: Basis + Teile → 1 Mesh, 1 Submesh, gleiche Bindeposen. Zusatzkanäle: TEXCOORD2 Farbgruppe/Zufall,
-   TEXCOORD3 Ruhe-Position im Körperraum (Muster kleben am Körper), TEXCOORD4 Ruhe-Normale, TEXCOORD5/6 Masken der 8 Ebenen.
+   TEXCOORD3 Ruhe-Position im Körperraum (Muster kleben am Körper), TEXCOORD4 Ruhe-Normale, TEXCOORD5/6 Masken der 8 Körper-Ebenen
+   (seit Teil F: TEXCOORD2.w = Eintrags-Nummer der Accessoires für die Accessoire-Ebenen).
 6. **Material**: Shader „VariantKit/Layered“, alle Werte als Material-Parameter (Farbgruppen `_G0..8*`, Ebenen `_L0..7*`).
 7. **Statur K/G** (Knochenlängen): Komponente `VariantStatur` – Beine, Pranken, Kopf, Schwanz gleichmäßig skaliert mit Ausgleich
    am Kind; Rumpf- und Halslänge über Verschieben der Kinder entlang der Knochenachse; Spurbreite und Bodenhöhe als Versatz.
@@ -419,3 +422,91 @@ Schritt C13 (Markierung), nicht Teil von G14.
 - Die Startwerte der Komponente sind Platzhalter, der Nutzer stellt sie ein. Kurzes Fell (5 % der Größe) bewegt sich
   naturgemäß wenig. Deutlich sichtbar sind lange Teile (Gehänge, Gesichtsfell, lange Zotteln).
 - Bei URP/HDRP: SRP-Batcher-taugliche Übergabe statt MaterialPropertyBlock (siehe E4).
+
+---
+
+## Teil F – Zwei Ebenen-Gruppen: Körper und Accessoires (2026-11-22)
+
+### F1. Kurzanleitung (ohne 3D-Erfahrung)
+Reiter **Material** im Unity-Fenster, unter den Farbgruppen:
+
+| Bereich | wirkt auf | Maske |
+|---|---|---|
+| **Körper-Ebenen** (max. 8) | Haut und Bedeckung (Fell, Stacheln …), **nie** auf Accessoires | Zonen, „ohne“, oben/unten, fleckiger Rand, Körper-Farbgruppen |
+| **Accessoire-Ebenen – liegen immer obenauf** (max. 4) | nur Accessoires | **„gilt für“**: alle Accessoires, oder Typen (z. B. `kristall`) und/oder einzelne Einträge (z. B. `eis_kamm`), dazu oben/unten und fleckiger Rand im Teil |
+
+1. Unten im Bereich **Accessoire-Ebenen** einen Typ wählen (z. B. `risse`) → **„Accessoire-Ebene hinzufügen“**.
+2. Bei **„gilt für“** auf **Wählen…** klicken: „alle Accessoires“ oder unter *Typen* / *Einträge* abhaken. Angeboten wird
+   nur, was in der Variante vorkommt. Trifft die Ebene nichts, erscheint eine gelbe Warnung.
+3. Die Körper-Ebenen bleiben wie bisher. Wählt man dort **alle Zonen ab**, wirkt die Ebene nirgends (Anzeige „– keine“).
+   Fehlt das Feld ganz, gilt „ganzer_koerper (Standard)“.
+
+Beispiel (Testvariante `temp/mg_work/test/32_rimehide_bear/varianten/mg_test_platten_kristall.variant.json`):
+Körper-Ebene Glutrisse, Accessoire-Ebene `platten_matt` (Überzug Staub, gilt für Typ `steinplatte`), Accessoire-Ebene
+`kristall_leuchten` (Risse/Adern arkan, Leuchten 5, gilt für Typ `kristall`). 1 Material, wie immer.
+
+**Alte Dateien:** Dateien im Format 1 laden weiter. Das Fenster zeigt dann einen blauen Hinweis („… umgestellt, N
+Accessoire-Ebenen angelegt“) und einen `*` am Speichern-Knopf. Erst „Speichern“ schreibt Format 2.
+
+### F2. Ursache des gemeldeten Fehlers (belegt)
+`VkLayerBatch.Diagnose` (`temp/mg_diag/diagnose.txt`, Bilder `temp/mg_diag/*.png`), alter Code:
+- Accessoire-Vertices hatten keine eigene Maske, sondern bekamen den Masken-Wert der Haut **an ihrem Ansatzpunkt** (für alle
+  Vertices des Teils). Weiche Zonenränder, Lücken zwischen den Zonen und das multiplikative „ohne“ ließen dort Reste stehen:
+  Slagback mit allen Einzelzonen in „ohne“ → Körper im Mittel 0,13, Basaltbrocken an der Schulter 0,67, am Kruppe-Cluster
+  bis 0,88 → das ganze Teil glühte weiter. Nur die Farbgruppe filterte.
+- `VkBuilder.Build` ersetzte eine **leere** Zonen-Liste durch `ganzer_koerper` → „alle Zonen abwählen“ änderte gar nichts
+  (Messwerte identisch zum Original).
+- Dass es „einmal klappte“, hing an der Reihenfolge/Farbgruppe der Ebenen, nicht an einer Regel.
+
+### F3. Technik
+- **Datei (Format 2):** `material.ebenen` (Körper) und `material.ebenen_accessoires` (Accessoires, Feld `ziel` = `"alle"`
+  oder `{typen, eintraege}`), Spec 4.3. Presets A–I tragen ebenfalls Format 2. `templates/umgebungs_gruppen/_v1/` ist die
+  eingefrorene Fassung 1 der Presets – nur zum Lesen alter Varianten, nicht bearbeiten.
+- **Vertex-Kanäle:** `TEXCOORD2.w` = 1 Basis · 0 Bedeckung · −(1 + n) Accessoire-Eintrag n (Reihenfolge der aktiven
+  Einträge der aufgelösten Liste). `TEXCOORD5/6` (Zonen-Masken der Körper-Ebenen) sind bei Accessoires 0.
+- **Shader** (`VariantLayers.cginc`, gemeinsam für Vorschau `VariantKit/Layered` und Backen `Hidden/VariantKit/Bake`):
+  `VKLayer()` rechnet eine Ebene, zwei Schleifen: Körper-Ebenen `_L0.._L7` (nur Nicht-Accessoire), danach
+  Accessoire-Ebenen `_A0.._A3` (nur Accessoire, Bit-Tabelle `_A#M.y`, −1 = alle). Die Rechnung jeder Ebene ist unverändert.
+- **Spiel-Shader** `VariantKit/Baked`: Rim pro Gruppe getrennt – Farbe + Breite als Vertex-Farbe im Spiel-Mesh, Stärke ×
+  Maske in Maske A (`_RimAn` schaltet). Puls: weiter ein Wert pro Material (erste pulsierende Risse-Ebene, Körper vor
+  Accessoires). Prefabs mit Rim, die vor 0.4.0 gebacken wurden, zeigen ihr Rim erst nach erneutem Backen.
+- **Migration** `VkSpec.MigrateMaterialV1` (Begründung in Spec 4.3): alte Ebenen → Körper-Ebenen (gleiche id), für jede
+  alte Ebene, die sichtbar auf Accessoires wirkte, eine Accessoire-Ebene mit gleicher id und gleichen Werten (gleicher
+  Seed), Ziel „alle“ bzw. die getroffenen Einträge. Blender (`vk_json.py`) liest Format 1 gegen `_v1/`, normalisiert
+  `ebenen_accessoires` bei Format 2 und schreibt byte-gleich zu Unity.
+- **Fenster:** `VariantKitWindow` – zwei Listen (`LayerList`), „gilt für“ (`ZielField`), Migrations-Hinweis. Fehlt der
+  Vorschau-Shader (Shader-Fehler oder Editor-Start vor dem Import), zeigt das Fenster eine Meldung statt einer
+  Null-Exception; die Datei bleibt geladen.
+
+### F4. Selbstprüfung
+```
+temp/mg_work/run.sh <log> VariantKit.VkLayerBatch.Diagnose -vkVariants "<a;b>" -vkShots <ordner>
+temp/mg_work/run.sh <log> VariantKit.VkLayerBatch.Run -vkVariants "<a;b>" -vkTest <testvariante> -vkShots <ordner>
+temp/mg_work/run.sh <log> VariantKit.VkLayerBatch.Migrate [-vkSave] -vkVariants "<a;b>"
+temp/mg_work/run.sh <log> VariantKit.VkBatch.Run -vkBlender -vkVariants "<a;b>" -vkShots <ordner>   (Backen + Vorschau↔gebacken)
+python temp/mg_work/cmp.py temp/mg_vorher temp/mg_nachher                                            (Vorher/Nachher)
+```
+Alle Prüfungen auf Kopien (`temp/mg_work/vorher|nachher/…/mg_<id>`), die Originale bleiben unberührt.
+
+Ergebnis 2026-11-22 (`temp/mg_pruefung/pruefung_ebenen.txt`, Bilder `temp/mg_pruefung/PRUEF_*.png`):
+
+| Prüfung | Ergebnis |
+|---|---|
+| (a) Slagback/Cragplate, alle Körper-Ebenen auf Zonen `[]` bzw. „ohne ganzer_koerper“ | Bild **pixelgleich** (0,00) zu „Körper-Ebenen aus“; Körper-Ebenen an↔aus ändern Accessoire-Pixel 0,12 / 0,01 (nur Kantenglättung an der Silhouette), Körper-Pixel 3,9 / 0,2; Accessoire-Ebenen an↔aus ändern Körper-Pixel 0,00 |
+| (b) Testvariante | Glutrisse: Körper 3,46 · Platten 0,09 · Kristalle 0,00 — Platten matt: Körper 0,00 · Platten 19,35 · Kristalle 0,00 — Kristall leuchtend: Körper 0,00 · Platten 0,00 · Kristalle 94,05 (mittlere Abweichung 0..255) |
+| (c) Vorschau ↔ gebacken (wie M2) | Slagback 1,4 · Cragplate 1,5 · Quillback 0,5 · Eisriese 0,9 · Ravine-Test (Bär) 1,2 · Ravine-Test (Stalker) 0,4 · Testvariante 1,2 |
+| (d) Vorher/Nachher nach Migration (8 Ansichten je Variante, gebacken + Vorschau + Fenster) | Slagback 0,02 · Cragplate 0,02 · Quillback ≤ 0,01 · Eisriese 0,00 · Ravine-Test (Bär) 0,00 · Ravine-Test (Stalker) 0,00 – kein Pixel > 8 |
+| (e) Gegenprobe CreatureImporter (Projekt-Kopie, `CreatureImporter.Batch`) | 14 Kreaturen, Boden-, Clip-, Dangle- und PLAY-Zeilen identisch zu G14 (`temp/mg_work/imp_new.txt` gegen `temp/g14_work/imp_new.txt`), alle 106 Prüfbilder pixelgleich; Kopie gelöscht |
+
+### F5. Limits und Reste
+- Körper-Ebenen max. 8, Accessoire-Ebenen max. 4 (Shader-Slots), je Typ 2× pro Gruppe, `naesse`/`rim` 1× pro Gruppe.
+- Gezielt wählbar: die ersten 24 Accessoire-Einträge einer Variante (Bits im float); „alle“ gilt für jede Anzahl.
+- Puls: ein Wert pro gebackenem Material (wie bisher). Zwei verschieden pulsierende Ebenen sehen gebacken gleich schnell aus.
+- Migration ist eine Näherung der alten Ansatzpunkt-Maske ohne weiche Ränder; in allen vorhandenen Dateien ohne sichtbaren
+  Unterschied. Ziele aus der Migration stehen als Einträge/„alle“, nicht als Typen (in den Presets von Hand auf Typen gesetzt:
+  `geologisch` sinter_ringe → `sinterplatte`, `kueste` salz_kanten → `seepocken`).
+- Blender zeigt Material-Ebenen weiterhin nicht (E6).
+- Bär-Varianten Slagback, Cragplate, Quillback sind auf Format 2 umgestellt (nur Kopfzeilen geändert, Look gleich). Ihr
+  `_gebaut.quell_hash` passt dadurch nicht mehr → das Fenster meldet „veraltet – neu backen“ (einmal Backen genügt).
+- Eisriese und die Testdateien des Nutzers (`ravine_test_01` Bär und Ravine Stalker) sind absichtlich NICHT umgeschrieben
+  (ungespeicherte Arbeit des Nutzers). Sie laden über die Migration; beim nächsten Speichern im Fenster werden sie Format 2.

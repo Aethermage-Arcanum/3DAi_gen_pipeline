@@ -2,10 +2,12 @@
 // Built-in Render Pipeline (wie das Testprojekt), Surface-Shader, kein Plugin.
 //   Farbgruppen (haut, accessoire_a, horn, akzent, augen …): Farbe, Farbe 2 + Farb-Zufall pro Teil, Rauheit, Detail
 //     (wie stark die Tripo-Textur durchscheint), Helligkeits-Zufall pro Facette, Leuchten, Glasig (falsche Transparenz).
-//   Ebenen (max. 8, Reihenfolge = Liste): verlauf, muster, risse (Glut/Frost … mit Emission + Puls), ueberzug, naesse, rim.
-//   Masken: Zonen pro Vertex (aus C#, TEXCOORD5/6), Gruppen-Filter, „oben“ und „rauschen“ pro Pixel.
+//   Zwei Ebenen-Gruppen (Reihenfolge = Liste): Körper-Ebenen (max. 8, nur Haut + Bedeckung, Masken: Zonen pro Vertex aus C#
+//     TEXCOORD5/6, Farbgruppen-Filter) und darüber Accessoire-Ebenen (max. 4, nur Accessoires, Ziel = alle oder bestimmte
+//     Einträge über die Eintrags-Nummer in TEXCOORD2.w). Typen: verlauf, muster, risse (Glut/Frost … mit Emission + Puls),
+//     ueberzug, naesse, rim. „oben“ und „rauschen“ wirken in beiden Gruppen pro Pixel.
 // Vertex-Daten (VkBuilder.Combine):
-//   TEXCOORD2 = (Gruppe hell, Gruppe dunkel | Farb-Zufall Teil, Zufall pro Teil, 1 = Basis / 0 = Accessoire)
+//   TEXCOORD2 = (Gruppe hell, Gruppe dunkel | Farb-Zufall Teil, Zufall pro Teil, w: 1 = Basis · 0 = Bedeckung · −(1+n) = Accessoire-Eintrag n)
 //   TEXCOORD3 = Ruhe-Position im Körperraum / Kreaturgröße (x vorn, y oben, z links), w = Höhe im Teil 0..1 (Ansatz → Spitze)
 //   TEXCOORD4 = Ruhe-Normale im Körperraum
 //   TEXCOORD1 + TANGENT = Nachschwingen (G14, VariantSwing.cginc): Beweglichkeit, Weichheit, Slot/Phase, Länge, Teil-Achse
@@ -105,6 +107,30 @@ Shader "VariantKit/Layered"
         _L7A ("Werte A", Vector) = (0,0,0,0)
         _L7B ("Werte B", Vector) = (0,0,0,0)
         _L7M ("Staerke, Gruppen-Bits, oben, rauschen", Vector) = (0,0,0,0)
+        [Header(Accessoire Ebene 0)] _A0T ("Typ, Art/Mischung, Richtung, -", Vector) = (0,0,0,0)
+        _A0C ("Farbe + Intensitaet", Vector) = (0,0,0,0)
+        _A0D ("Farbe B", Vector) = (0,0,0,0)
+        _A0A ("Werte A", Vector) = (0,0,0,0)
+        _A0B ("Werte B", Vector) = (0,0,0,0)
+        _A0M ("Staerke, Eintraege-Bits (minus 1 = alle), oben, rauschen", Vector) = (0,0,0,0)
+        [Header(Accessoire Ebene 1)] _A1T ("Typ, Art/Mischung, Richtung, -", Vector) = (0,0,0,0)
+        _A1C ("Farbe + Intensitaet", Vector) = (0,0,0,0)
+        _A1D ("Farbe B", Vector) = (0,0,0,0)
+        _A1A ("Werte A", Vector) = (0,0,0,0)
+        _A1B ("Werte B", Vector) = (0,0,0,0)
+        _A1M ("Staerke, Eintraege-Bits (minus 1 = alle), oben, rauschen", Vector) = (0,0,0,0)
+        [Header(Accessoire Ebene 2)] _A2T ("Typ, Art/Mischung, Richtung, -", Vector) = (0,0,0,0)
+        _A2C ("Farbe + Intensitaet", Vector) = (0,0,0,0)
+        _A2D ("Farbe B", Vector) = (0,0,0,0)
+        _A2A ("Werte A", Vector) = (0,0,0,0)
+        _A2B ("Werte B", Vector) = (0,0,0,0)
+        _A2M ("Staerke, Eintraege-Bits (minus 1 = alle), oben, rauschen", Vector) = (0,0,0,0)
+        [Header(Accessoire Ebene 3)] _A3T ("Typ, Art/Mischung, Richtung, -", Vector) = (0,0,0,0)
+        _A3C ("Farbe + Intensitaet", Vector) = (0,0,0,0)
+        _A3D ("Farbe B", Vector) = (0,0,0,0)
+        _A3A ("Werte A", Vector) = (0,0,0,0)
+        _A3B ("Werte B", Vector) = (0,0,0,0)
+        _A3M ("Staerke, Eintraege-Bits (minus 1 = alle), oben, rauschen", Vector) = (0,0,0,0)
     }
     SubShader
     {
