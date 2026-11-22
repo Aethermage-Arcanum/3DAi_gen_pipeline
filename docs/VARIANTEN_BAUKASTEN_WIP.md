@@ -1,21 +1,20 @@
 # Varianten-Baukasten M1 – Arbeitsstand (WIP, Build-Agent)
 
-Nur Notizbuch für den Fall, dass das Token-Limit zuschlägt. Die Nutzer-Anleitung steht in `VARIANTEN_BAUKASTEN.md`.
+Notizbuch für den Fall, dass das Token-Limit zuschlägt. Die Nutzer-Anleitung + Entwickler-Notiz steht in `VARIANTEN_BAUKASTEN.md`.
 
-## Plan / Stand
-- [ ] Bausteine per Blender: `procedural/bausteine/make_bausteine.py` → `<typ>.fbx/.glb/.json` (basaltbrocken, steinplatte, felszacke)
-- [ ] Zonen-Definition `rigging/quadruped_zonen.json` (Unity rechnet die Zonen in M1 aus Gewichten + Lage)
-- [ ] Presets `templates/umgebungs_gruppen/lebensfeindlich.json`, `stein.json`
-- [ ] Unity: `Assets/Editor/VariantKit/*.cs` (Fenster, JSON, Platzierung, Builder, Backen, Batch), `Assets/VariantKit/` (Shader, Statur-Komponente)
-- [ ] Varianten `creatures/32_rimehide_bear/varianten/slagback_bear.variant.json`, `cragplate_bear.variant.json`
-- [ ] Batch-Selbstprüfung, Bilder `temp/vk_shots/`
-- [ ] Gegenprobe CreatureImporter (Kopie unter `temp/vk_unitycopy`)
-- [ ] Doku `docs/VARIANTEN_BAUKASTEN.md`
+## Stand 2026-11-22: M1 fertig, nicht committet (Zwischenstand Commit 8eaf196)
+- [x] Bausteine per Blender: `procedural/bausteine/make_bausteine.py` → `<typ>.fbx/.glb/.json` (basaltbrocken, steinplatte, felszacke, je 3 Formen, 14–40 Tris)
+- [x] Zonen-Definition `rigging/quadruped_zonen.json`
+- [x] Presets `templates/umgebungs_gruppen/lebensfeindlich.json` (H), `stein.json` (D)
+- [x] Unity `Assets/Editor/VariantKit/*.cs` + `Assets/VariantKit/` (Shader, VariantStatur), eigene asmdefs
+- [x] Varianten `creatures/32_rimehide_bear/varianten/slagback_bear|cragplate_bear.variant.json` (+ `.instanzen.json`), gebacken
+- [x] Batch-Selbstprüfung `VariantKit.VkBatch.Run`, Bilder `temp/vk_shots/` (`*_vergleich.png`, `*_bewegung.png`)
+- [x] Gegenprobe CreatureImporter in einer Projekt-Kopie: 14 Kreaturen, alle Clips bewegen sich, Bodenwerte identisch
+- [x] Doku `docs/VARIANTEN_BAUKASTEN.md`
 
-## Entscheidungen (Abweichungen von der Spec, begründet)
-- JSON mit eigenem kleinem Parser/Schreiber in C# (kein Newtonsoft-Paket nötig, feste Feldreihenfolge, 3 Nachkommastellen).
-- Zonen rechnet in M1 Unity (C#) aus Skin-Gewichten + Lage entlang der Wirbelsäule + Flächenrichtung; Definition als JSON statt TOML.
-- Statur-S-Regler (Shape Keys) werden in M1 direkt beim Zusammenbau ins Mesh gerechnet (kein Blendshape nötig), K-Regler über
-  Knochen-Skalierung mit Ausgleich am Kind (Komponente `VariantStatur`, LateUpdate) – auch im gebackenen Prefab.
-- Material-Ebenen bleiben in M1 Shader-Parameter (Masken pro Vertex aus C#), kein Textur-Backen.
-- Bausteine: zusätzlich zu FBX/GLB liegen die Meshes im `<typ>.json` (achsen-eindeutig), Unity liest das JSON.
+## Hinweise für die nächste Session
+- Batch immer mit **Unity 6000.3.28f1** (Version des Projekts). Ein Lauf mit 15f1 hatte `ProjectVersion.txt` umgeschrieben
+  (zurückgesetzt). Hilfsskript: `temp/vk_work/run_batch.sh`.
+- Statur-Testvariante (starke Werte): `temp/vk_statur/statur_test.variant.json` (`-vkVariants <pfad>`).
+- Sitz der Accessoires in Bewegung: ±2–5 cm an Buckel/Rücken/Unterarm (große, stark gebogene Dreiecke). Kandidaten für M2:
+  feinere Haut unter den Andock-Zonen oder Bindung `haut` für große Platten.

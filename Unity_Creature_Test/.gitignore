@@ -17,3 +17,9 @@ Assets/Creatures/
 Assets/Creatures.meta
 Assets/CreatureViewer/Generated/
 Assets/CreatureViewer/Generated.meta
+
+# Varianten-Baukasten: Basis-Kopien und gebackene Varianten (jederzeit neu erzeugbar, Spec 6.2)
+Assets/VariantKit/Generated/
+Assets/VariantKit/Generated.meta
+Assets/VariantKit/Baked/
+Assets/VariantKit/Baked.meta

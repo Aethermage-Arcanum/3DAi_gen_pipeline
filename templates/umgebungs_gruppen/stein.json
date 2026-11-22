@@ -1,0 +1,65 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "stein",
+  "buchstabe": "D",
+  "name": "Steinlandschaften (Mesa/Tafelberge, Salzwueste)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen.",
+  "bedeckung": {
+    "haut": { "typ": "leder", "rauheit": 0.9, "falten": 0.2, "narben": 0.0, "skala": 0.05 },
+    "lagen": []
+  },
+  "accessoires": [
+    {
+      "id": "stein_seiten", "typ": "steinplatte", "formen": ["stein_a", "stein_b", "stein_c"],
+      "zonen": ["schulter_l", "oberschenkel_l"], "spiegeln": true, "asymmetrie": 0.2, "verteilung": "streuen", "anzahl": 2,
+      "groesse": 0.17, "groesse_zufall": 0.3, "streckung": [1.2, 1.0, 1.0], "abstand_min": 0.02,
+      "ausrichtung": "normale", "neigung": -10, "drehung_zufall": 40, "kipp_zufall": 8, "einsinken": 0.3,
+      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
+    },
+    {
+      "id": "fels_kamm", "typ": "felszacke", "formen": ["zacke_a", "zacke_b", "zacke_c"],
+      "zonen": ["rueckenlinie"], "spiegeln": false, "verteilung": "reihe", "anzahl": 9, "von": 0.15, "bis": 0.85, "reihen": 1,
+      "groesse": 0.14, "groesse_zufall": 0.3, "groesse_verlauf": [0.6, 1.0, 0.5], "streckung": [1.0, 1.0, 1.0], "abstand_min": 0.02,
+      "ausrichtung": "normale", "neigung": -20, "drehung_zufall": 50, "kipp_zufall": 10, "einsinken": 0.3,
+      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#8A7A70", "rauheit": 0.9, "helligkeit_zufall": 0.08, "detail": 0.5 },
+      "accessoire_a": { "farbe": "#77777A", "farbe_2": "#9A6A48", "verlauf": "keiner", "farb_zufall": 0.35, "rauheit": 0.95, "detail": 0.6, "helligkeit_zufall": 0.12 },
+      "horn": { "farbe": "#2A2628", "rauheit": 0.6 },
+      "akzent": { "farbe": "#1E1B1A", "rauheit": 0.7 },
+      "augen": { "farbe": "#C08A3A", "leuchten": 0.0 }
+    },
+    "ebenen": [
+      {
+        "id": "schatten_unten", "typ": "verlauf", "an": true, "richtung": "oben_unten", "farbe_a": "#FFFFFF", "farbe_b": "#B0A49C",
+        "mischung": "multiplizieren", "mitte": 0.45, "weichheit": 0.6, "staerke": 0.5,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut"] }
+      },
+      {
+        "id": "gesteinsschichten", "typ": "muster", "an": true, "art": "streifen", "farbe": "#5E5A58", "skala": 0.025, "dichte": 0.35,
+        "kontrast": 0.35, "richtung": "quer", "verzerrung": 0.4, "mischung": "ueberlagern", "seed": null, "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["accessoire_a"] }
+      },
+      {
+        "id": "staub", "typ": "ueberzug", "an": true, "art": "staub", "farbe": "#B8A890", "menge": 0.25, "kanten": 0.5,
+        "rauschen_skala": 0.06, "rauheit": 1.0, "seed": null, "staerke": 0.8,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["haut", "accessoire_a"] }
+      }
+    ]
+  },
+  "effekte": { "element": "erde", "partikel": ["staub"] },
+  "biome": {
+    "mesa": { "material": { "farbgruppen": { "accessoire_a": { "farbe_2": "#A8603C" } } } },
+    "salzwueste": {
+      "material": {
+        "farbgruppen": { "accessoire_a": { "farbe": "#A8A6A2", "farbe_2": "#E8E4DC" } },
+        "ebenen": [ { "id": "staub", "farbe": "#F0ECE4", "menge": 0.35 } ]
+      }
+    }
+  }
+}

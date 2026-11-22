@@ -35,9 +35,9 @@ TYPEN = {
         "basalt_c": {"ecken": 7, "blockig": 0.85, "dicke": 0.48, "streckung": [1.0, 0.95], "seed": 37},
     },
     "steinplatte": {
-        "stein_a": {"ecken": 6, "dicke": 0.16, "woelbung": 0.10, "kantenfase": 0.10, "seed": 5},
-        "stein_b": {"ecken": 5, "dicke": 0.20, "woelbung": 0.14, "kantenfase": 0.14, "seed": 17},
-        "stein_c": {"ecken": 7, "dicke": 0.13, "woelbung": 0.06, "kantenfase": 0.08, "seed": 29},
+        "stein_a": {"ecken": 6, "dicke": 0.26, "woelbung": 0.12, "kantenfase": 0.10, "seed": 5},
+        "stein_b": {"ecken": 5, "dicke": 0.30, "woelbung": 0.15, "kantenfase": 0.14, "seed": 17},
+        "stein_c": {"ecken": 7, "dicke": 0.22, "woelbung": 0.08, "kantenfase": 0.08, "seed": 29},
     },
     "felszacke": {
         "zacke_a": {"kanten": 4, "schlankheit": 0.42, "bruchkante": 0.25, "spitze_versatz": 0.12, "seed": 3},

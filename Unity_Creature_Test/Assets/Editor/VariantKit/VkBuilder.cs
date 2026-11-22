@@ -166,7 +166,7 @@ namespace VariantKit
         }
 
         // ------------------------------------------------------------------ Schicht 3: Platzierung (Unity, Spec 3.3)
-        struct Cand { public int tri; public Vector3 bary, pos, nrm; public float mask; }
+        public struct Cand { public int tri; public Vector3 bary, pos, nrm; public float mask; }
 
         static Vector3 Lerp3(Vector3[] a, int t, int[] tris, Vector3 w) => a[tris[t * 3]] * w.x + a[tris[t * 3 + 1]] * w.y + a[tris[t * 3 + 2]] * w.z;
 
@@ -558,6 +558,9 @@ namespace VariantKit
             return ColorUtility.TryParseHtmlString(h, out var c) ? c : def;
         }
 
+        /// <summary>Hex-Farben sind sRGB; im Linear-Farbraum (z. B. später URP) umrechnen, damit die Farbe stimmt.</summary>
+        static Vector4 Lin(Color c, float a) { if (QualitySettings.activeColorSpace == ColorSpace.Linear) c = c.linear; return new Vector4(c.r, c.g, c.b, a); }
+
         static int Idx(string v, params string[] opts) { int i = Array.IndexOf(opts, v); return i < 0 ? 0 : i; }
 
         public static void ApplyMaterial(Material mat, VkBase b, VkDoc doc, VkBuildResult res)
@@ -575,8 +578,8 @@ namespace VariantKit
                 var c = Hex(o.S("farbe", VkSpec.GruppenStdFarbe[name]), Color.gray);
                 var c2 = Hex(o.S("farbe_2", null), c);
                 float rauh = o.F("rauheit", name == "haut" && haut != null ? haut.F("rauheit", 0.8f) : 0.8f);
-                mat.SetVector($"_G{g}C", new Vector4(c.r, c.g, c.b, o.F("leuchten", 0)));
-                mat.SetVector($"_G{g}D", new Vector4(c2.r, c2.g, c2.b, o.F("farb_zufall", 0)));
+                mat.SetVector($"_G{g}C", Lin(c, o.F("leuchten", 0)));
+                mat.SetVector($"_G{g}D", Lin(c2, o.F("farb_zufall", 0)));
                 mat.SetVector($"_G{g}P", new Vector4(rauh, o.F("detail", 0.5f), o.F("helligkeit_zufall", 0.08f), o.S("verlauf", "keiner") == "ansatz_spitze" ? 1 : 0));
                 mat.SetVector($"_G{g}Q", new Vector4(o.F("glasig", 0), 0, 0, 0));
             }
@@ -603,13 +606,13 @@ namespace VariantKit
                         case "verlauf":
                             T = new Vector4(1, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"), Idx(e.S("richtung", "oben_unten"), "oben_unten", "vorn_hinten", "ansatz_spitze"), 0);
                             var ca = Hex(e.S("farbe_a", "#FFFFFF"), Color.white); var cb = Hex(e.S("farbe_b", "#808080"), Color.gray);
-                            C = new Vector4(ca.r, ca.g, ca.b, 0); C2 = new Vector4(cb.r, cb.g, cb.b, 0);
+                            C = Lin(ca, 0); C2 = Lin(cb, 0);
                             A = new Vector4(e.F("mitte", 0.5f), e.F("weichheit", 0.5f), 0, 0);
                             break;
                         case "muster":
                             T = new Vector4(2, Idx(e.S("mischung", "ueberlagern"), "multiplizieren", "ueberlagern", "ersetzen"),
                                 Idx(e.S("art", "flecken"), "streifen", "flecken", "tupfen", "ringe", "marmor", "zellen"), Idx(e.S("richtung", "quer"), "quer", "laengs", "knochen"));
-                            var cm = Hex(e.S("farbe", "#404040"), Color.gray); C = new Vector4(cm.r, cm.g, cm.b, 0);
+                            var cm = Hex(e.S("farbe", "#404040"), Color.gray); C = Lin(cm, 0);
                             A = new Vector4(e.F("skala", 0.08f), e.F("dichte", 0.5f), e.F("kontrast", 0.7f), e.F("verzerrung", 0.3f));
                             B = new Vector4(seedOff, 0, 0, 0);
                             break;
@@ -617,14 +620,14 @@ namespace VariantKit
                             var el = VkSpec.Elemente.TryGetValue(e.S("element", "glut"), out var ev) ? ev : ("#FF6A10", 4f);
                             var cr = Hex(e.S("farbe", el.Item1), Color.red);
                             T = new Vector4(3, Idx(e.S("art", "risse"), "risse", "adern", "zellfugen", "runen"), 0, 0);
-                            C = new Vector4(cr.r, cr.g, cr.b, e.F("intensitaet", el.Item2));
+                            C = Lin(cr, e.F("intensitaet", el.Item2));
                             A = new Vector4(e.F("breite", 0.005f), e.F("dichte", 0.4f), e.F("verzweigung", 0.5f), e.F("hof", 0.3f));
                             B = new Vector4(e.F("puls_frequenz", 0), e.F("puls_staerke", 0), seedOff, 0);
                             break;
                         case "ueberzug":
                             var cu = Hex(e.S("farbe", "#A89A88"), Color.gray);
                             T = new Vector4(4, Idx(e.S("art", "staub"), "schmutz", "frost", "asche", "schleim", "staub", "moos"), 0, 0);
-                            C = new Vector4(cu.r, cu.g, cu.b, 0);
+                            C = Lin(cu, 0);
                             A = new Vector4(e.F("menge", 0.3f), e.F("kanten", 0.4f), e.F("rauschen_skala", 0.08f), e.F("rauheit", 1f));
                             B = new Vector4(seedOff, 0, 0, 0);
                             break;
@@ -635,7 +638,7 @@ namespace VariantKit
                         case "rim":
                             var ci = Hex(e.S("farbe", "#FFD080"), Color.white);
                             T = new Vector4(6, 0, 0, 0);
-                            C = new Vector4(ci.r, ci.g, ci.b, e.F("intensitaet", 1.5f));
+                            C = Lin(ci, e.F("intensitaet", 1.5f));
                             A = new Vector4(e.F("breite", 0.35f), 0, 0, 0);
                             break;
                     }
