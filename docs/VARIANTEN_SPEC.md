@@ -225,9 +225,23 @@ an bestimmten Körperstellen (3 Eisplatten an der Schulter).
 | `abstand_min` | Mindestabstand zwischen Teilen (Anteil Größe), verhindert Klumpen | 0–0.1 | je Typ |
 | `farbgruppe` | Farbgruppe aus Schicht 4: `bedeckung_1` oder `bedeckung_2` | – | `bedeckung_1` |
 | `schwingen` | 0 = starr, > 0 = schwingt über `dangling` (Stärke) | 0–1 | 0 |
+| `weichheit` | **entschieden (Nutzer 2026-11-22), noch nicht gebaut** (BACKLOG G14). Wie stark die Spitzen nachschwingen: 0 = starr wie Felszacken, 1 = schwingendes Fell. Regler in der Varianten-Datei, im Blender-Panel und im Unity-Fenster. | 0–1 | je Typ: `platten`/`zacken` 0 · `stacheln` 0.1 · `fell` 0.6 · `federn` 0.4 · `fransen`/`tang` 0.9 |
 | `accessoires_aussparen` | unter Accessoires keine Teile erzeugen (spart Tris, nichts sticht durch) | bool | true |
 | `seed` | eigener Seed, sonst abgeleitet (6.2) | int/null | null |
 | `weg_ab_lod` | ab welcher LOD-Stufe die Lage nur noch als Textur existiert | 1–3/null | 2 |
+
+**Nachschwingen im Shader („Foliage-Trick“) – entschieden (Nutzer 2026-11-22), noch nicht gebaut (BACKLOG G14).**
+Beim Erzeugen der Bedeckung (Geometry Nodes, `procedural/variantkit_blender/`) bekommt jedes Teil einen
+Beweglichkeitswert pro Vertex: Wurzel 0, Spitze 1 (z. B. in der Vertex-Farbe oder einem UV-Kanal, wird beim Backen
+mitgenommen). Der Shader verbiegt die Spitzen auf der GPU, skaliert mit `weichheit`, aus drei Quellen: **Trägheit**
+(Beschleunigung bzw. Geschwindigkeit des Ansatz-Knochens → Nachschwingen beim Anlaufen, Bremsen, Drehen),
+**Wackeln** (leichtes Rauschen bzw. Wind) und **Stöße** (kurzer Impuls bei Slam oder Hit über Clip-Events). Keine Physik,
+keine Zusatz-Knochen, Kosten praktisch null auch bei vielen Gegnern. Baut auf dem `_DANGLING`-Prinzip auf
+(`rigging/dangling.py`, `Creature/Standard Dangling`) und gilt in `VariantKit/Layered` (Vorschau) wie in `VariantKit/Baked`
+(Spiel), weiterhin 1 Material. Schwingende Accessoires (`bewegung: schwingt`, z. B. `moosfransen`, `tang`, `gehaenge`,
+`kette`) nutzen denselben Weg mit ihrem Typ-Standard. Wie `weichheit` und das bisherige `schwingen` zusammengehen
+(ersetzen oder Stärke × Weichheit), klärt der Bau. **Nicht** dafür: Spring Bones (später, nur für wenige große Teile wie
+Mähnen-Strähnen) und echte Haar-/Stoff-Physik (verworfen, zu teuer).
 
 ### 2.3 Haut (nur Shader, 0 Tris)
 

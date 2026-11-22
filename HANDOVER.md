@@ -1,4 +1,4 @@
-# Handover (Stand 2026-11-20)
+# Handover (Stand 2026-11-20, Nächste Schritte + Git + Baukasten: 2026-11-22)
 
 Für die nächste Session lesen, in dieser Reihenfolge:
 1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer** (Hauptchat erkundet/schreibt nichts selbst, alles über Subagenten, Kontext sparen), Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
@@ -36,9 +36,13 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 - **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
 - **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
 - **Noch keine Modelle (17, geprüft 2026-11-20: kein `raw/generate_model.glb`):** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen. Das wären 17 × 110 = 1.870 Credits. Die 155 Credits reichen für 1 Modell, und das ist für den Rimehide Bear vorgesehen (G10). Die Void Manifestation hat ein altes Modell und soll neu gemacht werden. Die Prompts für alle sind fertig.
-- **Git:** Abgeschlossene Schritte sind committet (vor der Backlog-Bereinigung zuletzt `5f94528`). Laufende C15-Arbeit ist noch nicht committet. Push nur mit Freigabe des Nutzers.
+- **Varianten-Baukasten (G9):** M1 ✅ (87ff233, Unity-Fenster, Ebenen-Shader, Backen, Slagback + Cragplate), M2 ✅ (5f7466c, Blender-Panel mit Live-Reglern, Bedeckung per Geometry Nodes, „In Blender bauen“, Textur-Backen, Presets A B C E F G I, 15 Bausteintypen). Anleitung `docs/VARIANTEN_BAUKASTEN.md`, Reste in BACKLOG G9 bzw. `docs/VARIANTEN_BAUKASTEN_WIP.md`.
+- **Git:** Abgeschlossene Schritte sind committet, zuletzt `5f7466c` (Varianten-Baukasten M2). Push nur mit Freigabe des Nutzers.
 
-## Nächste Schritte (Priorität des Nutzers: erst neue Skelette, dann Muster)
+## Nächste Schritte
+0. 🔜 **ZUERST (Nutzer 2026-11-22): G14 Nachschwingen der Bedeckung im Shader („Foliage-Trick“).** Bedeckungsteile bekommen beim Erzeugen (Geometry Nodes) einen Beweglichkeitswert pro Vertex (Wurzel 0, Spitze 1), der Shader verbiegt die Spitzen auf der GPU aus Trägheit (Ansatz-Knochen), Wackeln (Rauschen/Wind) und Stößen (Clip-Events). Neuer Regler `weichheit` pro Lage (Spec 2.2). Gilt für `VariantKit/Layered` und `VariantKit/Baked`, bleibt 1 Material, keine Physik, keine Zusatz-Knochen. Nimmt die M2-Reste zu `schwingen` und hängenden Gehängen mit; C13 (Moos Bog Warden) danach. Spring Bones nur später für wenige große Teile, echte Haar-/Stoff-Physik verworfen. Spezifikation: BACKLOG G14. Ein Bau-Agent.
+
+Danach die bisherige Reihenfolge (Priorität des Nutzers: erst neue Skelette, dann Muster):
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
 2. ✅ **G7 fertig** (73990c3): Ordner heißen `creatures/NN_name/`, IDs und Exportnamen ohne Nummer.
 3. ✅ **`winged` fertig** (Commit 38ce1c7): Cinder Wyvern 14 (winged/drake, bleibt zweibeinig – Nutzer 2026-11-20) und Bonepicker Vulture 15 (winged/bird), je 14 Clips, Death nur Platzhalter. Bewegung muss der Nutzer noch per Roh-GIFs abnehmen. Reste (Vorschau-Kamera, Feueratem, Geier-Hinterzehe) in BACKLOG G12; echte Fledermaus = G11 (Todo, nicht vorziehen).
@@ -49,7 +53,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
    - ⏸ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
 6. **Offene Fragen an den Nutzer:** Alle stehen gesammelt in `BACKLOG.md` → „❓ Offene Fragen an den Nutzer“ (Q1–Q9, je mit Fundstelle). Darunter fallen: Raptor-Arme (A11), Schwanz des Raptors im Attack, Sohlen bei Wolf und Echse, Bog Warden (Slam und Walk), Oasis Gulper v1/v2 (G5), Test der zweistufigen Prompts (A10), die 16 Ergänzungen (G2), die Bären-Varianten (G10) sowie die Abnahme der Roh-GIFs von winged (G6) und C14.
-7. **G9, nach den Skeletten:** Prompt-Schritt Varianten-Brainstorming + Varianten-Baukasten (Geometry Nodes).
+7. **G9:** Prompt-Schritt Varianten-Brainstorming ✅, Varianten-Baukasten M1 ✅ (87ff233) und M2 ✅ (5f7466c). Offene Reste siehe BACKLOG G9; Nachschwingen → G14 (oben, zuerst).
 
 ## Ablauf pro Kreatur
 0. **Varianten zuerst (neue Kreaturen, Entscheidung 2026-11-20, BACKLOG G8 d/G9):** 5–6 Varianten brainstormen, Gemeinsames = Basis-Kreatur (nur sie geht ohne variable Details zu Tripo), Unterschiede → Tönung / Anbauteile (Geometry Nodes) / Proportions-Slider / Shader + Partikel in Unity; starke Silhouetten-Abweichung = eigene Basis-Kreatur; alle Varianten teilen Rig + Clips. Bestehende Modelle bleiben (eingebrannte Details, Varianten nur Tönung + Anbauteile). **Prompt-Schritt und Baukasten sind noch nicht gebaut** (nach den Skeletten); bis dahin Brainstorming von Hand mit dem Nutzer. Details: README „Ablauf“.
