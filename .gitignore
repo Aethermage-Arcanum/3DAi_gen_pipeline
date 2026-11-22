@@ -45,3 +45,6 @@ creatures/*/rig/build_manifest.json
 creatures/*/rig/fingerprint.json.gz
 creatures/*/style_tests/*/build_manifest.json
 creatures/*/style_tests/*/fingerprint.json.gz
+
+# Varianten-Baukasten: Bedeckung aus Blender (reproduzierbar mit procedural/variantkit_blender/vk_headless.py -- bauen)
+creatures/*/output/varianten/

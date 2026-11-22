@@ -7,7 +7,7 @@ namespace VariantKit
     /// Eine Stelle für alles, damit Fenster, Builder und Batch dieselben Zahlen benutzen.</summary>
     public static class VkSpec
     {
-        public const string ToolVersion = "0.1.0";
+        public const string ToolVersion = "0.2.0";
         public const int FormatVersion = 1;
 
         // ------------------------------------------------------------------ Schicht 1: Statur (Spec 1.2 / 1.3)
@@ -88,6 +88,22 @@ namespace VariantKit
             ["basaltbrocken"] = new TypStd { zonen = new[] { "buckel", "ruecken_mitte", "kruppe", "schulter_l" }, verteilung = "cluster", anzahl = 1, groesse = 0.13f },
             ["steinplatte"] = new TypStd { zonen = new[] { "stirn", "schulter_l", "unterarm_l", "oberschenkel_l", "ruecken_mitte" }, verteilung = "streuen", anzahl = 2, groesse = 0.12f },
             ["felszacke"] = new TypStd { zonen = new[] { "rueckenlinie" }, verteilung = "reihe", anzahl = 11, groesse = 0.10f },
+            // M2 (Spec 3.4 + 5.3), Startwerte – Formen kommen aus der Baustein-Werkbank (Blender)
+            ["kristall"] = new TypStd { zonen = new[] { "buckel", "ruecken_mitte" }, verteilung = "cluster", anzahl = 1, groesse = 0.05f },
+            ["eiszacke"] = new TypStd { zonen = new[] { "kopf_oben" }, verteilung = "kranz", anzahl = 7, groesse = 0.06f },
+            ["dorn"] = new TypStd { zonen = new[] { "schulter_l", "nacken" }, verteilung = "streuen", anzahl = 3, groesse = 0.06f },
+            ["horn"] = new TypStd { zonen = new[] { "kopf_oben" }, verteilung = "einzeln", anzahl = 1, groesse = 0.12f },
+            ["eisplatte"] = new TypStd { zonen = new[] { "schulter_l", "unterarm_l", "oberschenkel_l" }, verteilung = "cluster", anzahl = 1, groesse = 0.12f },
+            ["knochenplatte"] = new TypStd { zonen = new[] { "ruecken_mitte", "schulter_l" }, verteilung = "streuen", anzahl = 3, groesse = 0.08f },
+            ["sinterplatte"] = new TypStd { zonen = new[] { "ruecken_mitte", "schulter_l" }, verteilung = "streuen", anzahl = 2, groesse = 0.12f },
+            ["moospolster"] = new TypStd { zonen = new[] { "ruecken_gesamt", "schulter_l", "oberschenkel_l" }, verteilung = "streuen", anzahl = 2, groesse = 0.18f },
+            ["pilze"] = new TypStd { zonen = new[] { "buckel", "schulter_l", "kruppe" }, verteilung = "cluster", anzahl = 1, groesse = 0.05f },
+            ["grasbueschel"] = new TypStd { zonen = new[] { "ruecken_gesamt" }, verteilung = "streuen", anzahl = 4, groesse = 0.04f },
+            ["moosfransen"] = new TypStd { zonen = new[] { "flanke_l" }, verteilung = "streuen", anzahl = 4, groesse = 0.08f },
+            ["gehaenge"] = new TypStd { zonen = new[] { "flanke_l", "nacken" }, verteilung = "streuen", anzahl = 2, groesse = 0.10f },
+            ["seepocken"] = new TypStd { zonen = new[] { "ruecken_gesamt", "flanke_l" }, verteilung = "cluster", anzahl = 2, groesse = 0.035f },
+            ["tang"] = new TypStd { zonen = new[] { "flanke_l" }, verteilung = "streuen", anzahl = 3, groesse = 0.10f },
+            ["kette"] = new TypStd { zonen = new[] { "flanke_l", "nacken" }, verteilung = "streuen", anzahl = 2, groesse = 0.12f },
         };
 
         /// <summary>Accessoire-Eintrag mit allen Standardwerten (Spec 3.3) für einen Typ.</summary>
@@ -156,15 +172,15 @@ namespace VariantKit
         };
 
         // ------------------------------------------------------------------ Budget (Spec 6.4, E5)
-        public class Budget { public int tris, accessoires, textur, materialien; }
+        public class Budget { public int tris, accessoires, bedeckung, textur, materialien; }
 
         public static Budget BudgetFuer(string klasse)
         {
             switch (klasse)
             {
-                case "elite": return new Budget { tris = 9000, accessoires = 2500, textur = 1024, materialien = 2 };
-                case "boss": return new Budget { tris = 15000, accessoires = 4000, textur = 2048, materialien = 3 };
-                default: return new Budget { tris = 6000, accessoires = 1500, textur = 1024, materialien = 2 };
+                case "elite": return new Budget { tris = 9000, accessoires = 2500, bedeckung = 3000, textur = 1024, materialien = 2 };
+                case "boss": return new Budget { tris = 15000, accessoires = 4000, bedeckung = 5000, textur = 2048, materialien = 3 };
+                default: return new Budget { tris = 6000, accessoires = 1500, bedeckung = 2000, textur = 1024, materialien = 2 };
             }
         }
 

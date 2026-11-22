@@ -48,6 +48,7 @@ namespace VariantKit
         int newPreset;
         string addAccTyp = "basaltbrocken";
         int addLayerTyp = 2;
+        VkBlenderJob job;          // „In Blender bauen“ (läuft im Hintergrund)
 
         void OnEnable()
         {
@@ -79,6 +80,7 @@ namespace VariantKit
             if (dt < 1f / 30f) return;
             lastTick = now;
             if (playing) time += Mathf.Min(dt, 0.1f) * speed;
+            if (job != null && !job.done && job.Poll() && job.done) BlenderFinished();
             if (rebuild && now - lastChange > 0.12) Rebuild();
             Repaint();
         }
@@ -218,14 +220,71 @@ namespace VariantKit
                     int tris = res?.mesh != null ? res.mesh.triangles.Length / 3 : 0;
                     var a = VkSpec.StaturAmpel(doc.resolved.Obj("statur"), out _);
                     Lamp(a); GUILayout.Label("Statur", GUILayout.Width(40));
-                    Lamp(tris > bud.tris || (res?.trisAcc ?? 0) > bud.accessoires ? VkSpec.Ampel.Rot : VkSpec.Ampel.Gruen);
+                    Lamp(tris > bud.tris || (res?.trisAcc ?? 0) > bud.accessoires || (res?.trisCover ?? 0) > bud.bedeckung ? VkSpec.Ampel.Rot : VkSpec.Ampel.Gruen);
                     GUILayout.Label($"Budget: {tris:N0} / {bud.tris:N0} Tris · 1 Material", GUILayout.ExpandWidth(true));
+                    GUI.enabled = job == null || job.done;
+                    GUI.backgroundColor = new Color(0.6f, 0.8f, 1f);
+                    if (GUILayout.Button(new GUIContent("In Blender bauen", "Speichert die Datei, baut die Bedeckung (Fell, Stacheln, Platten) in Blender und lädt sie automatisch"), GUILayout.Width(118), GUILayout.Height(20))) BuildInBlender();
                     GUI.backgroundColor = new Color(1f, 0.85f, 0.5f);
-                    if (GUILayout.Button("Backen", GUILayout.Width(80), GUILayout.Height(20))) Bake();
+                    if (GUILayout.Button("Backen", GUILayout.Width(70), GUILayout.Height(20))) Bake();
                     GUI.backgroundColor = Color.white;
+                    GUI.enabled = true;
                 }
+                CoverStatus();
                 if (!string.IsNullOrEmpty(status)) EditorGUILayout.LabelField(status, EditorStyles.miniLabel);
             }
+        }
+
+        void CoverStatus()
+        {
+            if (job != null && !job.done)
+            {
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    var r = GUILayoutUtility.GetRect(100, 18, GUILayout.ExpandWidth(true));
+                    EditorGUI.ProgressBar(r, job.progress, $"Blender: {job.text} ({(DateTime.Now - job.started).TotalSeconds:0} s)");
+                    if (GUILayout.Button("Abbrechen", GUILayout.Width(80))) { job.Cancel(); status = "Blender abgebrochen"; }
+                }
+                return;
+            }
+            if (job != null && job.done && !job.ok)
+                EditorGUILayout.HelpBox("„In Blender bauen“ fehlgeschlagen: " + job.error + "\nLog: " + job.LogPath(), MessageType.Error);
+            if (res == null || !res.coverWanted) return;
+            if (res.cover == null) EditorGUILayout.HelpBox("Bedeckung noch nicht gebaut – „In Blender bauen“ drücken.", MessageType.Info);
+            else if (!res.coverFresh) EditorGUILayout.HelpBox("Bedeckung veraltet (Lagen in der Datei geändert) – „In Blender bauen“.", MessageType.Warning);
+            else EditorGUILayout.LabelField($"Bedeckung: {res.trisCover:N0} Tris ({string.Join(", ", res.trisCoverLage.Select(kv => $"Lage {kv.Key}: {kv.Value:N0}"))}) · aus Blender", EditorStyles.miniLabel);
+        }
+
+        /// <summary>„In Blender bauen“: Datei + Instanzen-Liste speichern → Blender headless baut die Bedeckung → Auto-Import.</summary>
+        void BuildInBlender()
+        {
+            if (doc.dirty || !File.Exists(doc.path))
+            {
+                var err = doc.Save();
+                if (err != null)
+                {
+                    if (!EditorUtility.DisplayDialog("Datei geändert", err + "\n\nTrotzdem überschreiben?", "Überschreiben", "Abbrechen")) return;
+                    doc.Save(true);
+                }
+                RefreshFiles();
+                fileIdx = Mathf.Max(0, files.IndexOf(doc.path));
+            }
+            try { if (res != null) VkBake.WriteInstances(cur, doc, res, doc.InstancesPath); }
+            catch (Exception ex) { Debug.LogWarning("[VariantKit] Instanzen-Liste: " + ex.Message); }
+            job = VkBlenderJob.Start(doc.path);
+            status = job.done ? "Blender: " + job.error : "Blender baut die Bedeckung …";
+        }
+
+        void BlenderFinished()
+        {
+            if (job.ok)
+            {
+                VkCover.Invalidate();
+                status = $"Bedeckung aus Blender geladen ({job.info})";
+                Rebuild();
+            }
+            else status = "Blender-Fehler: " + job.error;
+            Repaint();
         }
 
         bool ConfirmDiscard() => doc == null || !doc.dirty ||
@@ -498,7 +557,6 @@ namespace VariantKit
             var fg = m.Obj("farbgruppen");
             foreach (var g in VkSpec.Gruppen)
             {
-                if (g.StartsWith("bedeckung")) continue;   // Bedeckung kommt mit Meilenstein 2
                 var o = fg.O(g);
                 using (new EditorGUILayout.HorizontalScope())
                 {
@@ -767,6 +825,17 @@ namespace VariantKit
                 if (GUILayout.Button("Neu würfeln", GUILayout.Width(90))) { R["seed"] = (long)UnityEngine.Random.Range(1, 999999); Changed(); }
             }
             T(R, "freigegeben", "Freigegeben (Nutzer-Abnahme)", false);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUI.BeginChangeCheck();
+                var bp = EditorGUILayout.DelayedTextField(new GUIContent("Blender (Pfad)", "für „In Blender bauen“"), VkBlenderJob.BlenderPath);
+                if (EditorGUI.EndChangeCheck()) VkBlenderJob.BlenderPath = bp;
+                if (GUILayout.Button("…", GUILayout.Width(24)))
+                {
+                    var f = EditorUtility.OpenFilePanel("blender.exe wählen", Path.GetDirectoryName(VkBlenderJob.BlenderPath), "exe");
+                    if (!string.IsNullOrEmpty(f)) VkBlenderJob.BlenderPath = f;
+                }
+            }
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Kennzahlen (Live)", EditorStyles.boldLabel);
@@ -776,10 +845,10 @@ namespace VariantKit
                 int tris = res.mesh.triangles.Length / 3;
                 Row("Tris gesamt", $"{tris:N0} / {bud.tris:N0}", tris <= bud.tris);
                 Row("  davon Basis", $"{res.trisBase:N0}", true);
+                Row("  davon Bedeckung", res.coverWanted ? $"{res.trisCover:N0} / {bud.bedeckung:N0}" + (res.cover == null ? " (nicht gebaut)" : res.coverFresh ? "" : " (veraltet)") : "keine Lage", res.trisCover <= bud.bedeckung);
                 Row("  davon Accessoires", $"{res.trisAcc:N0} / {bud.accessoires:N0} ({res.instances.Count} Teile)", res.trisAcc <= bud.accessoires);
                 Row("Materialien / Draw Calls", "1", true);
-                int tex = Mathf.Max(cur.color ? cur.color.width : 0, cur.normal ? cur.normal.width : 0);
-                Row("Texturen", $"Farbe {(cur.color ? cur.color.width : 0)}², Normal {(cur.normal ? cur.normal.width : 0)}² (Basis)", tex <= bud.textur);
+                Row("Texturen (gebacken)", $"Albedo + Maske (+ Leuchten, + Normal bei Facetten < 1), je {bud.textur}²", true);
                 Row("Knochen", $"{cur.boneNames.Length} (keine zusätzlichen)", true);
                 Row("Vertices", $"{res.mesh.vertexCount:N0}", true);
             }

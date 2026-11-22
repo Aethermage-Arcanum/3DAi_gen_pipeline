@@ -18,6 +18,13 @@ namespace VariantKit
         public float rand, farbZufall, size;
         public float[] layerMask;    // Masken der Material-Ebenen am Ansatzpunkt
         public int vStart, vCount;   // Bereich im kombinierten Mesh
+        // M2: Teil der Bedeckung (Geometrie aus Blender statt Baustein-Bibliothek)
+        public bool cover; public int lage;
+        public Vector3[] cv;         // Vertices im Mesh-Raum (inkl. Statur-Versatz)
+        public Vector3[] cb;         // dieselben im Körperraum / L (Ruhe, für Muster)
+        public float[] ch;           // Höhe im Teil 0..1
+        public int[] ct;             // Dreiecke (lokal)
+        public int Tris => cover ? ct.Length / 3 : VkParts.Get(typ).First(f => f.name == form).tris;
     }
 
     /// <summary>Baustein-Bibliothek: procedural/bausteine/&lt;typ&gt;.json (Meshes in Blender-Koordinaten X vorn, Y links, Z oben).</summary>
@@ -58,6 +65,8 @@ namespace VariantKit
         public List<string> warnings = new List<string>();
         public Dictionary<string, int> trisPerAcc = new Dictionary<string, int>();
         public Vector3[] dv; public Vector3[] dn;  // verformte Basis (Mesh-Raum)
+        public int trisCover; public VkCover cover; public bool coverFresh, coverWanted;
+        public Dictionary<int, int> trisCoverLage = new Dictionary<int, int>();
         public List<JObj> ebenen = new List<JObj>();
     }
 
@@ -86,12 +95,51 @@ namespace VariantKit
                 try { Place(b, doc, acc, r, layerMasks); }
                 catch (Exception ex) { r.warnings.Add($"{acc.S("id", "?")}: {ex.Message}"); }
             }
+            AddCover(b, doc, r);
             r.mesh = Combine(b, r, layerMasks);
             r.trisBase = b.tris.Length / 3;
-            r.trisAcc = r.instances.Sum(i => i.vCount > 0 ? VkParts.Get(i.typ).First(f => f.name == i.form).tris : 0);
-            foreach (var g in r.instances.GroupBy(i => i.acc))
-                r.trisPerAcc[g.Key] = g.Sum(i => VkParts.Get(i.typ).First(f => f.name == i.form).tris);
+            r.trisAcc = r.instances.Where(i => !i.cover).Sum(i => i.vCount > 0 ? i.Tris : 0);
+            r.trisCover = r.instances.Where(i => i.cover).Sum(i => i.Tris);
+            foreach (var g in r.instances.Where(i => i.cover).GroupBy(i => i.lage)) r.trisCoverLage[g.Key] = g.Sum(i => i.Tris);
+            foreach (var g in r.instances.Where(i => !i.cover).GroupBy(i => i.acc))
+                r.trisPerAcc[g.Key] = g.Sum(i => i.Tris);
             return r;
+        }
+
+        // ------------------------------------------------------------------ Schicht 2: Bedeckung aus Blender (M2)
+        /// <summary>Teile der Bedeckung (Blender-Ergebnis) als Instanzen anhängen. Statur S: Versatz des Ansatzpunkts.</summary>
+        static void AddCover(VkBase b, VkDoc doc, VkBuildResult r)
+        {
+            r.coverWanted = VkCover.HasLayers(doc);
+            if (!r.coverWanted) return;
+            VkCover c;
+            try { c = VkCover.Get(b, doc); }
+            catch (Exception ex) { r.warnings.Add("Bedeckung unlesbar: " + ex.Message); return; }
+            r.cover = c;
+            if (c == null) { r.warnings.Add("Bedeckung noch nicht gebaut – Knopf „In Blender bauen“."); return; }
+            r.coverFresh = c.Fresh(doc);
+            if (!r.coverFresh) r.warnings.Add("Bedeckung veraltet (Lagen geändert) – „In Blender bauen“.");
+            foreach (var p in c.parts)
+            {
+                Vector3 d = Lerp3(r.dv, p.tri, b.tris, p.bary) - Lerp3(b.verts, p.tri, b.tris, p.bary);
+                var cv = new Vector3[p.nv]; var cb = new Vector3[p.nv]; var ch = new float[p.nv];
+                for (int k = 0; k < p.nv; k++)
+                {
+                    cb[k] = c.body[p.v0 + k];
+                    cv[k] = b.FromBody(cb[k] * b.L) + d;
+                    ch[k] = c.h[p.v0 + k];
+                }
+                var ct = new List<int>();
+                for (int k = 0; k < c.tris.Length; k += 3)
+                    if (c.tris[k] >= p.v0 && c.tris[k] < p.v0 + p.nv) { ct.Add(c.tris[k] - p.v0); ct.Add(c.tris[k + 1] - p.v0); ct.Add(c.tris[k + 2] - p.v0); }
+                r.instances.Add(new VkInstance
+                {
+                    acc = "bedeckung_" + p.lage, typ = "bedeckung", form = "", zone = "", cover = true, lage = p.lage,
+                    cv = cv, cb = cb, ch = ch, ct = ct.ToArray(), tri = p.tri, bary = p.bary,
+                    pos = Lerp3(r.dv, p.tri, b.tris, p.bary), anchor = p.weights, bindung = "anker", rand = p.rand,
+                    farbgruppe = p.farbgruppe, farbZufall = 0, size = 0.05f,
+                });
+            }
         }
 
         // ------------------------------------------------------------------ Statur Typ S (Formziele) direkt ins Mesh
@@ -490,6 +538,7 @@ namespace VariantKit
             // Haut-Bindung: Dreiecke in der Nähe vorsortieren
             foreach (var inst in r.instances)
             {
+                if (inst.cover) { AddCoverPart(b, inst, layerMasks, V, UV0, G, P, N, M0, M1, BW, T); continue; }
                 var form = VkParts.Get(inst.typ).First(f => f.name == inst.form);
                 inst.vStart = V.Count; inst.vCount = form.v.Length;
                 int g = VkSpec.GruppeIndex(inst.farbgruppe);
@@ -549,6 +598,39 @@ namespace VariantKit
             mesh.RecalculateTangents();
             mesh.RecalculateBounds();
             return mesh;
+        }
+
+        static void AddCoverPart(VkBase b, VkInstance inst, List<float[]> layerMasks, List<Vector3> V, List<Vector2> UV0, List<Vector4> G,
+            List<Vector4> P, List<Vector4> N, List<Vector4> M0, List<Vector4> M1, List<BoneWeight> BW, List<int> T)
+        {
+            inst.vStart = V.Count; inst.vCount = inst.cv.Length;
+            int g = VkSpec.GruppeIndex(inst.farbgruppe);
+            var am = new float[8];
+            for (int li = 0; li < 8; li++)
+                am[li] = li < layerMasks.Count ? layerMasks[li][b.tris[inst.tri * 3]] * inst.bary.x + layerMasks[li][b.tris[inst.tri * 3 + 1]] * inst.bary.y + layerMasks[li][b.tris[inst.tri * 3 + 2]] * inst.bary.z : 0;
+            inst.layerMask = am;
+            for (int k = 0; k < inst.cv.Length; k++)
+            {
+                V.Add(inst.cv[k]);
+                UV0.Add(Vector2.zero);
+                G.Add(new Vector4(g, 0, inst.rand, 0));
+                P.Add(new Vector4(inst.cb[k].x, inst.cb[k].y, inst.cb[k].z, inst.ch[k]));
+                N.Add(Vector4.zero);
+                M0.Add(new Vector4(am[0], am[1], am[2], am[3])); M1.Add(new Vector4(am[4], am[5], am[6], am[7]));
+                BW.Add(inst.anchor);
+            }
+            // Wicklung wie die Basis (Blender und Unity spiegeln die Achsen): Vorzeichen des Volumens um den Ansatz prüfen
+            var cen = inst.pos;
+            double vol = 0;
+            for (int k = 0; k < inst.ct.Length; k += 3)
+                vol += Vector3.Dot(V[inst.vStart + inst.ct[k]] - cen, Vector3.Cross(V[inst.vStart + inst.ct[k + 1]] - cen, V[inst.vStart + inst.ct[k + 2]] - cen));
+            bool flip = Math.Sign(vol) != Math.Sign(b.signedVolumeSign) && Math.Abs(vol) > 1e-12;
+            for (int k = 0; k < inst.ct.Length; k += 3)
+            {
+                T.Add(inst.vStart + inst.ct[k]);
+                T.Add(inst.vStart + inst.ct[k + (flip ? 2 : 1)]);
+                T.Add(inst.vStart + inst.ct[k + (flip ? 1 : 2)]);
+            }
         }
 
         // ------------------------------------------------------------------ Material (Schicht 4)
@@ -725,6 +807,7 @@ namespace VariantKit
             var bp = smr.sharedMesh.bindposes;
             var l2w = smr.transform.localToWorldMatrix;
             int Depth(Transform t) { int d = 0; while (t != null) { d++; t = t.parent; } return d; }
+            foreach (var bt in smr.bones) if (bt != null) bt.localScale = Vector3.one;   // Bindepose hat keine Statur-Skalierung (sonst hängt das Ergebnis vom Vorzustand ab)
             foreach (int i in Enumerable.Range(0, smr.bones.Length).OrderBy(i => Depth(smr.bones[i])))   // Eltern zuerst
             {
                 var m = l2w * bp[i].inverse;

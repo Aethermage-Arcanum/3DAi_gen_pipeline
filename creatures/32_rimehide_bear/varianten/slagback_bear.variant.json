@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
   "format_version": 1,
-  "revision": 8,
+  "revision": 13,
   "id": "slagback_bear",
   "name": "Slagback Bear",
   "basis": "rimehide_bear",
@@ -94,11 +94,12 @@
   },
   "_gebaut": {
     "quell_hash": "sha1:19c008e36dbedf47462ad9ef81196957ece2024e",
-    "datum": "2026-11-22T09:42:02",
-    "werkzeuge": { "unity_varianten": "0.1.0", "bausteine": "0.1.0", "zonen": "1" },
+    "datum": "2026-11-22T10:41:07",
+    "werkzeuge": { "unity_varianten": "0.2.0", "blender_bedeckung": "-", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
     "tris": { "basis": 3944, "bedeckung": 0, "accessoires": 606, "gesamt": 4550 },
     "materialien": 1,
     "texturen": 1024,
+    "textur_dateien": ["SlagbackBear_Albedo.png", "SlagbackBear_Maske.png", "SlagbackBear_Leuchten.png"],
     "statur_ampel": "gruen",
     "budget_ampel": "gruen",
     "dateien": ["Unity_Creature_Test/Assets/VariantKit/Baked/SlagbackBear/SlagbackBear.prefab"]

@@ -11,6 +11,7 @@ namespace VariantKit
     /// <summary>Selbstprüfung headless:
     ///   Unity.exe -batchmode -projectPath Unity_Creature_Test -executeMethod VariantKit.VkBatch.Run -logFile log.txt
     ///   optional: -vkVariants "pfad1;pfad2" (Standard: alle creatures/*/varianten/*.variant.json)  -vkShots &lt;ordner&gt;
+    ///             -vkBlender  (vorher „In Blender bauen“ für Varianten mit Bedeckungs-Lagen, wie der Knopf im Fenster)
     /// Backt jede Variante, rendert ARPG-Bilder (Ruhepose, Walk, Attack2, Seite) und misst, ob die Accessoires in der
     /// Bewegung schweben oder einsinken (Abstand Teil-Unterseite ↔ Haut entlang der Hautnormale, gegen die Ruhepose).</summary>
     public static class VkBatch
@@ -37,10 +38,26 @@ namespace VariantKit
                 {
                     var doc = VkDoc.Load(f);
                     var b = VkBase.Load(doc.resolved.S("basis", ""));
+                    JObj blender = null;
+                    if (Environment.GetCommandLineArgs().Contains("-vkBlender") && VkCover.HasLayers(doc))
+                    {
+                        var pre = VkBuilder.Build(b, doc);
+                        VkBake.WriteInstances(b, doc, pre, doc.InstancesPath);
+                        UnityEngine.Object.DestroyImmediate(pre.mesh);
+                        var t0 = DateTime.Now;
+                        var job = VkBlenderJob.Start(doc.path);
+                        bool ok = job.Wait();
+                        VkCover.Invalidate();
+                        blender = new JObj { ["ok"] = ok, ["sekunden"] = (double)(DateTime.Now - t0).TotalSeconds, ["info"] = job.info, ["fehler"] = job.error };
+                        Debug.Log($"[VariantKit] IN BLENDER BAUEN {doc.Id}: {(ok ? "ok" : "FEHLER " + job.error)} · {job.info} · {(DateTime.Now - t0).TotalSeconds:0.0} s");
+                        if (!ok) throw new Exception("In Blender bauen fehlgeschlagen: " + job.error);
+                    }
                     var r = VkBake.Bake(b, doc);
+                    if (r.build.mesh != null) r.build.mesh.hideFlags = HideFlags.DontUnloadUnusedAsset;   // Vorschau-Mesh für den Vergleich behalten
                     var entry = new JObj
                     {
                         ["id"] = doc.Id, ["prefab"] = r.prefabPath, ["tris"] = (long)r.tris, ["tris_basis"] = (long)r.trisBase, ["tris_accessoires"] = (long)r.trisAcc,
+                        ["tris_bedeckung"] = (long)r.trisCover, ["blender"] = blender, ["atlas_belegt"] = (double)r.tex.atlasFill, ["atlas_kachel_px"] = (double)r.tex.partTexel,
                         ["materialien"] = (long)r.materials, ["texturen"] = r.textures.Cast<object>().ToList(), ["knochen"] = (long)r.bones,
                         ["statur_ampel"] = r.staturAmpel.ToString(), ["budget_ampel"] = r.budgetAmpel.ToString(),
                         ["warnungen"] = r.warnings.Cast<object>().ToList(), ["teile"] = (long)r.build.instances.Count,
@@ -125,13 +142,61 @@ namespace VariantKit
             foreach (var t in new[] { 0.15f, 0.4f, 0.65f }) { SetPose("Walk", t); Shot($"walk_{(int)(t * 100):00}", ViewArpg); }
             foreach (var t in new[] { 0.3f, 0.55f, 0.8f }) { SetPose("Attack2", t); Shot($"attack2_{(int)(t * 100):00}", ViewArpg); }
             SetPose("Attack2", 0.55f); Shot("attack2_55_side", ViewSide);
+            // Vorschau (Ebenen-Shader, ungebacken) gegen gebackene Fassung: eigene Instanz der Basis wie im Fenster, gleiche Kamera
+            var pv = VkBuilder.Build(b, doc);
+            var prevMat = new Material(Shader.Find(VkBake.ShaderName));
+            VkBuilder.ApplyMaterial(prevMat, b, doc, pv);
+            var proot = new GameObject("vorschau");
+            var pinst = (GameObject)UnityEngine.Object.Instantiate(b.model, proot.transform);
+            pinst.transform.localPosition = new Vector3(0, -b.restMinY, 0);
+            var psmr = pinst.GetComponentInChildren<SkinnedMeshRenderer>();
+            psmr.sharedMesh = pv.mesh; psmr.sharedMaterials = new[] { prevMat };
+            var plb = b.smr.localBounds; plb.Expand(b.L * b.meshToMeter * 0.6f); psmr.localBounds = plb;
+            var pst = pinst.AddComponent<VariantStatur>();
+            VkBuilder.ConfigureStatur(pst, b, doc.resolved.Obj("statur"), pinst);
+            go.SetActive(false);
+            var keepModel = model; var keepSt = st;
+            model = pinst; st = pst;
+            SetPose(null, 0);
+            Shot("arpg_rest_vorschau", ViewArpg); Shot("side_rest_vorschau", ViewSide);
+            SetPose("Walk", 0.4f); Shot("walk_40_vorschau", ViewArpg);
+            model = keepModel; st = keepSt;
+            go.SetActive(true);
+            UnityEngine.Object.DestroyImmediate(proot);
+            UnityEngine.Object.DestroyImmediate(prevMat); UnityEngine.Object.DestroyImmediate(pv.mesh);
             RenderTexture.active = null;
             cam.targetTexture = null;
             Shader.SetGlobalFloat("_VKUseTime", 0f);
 
             var sitz = Seating(b, r.build, model, smr, st);
             UnityEngine.Object.DestroyImmediate(go);
+            var cmp = new JObj();
+            foreach (var tag in new[] { "arpg_rest", "side_rest", "walk_40" })
+                cmp[tag] = (double)ImageDiff(Path.Combine(outDir, $"{doc.ExportName}_{tag}.png"), Path.Combine(outDir, $"{doc.ExportName}_{tag}_vorschau.png"));
+            sitz["vergleich_vorschau_gebacken"] = cmp;
+            Debug.Log($"[VariantKit] VERGLEICH {doc.ExportName} gebacken↔Vorschau (mittlere Abweichung 0..255 auf dem Körper): " + string.Join(", ", cmp.Select(kv => $"{kv.Key} {Json.ToF(kv.Value, 0):0.0}")));
             return sitz;
+        }
+
+        /// <summary>Mittlere absolute Abweichung (0..255) zwischen zwei Bildern, nur auf Pixeln, die nicht Hintergrund sind.</summary>
+        public static float ImageDiff(string a, string bPath)
+        {
+            if (!File.Exists(a) || !File.Exists(bPath)) return -1;
+            var ta = new Texture2D(2, 2); ta.LoadImage(File.ReadAllBytes(a));
+            var tb = new Texture2D(2, 2); tb.LoadImage(File.ReadAllBytes(bPath));
+            var pa = ta.GetPixels32(); var pb = tb.GetPixels32();
+            var bg = pa[0];
+            double sum = 0; long n = 0;
+            for (int i = 0; i < Math.Min(pa.Length, pb.Length); i++)
+            {
+                bool fa = Math.Abs(pa[i].r - bg.r) + Math.Abs(pa[i].g - bg.g) + Math.Abs(pa[i].b - bg.b) > 6;
+                bool fb = Math.Abs(pb[i].r - bg.r) + Math.Abs(pb[i].g - bg.g) + Math.Abs(pb[i].b - bg.b) > 6;
+                if (!fa && !fb) continue;
+                sum += (Math.Abs(pa[i].r - pb[i].r) + Math.Abs(pa[i].g - pb[i].g) + Math.Abs(pa[i].b - pb[i].b)) / 3.0;
+                n++;
+            }
+            UnityEngine.Object.DestroyImmediate(ta); UnityEngine.Object.DestroyImmediate(tb);
+            return n > 0 ? (float)(sum / n) : 0;
         }
 
         /// <summary>Sitz der Accessoires in der Bewegung: Unterseite jedes Teils gegen den nächsten Hautpunkt (Ruhepose),
@@ -143,10 +208,11 @@ namespace VariantKit
             var probes = new List<(string acc, int pv, int tri, Vector3 bary, float d0)>();
             foreach (var inst in res.instances)
             {
-                var form = VkParts.Get(inst.typ).First(f => f.name == inst.form);
-                for (int k = 0; k < form.v.Length; k++)
+                var form = inst.cover ? null : VkParts.Get(inst.typ).First(f => f.name == inst.form);
+                int nv = inst.cover ? inst.cv.Length : form.v.Length;
+                for (int k = 0; k < nv; k++)
                 {
-                    if (form.v[k].z > form.height * 0.3f) continue;
+                    if (inst.cover ? inst.ch[k] > 0.3f : form.v[k].z > form.height * 0.3f) continue;
                     int pv = inst.vStart + k;
                     var c = VkBuilder.Closest(b, res.dv, res.dn, mv[pv]);
                     if (c.tri < 0) continue;

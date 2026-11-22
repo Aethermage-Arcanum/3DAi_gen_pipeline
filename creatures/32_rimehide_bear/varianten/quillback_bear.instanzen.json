@@ -1,0 +1,10 @@
+{
+  "format": "kreatur_instanzen",
+  "format_version": 1,
+  "variante": "quillback_bear",
+  "basis": "rimehide_bear",
+  "quell_hash": "sha1:b9fedabcbe27d0ff2336689f9381f299843f4f9f",
+  "werkzeug": "0.2.0",
+  "koordinaten": "Meter, Raum der Basis-FBX: x vorn, y links, z oben (wie Blender), Ursprung = Mesh-Ursprung",
+  "instanzen": []
+}

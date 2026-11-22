@@ -1,0 +1,193 @@
+{
+  "format": "umgebungs_gruppe",
+  "format_version": 1,
+  "gruppe": "kalt",
+  "buchstabe": "E",
+  "name": "Kalt (Taiga, Eiswueste)",
+  "hinweis": "Gruppen-Preset (Spec 5.3). Gleiche Struktur wie die Varianten-Datei, ohne Statur. Gilt fuer jede Kreatur; die Variante speichert nur Abweichungen. Platzhalter-Werte (M2) - Look ueber die Regler einstellen.",
+  "bedeckung": {
+    "haut": { "typ": "glatt", "rauheit": 0.8 },
+    "lagen": [
+      {
+        "id": "fell",
+        "typ": "fell",
+        "an": true,
+        "modus": "geometrie",
+        "anzahl": 450,
+        "laenge": 0.08,
+        "laenge_zufall": 0.3,
+        "laenge_nach_zone": { "nacken": 1.4, "schulter_l": 1.3, "schulter_r": 1.3, "schwanz": 1.3, "gesicht": 0.5, "pfoten": 0.4 },
+        "breite": 0.7,
+        "form": "spitz",
+        "kanten": 3,
+        "kruemmung": 0.4,
+        "richtung": "knochen",
+        "anlege_winkel": 18.0,
+        "richtung_zufall": 15.0,
+        "abstand_min": 0.015,
+        "farbgruppe": "bedeckung_1",
+        "schwingen": 0.0,
+        "accessoires_aussparen": true,
+        "seed": null,
+        "weg_ab_lod": 2,
+        "maske": { "zonen": ["ganzer_koerper"], "ohne": ["schnauze", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.2 }
+      }
+    ]
+  },
+  "accessoires": [
+    {
+      "id": "eis_kamm",
+      "typ": "kristall",
+      "formen": ["kristall_a", "kristall_schlank", "kristall_breit"],
+      "zonen": ["rueckenlinie"],
+      "spiegeln": false,
+      "verteilung": "reihe",
+      "anzahl": 9,
+      "teile": 4,
+      "groesse": 0.16,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 0.8, 1.3],
+      "abstand_min": 0.03,
+      "ausrichtung": "oben",
+      "neigung": -20.0,
+      "drehung_zufall": 60.0,
+      "kipp_zufall": 20.0,
+      "einsinken": 0.3,
+      "bindung": "anker",
+      "bewegung": "starr",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null,
+      "von": 0.12,
+      "bis": 0.72,
+      "reihen": 1,
+      "groesse_verlauf": [0.6, 1.0, 0.45],
+      "auf_bedeckung": 0.6
+    },
+    {
+      "id": "eisplatte_schulter",
+      "typ": "eisplatte",
+      "formen": ["eisplatte_a", "eisplatte_zackig"],
+      "zonen": ["schulter_l"],
+      "spiegeln": true,
+      "verteilung": "cluster",
+      "anzahl": 1,
+      "teile": 3,
+      "groesse": 0.15,
+      "groesse_zufall": 0.35,
+      "streckung": [1.2, 1.0, 0.8],
+      "abstand_min": 0.02,
+      "ausrichtung": "aussen",
+      "neigung": -10.0,
+      "drehung_zufall": 45.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.3,
+      "bindung": "anker",
+      "bewegung": "starr",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null,
+      "asymmetrie": 0.2,
+      "auf_bedeckung": 0.8
+    },
+    {
+      "id": "eiszacken_krone",
+      "typ": "eiszacke",
+      "formen": ["eiszacke_a", "eiszacke_b"],
+      "zonen": ["kopf_oben"],
+      "spiegeln": false,
+      "verteilung": "kranz",
+      "anzahl": 5,
+      "teile": 4,
+      "groesse": 0.05,
+      "groesse_zufall": 0.3,
+      "streckung": [1.0, 1.0, 1.0],
+      "abstand_min": 0.02,
+      "ausrichtung": "normale",
+      "neigung": -15.0,
+      "drehung_zufall": 180.0,
+      "kipp_zufall": 10.0,
+      "einsinken": 0.25,
+      "bindung": "anker",
+      "bewegung": "starr",
+      "farbgruppe": "accessoire_a",
+      "farb_zufall": 0.0,
+      "weg_ab_lod": null,
+      "seed": null,
+      "an": false,
+      "groesse_verlauf": [0.8, 1.2, 0.8]
+    }
+  ],
+  "material": {
+    "stil": { "facetten": 1.0 },
+    "farbgruppen": {
+      "haut": { "farbe": "#C9CED8", "rauheit": 0.85 },
+      "bedeckung_1": { "farbe": "#9AA6BC", "farbe_2": "#F4F6FA", "verlauf": "ansatz_spitze", "helligkeit_zufall": 0.1, "rauheit": 0.9, "detail": 0.4 },
+      "accessoire_a": { "farbe": "#7CC8F0", "farbe_2": "#D8F2FF", "verlauf": "ansatz_spitze", "rauheit": 0.15, "glasig": 0.7, "leuchten": 0.3 },
+      "horn": { "farbe": "#2B2D33", "rauheit": 0.5 },
+      "akzent": { "farbe": "#1F2228", "rauheit": 0.6 },
+      "augen": { "farbe": "#5AB4FF", "leuchten": 0.8 }
+    },
+    "ebenen": [
+      {
+        "id": "kalt_verlauf",
+        "typ": "verlauf",
+        "an": true,
+        "richtung": "oben_unten",
+        "farbe_a": "#FFFFFF",
+        "farbe_b": "#8E9AB0",
+        "mischung": "multiplizieren",
+        "mitte": 0.5,
+        "weichheit": 0.5,
+        "staerke": 0.35,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["haut", "bedeckung_1"] }
+      },
+      {
+        "id": "frost_adern",
+        "typ": "risse",
+        "an": true,
+        "element": "frost",
+        "art": "adern",
+        "farbe": "#E6F7FF",
+        "intensitaet": 0.8,
+        "breite": 0.005,
+        "dichte": 0.4,
+        "verzweigung": 0.5,
+        "hof": 0.3,
+        "puls_frequenz": 0.0,
+        "puls_staerke": 0.0,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "gruppen": ["accessoire_a"] }
+      },
+      {
+        "id": "frost_oben",
+        "typ": "ueberzug",
+        "an": true,
+        "art": "frost",
+        "farbe": "#E8F4FF",
+        "menge": 0.2,
+        "kanten": 0.5,
+        "rauschen_skala": 0.08,
+        "rauheit": 0.6,
+        "seed": null,
+        "staerke": 1.0,
+        "maske": { "zonen": ["ganzer_koerper"], "oben": 0.5, "gruppen": ["bedeckung_1", "horn"] }
+      }
+    ]
+  },
+  "effekte": { "element": "kaelte", "partikel": ["frost_atem"] },
+  "biome": {
+    "eiswueste": {},
+    "taiga": {
+      "material": {
+        "farbgruppen": {
+          "accessoire_a": { "farbe": "#4E7A5A", "farbe_2": "#8AB89A", "glasig": 0.3 },
+          "bedeckung_1": { "farbe": "#7D8478" }
+        }
+      }
+    }
+  }
+}

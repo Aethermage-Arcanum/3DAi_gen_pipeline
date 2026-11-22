@@ -38,15 +38,17 @@ namespace VariantKit
     public class VkBakeResult
     {
         public string prefabPath, meshPath, materialPath, instancesPath;
-        public int trisBase, trisAcc, tris, materials, bones, texSize;
+        public int trisBase, trisAcc, trisCover, tris, materials, bones, texSize;
+        public VkTexBake.Result tex;
         public List<string> textures = new List<string>();
         public VkSpec.Ampel staturAmpel, budgetAmpel;
         public List<string> warnings = new List<string>();
         public VkBuildResult build;
     }
 
-    /// <summary>„Backen“ (Spec 6.3, Meilenstein 1 komplett in Unity): Prefab mit 1 SkinnedMeshRenderer (Körper +
-    /// Accessoires mit Gewichten vom Ansatzpunkt) und 1 Material. Schreibt Instanzen-Liste und _gebaut in die Varianten-Datei.</summary>
+    /// <summary>„Backen“ (Spec 6.3): Prefab mit 1 SkinnedMeshRenderer (Körper + Bedeckung aus Blender + Accessoires, Gewichte vom
+    /// Ansatzpunkt), Material-Ebenen in Texturen gebacken (Albedo, Maske, ggf. Leuchten/Normal) und 1 Material „VariantKit/Baked“.
+    /// Schreibt Instanzen-Liste und _gebaut in die Varianten-Datei.</summary>
     public static class VkBake
     {
         public const string BakedDir = "Assets/VariantKit/Baked";
@@ -70,11 +72,10 @@ namespace VariantKit
             Directory.CreateDirectory(dir);
             AssetDatabase.Refresh();
 
-            res.mesh.name = name;
-            var mesh = Store(res.mesh, r.meshPath = $"{dir}/{name}_mesh.asset");
-            var mat = new Material(Shader.Find(ShaderName)) { name = name };
-            VkBuilder.ApplyMaterial(mat, b, doc, res);
-            mat = Store(mat, r.materialPath = $"{dir}/{name}.mat");
+            var bud0 = VkSpec.BudgetFuer(doc.resolved.S("budget_klasse", "normal"));
+            r.tex = VkTexBake.Bake(b, doc, res, null, dir, name, bud0.textur);
+            var mesh = Store(r.tex.mesh, r.meshPath = $"{dir}/{name}_mesh.asset");
+            var mat = Store(r.tex.material, r.materialPath = $"{dir}/{name}.mat");
 
             var root = new GameObject(name);
             var model = (GameObject)PrefabUtility.InstantiatePrefab(b.model);
@@ -95,11 +96,12 @@ namespace VariantKit
             UnityEngine.Object.DestroyImmediate(root);
 
             // Kennzahlen + Budget (E5)
-            r.trisBase = res.trisBase; r.trisAcc = res.trisAcc; r.tris = mesh.triangles.Length / 3;
+            r.trisBase = res.trisBase; r.trisAcc = res.trisAcc; r.trisCover = res.trisCover; r.tris = mesh.triangles.Length / 3;
             r.materials = 1;
-            foreach (var t in new[] { b.color, b.normal }.Where(t => t != null)) { r.textures.Add($"{t.name} {t.width}²"); r.texSize = Mathf.Max(r.texSize, t.width); }
+            foreach (var t in r.tex.textures) { r.textures.Add($"{Path.GetFileNameWithoutExtension(t)} {r.tex.size}²"); r.texSize = Mathf.Max(r.texSize, r.tex.size); }
             var bud = VkSpec.BudgetFuer(doc.resolved.S("budget_klasse", "normal"));
-            r.budgetAmpel = r.tris > bud.tris || r.trisAcc > bud.accessoires || r.texSize > bud.textur ? VkSpec.Ampel.Rot : VkSpec.Ampel.Gruen;
+            r.budgetAmpel = r.tris > bud.tris || r.trisAcc > bud.accessoires || r.trisCover > bud.bedeckung || r.texSize > bud.textur ? VkSpec.Ampel.Rot : VkSpec.Ampel.Gruen;
+            if (res.coverWanted && (res.cover == null || !res.coverFresh)) r.warnings.Add("Bedeckung fehlt/veraltet – vor dem Backen „In Blender bauen“.");
             r.staturAmpel = VkSpec.StaturAmpel(doc.resolved.Obj("statur"), out _);
 
             // Instanzen-Liste (abgeleitet, Spec 3.3) + _gebaut
@@ -110,10 +112,12 @@ namespace VariantKit
             {
                 ["quell_hash"] = doc.SourceHash(),
                 ["datum"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
-                ["werkzeuge"] = new JObj { ["unity_varianten"] = VkSpec.ToolVersion, ["bausteine"] = parts.Values.Distinct().FirstOrDefault() ?? "-", ["zonen"] = "1" },
-                ["tris"] = new JObj { ["basis"] = (long)r.trisBase, ["bedeckung"] = 0L, ["accessoires"] = (long)r.trisAcc, ["gesamt"] = (long)r.tris },
+                ["werkzeuge"] = new JObj { ["unity_varianten"] = VkSpec.ToolVersion, ["blender_bedeckung"] = res.cover?.werkzeug ?? "-",
+                    ["bausteine"] = string.Join(",", parts.Values.Distinct()), ["zonen"] = "2" },
+                ["tris"] = new JObj { ["basis"] = (long)r.trisBase, ["bedeckung"] = (long)r.trisCover, ["accessoires"] = (long)r.trisAcc, ["gesamt"] = (long)r.tris },
                 ["materialien"] = (long)r.materials,
                 ["texturen"] = (long)r.texSize,
+                ["textur_dateien"] = r.tex.textures.Select(t => (object)Path.GetFileName(t)).ToList(),
                 ["statur_ampel"] = r.staturAmpel == VkSpec.Ampel.Gruen ? "gruen" : r.staturAmpel == VkSpec.Ampel.Gelb ? "gelb" : "rot",
                 ["budget_ampel"] = r.budgetAmpel == VkSpec.Ampel.Gruen ? "gruen" : "rot",
                 ["dateien"] = new List<object> { "Unity_Creature_Test/" + r.prefabPath },
@@ -122,19 +126,19 @@ namespace VariantKit
             if (err != null) r.warnings.Add("Varianten-Datei nicht gespeichert: " + err);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log($"[VariantKit] GEBACKEN {name}: {r.tris} Tris (Basis {r.trisBase} + Accessoires {r.trisAcc}), 1 Material, " +
+            Debug.Log($"[VariantKit] GEBACKEN {name}: {r.tris} Tris (Basis {r.trisBase} + Bedeckung {r.trisCover} + Accessoires {r.trisAcc}), 1 Material, " +
                       $"Texturen {string.Join(", ", r.textures)}, {r.bones} Knochen, Statur {r.staturAmpel}, Budget {r.budgetAmpel} → {r.prefabPath}");
             return r;
         }
 
         /// <summary>&lt;id&gt;.instanzen.json: Meter im Raum der Basis-FBX (x vorn, y links, z oben = Blender-Objektraum),
         /// Ursprung = Ursprung des Meshes. Matrix-Spalten = Baustein-Achsen (X Länge, Y Breite, Z Höhe) inkl. Größe.</summary>
-        static void WriteInstances(VkBase b, VkDoc doc, VkBuildResult res, string path)
+        public static void WriteInstances(VkBase b, VkDoc doc, VkBuildResult res, string path)
         {
             float s = b.meshToMeter;
             List<object> V(Vector3 v) => new List<object> { (double)Vector3.Dot(v, b.fwd) * s, (double)Vector3.Dot(v, b.left) * s, (double)Vector3.Dot(v, b.up) * s };
             var list = new List<object>();
-            foreach (var i in res.instances)
+            foreach (var i in res.instances.Where(x => !x.cover))
             {
                 var w = i.anchor;
                 var anker = new JObj();

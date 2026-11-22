@@ -393,6 +393,18 @@ namespace VariantKit
             string seite = z.S("seite", null);
             float sw = z.F("schwelle", 0f);
             float soft = b.L * 0.025f;
+            // M2: nur oberhalb eines Knochenpunkts („ueber“), nicht an bestimmten Knochen („nicht_knochen“)
+            var nk = z.Strs("nicht_knochen").Select(b.Bone).Where(x => x >= 0).ToList();
+            float nw = z.F("nicht_gewicht", 0.5f);
+            bool hasUeber = z.S("ueber", null) is string ue && b.Bone(ue.Split(':')[0]) >= 0;
+            float yUeber = 0;
+            if (hasUeber)
+            {
+                var parts = z.S("ueber", "").Split(':');
+                int ub = b.Bone(parts[0]);
+                float ut = parts.Length > 1 ? float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture) : 0f;
+                yUeber = b.Body(Vector3.LerpUnclamped(b.boneHead[ub], b.boneTail[ub], ut)).y;
+            }
             for (int v = 0; v < m.Length; v++)
             {
                 var p = b.verts[v]; var bp = b.Body(p); var nb = b.BodyDir(b.normals[v]);
@@ -406,6 +418,8 @@ namespace VariantKit
                     float top = b.TorsoTop(bp.x), bot = b.TorsoBot(bp.x);
                     r *= Band(hh[0], hh[1], (bp.y - bot) / Mathf.Max(1e-6f, top - bot), 0.06f);
                 }
+                if (nk.Count > 0 && r > 0) r *= 1 - Smooth(nw - 0.15f, nw + 0.15f, b.WeightSum(v, nk));
+                if (hasUeber && r > 0) r *= Smooth(yUeber - soft, yUeber + soft, bp.y);
                 if (seite != null && r > 0)
                 {
                     float side = bp.z >= 0 ? 1 : -1;

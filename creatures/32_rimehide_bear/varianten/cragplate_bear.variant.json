@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
   "format_version": 1,
-  "revision": 9,
+  "revision": 17,
   "id": "cragplate_bear",
   "name": "Cragplate Bear",
   "basis": "rimehide_bear",
@@ -130,11 +130,12 @@
   },
   "_gebaut": {
     "quell_hash": "sha1:f716b45ccc71cf16043f78ab33ef11e15bdd1f17",
-    "datum": "2026-11-22T09:41:55",
-    "werkzeuge": { "unity_varianten": "0.1.0", "bausteine": "0.1.0", "zonen": "1" },
+    "datum": "2026-11-22T10:40:57",
+    "werkzeuge": { "unity_varianten": "0.2.0", "blender_bedeckung": "-", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
     "tris": { "basis": 3944, "bedeckung": 0, "accessoires": 738, "gesamt": 4682 },
     "materialien": 1,
     "texturen": 1024,
+    "textur_dateien": ["CragplateBear_Albedo.png", "CragplateBear_Maske.png"],
     "statur_ampel": "gruen",
     "budget_ampel": "gruen",
     "dateien": ["Unity_Creature_Test/Assets/VariantKit/Baked/CragplateBear/CragplateBear.prefab"]

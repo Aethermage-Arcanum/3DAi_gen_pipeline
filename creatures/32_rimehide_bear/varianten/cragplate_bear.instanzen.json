@@ -4,7 +4,7 @@
   "variante": "cragplate_bear",
   "basis": "rimehide_bear",
   "quell_hash": "sha1:f716b45ccc71cf16043f78ab33ef11e15bdd1f17",
-  "werkzeug": "0.1.0",
+  "werkzeug": "0.2.0",
   "koordinaten": "Meter, Raum der Basis-FBX: x vorn, y links, z oben (wie Blender), Ursprung = Mesh-Ursprung",
   "instanzen": [
     {
