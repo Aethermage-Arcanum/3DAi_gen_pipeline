@@ -171,7 +171,8 @@ public static class CreatureImporter
         var danglePath = $"{dir}/{name}_dangling.json";
         var shader = Shader.Find(File.Exists(danglePath) ? DangleShader : "Standard");
         var existing = AssetDatabase.LoadAssetAtPath<Material>(matPath);
-        if (existing != null && AssetDatabase.FindAssets("t:Texture2D", new[] { texDir }).Length > 0)
+        if (existing != null && AssetDatabase.IsValidFolder(texDir)
+            && AssetDatabase.FindAssets("t:Texture2D", new[] { texDir }).Length > 0)
         {
             // Texturen + Material schon da → nur Shader (Markierung neu/entfernt) und Wabbel-Startwerte nachziehen
             if (existing.shader != shader)
