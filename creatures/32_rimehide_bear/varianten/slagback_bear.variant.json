@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
   "format_version": 1,
-  "revision": 13,
+  "revision": 20,
   "id": "slagback_bear",
   "name": "Slagback Bear",
   "basis": "rimehide_bear",
@@ -55,7 +55,6 @@
       "kipp_zufall": 15,
       "einsinken": 0.35,
       "bindung": "anker",
-      "bewegung": "starr",
       "farbgruppe": "accessoire_a",
       "farb_zufall": 0.2,
       "weg_ab_lod": 2,
@@ -80,7 +79,6 @@
       "kipp_zufall": 5,
       "einsinken": 0.4,
       "bindung": "anker",
-      "bewegung": "starr",
       "farbgruppe": "accessoire_a",
       "farb_zufall": 0.0,
       "weg_ab_lod": null,
@@ -93,9 +91,9 @@
     ]
   },
   "_gebaut": {
-    "quell_hash": "sha1:19c008e36dbedf47462ad9ef81196957ece2024e",
-    "datum": "2026-11-22T10:41:07",
-    "werkzeuge": { "unity_varianten": "0.2.0", "blender_bedeckung": "-", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
+    "quell_hash": "sha1:cc4d42eb2997e6b0ae6ed28c8192498884467b65",
+    "datum": "2026-11-22T14:57:49",
+    "werkzeuge": { "unity_varianten": "0.3.0", "blender_bedeckung": "-", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
     "tris": { "basis": 3944, "bedeckung": 0, "accessoires": 606, "gesamt": 4550 },
     "materialien": 1,
     "texturen": 1024,

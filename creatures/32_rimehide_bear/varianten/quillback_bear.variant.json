@@ -1,7 +1,7 @@
 {
   "format": "kreatur_variante",
   "format_version": 1,
-  "revision": 4,
+  "revision": 12,
   "id": "quillback_bear",
   "name": "Quillback-Buddler",
   "basis": "rimehide_bear",
@@ -54,7 +54,6 @@
         "richtung_zufall": 12.0,
         "abstand_min": 0.02,
         "farbgruppe": "bedeckung_1",
-        "schwingen": 0.0,
         "accessoires_aussparen": true,
         "seed": null,
         "weg_ab_lod": 2,
@@ -77,7 +76,6 @@
         "richtung_zufall": 10.0,
         "abstand_min": 0.008,
         "farbgruppe": "bedeckung_2",
-        "schwingen": 0.0,
         "accessoires_aussparen": true,
         "seed": null,
         "weg_ab_lod": 1,
@@ -115,9 +113,9 @@
     ]
   },
   "_gebaut": {
-    "quell_hash": "sha1:b9fedabcbe27d0ff2336689f9381f299843f4f9f",
-    "datum": "2026-11-22T10:41:00",
-    "werkzeuge": { "unity_varianten": "0.2.0", "blender_bedeckung": "0.2.0", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
+    "quell_hash": "sha1:c0a6f93c6f45abe8c584568d568e2c48a4d66812",
+    "datum": "2026-11-22T14:58:38",
+    "werkzeuge": { "unity_varianten": "0.3.0", "blender_bedeckung": "0.2.0", "bausteine": "0.1.0,0.2.0", "zonen": "2" },
     "tris": { "basis": 3944, "bedeckung": 2508, "accessoires": 0, "gesamt": 6452 },
     "materialien": 1,
     "texturen": 1024,

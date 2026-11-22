@@ -34,6 +34,7 @@ namespace VariantKit
         {
             var V = new List<Vector3>(); src.GetVertices(V);
             var Nn = new List<Vector3>(); src.GetNormals(Nn);
+            var Tg = new List<Vector4>(); src.GetTangents(Tg); if (Tg.Count != V.Count) Tg = Enumerable.Repeat(new Vector4(1, 0, 0, 1), V.Count).ToList();
             var BW = src.boneWeights.ToList();
             var uvs = new List<Vector4>[7];
             for (int c = 0; c < 7; c++) { uvs[c] = new List<Vector4>(); src.GetUVs(c, uvs[c]); if (uvs[c].Count != V.Count) uvs[c] = Enumerable.Repeat(Vector4.zero, V.Count).ToList(); }
@@ -48,7 +49,7 @@ namespace VariantKit
                 for (int kk = 0; kk < 3; kk++)
                 {
                     int ov = T[t * 3 + kk];
-                    V.Add(V[ov]); Nn.Add(Nn[ov]); BW.Add(BW[ov]);
+                    V.Add(V[ov]); Nn.Add(Nn[ov]); Tg.Add(Tg[ov]); BW.Add(BW[ov]);
                     for (int c = 0; c < 7; c++) uvs[c].Add(uvs[c][ov]);
                     atlas.Add(Vector4.zero);
                     newT[t * 3 + kk] = V.Count - 1;
@@ -91,6 +92,7 @@ namespace VariantKit
             var m = new Mesh { name = src.name + "_atlas", indexFormat = V.Count > 65000 ? IndexFormat.UInt32 : IndexFormat.UInt16 };
             m.SetVertices(V);
             m.SetNormals(Nn);
+            m.SetTangents(Tg);
             for (int c = 0; c < 7; c++) m.SetUVs(c, uvs[c]);
             m.SetUVs(7, atlas);
             m.SetTriangles(newT, 0);
@@ -191,7 +193,7 @@ namespace VariantKit
                 ti.mipmapEnabled = true;
                 ti.SaveAndReimport();
             }
-            // Spiel-Mesh: nur Atlas-UV
+            // Spiel-Mesh: Atlas-UV + G14-Nachschwingen (TEXCOORD1, Teil-Achse in der Tangente schwingender Teile)
             var gm = new Mesh { name = name, indexFormat = atlasMesh.indexFormat };
             var v = new List<Vector3>(); atlasMesh.GetVertices(v); gm.SetVertices(v);
             var uvA = new List<Vector4>(); atlasMesh.GetUVs(7, uvA);
@@ -201,6 +203,16 @@ namespace VariantKit
             gm.bindposes = atlasMesh.bindposes;
             var n = new List<Vector3>(); atlasMesh.GetNormals(n); gm.SetNormals(n);
             gm.RecalculateTangents();
+            var sw = new List<Vector4>(); atlasMesh.GetUVs(1, sw);
+            if (sw.Count != v.Count) sw = Enumerable.Repeat(Vector4.zero, v.Count).ToList();
+            gm.SetUVs(1, sw);   // immer schreiben: fehlt der Kanal, liefert die GPU Zufallswerte statt 0
+            if (sw.Any(x => x.y > 0))
+            {
+                var tgA = new List<Vector4>(); atlasMesh.GetTangents(tgA);
+                var tgG = new List<Vector4>(); gm.GetTangents(tgG);
+                for (int i = 0; i < sw.Count; i++) if (sw[i].y > 0) tgG[i] = tgA[i];
+                gm.SetTangents(tgG);
+            }
             gm.RecalculateBounds();
             r.mesh = gm;
             UnityEngine.Object.DestroyImmediate(atlasMesh);

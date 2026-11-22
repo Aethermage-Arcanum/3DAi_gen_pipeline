@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace VariantKit
 {
@@ -7,7 +8,7 @@ namespace VariantKit
     /// Eine Stelle für alles, damit Fenster, Builder und Batch dieselben Zahlen benutzen.</summary>
     public static class VkSpec
     {
-        public const string ToolVersion = "0.2.0";
+        public const string ToolVersion = "0.3.0";   // 0.3.0 = G14 Nachschwingen (weichheit, TEXCOORD1)
         public const int FormatVersion = 1;
 
         // ------------------------------------------------------------------ Schicht 1: Statur (Spec 1.2 / 1.3)
@@ -78,7 +79,8 @@ namespace VariantKit
 
         // ------------------------------------------------------------------ Schicht 3: Accessoires (Spec 3.3 / 3.4)
         public static readonly string[] Verteilungen = { "einzeln", "streuen", "cluster", "reihe", "kranz" };
-        public static readonly string[] Ausrichtungen = { "normale", "oben", "hinten", "aussen", "knochen" };
+        public static readonly string[] Ausrichtungen = { "normale", "oben", "hinten", "aussen", "knochen", "unten" };
+        public static readonly string[] Stellen = { "oben", "rand_unten" };
         public static readonly string[] Bindungen = { "anker", "knochen", "haut" };
 
         public class TypStd { public string[] zonen; public string verteilung; public int anzahl; public float groesse; }
@@ -117,11 +119,71 @@ namespace VariantKit
                 ["spiegeln"] = true, ["asymmetrie"] = 0.2, ["verteilung"] = t.verteilung, ["anzahl"] = (long)t.anzahl, ["teile"] = 4L,
                 ["von"] = 0.1, ["bis"] = 0.8, ["reihen"] = 1L, ["groesse"] = (double)t.groesse, ["groesse_zufall"] = 0.3,
                 ["groesse_verlauf"] = new List<object> { 1.0, 1.0, 1.0 }, ["streckung"] = new List<object> { 1.0, 1.0, 1.0 },
-                ["abstand_min"] = 0.02, ["ausrichtung"] = "normale", ["neigung"] = 0.0, ["drehung_zufall"] = 180.0,
-                ["kipp_zufall"] = 10.0, ["einsinken"] = 0.25, ["bindung"] = "anker", ["bewegung"] = "starr",
+                ["abstand_min"] = 0.02, ["ausrichtung"] = Haengt(typ) ? "unten" : "normale", ["neigung"] = 0.0, ["drehung_zufall"] = 180.0,
+                ["kipp_zufall"] = 10.0, ["einsinken"] = 0.25, ["bindung"] = "anker", ["weichheit"] = (double)WeichStdAcc(typ),
                 ["farbgruppe"] = "accessoire_a", ["farb_zufall"] = 0.0, ["weg_ab_lod"] = null, ["seed"] = null,
             };
             return o;
+        }
+
+        // ------------------------------------------------------------------ G14 Nachschwingen: weichheit (Spec 2.2, 3.3)
+        /// <summary>Standard-Weichheit einer Lage: 0 = starr wie Felszacken, 1 = schwingendes Fell.</summary>
+        public static float WeichStdLage(string typ)
+        {
+            switch (typ)
+            {
+                case "fell": return 0.6f;
+                case "federn": return 0.4f;
+                case "stacheln": return 0.1f;
+                default: return 0f;   // platten
+            }
+        }
+
+        /// <summary>Standard-Weichheit eines Accessoire-Typs (Gehänge schwingen, alles andere ist starr).</summary>
+        public static float WeichStdAcc(string typ)
+        {
+            switch (typ)
+            {
+                case "moosfransen": case "tang": case "gehaenge": return 0.9f;
+                case "kette": return 0.7f;
+                case "barteln": return 0.6f;
+                case "grasbueschel": return 0.5f;
+                default: return 0f;
+            }
+        }
+
+        /// <summary>Gehänge: hängen in der Ruhe nach unten (Ausrichtung „unten“) und folgen beim Neigen der Schwerkraft.</summary>
+        public static bool Haengt(string typ) => typ == "moosfransen" || typ == "tang" || typ == "gehaenge" || typ == "kette";
+
+        public static float WeichheitLage(JObj l) => Mathf.Clamp01(l.F("weichheit", WeichStdLage(l.S("typ", "fell"))));
+        public static float WeichheitAcc(JObj a) => Mathf.Clamp01(a.F("weichheit", WeichStdAcc(a.S("typ", ""))));
+
+        /// <summary>Migration alter Dateien (vor G14): `schwingen` der Lagen und `bewegung`/`schwingen.staerke` der Accessoires
+        /// gehen in `weichheit` auf (ein Feld). Die alten Felder hatten noch keine Wirkung: 0/„starr“ war nur der
+        /// Platzhalter → Typ-Standard; ein Wert &gt; 0 bzw. „schwingt“ wird übernommen. Gilt für Varianten-Dateien und Presets.</summary>
+        public static void Migrate(JObj o)
+        {
+            if (o == null) return;
+            foreach (JObj l in (o.O("bedeckung")?.L("lagen") ?? new List<object>()).OfType<JObj>())
+            {
+                if (!l.Has("schwingen")) continue;
+                float v = l.F("schwingen", 0);
+                l.Remove("schwingen");
+                if (v > 0 && !l.Has("weichheit")) l["weichheit"] = (double)v;
+            }
+            foreach (JObj a in (o.L("accessoires") ?? new List<object>()).OfType<JObj>())
+            {
+                string b = a.Has("bewegung") ? a.S("bewegung", "starr") : null;
+                var sw = a["schwingen"];
+                a.Remove("bewegung"); a.Remove("schwingen");
+                if (b == "schwingt" && !a.Has("weichheit"))
+                {
+                    float st = sw is JObj so ? so.F("staerke", 1f) : sw != null ? Json.ToF(sw, 1f) : 1f;
+                    float std = WeichStdAcc(a.S("typ", ""));
+                    a["weichheit"] = (double)Mathf.Round(st * (std > 0 ? std : 0.9f) * 1000f) / 1000.0;
+                }
+            }
+            foreach (var kv in o.O("biome") ?? new JObj()) Migrate(kv.Value as JObj);
         }
 
         // ------------------------------------------------------------------ Schicht 4: Farbgruppen + Ebenen (Spec 4.2 / 4.3)

@@ -211,14 +211,14 @@ class VKHaut(bpy.types.PropertyGroup):
     rauheit: FloatProperty(name="Rauheit", min=0, max=1, default=0.8, update=_upd_haut)
 
 
-LAGE_FELDER_F = ["laenge", "laenge_zufall", "anlege_winkel", "richtung_zufall", "abstand_min", "schwingen", "breite", "kruemmung", "dicke",
+LAGE_FELDER_F = ["laenge", "laenge_zufall", "anlege_winkel", "richtung_zufall", "abstand_min", "weichheit", "breite", "kruemmung", "dicke",
                  "spitze", "groesse", "streckung", "schuppung", "woelbung", "groesse_zufall"]
 LAGE_FELDER_I = ["anzahl", "kanten", "ecken"]
 LAGE_FELDER_E = ["typ", "modus", "richtung", "form", "farbgruppe"]
 LAGE_FELDER_B = ["accessoires_aussparen", "kiel"]
 LAGE_ORDNUNG = ["id", "typ", "an", "modus", "anzahl", "laenge", "laenge_zufall", "laenge_nach_zone", "breite", "form", "kanten", "kruemmung",
                 "kiel", "dicke", "spitze", "groesse", "groesse_zufall", "streckung", "ecken", "schuppung", "woelbung", "richtung",
-                "anlege_winkel", "richtung_zufall", "abstand_min", "farbgruppe", "schwingen", "accessoires_aussparen", "seed", "weg_ab_lod", "maske"]
+                "anlege_winkel", "richtung_zufall", "abstand_min", "farbgruppe", "weichheit", "accessoires_aussparen", "seed", "weg_ab_lod", "maske"]
 
 
 def _push_lage(self, kind):
@@ -306,7 +306,8 @@ class VKLage(bpy.types.PropertyGroup):
     richtung_zufall: FloatProperty(name="Richtungs-Zufall", min=0, max=45, default=12, update=_upd_lage, description="Grad")
     abstand_min: FloatProperty(name="Abstand min.", min=0, max=0.1, default=0.015, precision=3, step=0.1, update=_upd_lage)
     farbgruppe: EnumProperty(name="Farbgruppe", items=[("bedeckung_1", "bedeckung_1", ""), ("bedeckung_2", "bedeckung_2", "")], update=_upd_lage)
-    schwingen: FloatProperty(name="Schwingen", min=0, max=1, default=0, update=_upd_lage, description="(wirkt erst mit dangling in Unity, noch nicht in M2)")
+    weichheit: FloatProperty(name="Weichheit", min=0, max=1, default=0.6, update=lambda s, c: _push_lage(s, "weich"),
+                             description="Nachschwingen im Unity-Shader (G14): 0 = starr wie Felszacken, 1 = schwingendes Fell. Ändert die Geometrie nicht")
     accessoires_aussparen: BoolProperty(name="unter Accessoires aussparen", default=True, update=_upd_lage)
     kiel: BoolProperty(name="Kiel (Textur)", default=True, update=_upd_lage)
     seed_auto: BoolProperty(name="Seed automatisch", default=True, update=_upd_lage)
@@ -967,6 +968,7 @@ class VK_PT_panel(bpy.types.Panel):
         col.prop(lp, "richtung")
         col.prop(lp, "anlege_winkel", slider=True)
         col.prop(lp, "richtung_zufall", slider=True)
+        col.prop(lp, "weichheit", slider=True, text="Weichheit (Nachschwingen in Unity)")
         col = b.column(align=True)
         if lp.typ == "fell":
             col.prop(lp, "form")

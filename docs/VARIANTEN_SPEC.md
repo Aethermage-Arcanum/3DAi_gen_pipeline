@@ -224,13 +224,12 @@ an bestimmten Körperstellen (3 Eisplatten an der Schulter).
 | `richtung_zufall` | zufällige Abweichung der Richtung in Grad | 0–45 | 12 |
 | `abstand_min` | Mindestabstand zwischen Teilen (Anteil Größe), verhindert Klumpen | 0–0.1 | je Typ |
 | `farbgruppe` | Farbgruppe aus Schicht 4: `bedeckung_1` oder `bedeckung_2` | – | `bedeckung_1` |
-| `schwingen` | 0 = starr, > 0 = schwingt über `dangling` (Stärke) | 0–1 | 0 |
-| `weichheit` | **entschieden (Nutzer 2026-11-22), noch nicht gebaut** (BACKLOG G14). Wie stark die Spitzen nachschwingen: 0 = starr wie Felszacken, 1 = schwingendes Fell. Regler in der Varianten-Datei, im Blender-Panel und im Unity-Fenster. | 0–1 | je Typ: `platten`/`zacken` 0 · `stacheln` 0.1 · `fell` 0.6 · `federn` 0.4 · `fransen`/`tang` 0.9 |
+| `weichheit` | **gebaut (G14, 2026-11-22)**, ersetzt das frühere `schwingen` (Migration beim Laden, `docs/VARIANTEN_BAUKASTEN.md` Teil E). Wie stark die Spitzen nachschwingen: 0 = starr wie Felszacken, 1 = schwingendes Fell. Regler in der Varianten-Datei, im Blender-Panel und im Unity-Fenster. Wirkt nur im Shader, kein neues „In Blender bauen“. | 0–1 | je Typ: `platten` 0 · `stacheln` 0.1 · `federn` 0.4 · `fell` 0.6 |
 | `accessoires_aussparen` | unter Accessoires keine Teile erzeugen (spart Tris, nichts sticht durch) | bool | true |
 | `seed` | eigener Seed, sonst abgeleitet (6.2) | int/null | null |
 | `weg_ab_lod` | ab welcher LOD-Stufe die Lage nur noch als Textur existiert | 1–3/null | 2 |
 
-**Nachschwingen im Shader („Foliage-Trick“) – entschieden (Nutzer 2026-11-22), noch nicht gebaut (BACKLOG G14).**
+**Nachschwingen im Shader („Foliage-Trick“) – gebaut (G14, 2026-11-22), Umsetzung: `docs/VARIANTEN_BAUKASTEN.md` Teil E.**
 Beim Erzeugen der Bedeckung (Geometry Nodes, `procedural/variantkit_blender/`) bekommt jedes Teil einen
 Beweglichkeitswert pro Vertex: Wurzel 0, Spitze 1 (z. B. in der Vertex-Farbe oder einem UV-Kanal, wird beim Backen
 mitgenommen). Der Shader verbiegt die Spitzen auf der GPU, skaliert mit `weichheit`, aus drei Quellen: **Trägheit**
@@ -238,9 +237,9 @@ mitgenommen). Der Shader verbiegt die Spitzen auf der GPU, skaliert mit `weichhe
 **Wackeln** (leichtes Rauschen bzw. Wind) und **Stöße** (kurzer Impuls bei Slam oder Hit über Clip-Events). Keine Physik,
 keine Zusatz-Knochen, Kosten praktisch null auch bei vielen Gegnern. Baut auf dem `_DANGLING`-Prinzip auf
 (`rigging/dangling.py`, `Creature/Standard Dangling`) und gilt in `VariantKit/Layered` (Vorschau) wie in `VariantKit/Baked`
-(Spiel), weiterhin 1 Material. Schwingende Accessoires (`bewegung: schwingt`, z. B. `moosfransen`, `tang`, `gehaenge`,
-`kette`) nutzen denselben Weg mit ihrem Typ-Standard. Wie `weichheit` und das bisherige `schwingen` zusammengehen
-(ersetzen oder Stärke × Weichheit), klärt der Bau. **Nicht** dafür: Spring Bones (später, nur für wenige große Teile wie
+(Spiel), weiterhin 1 Material. Schwingende Accessoires (`weichheit` > 0, z. B. `moosfransen`, `tang`, `gehaenge`,
+`kette`) nutzen denselben Weg mit ihrem Typ-Standard. `weichheit` ersetzt das bisherige `schwingen`
+(ein Feld, entschieden im Bau). **Nicht** dafür: Spring Bones (später, nur für wenige große Teile wie
 Mähnen-Strähnen) und echte Haar-/Stoff-Physik (verworfen, zu teuer).
 
 ### 2.3 Haut (nur Shader, 0 Tris)
@@ -265,8 +264,8 @@ Kleine Schuppen sind **nie** Geometrie (Lehre aus `procedural/README.md`: dichte
 
 **Technik (Blender, Geometry Nodes):** Punkte in der Maske verteilen (Poisson, `abstand_min`), Baustein je Punkt
 instanzieren, nach `richtung`/`anlege_winkel` drehen, Länge/Farbe/Zufall aus Attributen. Jedes Teil bekommt die
-**Gewichte seines Ansatzpunkts** auf der Haut (bewegt sich mit der Haut, verformt sich nicht). Mit `schwingen` > 0
-schreibt die Lage das `_DANGLING`-Attribut selbst: Ansatz = 0, Spitze = `schwingen`, Phase pro Teil zufällig.
+**Gewichte seines Ansatzpunkts** auf der Haut (bewegt sich mit der Haut, verformt sich nicht). Mit `weichheit` > 0
+schwingt die Lage im Shader nach (G14: Beweglichkeit `vk_h` Ansatz 0 → Spitze 1, Phase pro Teil zufällig).
 Die Dicke-Erkennung von `dangling.py` wird dabei nicht gebraucht, weil die Geometrie bekannt ist.
 Shape Keys (Statur): Jede Instanz bekommt pro Shape Key den Versatz ihres Ansatzpunkts (wandert mit, verformt sich
 nicht).
@@ -364,15 +363,14 @@ Skeletts übertragbar sind.
 | `groesse_verlauf` | nur `reihe`/`kranz`: Faktor [Anfang, Mitte, Ende] | je 0.1–2 | [1, 1, 1] |
 | `streckung` | Verzerrung [Länge, Breite, Höhe] des Bausteins | je 0.3–3 | [1, 1, 1] |
 | `abstand_min` | Mindestabstand zwischen Teilen (Anteil Größe) | 0–0.2 | 0.02 |
-| `ausrichtung` | Grundrichtung: `normale` (senkrecht zur Haut) · `oben` · `hinten` · `aussen` · `knochen` (entlang des Knochens) | – | `normale` |
+| `ausrichtung` | Grundrichtung: `normale` (senkrecht zur Haut) · `oben` · `hinten` · `aussen` · `knochen` (entlang des Knochens) · `unten` (hängt, G14) | – | `normale`, Gehänge `unten` |
 | `neigung` | Kippen nach hinten (−) oder vorn (+) in Grad | −90…90 | 0 |
 | `drehung_zufall` | zufällige Drehung um die eigene Achse | 0–180 | 180 |
 | `kipp_zufall` | zufälliges Kippen | 0–45 | 10 |
 | `einsinken` | wie tief das Teil in die Haut einsinkt (Anteil seiner Höhe), verhindert sichtbare Lücken | 0–0.6 | 0.25 |
 | `auf_bedeckung` | wie weit das Teil auf der Bedeckung statt auf der Haut sitzt (1 = obenauf, sonst versinkt es im Fell) | 0–1 | 0.7 |
 | `bindung` | `anker` = alle Punkte bekommen die Gewichte des Ansatzpunkts (bewegt sich mit der Haut, bleibt formstabil) · `knochen` = 100 % am nächsten Knochen · `haut` = jeder Punkt die Gewichte der Haut darunter (biegt sich mit, für große Platten über Gelenken) | – | `anker` (→ E4) |
-| `bewegung` | `starr` oder `schwingt` (über `dangling`) | – | Typ-Standard |
-| `schwingen` | nur `schwingt`: `staerke` 0–1 (skaliert R im `_DANGLING`-Attribut) | – | `{"staerke":1.0}` |
+| `weichheit` | Nachschwingen im Shader (G14): 0 = starr … 1 = schwingt voll; ersetzt die früheren Felder `bewegung` + `schwingen` (Migration: `schwingt` → Stärke × Typ-Standard). Gehänge (`moosfransen`, `tang`, `gehaenge`, `kette`) folgen zusätzlich der Schwerkraft. | 0–1 | Typ-Standard: Gehänge 0.9, `kette` 0.7, `barteln` 0.6, `grasbueschel` 0.5, sonst 0 |
 | `farbgruppe` | `accessoire_a` · `accessoire_b` · `accessoire_c` · `horn` | – | `accessoire_a` |
 | `farb_zufall` | pro Teil zufällige Mischung zwischen `farbe` und `farbe_2` der Gruppe (Cragplate: grau/rostbraun gemischt) | 0–1 | 0 |
 | `weg_ab_lod` | ab welcher LOD-Stufe das Teil weggelassen wird (kleine Teile früh) | 1–3/null | null |
@@ -778,21 +776,21 @@ Fugen, je ein großer Brocken auf den Schultern, glühende Augen):
       "zonen": ["buckel", "ruecken_mitte"], "spiegeln": false, "verteilung": "cluster", "anzahl": 1, "teile": 9,
       "groesse": 0.13, "groesse_zufall": 0.4, "streckung": [1.0, 0.85, 0.75], "abstand_min": 0.015,
       "ausrichtung": "normale", "neigung": -10, "drehung_zufall": 180, "kipp_zufall": 15, "einsinken": 0.35,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": null
+      "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": null
     },
     {
       "id": "basalt_kruppe", "typ": "basaltbrocken", "formen": ["basalt_b", "basalt_c"],
       "zonen": ["kruppe"], "spiegeln": false, "verteilung": "cluster", "anzahl": 1, "teile": 4,
       "groesse": 0.09, "groesse_zufall": 0.35, "streckung": [1.0, 0.9, 0.7], "abstand_min": 0.015,
       "ausrichtung": "normale", "neigung": -15, "drehung_zufall": 180, "kipp_zufall": 15, "einsinken": 0.35,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": 2
+      "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": 2
     },
     {
       "id": "basalt_schulter", "typ": "basaltbrocken", "formen": ["basalt_a"],
       "zonen": ["schulter_l"], "spiegeln": true, "asymmetrie": 0.2, "verteilung": "einzeln", "anzahl": 1,
       "groesse": 0.17, "groesse_zufall": 0.1, "streckung": [1.2, 1.0, 0.6], "abstand_min": 0.02,
       "ausrichtung": "aussen", "neigung": -5, "drehung_zufall": 30, "kipp_zufall": 5, "einsinken": 0.4,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null
+      "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null
     }
   ],
   "material": {
@@ -887,7 +885,7 @@ eisblaue Augen):
         "typ": "fell", "modus": "geometrie", "anzahl": 550, "laenge": 0.05, "laenge_zufall": 0.3,
         "laenge_nach_zone": { "nacken": 1.4, "schulter_l": 1.3, "schulter_r": 1.3, "schwanz": 1.3, "gesicht": 0.5, "pfoten": 0.4 },
         "breite": 0.45, "form": "spitz", "kanten": 3, "kruemmung": 0.3, "richtung": "knochen", "anlege_winkel": 25,
-        "richtung_zufall": 15, "abstand_min": 0.015, "farbgruppe": "bedeckung_1", "schwingen": 0.0,
+        "richtung_zufall": 15, "abstand_min": 0.015, "farbgruppe": "bedeckung_1", "weichheit": 0.6,
         "accessoires_aussparen": true, "seed": null, "weg_ab_lod": 2,
         "maske": { "zonen": ["ganzer_koerper"], "ohne": ["schnauze", "pfoten"], "oben": 0.0, "rand": 0.05, "rauschen": 0.2 }
       }
@@ -900,42 +898,42 @@ eisblaue Augen):
       "reihen": 1, "groesse": 0.16, "groesse_zufall": 0.3, "groesse_verlauf": [0.6, 1.0, 0.45],
       "streckung": [1.0, 0.8, 1.3], "abstand_min": 0.03, "ausrichtung": "oben", "neigung": -20,
       "drehung_zufall": 60, "kipp_zufall": 20, "einsinken": 0.3, "auf_bedeckung": 0.6,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null
+      "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null
     },
     {
       "id": "eis_ruecken_klein", "typ": "kristall", "formen": ["kristall_a", "kristall_schlank"],
       "zonen": ["buckel", "ruecken_mitte"], "spiegeln": false, "verteilung": "cluster", "anzahl": 2, "teile": 5,
       "groesse": 0.06, "groesse_zufall": 0.4, "streckung": [1.0, 1.0, 1.0], "abstand_min": 0.02,
       "ausrichtung": "normale", "neigung": -15, "drehung_zufall": 180, "kipp_zufall": 25, "einsinken": 0.3,
-      "auf_bedeckung": 0.6, "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "weg_ab_lod": 2
+      "auf_bedeckung": 0.6, "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "weg_ab_lod": 2
     },
     {
       "id": "eisplatte_schulter", "typ": "eisplatte", "formen": ["eisplatte_a", "eisplatte_zackig"],
       "zonen": ["schulter_l"], "spiegeln": true, "asymmetrie": 0.2, "verteilung": "cluster", "anzahl": 1, "teile": 3,
       "groesse": 0.15, "groesse_zufall": 0.35, "streckung": [1.2, 1.0, 0.8], "abstand_min": 0.02,
       "ausrichtung": "aussen", "neigung": -10, "drehung_zufall": 45, "kipp_zufall": 10, "einsinken": 0.3,
-      "auf_bedeckung": 0.8, "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "weg_ab_lod": null
+      "auf_bedeckung": 0.8, "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "weg_ab_lod": null
     },
     {
       "id": "eisplatte_unterarm", "typ": "eisplatte", "formen": ["eisplatte_a"],
       "zonen": ["unterarm_l"], "spiegeln": true, "verteilung": "streuen", "anzahl": 2,
       "groesse": 0.09, "groesse_zufall": 0.3, "streckung": [1.3, 1.0, 0.8], "abstand_min": 0.02,
       "ausrichtung": "aussen", "neigung": 0, "drehung_zufall": 45, "kipp_zufall": 10, "einsinken": 0.3,
-      "auf_bedeckung": 0.8, "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "weg_ab_lod": null
+      "auf_bedeckung": 0.8, "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "weg_ab_lod": null
     },
     {
       "id": "eisplatte_oberschenkel", "typ": "eisplatte", "formen": ["eisplatte_a", "eisplatte_zackig"],
       "zonen": ["oberschenkel_l"], "spiegeln": true, "verteilung": "streuen", "anzahl": 2,
       "groesse": 0.10, "groesse_zufall": 0.3, "streckung": [1.2, 1.0, 0.8], "abstand_min": 0.02,
       "ausrichtung": "aussen", "neigung": -10, "drehung_zufall": 45, "kipp_zufall": 10, "einsinken": 0.3,
-      "auf_bedeckung": 0.8, "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "weg_ab_lod": null
+      "auf_bedeckung": 0.8, "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "weg_ab_lod": null
     },
     {
       "id": "eis_brauen", "typ": "kristall", "formen": ["kristall_breit"],
       "zonen": ["stirn"], "spiegeln": false, "verteilung": "cluster", "anzahl": 1, "teile": 5,
       "groesse": 0.035, "groesse_zufall": 0.3, "streckung": [1.4, 1.0, 0.7], "abstand_min": 0.008,
       "ausrichtung": "normale", "neigung": -40, "drehung_zufall": 40, "kipp_zufall": 15, "einsinken": 0.3,
-      "auf_bedeckung": 0.5, "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "weg_ab_lod": 1
+      "auf_bedeckung": 0.5, "bindung": "anker", "weichheit": 0.0, "farbgruppe": "accessoire_a", "weg_ab_lod": 1
     }
   ],
   "material": {

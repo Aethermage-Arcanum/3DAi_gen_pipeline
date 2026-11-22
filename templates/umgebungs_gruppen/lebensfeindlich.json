@@ -15,7 +15,7 @@
       "zonen": ["ruecken_gesamt"], "spiegeln": false, "verteilung": "cluster", "anzahl": 1, "teile": 10,
       "groesse": 0.18, "groesse_zufall": 0.4, "streckung": [1.0, 0.85, 0.75], "abstand_min": 0.015,
       "ausrichtung": "normale", "neigung": -10, "drehung_zufall": 180, "kipp_zufall": 15, "einsinken": 0.35,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": null, "seed": null
+      "bindung": "anker", "farbgruppe": "accessoire_a", "farb_zufall": 0.2, "weg_ab_lod": null, "seed": null
     }
   ],
   "material": {

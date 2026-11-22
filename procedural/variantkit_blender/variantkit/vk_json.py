@@ -235,6 +235,34 @@ def preset_dir():
     return os.path.join(pipeline_root(), "templates", "umgebungs_gruppen")
 
 
+WEICH_STD_ACC = {"moosfransen": 0.9, "tang": 0.9, "gehaenge": 0.9, "kette": 0.7, "barteln": 0.6, "grasbueschel": 0.5}
+
+
+def migrate(o):
+    """G14 (wie Unity VkSpec.Migrate): `schwingen` der Lagen und `bewegung`/`schwingen.staerke` der Accessoires gehen in
+    `weichheit` auf. Die alten Felder hatten keine Wirkung: 0 / "starr" = Platzhalter -> Typ-Standard."""
+    if not isinstance(o, dict):
+        return
+    bed = o.get("bedeckung")
+    for l in (bed.get("lagen") or []) if isinstance(bed, dict) else []:
+        if isinstance(l, dict) and "schwingen" in l:
+            v = l.pop("schwingen")
+            if _is_num(v) and v > 0 and "weichheit" not in l:
+                l["weichheit"] = float(v)
+    acc = o.get("accessoires")
+    for a in acc if isinstance(acc, list) else []:
+        if not isinstance(a, dict):
+            continue
+        b = a.pop("bewegung", None)
+        sw = a.pop("schwingen", None)
+        if b == "schwingt" and "weichheit" not in a:
+            st = sw.get("staerke", 1.0) if isinstance(sw, dict) else (sw if _is_num(sw) else 1.0)
+            a["weichheit"] = round(float(st) * WEICH_STD_ACC.get(a.get("typ"), 0.9), 3)
+    bio = o.get("biome")
+    for v in bio.values() if isinstance(bio, dict) else []:
+        migrate(v)
+
+
 def load_preset(gruppe, biom):
     if not gruppe:
         return {}
@@ -249,6 +277,7 @@ def load_preset(gruppe, biom):
     bb = (pr.get("biome") or {}).get(biom or "")
     if isinstance(bb, dict):
         r = merge(r, bb)
+    migrate(r)
     return r
 
 
@@ -276,6 +305,7 @@ class VariantDoc:
     @staticmethod
     def load(path):
         stored = read_file(path)
+        migrate(stored)
         d = VariantDoc(path)
         d.preset_resolved = load_preset(stored.get("gruppe"), stored.get("biom"))
         d.resolved = merge(d.preset_resolved, stored)

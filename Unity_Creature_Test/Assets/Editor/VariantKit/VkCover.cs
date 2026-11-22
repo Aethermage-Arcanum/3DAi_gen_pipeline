@@ -61,8 +61,17 @@ namespace VariantKit
         public static void Invalidate() => cache.Clear();
 
         /// <summary>Stimmt die gebaute Bedeckung noch mit der Varianten-Datei überein (Lagen + Seed)?</summary>
+        /// <summary>`weichheit` (G14) wirkt nur in Unity (Shader) → zählt nicht als Änderung der Geometrie.</summary>
         public bool Fresh(VkDoc doc) =>
-            quelle != null && Json.Same(quelle["bedeckung"], doc.resolved["bedeckung"]) && quelle.I("seed", -1) == doc.resolved.I("seed", 0);
+            quelle != null && Json.Same(Geo(quelle["bedeckung"]), Geo(doc.resolved["bedeckung"])) && quelle.I("seed", -1) == doc.resolved.I("seed", 0);
+
+        static object Geo(object bed)
+        {
+            if (!(bed is JObj b)) return bed;
+            var c = (JObj)Json.Clone(b);
+            foreach (JObj l in (c.L("lagen") ?? new List<object>()).OfType<JObj>()) { l.Remove("weichheit"); l.Remove("schwingen"); }
+            return c;
+        }
 
         static VkCover Load(VkBase b, string path)
         {

@@ -8,6 +8,7 @@
 //   TEXCOORD2 = (Gruppe hell, Gruppe dunkel | Farb-Zufall Teil, Zufall pro Teil, 1 = Basis / 0 = Accessoire)
 //   TEXCOORD3 = Ruhe-Position im Körperraum / Kreaturgröße (x vorn, y oben, z links), w = Höhe im Teil 0..1 (Ansatz → Spitze)
 //   TEXCOORD4 = Ruhe-Normale im Körperraum
+//   TEXCOORD1 + TANGENT = Nachschwingen (G14, VariantSwing.cginc): Beweglichkeit, Weichheit, Slot/Phase, Länge, Teil-Achse
 // Alle Muster hängen an der RUHE-Position → sie kleben beim Laufen am Körper. Facetten-Look über Flächen-Ableitungen.
 // Kosten: Editor-Vorschau darf teuer sein. Das gebackene Prefab nutzt seit M2 Texturen + „VariantKit/Baked“.
 // Die Rechnung der Ebenen steht in VariantLayers.cginc (gleich für Vorschau und Textur-Backen).
@@ -114,6 +115,7 @@ Shader "VariantKit/Layered"
         #pragma surface surf Standard fullforwardshadows vertex:vert addshadow
         #pragma target 4.0
         #include "VariantLayers.cginc"
+        #include "VariantSwing.cginc"
 
         float _VKTime, _VKUseTime;   // feste Zeit für Prüfbilder/Fenster (global)
 
@@ -142,6 +144,7 @@ Shader "VariantKit/Layered"
             float3 rnrm;
             float4 m0;
             float4 m1;
+            float swf;          // 1 = schwingendes Teil (Normal-Map aus, Tangente = Teil-Achse)
         };
 
         void vert(inout appdata_vk v, out Input o)
@@ -152,6 +155,8 @@ Shader "VariantKit/Layered"
             o.rnrm = v.texcoord4.xyz;
             o.m0 = v.texcoord5;
             o.m1 = v.texcoord6;
+            o.swf = step(1e-4, v.texcoord1.y);
+            v.vertex.xyz += VKSwingOffsetOS(v.vertex.xyz, v.tangent, v.texcoord1, lerp(_Time.y, _VKTime, _VKUseTime));
         }
 
         void surf(Input IN, inout SurfaceOutputStandard o)
@@ -174,7 +179,7 @@ Shader "VariantKit/Layered"
             VKOut r = VKEval(vi);
 
             float3 nDetail = normalize(r.nTS.x * wT + r.nTS.y * wB + r.nTS.z * wN);
-            float3 nW = normalize(lerp(nDetail, flatN, _Facetten));
+            float3 nW = normalize(lerp(nDetail, flatN, max(_Facetten, IN.swf)));
             float3 V = normalize(_WorldSpaceCameraPos - IN.worldPos);
             float fres = pow(1 - saturate(dot(V, nW)), 3);
             float3 col = r.col + r.glasig * fres * 0.5;

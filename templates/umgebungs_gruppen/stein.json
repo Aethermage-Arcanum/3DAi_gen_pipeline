@@ -15,14 +15,14 @@
       "zonen": ["schulter_l", "oberschenkel_l"], "spiegeln": true, "asymmetrie": 0.2, "verteilung": "streuen", "anzahl": 2,
       "groesse": 0.17, "groesse_zufall": 0.3, "streckung": [1.2, 1.0, 1.0], "abstand_min": 0.02,
       "ausrichtung": "normale", "neigung": -10, "drehung_zufall": 40, "kipp_zufall": 8, "einsinken": 0.3,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
+      "bindung": "anker", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
     },
     {
       "id": "fels_kamm", "typ": "felszacke", "formen": ["zacke_a", "zacke_b", "zacke_c"],
       "zonen": ["rueckenlinie"], "spiegeln": false, "verteilung": "reihe", "anzahl": 9, "von": 0.15, "bis": 0.85, "reihen": 1,
       "groesse": 0.14, "groesse_zufall": 0.3, "groesse_verlauf": [0.6, 1.0, 0.5], "streckung": [1.0, 1.0, 1.0], "abstand_min": 0.02,
       "ausrichtung": "normale", "neigung": -20, "drehung_zufall": 50, "kipp_zufall": 10, "einsinken": 0.3,
-      "bindung": "anker", "bewegung": "starr", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
+      "bindung": "anker", "farbgruppe": "accessoire_a", "farb_zufall": 0.0, "weg_ab_lod": null, "seed": null
     }
   ],
   "material": {

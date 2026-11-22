@@ -70,6 +70,8 @@ namespace VariantKit
 
         static readonly Dictionary<string, VkBase> cache = new Dictionary<string, VkBase>();
 
+        static readonly HashSet<string> eventsChecked = new HashSet<string>();
+
         public static VkBase Load(string id, bool forceAnalyse = false)
         {
             var info = List().FirstOrDefault(i => i.id == id) ?? throw new Exception($"Basis-Kreatur '{id}' nicht gefunden (creatures/*/creature.toml name, bodyplan quadruped, output/*.fbx)");
@@ -82,6 +84,19 @@ namespace VariantKit
             b.mesh = b.smr.sharedMesh;
             if (!b.mesh.isReadable) throw new Exception($"{dst}: Mesh nicht lesbar (Import-Einstellung VkImport)");
             b.clips = AssetDatabase.LoadAllAssetsAtPath(dst).OfType<AnimationClip>().Where(a => !a.name.StartsWith("__preview__")).ToList();
+            // G14: Clip-Events (hit/slam) fehlen noch in der Kopie (älterer Import) → einmal neu importieren
+            var evPath = $"{BasesDir}/{info.name}/{info.name}_events.json";
+            if (File.Exists(evPath) && !eventsChecked.Contains(dst) && Regex.IsMatch(File.ReadAllText(evPath), "\"(hit|slam)\"")
+                && b.clips.All(c => AnimationUtility.GetAnimationEvents(c).Length == 0))
+            {
+                eventsChecked.Add(dst);
+                AssetDatabase.ImportAsset(dst, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+                b.model = AssetDatabase.LoadAssetAtPath<GameObject>(dst);
+                b.smr = b.model.GetComponentInChildren<SkinnedMeshRenderer>(true);
+                b.mesh = b.smr.sharedMesh;
+                b.clips = AssetDatabase.LoadAllAssetsAtPath(dst).OfType<AnimationClip>().Where(a => !a.name.StartsWith("__preview__")).ToList();
+                Debug.Log($"[VariantKit] {info.name}: Clip-Events nachgetragen ({b.clips.Sum(c => AnimationUtility.GetAnimationEvents(c).Length)} Stöße)");
+            }
             var texDir = $"{BasesDir}/{info.name}/Textures";
             Texture2D Find(string p) => AssetDatabase.FindAssets("t:Texture2D", new[] { texDir })
                 .Select(g => AssetDatabase.LoadAssetAtPath<Texture2D>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault(t => t.name.StartsWith(p));
@@ -100,6 +115,20 @@ namespace VariantKit
             bool copy = !File.Exists(dst) || new FileInfo(info.fbx).Length != new FileInfo(dst).Length ||
                         new FileInfo(info.fbx).LastWriteTimeUtc > new FileInfo(dst).LastWriteTimeUtc;
             var texDir = dir.Replace('\\', '/') + "/Textures";
+            // G14: Clip-Events (hit/slam) neben die Kopie legen; VkImport schreibt sie in die Clips → bei Änderung neu importieren
+            var evSrc = Path.Combine(Path.GetDirectoryName(info.fbx), Path.GetFileNameWithoutExtension(info.fbx) + "_events.json");
+            var evDst = (Path.Combine(dir, Path.GetFileNameWithoutExtension(dst) + "_events.json")).Replace('\\', '/');
+            if (File.Exists(evSrc) && (!File.Exists(evDst) || File.ReadAllText(evSrc) != File.ReadAllText(evDst)))
+            {
+                File.Copy(evSrc, evDst, true);
+                AssetDatabase.ImportAsset(evDst, ImportAssetOptions.ForceSynchronousImport);
+                if (!copy)
+                {
+                    AssetDatabase.ImportAsset(dst, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+                    Debug.Log($"[VariantKit] {info.name}: Clip-Events (hit/slam) für das Nachschwingen übernommen → Basis-Kopie neu importiert");
+                    return true;
+                }
+            }
             if (copy)
             {
                 File.Copy(info.fbx, dst, true);

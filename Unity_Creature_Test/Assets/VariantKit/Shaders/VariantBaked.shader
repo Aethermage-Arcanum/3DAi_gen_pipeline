@@ -1,6 +1,7 @@
 // Varianten-Baukasten – Spiel-Shader der gebackenen Variante (Spec 4.1, E5): EIN Material, feste Kosten, egal wie viele
 // Ebenen die Variante hatte. Texturen (je 1024²): Albedo, Maske (R Rauheit, G Puls-Anteil, B Glasig, A Rim-Maske),
-// optional Leuchten und Normal. Live bleiben nur: Facetten-Look (Flächen-Ableitung), Glasig-Fresnel, Rim-Light, Puls.
+// optional Leuchten und Normal. Live bleiben nur: Facetten-Look (Flächen-Ableitung), Glasig-Fresnel, Rim-Light, Puls und
+// seit G14 das Nachschwingen der Bedeckung/Gehänge (VariantSwing.cginc, Werte per MaterialPropertyBlock von VariantSchwingen).
 Shader "VariantKit/Baked"
 {
     Properties
@@ -21,13 +22,21 @@ Shader "VariantKit/Baked"
         Tags { "RenderType"="Opaque" }
         LOD 200
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows addshadow
+        #pragma surface surf Standard fullforwardshadows addshadow vertex:vert
         #pragma target 3.5
         sampler2D _MainTex, _MaskTex, _EmissionTex, _BumpMap;
         half _Facetten, _EmissionScale, _PulsFreq, _PulsStaerke, _RimBreite;
         float4 _RimColor;
         float _VKTime, _VKUseTime;
-        struct Input { float2 uv_MainTex; float3 worldPos; float3 worldNormal; INTERNAL_DATA };
+        #include "VariantSwing.cginc"
+        struct Input { float2 uv_MainTex; float3 worldPos; float3 worldNormal; INTERNAL_DATA float swf; };
+
+        void vert(inout appdata_full v, out Input o)
+        {
+            UNITY_INITIALIZE_OUTPUT(Input, o);
+            o.swf = step(1e-4, v.texcoord1.y);
+            v.vertex.xyz += VKSwingOffsetOS(v.vertex.xyz, v.tangent, v.texcoord1, lerp(_Time.y, _VKTime, _VKUseTime));
+        }
 
         void surf(Input IN, inout SurfaceOutputStandard o)
         {
@@ -39,7 +48,7 @@ Shader "VariantKit/Baked"
             float3 nDetail = normalize(nTS.x * wT + nTS.y * wB + nTS.z * wN);
             float3 flatN = normalize(cross(ddy(IN.worldPos), ddx(IN.worldPos)));
             flatN *= sign(dot(flatN, wN) + 1e-5);
-            float3 nW = normalize(lerp(nDetail, flatN, _Facetten));
+            float3 nW = normalize(lerp(nDetail, flatN, max(_Facetten, IN.swf)));
             float3 V = normalize(_WorldSpaceCameraPos - IN.worldPos);
             float nv = 1 - saturate(dot(V, nW));
             float3 col = tex2D(_MainTex, IN.uv_MainTex).rgb + m.b * pow(nv, 3) * 0.5;

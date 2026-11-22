@@ -42,12 +42,14 @@ namespace VariantKit
             foreach (var k in new[] { "bedeckung", "accessoires", "material", "effekte" }) if (p.Has(k)) r[k] = Json.Clone(p[k]);
             var bb = p.O("biome")?.O(biom ?? "");
             if (bb != null) r = (JObj)Json.Merge(r, bb);
+            VkSpec.Migrate(r);   // G14: schwingen/bewegung → weichheit
             return r;
         }
 
         public static VkDoc Load(string path)
         {
             var stored = Json.ParseObj(File.ReadAllText(path));
+            VkSpec.Migrate(stored);   // G14: schwingen/bewegung → weichheit
             var d = new VkDoc { path = path };
             d.presetResolved = LoadPreset(stored.S("gruppe", null), stored.S("biom", null));
             d.resolved = (JObj)Json.Merge(d.presetResolved, stored);

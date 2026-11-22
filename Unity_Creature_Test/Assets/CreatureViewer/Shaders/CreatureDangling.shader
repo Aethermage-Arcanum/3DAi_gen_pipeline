@@ -7,6 +7,9 @@
 // nach dem Skinning → funktioniert mit jeder Animation. Schatten schwingen mit (addshadow).
 // Kosten: ~20 Rechenschritte pro Vertex im Vertex-Shader, kein zusätzlicher Draw Call, keine Knochen.
 // Kreaturen ohne Markierung bekommen weiter den normalen Standard-Shader (CreatureImporter.EnsureMaterial).
+// G14 (C13): optionaler Schalter „Nachschwingen“ (Standard AUS → exakt der alte Shader, eigene Variante per shader_feature).
+// AN: zusätzlich Trägheit, Wackeln und Stöße der Laufzeit-Komponente VariantSchwingen (VariantKit/Shaders/VariantSwing.cginc).
+// Eingeschaltet über creature.toml [dangling] nachschwingen = true (VariantKit/Editor/VkDangleSwing.cs), z. Z. nur Bog Warden.
 Shader "Creature/Standard Dangling"
 {
     Properties
@@ -23,6 +26,12 @@ Shader "Creature/Standard Dangling"
         _DangleFrequency ("Tempo (Schwingungen pro s)", Range(0, 4)) = 0.7
         _DangleLag ("Verzoegerung Ansatz bis Spitze (rad)", Range(0, 6.3)) = 1.5
         _DangleVertical ("Anteil auf-ab", Range(0, 1)) = 0.3
+
+        [Header(Nachschwingen G14 mit Komponente VariantSchwingen)]
+        [Toggle(_VK_NACHSCHWINGEN)] _VKNachschwingen ("Nachschwingen", Float) = 0
+        _VKDangleLen ("Laenge der haengenden Teile (m)", Range(0.02, 1)) = 0.3
+        _VKDangleSlot ("Feder (0 Huefte, 1 Brust, 2 Kopf, 3 Schwanz)", Range(0, 3)) = 2
+        _VKDangleStaerke ("Staerke", Range(0, 3)) = 1
     }
     SubShader
     {
@@ -32,6 +41,11 @@ Shader "Creature/Standard Dangling"
         CGPROGRAM
         #pragma surface surf Standard fullforwardshadows vertex:vert addshadow
         #pragma target 3.0
+        #pragma shader_feature_local _VK_NACHSCHWINGEN
+        #ifdef _VK_NACHSCHWINGEN
+        #include "Assets/VariantKit/Shaders/VariantSwing.cginc"
+        float _VKDangleLen, _VKDangleSlot, _VKDangleStaerke;
+        #endif
 
         sampler2D _MainTex;
         sampler2D _BumpMap;
@@ -57,6 +71,9 @@ Shader "Creature/Standard Dangling"
             d.y = _DangleVertical * (0.7 * sin(a * 1.31 + 4.1) + 0.3 * sin(a * 2.71));
             float scale = length(unity_ObjectToWorld._m00_m10_m20);       // Kreatur größer skaliert → Ausschlag mit
             float3 worldOffset = d * (_DangleAmplitude * scale * w);
+            #ifdef _VK_NACHSCHWINGEN
+            worldOffset += VKSwingDangleOffsetWS(w, v.color.g, _VKDangleSlot, _VKDangleLen * scale, t) * _VKDangleStaerke;
+            #endif
             v.vertex.xyz += mul((float3x3)unity_WorldToObject, worldOffset);
         }
 

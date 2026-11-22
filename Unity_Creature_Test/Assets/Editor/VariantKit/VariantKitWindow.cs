@@ -31,6 +31,10 @@ namespace VariantKit
         GameObject inst, ground;
         Material mat;
         VariantStatur statur;
+        VariantSchwingen schwingen;   // G14: Nachschwingen in der Vorschau (von Hand getaktet)
+        bool swingOn = true;
+        float swingTime = -1, swingClipT;
+        int swingClip = -1;
         static readonly string[] ClipLabels = { "Ruhe", "Walk", "Idle", "Run", "Attack1", "Attack2" };
         int clipIdx = 1;
         float time, speed = 1f;
@@ -131,6 +135,8 @@ namespace VariantKit
             inst.hideFlags = HideFlags.HideAndDontSave;
             inst.transform.position = new Vector3(0, -cur.restMinY, 0);
             statur = inst.AddComponent<VariantStatur>();
+            schwingen = inst.AddComponent<VariantSchwingen>();
+            schwingen.manuell = true;
             pru.AddSingleGO(inst);
             ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.hideFlags = HideFlags.HideAndDontSave;
@@ -158,6 +164,8 @@ namespace VariantKit
                 smr.sharedMaterials = new[] { mat };
                 var lb = cur.smr.localBounds; lb.Expand(cur.L * cur.meshToMeter * 0.6f); smr.localBounds = lb;
                 VkBuilder.ConfigureStatur(statur, cur, doc.resolved.Obj("statur"), inst);
+                VkBake.ConfigureSchwingen(schwingen, cur, inst, true);
+                schwingen.manuell = true;
                 if (old != null) DestroyImmediate(old);
                 error = null;
             }
@@ -381,6 +389,7 @@ namespace VariantKit
                 if (c != null) c.SampleAnimation(inst, c.length > 0 ? time % c.length : 0);
             }
             statur.Apply();
+            StepSwing();
             float size = cur.L * cur.meshToMeter;
             var focus = new Vector3(0, size * 0.38f, 0);
             VkBatch.Pose(view, focus, size * zoom, out var pos, out var rot);
@@ -395,6 +404,27 @@ namespace VariantKit
             GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill, false);
             if (clipIdx != 0)
                 GUI.Label(new Rect(rect.x + 6, rect.yMax - 20, rect.width, 18), "Live-Vorschau: Fußrutschen bei geänderter Statur ist normal (Clips werden erst beim Blender-Backen angepasst).", EditorStyles.whiteMiniLabel);
+        }
+
+        /// <summary>G14: Federn um die Zeit seit dem letzten Bild weiterrechnen. Das Vorschau-Modell läuft auf der Stelle →
+        /// „Laufband“ = Tempo des Clips als Zusatz-Geschwindigkeit. Clip-Events (hit/slam) lösen den Stoß aus.</summary>
+        void StepSwing()
+        {
+            if (schwingen == null) return;
+            schwingen.an = swingOn;
+            float dt = swingTime < 0 ? 0 : Mathf.Clamp(time - swingTime, 0, 0.1f);
+            if (swingClip != clipIdx || time < swingTime) { schwingen.Zuruecksetzen(); dt = 0; swingClipT = -1; }
+            swingTime = time; swingClip = clipIdx;
+            var c = clipIdx == 0 ? null : VkBatch.Clip(cur, ClipLabels[clipIdx]);
+            float speedC = c != null && (ClipLabels[clipIdx] == "Walk" || ClipLabels[clipIdx] == "Run") ? VkSwingBatch.GroundSpeed(cur, c, inst) : 0;
+            schwingen.zusatzGeschwindigkeit = VkSwingBatch.WorldForward(cur, inst) * speedC;
+            if (c != null && c.length > 0)
+            {
+                float tc = time % c.length;
+                if (swingClipT >= 0) VkSwingBatch.FireEvents(c, swingClipT, tc, schwingen);
+                swingClipT = tc;
+            }
+            schwingen.Step(dt);
         }
 
         // ------------------------------------------------------------------ Helfer für Felder (lesen/schreiben direkt in der aufgelösten Datei)
@@ -697,6 +727,7 @@ namespace VariantKit
         {
             var list = doc.resolved.List("accessoires");
             var types = VkParts.Types();
+            SwingBox();
             EditorGUILayout.HelpBox("Ablauf: Körperstellen (Zonen) wählen → Typ → Einstellungen. Die Teile sitzen auf der Haut unter dem Ansatzpunkt " +
                                     "und bekommen dessen Gewichte (Bindung „anker“, E4). Größen sind Anteile der Kreaturgröße (cm in Klammern).", MessageType.None);
             for (int i = 0; i < list.Count; i++)
@@ -736,6 +767,29 @@ namespace VariantKit
             }
         }
 
+        /// <summary>G14: Weichheit der Bedeckungs-Lagen (die Geometrie kommt aus Blender, die Weichheit wirkt sofort im Shader).</summary>
+        void SwingBox()
+        {
+            if (!Fold("swing", "Nachschwingen (Weichheit, G14)", true)) return;
+            EditorGUI.indentLevel++;
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                swingOn = EditorGUILayout.ToggleLeft("in der Vorschau an", swingOn, GUILayout.Width(150));
+                if (GUILayout.Button("Stoß (slam)", GUILayout.Width(90)) && schwingen != null) schwingen.Stoss("slam");
+                if (GUILayout.Button("Schlag (hit)", GUILayout.Width(90)) && schwingen != null) schwingen.Stoss("hit");
+            }
+            var lagen = doc.resolved.Obj("bedeckung").List("lagen").OfType<JObj>().Where(l => l.B("an", true)).Take(2).ToList();
+            if (lagen.Count == 0) EditorGUILayout.LabelField("Keine Bedeckungs-Lage (Fell, Federn …) – Weichheit der Accessoires steht unten pro Eintrag.", EditorStyles.miniLabel);
+            for (int i = 0; i < lagen.Count; i++)
+            {
+                string typ = lagen[i].S("typ", "fell");
+                F(lagen[i], "weichheit", $"Lage {i + 1} ({typ})", 0, 1, VkSpec.WeichStdLage(typ), "0 = starr wie Felszacken … 1 = schwingendes Fell. Wirkt ohne „In Blender bauen“.");
+            }
+            EditorGUILayout.LabelField("Trägheit beim Anlaufen/Bremsen/Drehen, Wackeln und Stöße (Clip-Events hit/slam) rechnet die Komponente VariantSchwingen im Prefab.", EditorStyles.wordWrappedMiniLabel);
+            EditorGUI.indentLevel--;
+            EditorGUILayout.Space(4);
+        }
+
         void AccFields(JObj a, List<string> types)
         {
             using (new EditorGUILayout.HorizontalScope())
@@ -763,7 +817,17 @@ namespace VariantKit
                     }
                 }
             }
-            ZoneList(a, "zonen", "Zonen", true);
+            // Spec 3.3 `auf`/`stelle`: auf einem anderen Accessoire sitzen statt auf Zonen
+            var others = doc.resolved.List("accessoires").OfType<JObj>().Select(x => x.S("id", "")).Where(x => x.Length > 0 && x != a.S("id", "")).ToList();
+            {
+                var opts = new List<string> { "(Zonen)" }; opts.AddRange(others);
+                int ai = Mathf.Max(0, opts.IndexOf(a["auf"] as string ?? "(Zonen)"));
+                EditorGUI.BeginChangeCheck();
+                int na = EditorGUILayout.Popup(new GUIContent("Sitzt auf", "statt Zonen: auf einem anderen Accessoire (Fransen am Moospolster-Rand, Pilze auf Moos)"), ai, opts.ToArray());
+                if (EditorGUI.EndChangeCheck()) { a["auf"] = na == 0 ? null : opts[na]; Changed(); }
+            }
+            if (a["auf"] is string) P(a, "stelle", "Stelle", VkSpec.Stellen, "oben");
+            else ZoneList(a, "zonen", "Zonen", true);
             T(a, "spiegeln", "Spiegeln (_l → _r)", true);
             if (a.B("spiegeln", true)) F(a, "asymmetrie", "Asymmetrie", 0, 1, 0.2f);
             P(a, "verteilung", "Verteilung", VkSpec.Verteilungen, "streuen");
@@ -786,6 +850,7 @@ namespace VariantKit
             F(a, "kipp_zufall", "Kippen Zufall (°)", 0, 45, 10);
             F(a, "einsinken", "Einsinken (Anteil Höhe)", 0, 0.6f, 0.25f);
             P(a, "bindung", "Bindung", VkSpec.Bindungen, "anker");
+            F(a, "weichheit", "Weichheit (Nachschwingen)", 0, 1, VkSpec.WeichStdAcc(a.S("typ", "")), "0 = starr … 1 = schwingt voll (Fransen, Tang, Ketten). Gehänge folgen zusätzlich der Schwerkraft.");
             P(a, "farbgruppe", "Farbgruppe", new[] { "accessoire_a", "accessoire_b", "accessoire_c", "horn" }, "accessoire_a");
             F(a, "farb_zufall", "Farb-Zufall", 0, 1, 0);
             using (new EditorGUILayout.HorizontalScope())
@@ -882,6 +947,11 @@ namespace VariantKit
                 var c = VkBatch.Clip(w.cur, clip);
                 c.SampleAnimation(w.inst, c.length * t);
                 w.statur.Apply();
+                // G14: Federn wie im Fenster takten (Laufband-Tempo des Clips, 10 Schritte bis zum Bild)
+                w.clipIdx = Mathf.Max(0, Array.IndexOf(ClipLabels, clip));
+                for (int k = 0; k <= 10; k++) { w.time = c.length * t - (10 - k) / 30f; w.StepSwing(); }
+                c.SampleAnimation(w.inst, c.length * t);
+                w.statur.Apply();
                 float size = w.cur.L * w.cur.meshToMeter;
                 VkBatch.Pose(VkBatch.ViewArpg, new Vector3(0, size * 0.38f, 0), size * 2.3f, out var pos, out var rot);
                 w.pru.camera.transform.SetPositionAndRotation(pos, rot);
@@ -890,7 +960,8 @@ namespace VariantKit
                 w.pru.Render(true);
                 var tex = w.pru.EndStaticPreview();
                 File.WriteAllBytes(outPng, tex.EncodeToPNG());
-                Debug.Log($"[VariantKit] FENSTER-VORSCHAU {Path.GetFileName(outPng)}: {w.res.mesh.triangles.Length / 3} Tris, {w.res.instances.Count} Teile, Statur-Ops {w.statur.scales.Count}/{w.statur.stretches.Count}/{w.statur.offsets.Count}");
+                Debug.Log($"[VariantKit] FENSTER-VORSCHAU {Path.GetFileName(outPng)}: {w.res.mesh.triangles.Length / 3} Tris, {w.res.instances.Count} Teile, Statur-Ops {w.statur.scales.Count}/{w.statur.stretches.Count}/{w.statur.offsets.Count}, " +
+                          $"Nachschwingen: Laufband {w.schwingen.zusatzGeschwindigkeit.magnitude:0.00} m/s, Hüfte {w.schwingen.Auslenkung(0).magnitude:0.000} rad");
             }
             finally { w.Cleanup(); DestroyImmediate(w); }
         }

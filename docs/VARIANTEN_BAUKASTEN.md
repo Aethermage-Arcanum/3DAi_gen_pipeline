@@ -1,11 +1,13 @@
-# Varianten-Baukasten (Unity + Blender) – Meilensteine 1 und 2
+# Varianten-Baukasten (Unity + Blender) – Meilensteine 1 und 2, G14 Nachschwingen
 
-Stand 2026-11-22 · Werkzeug-Version 0.2.0 · Grundlage: `docs/VARIANTEN_SPEC.md` (Entscheidungen E1–E8).
+Stand 2026-11-22 · Werkzeug-Version 0.3.0 · Grundlage: `docs/VARIANTEN_SPEC.md` (Entscheidungen E1–E8).
 - **M1:** Unity-Fenster für Statur, Accessoires und Material-Ebenen, Backen zu 1 Mesh + 1 Material (Teile A und B).
 - **M2:** Blender-Panel mit Live-Reglern (Statur, Bedeckungs-Lagen Fell/Federn/Stacheln/Platten, Baustein-Werkbank),
   Unity-Knopf **„In Blender bauen“**, **Textur-Backen** (Albedo, Maske, Leuchten, Normal → Spiel-Shader „VariantKit/Baked“),
   Gruppen-Presets A–I und 15 neue Bausteintypen (Teile C und D).
-Die Reste stehen am Ende von Teil D.
+- **G14:** Nachschwingen von Fell, Federn, Stacheln, Fransen, Tang und Ketten im Shader („Foliage-Trick“), Regler
+  `weichheit`, hängende Gehänge (`auf`/`stelle`, Ausrichtung `unten`), Schalter im Dangling-Shader für den Bog Warden (Teil E).
+Die Reste stehen am Ende von Teil D bzw. E.
 
 ---
 
@@ -286,8 +288,134 @@ bewegen sich, Bodenwerte identisch zu M1 (`temp/vk2_work/importer_check.log` geg
 - **LODs** (LOD1/LOD2, `weg_ab_lod`).
 - **Partikel** aus `effekte`.
 - **Zonen-Export aus Blender** (`<Name>_zonen.json`), Zonen-Korrekturen pro Kreatur.
-- `schwingen` der Lagen und schwingende Accessoires (dangling): Feld vorhanden, noch ohne Wirkung. Gehänge (Fransen,
-  Tang, Ketten) hängen noch nicht nach unten (`auf`/`stelle` fehlen in der Unity-Platzierung).
+- ~~`schwingen` der Lagen, schwingende Accessoires, hängende Gehänge (`auf`/`stelle`)~~ → erledigt mit G14 (Teil E).
 - Fell-Modus `nur_shader` (Strich-Textur), Feder-`kiel`, Haut-Relief `leder`/`schuppen` im Shader.
 - Datei-Beobachtung mit automatischem Neu-Laden (Spec 6.2). Jetzt: Revisions-Schutz + Knopf „Neu laden“.
 - Startwerte der neuen Presets und Bausteine sind Platzhalter (der Nutzer stellt sie ein).
+
+---
+
+## Teil E – G14: Nachschwingen im Shader („Foliage-Trick“)
+
+### E1. Kurzanleitung (ohne 3D-Erfahrung)
+**Was es tut:** Fell, Federn, Stacheln und Gehänge (Moosfransen, Tang, Ranken, Ketten) schwingen beim Anlaufen, Bremsen,
+Drehen und bei Schlägen gedämpft nach, wie an einer Feder. Dazu kommt ein leichtes Wackeln (Wind). Es gibt keine Physik und
+keine Zusatz-Knochen. Der Shader verbiegt die Spitzen, die Wurzeln bleiben fest.
+
+**Der Regler „Weichheit“** (0 = starr wie Felszacken, 1 = schwingt voll) gilt pro Lage und pro Accessoire:
+
+| Wo | Regler |
+|---|---|
+| Unity-Fenster, Reiter **Accessoires**, Kasten **„Nachschwingen (Weichheit, G14)“** | Weichheit jeder Bedeckungs-Lage (Lage 1/2), Schalter „in der Vorschau an“, Knöpfe **Stoß (slam)** und **Schlag (hit)** zum Ausprobieren |
+| Unity-Fenster, Reiter **Accessoires**, jeder Eintrag | **Weichheit (Nachschwingen)**, außerdem **Sitzt auf** (anderes Accessoire statt Zonen) + **Stelle** (`oben` / `rand_unten`) und die Ausrichtung **unten** (hängt) |
+| Blender-Panel, **2 · Bedeckung**, jede Lage | **Weichheit (Nachschwingen in Unity)** – ändert die Geometrie nicht, Blender zeigt die Bewegung nicht |
+
+Standards (wenn nichts eingestellt ist): Platten 0 · Stacheln 0,1 · Federn 0,4 · Fell 0,6 · Grasbüschel 0,5 · Barteln 0,6 ·
+Ketten 0,7 · Moosfransen, Tang, Gehänge 0,9 · alle übrigen Accessoires 0. Die Weichheit wirkt sofort, ohne „In Blender bauen“.
+
+In der Fenster-Vorschau läuft das Modell auf der Stelle. Damit man das Nachschwingen trotzdem sieht, rechnet das Fenster
+bei Walk und Run ein „Laufband“ mit dem Tempo des Clips. Clip-Events (hit, slam) lösen die Stöße aus.
+
+**Feinabstimmung im Spiel:** Das gebackene Prefab hat die Komponente **VariantSchwingen** (am Modell neben VariantStatur).
+
+| Regler | Wirkung | Standard |
+|---|---|---|
+| Trägheit | wie stark Anlaufen/Bremsen/Drehen die Spitzen auslenkt | 1,5 |
+| Frequenz | Eigenfrequenz der Feder (klein = träge, groß = zappelig) | 1,6 Hz |
+| Dämpfung | 0,1 schwingt lange nach, 1 kommt ohne Überschwingen zur Ruhe | 0,2 |
+| Fahrtwind | Spitzen zeigen beim Laufen nach hinten (rad pro m/s) | 0,15 |
+| Max. Ausschlag | weiche Obergrenze des Spitzen-Winkels (rad) | 0,8 |
+| Wackeln / Wackel-Tempo | Wind-Rauschen (rad) / Hz | 0,04 / 1,1 |
+| Stoß / Zittern | Stärke der Stöße (hit, slam, Treffer) / kurzes 9-Hz-Zittern danach | 1 / 0,15 |
+| Schwerkraft | wie stark Gehänge beim Neigen des Körpers nach unten gezogen werden | 0,7 |
+
+Spiel-Code: `Stoss("slam"|"hit"|"getroffen")`, `Treffer(richtung)`, nach Teleport/Pool `Zuruecksetzen()`.
+
+### E2. `weichheit` und das alte `schwingen` – ein Feld
+`weichheit` ersetzt `schwingen` (Lagen) sowie `bewegung` + `schwingen.staerke` (Accessoires). Die alten Felder hatten nie
+eine Wirkung. **Migration** beim Laden (Unity `VkSpec.Migrate`, Blender `vk_json.migrate`, gleich für Varianten-Dateien und
+Presets): `schwingen` > 0 → `weichheit`, `bewegung: "schwingt"` → `weichheit` = Stärke × Typ-Standard. `0` bzw. `"starr"` war
+nur der Platzhalter-Standard und entfällt, es gilt dann der Typ-Standard. Beim Speichern werden die alten Felder nicht mehr
+geschrieben. Die 9 Presets und 4 Varianten sind bereits bereinigt. Die Gehänge in den Presets `feucht` und `kueste` hängen
+jetzt (`ausrichtung: "unten"`).
+
+### E3. Technik
+- **Beweglichkeit pro Vertex** (Wurzel 0 … Spitze 1): Bedeckung = Blender-Attribut `vk_h` (Geometry Nodes, schon seit M2),
+  exportiert als `h` in `<Name>.bedeckung.json`. Accessoires = Höhe im Baustein (`z / Höhe`). Sie läuft Blender → Unity →
+  Backen mit.
+- **Vertex-Kanäle** (Vorschau-Mesh UND Spiel-Mesh): `TEXCOORD1` = (h, weichheit [+2 = folgt der Schwerkraft, nur Gehänge],
+  Feder-Slot + Phase pro Teil, Teil-Länge / Kreaturgröße). `TANGENT.xyz` = Achse des Teils (Wurzel → Spitze), nur bei
+  schwingenden Teilen. Das Skinning dreht sie mit. Deren Normal-Map ist dafür aus (der Facetten-Look ist ohnehin Standard).
+  Die Basis und starre Teile haben `TEXCOORD1.y = 0`, dort bricht der Shader nach einem Vergleich ab. Das Spiel-Mesh bekommt
+  den Kanal immer (auch nur Nullen): Fehlt er, liefert die GPU Zufallswerte.
+- **Shader** `Shaders/VariantSwing.cginc`, eingebunden in `VariantKit/Layered` und `VariantKit/Baked` (Vertex-Funktion,
+  weiterhin 1 Material, Schatten schwingen mit). Auslenkung D (Spitzen-Winkel als Welt-Vektor) = Feder des Slots + Wackeln
+  + Stoß-Zittern (+ Schwerkraft bei Gehängen), × Weichheit, nur quer zur Teil-Achse. Die Biegung ist ein **Kreisbogen um
+  die Wurzel**: Das Teil wird nicht länger, die Spitze wandert auf dem Bogen.
+- **Laufzeit** `Scripts/VariantSchwingen.cs`: 4 Federn (Slot 0 Hüfte/Hips, 1 Brust/Chest, 2 Kopf/Head, 3 Schwanz/Tail).
+  Der Slot eines Teils kommt aus dem stärksten Knochen seines Ansatzes. Jede Feder misst die Geschwindigkeit ihres Knochens
+  (Welt). Die Änderung der Geschwindigkeit stößt die Feder an (Pendel: Winkelbeschleunigung = −a/ℓ, ℓ ≈ 0,4 × Größe), dazu
+  kommt der Fahrtwind. Dämpfung semi-implizit, 120-Hz-Teilschritte, weiche Begrenzung (tanh). Werte per
+  `MaterialPropertyBlock` (`_VKS0…3`, `_VKSwing`, `_VKSwingB`). Ohne Komponente oder mit „an“ = aus ist alles 0 → das Mesh
+  ist exakt wie ohne G14. Varianten ohne schwingende Teile bekommen die Komponente ausgeschaltet (kostet nichts).
+- **Stöße aus Clip-Events:** `VkBase` legt `<Name>_events.json` neben die Basis-Kopie, `VkImport.OnPostprocessAnimation`
+  schreibt `hit`/`slam` als AnimationEvent `VKStoss` in die Clips (nur die Baukasten-Kopie, der CreatureImporter bleibt
+  unberührt). Ein Animator ruft damit `VariantSchwingen.VKStoss` selbst auf.
+- **Gehänge hängen:** Ausrichtung `unten` (nach unten, leicht von der Haut weg). `auf: <id>` + `stelle: oben | rand_unten`
+  setzt Teile auf ein anderes Accessoire (Punkte auf der Oberseite bzw. am unteren Rand des Bausteins). Sie erben dessen
+  Gewichte und werden nach allen anderen platziert.
+- **Weichheit zählt nicht als Änderung der Bedeckung** (`VkCover.Fresh` ignoriert sie) → kein erneutes „In Blender bauen“.
+
+### E4. Kosten
+
+| | Messung / Schätzung |
+|---|---|
+| CPU (`VariantSchwingen.Step`) | **3,5 µs pro Gegner und Frame** (gemessen: 300 Gegner × 200 Schritte, Editor-Batch Mono, inkl. SetPropertyBlock). Ziel < 20 µs. Ein IL2CPP-Build ist schneller. |
+| GPU | Nur schwingende Vertices rechnen (≈ 60 Rechenschritte, je 2 sin/cos): Eisriese 1.460 von 17.543, Quillback 2.056 von 21.067, Testvariante 1.600 von 19.075. Alle anderen brechen nach 1 Vergleich ab. Kein zusätzlicher Draw Call, keine Textur. |
+| Speicher | + 1 UV-Kanal (16 Byte pro Vertex) im Spiel-Mesh |
+| Batching | Built-in RP: Ein SkinnedMeshRenderer wird ohnehin nie per GPU-Instancing oder dynamisch gebatcht, der MaterialPropertyBlock ändert daran nichts. Erst mit URP/HDRP wichtig: Dort nähme der Block den Renderer aus dem SRP-Batcher (Lösung dann: Werte pro Renderer anders übergeben). |
+
+### E5. Selbstprüfung G14
+```
+temp/g14_work/run_g14.sh <log> VariantKit.VkSwingBatch.Run [-vkBlender] [-vkPerf] -vkVariants "<a;b>" -vkShots <ordner>
+python temp/g14_work/make_gifs.py <ordner>     # ohne_###.png + mit_###.png → <Name>_<folge>.gif (links ohne, rechts mit)
+```
+Pro Variante: backen, dann zwei Bildfolgen in der ARPG-Ansicht. Das Modell wandert wirklich (quer zur Kamera), die Kamera
+folgt. `lauf` = Idle → Walk → Run → Stopp → Idle (Tempo = Boden-Tempo des Clips aus den Füßen: Walk 0,26 m/s, Run 1,0 m/s),
+`angriff` = Idle → Attack2 (Event hit) → Idle → Ready (Event slam) → Idle. Jedes Bild wird zweimal gerendert, mit und ohne
+Block → gleiche Pose, nur das Nachschwingen unterscheidet sich.
+
+Ergebnis 2026-11-22 (`temp/g14_shots_final/`):
+
+| Variante | schwingende Teile | Weichheit | max. Feder-Auslenkung lauf / angriff |
+|---|---|---|---|
+| Eisriese (Fell) | 365 | Fell 0,6 | 0,61 / 0,72 rad |
+| Quillback | 284 | Stacheln 0,1, Gesichtsfell 0,6 | 0,60 / 0,72 rad |
+| Testvariante Moos + Tang (`temp/g14_work/g14_mossback_test.variant.json`, Preset feucht) | 26 | Fransen, Ranken, Tang, Fransen am Moospolster je 0,9 | 0,58 / 0,72 rad |
+| Slagback, Cragplate (alles starr) | 0 | – | **mit = ohne in allen 542 Bildern pixelgleich** |
+
+Regression `VkBatch.Run`: Slagback und Cragplate in allen 15 Prüfbildern pixelgleich zu M2 (`temp/vk2_shots`), auch die
+Fenster-Vorschau mit laufenden Federn. Sitz-Werte aller 4 Varianten unverändert. Die Bedeckungs-Geometrie des Eisriesen aus
+Blender ist mit altem und neuem Blender-Code byte-gleich. Gegenprobe CreatureImporter in einer Projekt-Kopie
+(`temp/g14_work/importer_check.log`): Boden-, Clip- und Dangle-Zeilen identisch zu M2, alle 106 Prüfbilder pixelgleich.
+
+### E6. C13 – Bog Warden im Shader „Creature/Standard Dangling“
+Neuer Schalter **„Nachschwingen“** (`shader_feature_local _VK_NACHSCHWINGEN`, Standard **aus** → kompiliert exakt den alten
+Shader, alle fertigen Kreaturen bleiben gleich). An: zusätzlich Trägheit, Wackeln und Stöße aus `VariantSwing.cginc`. Dort
+gibt es nur Gewicht (Vertex-Farbe R) und Phase (G), deshalb gilt Achse ≈ unten und eine feste Strähnen-Länge.
+Eingeschaltet wird er in der `creature.toml` (`[dangling] nachschwingen = true`, `nachschwingen_laenge`, `nachschwingen_feder`).
+`Editor/VariantKit/VkDangleSwing.cs` setzt ihn nach jedem Import des Kreatur-Materials, der CreatureImporter bleibt
+unverändert. Zurzeit ist er **nur beim Bog Warden** an. Die Komponente hängt `VariantSchwingen.AutoAttach` beim Start einer
+Szene an (CreatureViewer, Play). Ergebnis: `temp/g14_c13/BogWarden_lauf.gif`, `BogWarden_angriff.gif` (Events hit aus
+`BogWarden_events.json`). Die markierten Strähnen-Spitzen schwingen jetzt mit Trägheit und Schlag nach. Weil `dangling.py`
+nur die untersten Spitzen markiert (256 von 5.764 Vertices), bleibt der größte Teil des Mooses steif. Das ist der eigene
+Schritt C13 (Markierung), nicht Teil von G14.
+
+### E7. Reste (nicht in G14)
+- C13: Markierung in `rigging/dangling.py` zu knapp (Regel `below` an der Crown-Achse) – eigener Schritt.
+- Blender zeigt das Nachschwingen nicht (nur den Regler), die Bewegung sieht man nur in Unity.
+- Feder-Slots sind für Vierbeiner benannt (Hips/Chest/Head/Tail, Ersatz Pelvis/Crown). Andere Skelette brauchen ggf. eigene
+  Namen (`VariantSchwingen.SlotKnochen`).
+- Die Startwerte der Komponente sind Platzhalter, der Nutzer stellt sie ein. Kurzes Fell (5 % der Größe) bewegt sich
+  naturgemäß wenig. Deutlich sichtbar sind lange Teile (Gehänge, Gesichtsfell, lange Zotteln).
+- Bei URP/HDRP: SRP-Batcher-taugliche Übergabe statt MaterialPropertyBlock (siehe E4).

@@ -28,6 +28,12 @@ symmetrie = "Astkrone, Moos-Strähnen und Baumpilze sind bewusst asymmetrisch (B
 [dangling]
 amplitude = 0.018
 frequency = 0.6           # langsam, schwer (nasses Moos)
+# G14/C13 (Nutzer 2026-11-22): zusätzlich Trägheit, Wackeln und Stöße im Shader (Schalter „Nachschwingen“ in
+# Creature/Standard Dangling, gesetzt von VariantKit/Editor/VkDangleSwing.cs; Laufzeit-Komponente VariantSchwingen).
+# Die zu knappe Markierung (nur Strähnen-Spitzen schwingen) ist ein eigener Schritt (BACKLOG C13).
+nachschwingen = true
+nachschwingen_laenge = 0.35   # Länge der Moos-Strähnen (m)
+nachschwingen_feder = 2       # Feder am Kopf (die Krone hängt am Kopf)
 [[dangling.region]]
 bones = ["Crown"]
 below = -0.02

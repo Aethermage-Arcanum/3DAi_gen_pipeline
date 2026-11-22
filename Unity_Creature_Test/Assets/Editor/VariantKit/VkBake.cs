@@ -28,6 +28,32 @@ namespace VariantKit
             mi.importLights = false;
         }
 
+        /// <summary>G14: Stoß-Events (hit, slam) aus &lt;Name&gt;_events.json als AnimationEvents „VKStoss“ in die Clips der
+        /// Basis-Kopie schreiben → ein Animator ruft VariantSchwingen.VKStoss automatisch auf. Nur die Baukasten-Kopie.</summary>
+        void OnPostprocessAnimation(GameObject root, AnimationClip clip)
+        {
+            if (!Ours) return;
+            var ev = Path.Combine(Path.GetDirectoryName(assetPath), Path.GetFileNameWithoutExtension(assetPath) + "_events.json");
+            if (!File.Exists(ev)) return;
+            try
+            {
+                var j = Json.ParseObj(File.ReadAllText(ev));
+                float fps = j.F("fps", 30);
+                string cn = clip.name.Contains("|") ? clip.name.Substring(clip.name.LastIndexOf('|') + 1) : clip.name;   // „RimehideBear|Quadruped_Bear_Walk“
+                var list = j.O("clips")?.L(cn);
+                if (list == null) return;
+                var events = new List<AnimationEvent>();
+                foreach (JObj e in list.OfType<JObj>())
+                {
+                    string art = e.S("event", "");
+                    if (art != "hit" && art != "slam") continue;
+                    events.Add(new AnimationEvent { time = e.F("frame", 0) / fps, functionName = "VKStoss", stringParameter = art });
+                }
+                if (events.Count > 0) AnimationUtility.SetAnimationEvents(clip, events.ToArray());
+            }
+            catch (Exception ex) { Debug.LogWarning($"[VariantKit] Events {ev}: {ex.Message}"); }
+        }
+
         void OnPreprocessTexture()
         {
             if (!assetPath.StartsWith(VkBase.BasesDir + "/")) return;
@@ -90,6 +116,10 @@ namespace VariantKit
             var st = model.AddComponent<VariantStatur>();
             VkBuilder.ConfigureStatur(st, b, doc.resolved.Obj("statur"), model);
             if (st.scales.Count + st.stretches.Count + st.offsets.Count == 0) UnityEngine.Object.DestroyImmediate(st);
+            // G14 Nachschwingen: Federn an Hüfte/Brust/Kopf/Schwanz, Empfänger der Clip-Events (hit/slam). Ohne schwingende
+            // Teile bleibt sie aus (kostet dann nichts, empfängt aber weiter die Events).
+            var sw = model.AddComponent<VariantSchwingen>();
+            ConfigureSchwingen(sw, b, model, res.instances.Any(i => i.weich > 0));
             r.prefabPath = $"{dir}/{name}.prefab";
             r.bones = smr.bones.Length;
             PrefabUtility.SaveAsPrefabAsset(root, r.prefabPath);
@@ -129,6 +159,13 @@ namespace VariantKit
             Debug.Log($"[VariantKit] GEBACKEN {name}: {r.tris} Tris (Basis {r.trisBase} + Bedeckung {r.trisCover} + Accessoires {r.trisAcc}), 1 Material, " +
                       $"Texturen {string.Join(", ", r.textures)}, {r.bones} Knochen, Statur {r.staturAmpel}, Budget {r.budgetAmpel} → {r.prefabPath}");
             return r;
+        }
+
+        public static void ConfigureSchwingen(VariantSchwingen sw, VkBase b, GameObject model, bool active)
+        {
+            sw.Binden();
+            sw.groesse = b.L * b.meshToMeter;   // Modell-Raum (Skalierung 1); zur Laufzeit × lossyScale
+            sw.enabled = active;
         }
 
         /// <summary>&lt;id&gt;.instanzen.json: Meter im Raum der Basis-FBX (x vorn, y links, z oben = Blender-Objektraum),

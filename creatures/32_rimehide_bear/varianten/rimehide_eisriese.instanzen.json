@@ -4,7 +4,7 @@
   "variante": "rimehide_eisriese",
   "basis": "rimehide_bear",
   "quell_hash": "sha1:b8a6d6bb021e2a3c7678a761e92cc1c1739318a8",
-  "werkzeug": "0.2.0",
+  "werkzeug": "0.3.0",
   "koordinaten": "Meter, Raum der Basis-FBX: x vorn, y links, z oben (wie Blender), Ursprung = Mesh-Ursprung",
   "instanzen": [
     {

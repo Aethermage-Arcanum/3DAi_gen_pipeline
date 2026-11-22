@@ -24,6 +24,12 @@ namespace VariantKit
         public Vector3[] cb;         // dieselben im Körperraum / L (Ruhe, für Muster)
         public float[] ch;           // Höhe im Teil 0..1
         public int[] ct;             // Dreiecke (lokal)
+        // G14 Nachschwingen (TEXCOORD1 + TANGENT, VariantSwing.cginc)
+        public float weich;          // Weichheit der Lage / des Accessoires (0 = starr)
+        public bool grav;            // Gehänge: folgt der Schwerkraft
+        public int slot;             // Feder 0 Hüfte · 1 Brust · 2 Kopf · 3 Schwanz (aus dem Ansatz-Knochen)
+        public Vector3 axis;         // Wurzel → Spitze (Mesh-Raum)
+        public float lenRel;         // Länge Wurzel → Spitze / Kreaturgröße
         public int Tris => cover ? ct.Length / 3 : VkParts.Get(typ).First(f => f.name == form).tris;
     }
 
@@ -89,7 +95,8 @@ namespace VariantKit
                 var z = m.Strs("zonen"); if (z.Count == 0) z.Add("ganzer_koerper");
                 return b.zones.Mask(z, m.Strs("ohne"));
             }).ToList();
-            foreach (JObj acc in R.List("accessoires").OfType<JObj>())
+            // Accessoires mit `auf` (sitzen auf einem anderen Accessoire) nach den übrigen platzieren
+            foreach (JObj acc in R.List("accessoires").OfType<JObj>().OrderBy(x => x["auf"] is string ? 1 : 0))
             {
                 if (!acc.B("an", true)) continue;
                 try { Place(b, doc, acc, r, layerMasks); }
@@ -119,6 +126,8 @@ namespace VariantKit
             if (c == null) { r.warnings.Add("Bedeckung noch nicht gebaut – Knopf „In Blender bauen“."); return; }
             r.coverFresh = c.Fresh(doc);
             if (!r.coverFresh) r.warnings.Add("Bedeckung veraltet (Lagen geändert) – „In Blender bauen“.");
+            // gleiche Zählung wie der Blender-Export: aktive Lagen, höchstens 2, Lage = Index + 1
+            var lagen = doc.resolved.Obj("bedeckung").List("lagen").OfType<JObj>().Where(l => l.B("an", true)).Take(2).ToList();
             foreach (var p in c.parts)
             {
                 Vector3 d = Lerp3(r.dv, p.tri, b.tris, p.bary) - Lerp3(b.verts, p.tri, b.tris, p.bary);
@@ -132,12 +141,23 @@ namespace VariantKit
                 var ct = new List<int>();
                 for (int k = 0; k < c.tris.Length; k += 3)
                     if (c.tris[k] >= p.v0 && c.tris[k] < p.v0 + p.nv) { ct.Add(c.tris[k] - p.v0); ct.Add(c.tris[k + 1] - p.v0); ct.Add(c.tris[k + 2] - p.v0); }
+                var lage = p.lage - 1 < lagen.Count ? lagen[p.lage - 1] : null;
+                // Achse: Mittel der Wurzel-Vertices → Mittel der Spitzen-Vertices
+                Vector3 root = Vector3.zero, tip = Vector3.zero; float nr = 0, nt = 0, hmax = ch.Length > 0 ? ch.Max() : 1;
+                for (int k = 0; k < p.nv; k++)
+                {
+                    if (ch[k] <= 0.02f) { root += cv[k]; nr++; }
+                    if (ch[k] >= hmax - 0.02f) { tip += cv[k]; nt++; }
+                }
+                var axis = nr > 0 && nt > 0 ? tip / nt - root / nr : b.up;
                 r.instances.Add(new VkInstance
                 {
                     acc = "bedeckung_" + p.lage, typ = "bedeckung", form = "", zone = "", cover = true, lage = p.lage,
                     cv = cv, cb = cb, ch = ch, ct = ct.ToArray(), tri = p.tri, bary = p.bary,
                     pos = Lerp3(r.dv, p.tri, b.tris, p.bary), anchor = p.weights, bindung = "anker", rand = p.rand,
                     farbgruppe = p.farbgruppe, farbZufall = 0, size = 0.05f,
+                    weich = lage != null ? VkSpec.WeichheitLage(lage) : 0, slot = SlotOf(b, p.weights),
+                    axis = axis.sqrMagnitude > 1e-12f ? axis.normalized : b.up, lenRel = axis.magnitude / Mathf.Max(1e-6f, b.L * Mathf.Max(1e-3f, hmax)),
                 });
             }
         }
@@ -344,10 +364,46 @@ namespace VariantKit
             var zonen = a.Strs("zonen"); if (zonen.Count == 0) zonen.Add("buckel");
             bool spiegeln = a.B("spiegeln", true);
             var points = new List<(Cand c, string zone, float sizeF)>();
+            var parentOf = new Dictionary<int, VkInstance>();   // `auf`: Punkt sitzt auf diesem Teil (erbt dessen Gewichte)
+            string auf = a["auf"] as string;
             var gv = a.Vec("groesse_verlauf", new[] { 1f, 1f, 1f });
             float Verlauf(float t) => t < 0.5f ? Mathf.Lerp(gv[0], gv[1], t * 2) : Mathf.Lerp(gv[1], gv[2], t * 2 - 1);
 
-            if (vert == "reihe")
+            if (!string.IsNullOrEmpty(auf))
+            {
+                // Spec 3.3 `auf` + `stelle`: auf einem anderen Accessoire sitzen (oben) oder an seinem unteren Rand hängen
+                var parents = r.instances.Where(i => !i.cover && i.acc == auf).ToList();
+                if (parents.Count == 0) { r.warnings.Add($"{id}: auf '{auf}' – kein solches Accessoire (oder es ist aus)"); return; }
+                spiegeln = false;   // die Eltern sind schon gespiegelt
+                string stelle = a.S("stelle", "oben");
+                foreach (var pi in parents)
+                {
+                    var pf = VkParts.Get(pi.typ).FirstOrDefault(f => f.name == pi.form);
+                    if (pf == null) continue;
+                    var pc = pi.m.MultiplyPoint3x4(new Vector3(0, 0, pf.height * 0.5f));
+                    var pu = ((Vector3)pi.m.GetColumn(2)).normalized;
+                    float rmax = pf.v.Max(v => new Vector2(v.x, v.y).magnitude);
+                    var cands = new List<Cand>();
+                    foreach (var v in pf.v)
+                    {
+                        float rr = new Vector2(v.x, v.y).magnitude;
+                        bool ok = stelle == "rand_unten" ? v.z <= pf.height * 0.35f && rr >= rmax * 0.55f : v.z >= pf.height * 0.55f;
+                        if (!ok) continue;
+                        var wp = pi.m.MultiplyPoint3x4(v);
+                        var outw = wp - pc; outw -= Vector3.Dot(outw, pu) * pu;
+                        var n = stelle == "rand_unten" ? (outw.sqrMagnitude > 1e-12f ? outw.normalized : pu) : pu;
+                        // am Rand unten: nur Stellen, deren Außenseite nicht nach oben zeigt (sonst hängt die Franse über dem Rücken)
+                        if (stelle == "rand_unten" && Vector3.Dot(n, b.up) > 0.2f) continue;
+                        cands.Add(new Cand { tri = pi.tri, bary = pi.bary, pos = wp, nrm = n, mask = 1 });
+                    }
+                    foreach (var c in Scatter(cands.OrderBy(_ => rnd.Next()).ToList(), anzahl, Mathf.Max(dmin, size * 0.5f)))
+                    {
+                        parentOf[points.Count] = pi;
+                        points.Add((c, pi.zone, 1));
+                    }
+                }
+            }
+            else if (vert == "reihe")
             {
                 var rl = b.zones.rueckenlinie;
                 float u0 = b.BoneU(rl.S("von", "Head:0.25")), u1 = b.BoneU(rl.S("bis", "Tail_1:0.8"));
@@ -439,8 +495,12 @@ namespace VariantKit
             float hand = Mathf.Sign(Vector3.Dot(Vector3.Cross(b.up, b.fwd), b.left));
             bool clusterMirror = spiegeln && (vert == "cluster" || vert == "kranz") && zonen.All(z => z.EndsWith("_l"));
             int count = 0;
-            foreach (var (c, zone, sizeF) in points)
+            float weich = VkSpec.WeichheitAcc(a);
+            bool grav = VkSpec.Haengt(typ);
+            for (int pIdx = 0; pIdx < points.Count; pIdx++)
             {
+                var (c, zone, sizeF) = points[pIdx];
+                parentOf.TryGetValue(pIdx, out var parent);
                 var form = use[rnd.Next(use.Count)];
                 float sF = sizeF * Mathf.Lerp(1 - gz * 0.5f, 1 + gz * 0.5f, (float)rnd.NextDouble());
                 float s = size * sF;
@@ -450,6 +510,12 @@ namespace VariantKit
                 {
                     case "oben": U = b.up; break;
                     case "hinten": U = -b.fwd; break;
+                    case "unten":   // Gehänge: hängt nach unten, leicht von der Haut weg geneigt
+                        {
+                            var nh = c.nrm - Vector3.Dot(c.nrm, b.up) * b.up;
+                            U = (-b.up + 0.3f * (nh.sqrMagnitude > 1e-8f ? nh.normalized : Vector3.zero)).normalized;
+                            break;
+                        }
                     case "aussen": U = Mathf.Abs(bc.z) < L * 0.02f ? c.nrm : (b.left * Mathf.Sign(bc.z) + c.nrm).normalized; break;
                     default: U = c.nrm; break;
                 }
@@ -478,11 +544,14 @@ namespace VariantKit
                 m.SetColumn(0, F * (s * str[0])); m.SetColumn(1, W * (s * str[1])); m.SetColumn(2, U * (s * str[2]));
                 m.SetColumn(3, new Vector4(pos.x, pos.y, pos.z, 1));
                 float rnd1 = (float)rnd.NextDouble();
+                var anchorW = parent != null ? parent.anchor : Blend(b, c.tri, c.bary, bind);
+                float lenRel = form.height * s * str[2] / L;
                 var inst = new VkInstance
                 {
                     acc = id, typ = typ, form = form.name, zone = zone, m = m, tri = c.tri, bary = c.bary, pos = c.pos, nrm = c.nrm,
-                    anchor = Blend(b, c.tri, c.bary, bind), bindung = bind, rand = rnd1, size = s / L,
+                    anchor = anchorW, bindung = parent != null ? "anker" : bind, rand = rnd1, size = s / L,
                     farbgruppe = a.S("farbgruppe", "accessoire_a"), farbZufall = a.F("farb_zufall", 0),
+                    weich = weich, grav = grav, slot = SlotOf(b, anchorW), axis = U, lenRel = lenRel,
                 };
                 r.instances.Add(inst);
                 count++;
@@ -506,6 +575,8 @@ namespace VariantKit
                         acc = id, typ = typ, form = form.name, zone = rz, m = sc * mm, mirrored = true, tri = snap.tri, bary = snap.bary,
                         pos = snap.pos, nrm = snap.nrm, anchor = Blend(b, snap.tri, snap.bary, bind), bindung = bind, rand = rnd1, size = s * af / L,
                         farbgruppe = inst.farbgruppe, farbZufall = inst.farbZufall,
+                        weich = weich, grav = grav, slot = SlotOf(b, Blend(b, snap.tri, snap.bary, bind)),
+                        axis = ((Vector3)(sc * mm).GetColumn(2)).normalized, lenRel = lenRel * af,
                     });
                 }
             }
@@ -520,6 +591,7 @@ namespace VariantKit
             var UV0 = new List<Vector2>(b.mesh.uv.Length == nb ? b.mesh.uv : new Vector2[nb]);
             var G = new List<Vector4>(); var P = new List<Vector4>(); var N = new List<Vector4>();
             var M0 = new List<Vector4>(); var M1 = new List<Vector4>();
+            var SW = new List<Vector4>(new Vector4[nb]);   // G14: TEXCOORD1 (Basis = 0, starr)
             var BW = new List<BoneWeight>(b.weights);
             var T = new List<int>();
             for (int sm = 0; sm < b.mesh.subMeshCount; sm++) T.AddRange(b.mesh.GetTriangles(sm));
@@ -538,7 +610,7 @@ namespace VariantKit
             // Haut-Bindung: Dreiecke in der Nähe vorsortieren
             foreach (var inst in r.instances)
             {
-                if (inst.cover) { AddCoverPart(b, inst, layerMasks, V, UV0, G, P, N, M0, M1, BW, T); continue; }
+                if (inst.cover) { AddCoverPart(b, inst, layerMasks, V, UV0, G, P, N, M0, M1, BW, T); for (int k = 0; k < inst.cv.Length; k++) SW.Add(Swing(inst, inst.ch[k])); continue; }
                 var form = VkParts.Get(inst.typ).First(f => f.name == inst.form);
                 inst.vStart = V.Count; inst.vCount = form.v.Length;
                 int g = VkSpec.GruppeIndex(inst.farbgruppe);
@@ -561,6 +633,7 @@ namespace VariantKit
                     G.Add(new Vector4(g, inst.farbZufall, inst.rand, 0));
                     var bp = b.Body(wp) / L;
                     P.Add(new Vector4(bp.x, bp.y, bp.z, Mathf.Clamp01(pv.z / Mathf.Max(1e-6f, form.height))));
+                    SW.Add(Swing(inst, Mathf.Clamp01(pv.z / Mathf.Max(1e-6f, form.height))));
                     N.Add(Vector4.zero);   // unten nach dem Normalen-Rechnen gesetzt
                     M0.Add(new Vector4(am[0], am[1], am[2], am[3])); M1.Add(new Vector4(am[4], am[5], am[6], am[7]));
                     if (near != null)
@@ -595,9 +668,36 @@ namespace VariantKit
             mesh.normals = nn;
             for (int v = nb; v < V.Count; v++) { var bn = b.BodyDir(nn[v]); N[v] = new Vector4(bn.x, bn.y, bn.z, 0); }
             mesh.SetUVs(2, G); mesh.SetUVs(3, P); mesh.SetUVs(4, N); mesh.SetUVs(5, M0); mesh.SetUVs(6, M1);
+            mesh.SetUVs(1, SW);
             mesh.RecalculateTangents();
+            // G14: schwingende Teile tragen ihre Achse (Wurzel → Spitze) in der Tangente – das Skinning dreht sie mit
+            var tg = mesh.tangents;
+            foreach (var inst in r.instances)
+            {
+                if (inst.weich <= 0 || inst.vCount <= 0) continue;
+                var ax = new Vector4(inst.axis.x, inst.axis.y, inst.axis.z, 1);
+                for (int k = 0; k < inst.vCount; k++) tg[inst.vStart + k] = ax;
+            }
+            mesh.tangents = tg;
             mesh.RecalculateBounds();
             return mesh;
+        }
+
+        /// <summary>TEXCOORD1 eines Teil-Vertex: (Beweglichkeit h, Weichheit [+2 Schwerkraft], Slot + Phase, Länge / L).</summary>
+        static Vector4 Swing(VkInstance inst, float h)
+        {
+            if (inst.weich <= 0) return new Vector4(h, 0, 0, 0);
+            return new Vector4(Mathf.Clamp01(h), inst.weich + (inst.grav ? 2 : 0), inst.slot + Mathf.Clamp(inst.rand, 0, 0.999f), inst.lenRel);
+        }
+
+        /// <summary>Feder-Slot aus dem stärksten Knochen des Ansatzes (VariantSchwingen.SlotFuer).</summary>
+        static int SlotOf(VkBase b, BoneWeight w)
+        {
+            int bi = w.boneIndex0; float bw = w.weight0;
+            if (w.weight1 > bw) { bi = w.boneIndex1; bw = w.weight1; }
+            if (w.weight2 > bw) { bi = w.boneIndex2; bw = w.weight2; }
+            if (w.weight3 > bw) { bi = w.boneIndex3; }
+            return bi >= 0 && bi < b.boneNames.Length ? VariantSchwingen.SlotFuer(b.boneNames[bi]) : 0;
         }
 
         static void AddCoverPart(VkBase b, VkInstance inst, List<float[]> layerMasks, List<Vector3> V, List<Vector2> UV0, List<Vector4> G,

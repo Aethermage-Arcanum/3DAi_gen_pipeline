@@ -31,17 +31,19 @@ SILHOUETTE_ZONEN = ["ruecken_gesamt", "schultern", "oberschenkel", "unterarme", 
 
 # Standardwerte pro Typ (Spec 2.2 / 2.4)
 GEMEINSAM = {"laenge_zufall": 0.3, "laenge_nach_zone": {}, "richtung": "knochen", "richtung_zufall": 12.0,
-             "farbgruppe": "bedeckung_1", "schwingen": 0.0, "accessoires_aussparen": True, "seed": None, "weg_ab_lod": 2}
+             "farbgruppe": "bedeckung_1", "accessoires_aussparen": True, "seed": None, "weg_ab_lod": 2}
 TYP_STD = {
     "fell": {"anzahl": 500, "laenge": 0.05, "anlege_winkel": 25.0, "abstand_min": 0.015, "breite": 0.45, "form": "spitz",
-             "kanten": 3, "kruemmung": 0.3, "modus": "geometrie"},
+             "kanten": 3, "kruemmung": 0.3, "modus": "geometrie", "weichheit": 0.6},
     "federn": {"anzahl": 300, "laenge": 0.06, "anlege_winkel": 15.0, "abstand_min": 0.02, "breite": 0.35, "kruemmung": 0.4,
-               "kiel": True, "modus": "geometrie"},
+               "kiel": True, "modus": "geometrie", "weichheit": 0.4},
     "stacheln": {"anzahl": 250, "laenge": 0.10, "anlege_winkel": 35.0, "abstand_min": 0.02, "dicke": 0.01, "kanten": 4,
-                 "spitze": 0.9, "kruemmung": 0.1},
+                 "spitze": 0.9, "kruemmung": 0.1, "weichheit": 0.1},
     "platten": {"anzahl": 60, "laenge": 0.06, "anlege_winkel": 10.0, "abstand_min": 0.03, "groesse": 0.06, "dicke": 0.01,
-                "streckung": 1.2, "ecken": 6, "schuppung": 0.4, "woelbung": 0.3, "groesse_zufall": 0.3},
+                "streckung": 1.2, "ecken": 6, "schuppung": 0.4, "woelbung": 0.3, "groesse_zufall": 0.3, "weichheit": 0.0},
 }
+# G14: `weichheit` (Nachschwingen im Unity-Shader) steht pro Typ in TYP_STD; sie ändert die Geometrie nicht. Die
+# Beweglichkeit pro Vertex ist das Attribut `vk_h` (Wurzel 0 … Spitze 1), exportiert als "h" in <Name>.bedeckung.json.
 TRIS_PRO_TEIL = {"fell": lambda l: {"spitz": 1, "rund": 3, "zackig": 2, "buschel": 3}.get(l.get("form", "spitz"), 1) * int(l.get("kanten", 3)),
                  "federn": lambda l: 4, "stacheln": lambda l: int(l.get("kanten", 4)) + (int(l.get("kanten", 4)) if float(l.get("spitze", 0.9)) < 0.99 else 0),
                  "platten": lambda l: 3 * int(l.get("ecken", 6))}

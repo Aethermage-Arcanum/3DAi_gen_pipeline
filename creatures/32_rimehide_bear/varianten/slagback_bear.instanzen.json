@@ -3,8 +3,8 @@
   "format_version": 1,
   "variante": "slagback_bear",
   "basis": "rimehide_bear",
-  "quell_hash": "sha1:19c008e36dbedf47462ad9ef81196957ece2024e",
-  "werkzeug": "0.2.0",
+  "quell_hash": "sha1:cc4d42eb2997e6b0ae6ed28c8192498884467b65",
+  "werkzeug": "0.3.0",
   "koordinaten": "Meter, Raum der Basis-FBX: x vorn, y links, z oben (wie Blender), Ursprung = Mesh-Ursprung",
   "instanzen": [
     {
