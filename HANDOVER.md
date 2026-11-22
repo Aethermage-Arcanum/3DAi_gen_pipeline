@@ -1,4 +1,4 @@
-# Handover (Stand 2026-11-20, Nächste Schritte + Git + Baukasten: 2026-11-22)
+# Handover (Stand 2026-11-22)
 
 Für die nächste Session lesen, in dieser Reihenfolge:
 1. `../CLAUDE.md` mit den Regeln des Nutzers. Besonders wichtig: **Claude = Orchestrator + Prüfer** (Hauptchat erkundet/schreibt nichts selbst, alles über Subagenten, Kontext sparen), Subagenten **nacheinander** (max. 1 Bau-Agent + 1 leichter), gründlich statt hektisch, Death-Clips vorerst nicht anfassen, selbständig committen, nur Push mit Freigabe.
@@ -10,6 +10,7 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 ### Fertig (Mesh + UV + Rig + Clips + FBX/GLB)
 - **9 Kreaturen (Stand 17./18.11.):** Chitin Crawler (hexapod/ant), Ravine Stalker (quadruped/wolf), Reef Snapper (quadruped/lizard), Hollow Stag (quadruped/deer), Dune Raptor (biped_raptor/raptor), Eel Stalker (legless/cobra), Scorpion Matriarch (multileg/scorpion), Needle Wasp (flyer/wasp), Void Manifestation (floater/tentacle).
 - Seit dem 18.–20.11. sind außerdem fertig: Bog Warden (upright/treant, Commit 9686a8f), Cinder Wyvern und Bonepicker Vulture (winged, Commit 38ce1c7). Die Abnahme durch den Nutzer steht noch aus.
+- Seit dem 21.11. außerdem fertig: **Broodling** (octopod/spider, Commits cfce08e, 04faf33) und **Rimehide Bear** (quadruped/bear, Tripo 88852f9, Rig + 10 Clips f8bfe1b). Abnahme der Roh-GIFs durch den Nutzer steht aus (BACKLOG Q9).
 - **Void Manifestation** wird neu gemacht. Ihr Tentakel-Agent hat nur die allgemeinen Learnings erarbeitet.
 - **Am 18.11. überarbeitet und von Claude geprüft:**
   - Vierbeiner weich: echter Wolfsgalopp statt Hoppeln, Turn-Vorzeichen behoben.
@@ -20,7 +21,6 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 ### Tripo-Modelle bereit für Rig und Muster (alle Pflichtprüfung B bestanden)
 | Kreatur | Muster | Hinweis für den Rig |
 |---|---|---|
-| broodling | octopod/spider | vorderes Beinpaar leicht angehoben |
 | shellback | quadruped/tortoise | Ansichten aus dem Raster nach Inhalt neu geschnitten |
 | sand_leviathan | legless/sandworm | rundes Maul (Nutzer bevorzugt) |
 | frost_colossus | quadruped/gorilla | – |
@@ -33,16 +33,17 @@ Für die nächste Session lesen, in dieser Reihenfolge:
 | bonepicker_vulture | winged/bird | `winged`; Federspitzen einseitig → `double_sided` |
 
 ### Weitere Eckdaten
-- **Tripo-Guthaben ≈ 155 Credits** (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
+- **Tripo-Guthaben ≈ 45 Credits** (nach dem Bär-Lauf, 155 − 110) (ca. 110 pro Modell, **≈ 1 $ pro Modell**; Preisrecherche: `docs/recherche/RECHERCHE_3D_DIENSTE.md`).
 - **Roster:** 36 Kreaturen (`creatures/roster.toml`): 20 ursprüngliche plus 16 aus der Monster-Recherche (ohne Concept, Design aus der Beschreibung). Dazu kommen 18 Biome (`templates/biomes.toml`). Vorschlag und Auswahl stehen in `docs/recherche/ROSTER_ERWEITERUNG_VORSCHLAG.md`, die Recherche in `docs/recherche/RECHERCHE_MONSTERARTEN.md`.
-- **Noch keine Modelle (17, geprüft 2026-11-20: kein `raw/generate_model.glb`):** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, geode_golem, tomb_shroud, idol_eye, umbral_panther, rimehide_bear, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen. Das wären 17 × 110 = 1.870 Credits. Die 155 Credits reichen für 1 Modell, und das ist für den Rimehide Bear vorgesehen (G10). Die Void Manifestation hat ein altes Modell und soll neu gemacht werden. Die Prompts für alle sind fertig.
+- **Noch keine Modelle (16, geprüft 2026-11-22: kein `raw/generate_model.glb`):** spore_drone, shore_lurker, stone_boar, rock_hyena, glassback_colossus, flesh_titan, void_harbinger, geode_golem, tomb_shroud, idol_eye, umbral_panther, sporecap_mortar, bog_ooze, quillback_burrower, tallgrass_viper, mound_queen. Das wären 16 × 110 = 1.760 Credits. Die 45 Credits reichen für kein weiteres Modell. Der Rimehide Bear ist generiert (88852f9), seine Varianten entstehen über den Baukasten. Die Void Manifestation hat ein altes Modell und soll neu gemacht werden. Die Prompts für alle sind fertig.
 - **Varianten-Baukasten (G9):** M1 ✅ (87ff233, Unity-Fenster, Ebenen-Shader, Backen, Slagback + Cragplate), M2 ✅ (5f7466c, Blender-Panel mit Live-Reglern, Bedeckung per Geometry Nodes, „In Blender bauen“, Textur-Backen, Presets A B C E F G I, 15 Bausteintypen). Anleitung `docs/VARIANTEN_BAUKASTEN.md`, Reste in BACKLOG G9 bzw. `docs/VARIANTEN_BAUKASTEN_WIP.md`.
-- **Git:** Abgeschlossene Schritte sind committet, zuletzt `40f0fa8` (Unity: Input System Package statt alter Input Manager), gepusht bis dahin. Push nur mit Freigabe des Nutzers.
+- **Git:** Abgeschlossene Schritte sind committet, zuletzt `7eb22ce` (G15 Material-Ebenen in zwei Gruppen), gepusht bis dahin. Push nur mit Freigabe des Nutzers.
 
 ## Nächste Schritte
-0. 🔄 **JETZT (Nutzer 2026-11-22): G15 Material-Ebenen in zwei Gruppen (Fehler + Umbau)**, Build-Agent läuft. Fehler: Zonen-Masken aller Ebenen auf „ohne“ → Ebenen wirken trotzdem auf alle Accessoires. Entscheidung: Körper-Ebenen nur auf Haut + Bedeckung (Zonen), nie auf Accessoires; eigene Gruppe Accessoire-Ebenen immer obenauf, je Ebene für alle Accessoires oder bestimmte Typen (z. B. Platten matt, Kristalle leuchtend). Weiterhin 1 Material, alte Varianten-Dateien werden migriert. Spezifikation: BACKLOG G15.
-   - ☐ **Danach: G16 Bedien-Durchgang Varianten-Baukasten**, wenn der Nutzer Zeit hat. Der Nutzer findet den Baukasten „nicht ganz intuitiv“ und will ihn Punkt für Punkt gemeinsam durchgehen. **Keine eigenmächtigen UI-Umbauten vorher.** Bedienfragen werden in BACKLOG G16 gesammelt.
-   - ✅ Erledigt 2026-11-22 (alle gepusht): G14 Nachschwingen der Bedeckung im Shader (b01a43f), Warnungs-Fixes Texturen-Ordner (05044ac) und Input System (40f0fa8).
+0. **Aktuell läuft kein Bau-Agent** (Stand 2026-11-22). ✅ Erledigt: G15 Material-Ebenen in zwei Gruppen (7eb22ce, gepusht), C15 Rumpf/Hals-Dehnung (cf0eb3d), Spinne `octopod/spider` (cfce08e, 04faf33), Rimehide Bear Tripo + Rig + `quadruped/bear` (88852f9, f8bfe1b).
+   - ☐ **G16 Bedien-Durchgang Varianten-Baukasten und G17 Interview Bedeckung/Accessoires:** finden gemeinsam mit dem Nutzer statt, wann er Zeit hat – **nicht Teil der Bau-Warteschlange**. Der Nutzer findet den Baukasten „nicht ganz intuitiv“ und will ihn Punkt für Punkt gemeinsam durchgehen. **Keine eigenmächtigen UI-Umbauten vorher.** Bedienfragen werden in BACKLOG G16 gesammelt.
+   - ✅ Erledigt 2026-11-22 (alle gepusht): G14 Nachschwingen der Bedeckung im Shader (b01a43f), Warnungs-Fixes Texturen-Ordner (05044ac) und Input System (40f0fa8), G15 (7eb22ce).
+   - **Bau-Warteschlange** (je nur ein Bau-Agent, nacheinander, gleich in BACKLOG): Schildkröte (Shellback) → Sandwurm (Sand Leviathan) → Gorilla (Frost Colossus) → Affe (Ruin Howler) → Frosch (Oasis Gulper, inkl. C16 und Q5) → Mantis (Reality Ripper) → Tausendfüßer (Gloomfang).
 
 Danach die bisherige Reihenfolge (Priorität des Nutzers: erst neue Skelette, dann Muster):
 1. ✅ **`upright` fertig** (Commit 9686a8f, Bog Warden, Muster treant). Offen daran: Moos steif (C13, später).
@@ -50,12 +51,12 @@ Danach die bisherige Reihenfolge (Priorität des Nutzers: erst neue Skelette, da
 3. ✅ **`winged` fertig** (Commit 38ce1c7): Cinder Wyvern 14 (winged/drake, bleibt zweibeinig – Nutzer 2026-11-20) und Bonepicker Vulture 15 (winged/bird), je 14 Clips, Death nur Platzhalter. Bewegung muss der Nutzer noch per Roh-GIFs abnehmen. Reste (Vorschau-Kamera, Feueratem, Geier-Hinterzehe) in BACKLOG G12; echte Fledermaus = G11 (Todo, nicht vorziehen).
 4. ✅ **Geweih-Fix Hollow Stag (C14)** erledigt 2026-11-20 (Commit 5b09992; Geweih 0,0 cm Abweichung, Wolf und Echse identisch; Abnahme der GIFs durch den Nutzer steht aus).
    - ✅ **C9 Gelenk-Verdichtung** als Baustein fertig (Commit 1d2305b, `rigging/joint_densify.py`, opt-in `[joint_densify]`, bei keiner Kreatur eingeschaltet). Wolf-Kopie: +800 Tris, Dehnung im Run 2,05 → 1,78, aus der Spielkamera kaum sichtbar, Raptor sogar schlechter. Nutzerkritik: am irrelevanten Sprunggelenk getestet.
-   - 🔄 **jetzt C15: Rumpf/Hals-Dehnung** (Wolf Bauch/Rücken, Hirsch Hals), Build-Agent läuft. Ursache sind die Gewichte (Wolf Hüftflanke 2,89; Hirsch Tail_1 zieht mit 42 % am Knie; Raptor/Geier/Wyvern an der harten Sohle). **Regel: Prüfungen zuerst an dem, was die ARPG-Kamera sieht.**
-   - Danach die **Muster-Warteschlange mit der Spinne neu** (alter Agent ohne Spuren): Spinne → Schildkröte → Sandwurm → Gorilla → Affe → Frosch (inkl. Rig-Fehler **C16**: `center_at` liefert None → TypeError in `quadruped_rig.py`, vor dem Frosch-Muster lösen) → Mantis → Tausendfüßer. Immer nur ein Bau-Agent.
+   - ✅ **C15 Rumpf/Hals-Dehnung** erledigt (Commit cf0eb3d, Regeln `zone_lock` und `spine_chain_blend`). Rest: Wolf-Bauchlinie im Galopp ~1,9, nur iterativ lösbar; Hirsch-Schwanzkette im Zickzack → Nutzer entscheidet, ob umgesetzt wird. **Regel: Prüfungen zuerst an dem, was die ARPG-Kamera sieht.**
+   - ✅ **Spinne** (Muster `octopod/spider`, Broodling, Commits cfce08e, 04faf33). Rest: Coxa-Femur-Dehnung bei Bein III/IV bis 2,64 (C9-Baustein evtl. ins octopod-Rig übernehmen), Drehung 78 °/s. Danach die Bau-Warteschlange oben (Schildkröte → … → Tausendfüßer).
    - ⏸ **Hirsch C12 = vorgemerkt, ferne Zukunft** (Nutzer 2026-11-20): nur **neue Basisbilder + Tripo-Neulauf** warten, bis der Nutzer es ausdrücklich aufruft. Der Geweih-Fix gehört nicht dazu (→ C14).
 5. **C13 Moos** (Bog Warden, `dangling.py`) bleibt offen.
-6. **Offene Fragen an den Nutzer:** Alle stehen gesammelt in `BACKLOG.md` → „❓ Offene Fragen an den Nutzer“ (Q1–Q9, je mit Fundstelle). Darunter fallen: Raptor-Arme (A11), Schwanz des Raptors im Attack, Sohlen bei Wolf und Echse, Bog Warden (Slam und Walk), Oasis Gulper v1/v2 (G5), Test der zweistufigen Prompts (A10), die 16 Ergänzungen (G2), die Bären-Varianten (G10) sowie die Abnahme der Roh-GIFs von winged (G6) und C14.
-7. **G9:** Prompt-Schritt Varianten-Brainstorming ✅, Varianten-Baukasten M1 ✅ (87ff233) und M2 ✅ (5f7466c). Offene Reste siehe BACKLOG G9; Nachschwingen G14 ✅ (b01a43f); Material-Ebenen G15 und Bedien-Durchgang G16 oben.
+6. **Offene Fragen an den Nutzer:** Alle stehen gesammelt in `BACKLOG.md` → „❓ Offene Fragen an den Nutzer“ (Q1–Q9, je mit Fundstelle). Darunter fallen: Raptor-Arme (A11), Schwanz des Raptors im Attack, Sohlen bei Wolf und Echse, Bog Warden (Slam und Walk), Oasis Gulper v1/v2 (G5), Test der zweistufigen Prompts (A10), die 16 Ergänzungen (G2) sowie die Abnahme der Roh-GIFs von winged (G6), C14, Spinne, Bär (G10) und C15 (Wolf/Hirsch).
+7. **G9:** Prompt-Schritt Varianten-Brainstorming ✅, Varianten-Baukasten M1 ✅ (87ff233) und M2 ✅ (5f7466c). Offene Reste siehe BACKLOG G9; Nachschwingen G14 ✅ (b01a43f); Material-Ebenen G15 ✅ (7eb22ce); Bedien-Durchgang G16 und Interview G17 oben.
 
 ## Ablauf pro Kreatur
 0. **Varianten zuerst (neue Kreaturen, Entscheidung 2026-11-20, BACKLOG G8 d/G9):** 5–6 Varianten brainstormen, Gemeinsames = Basis-Kreatur (nur sie geht ohne variable Details zu Tripo), Unterschiede → Tönung / Anbauteile (Geometry Nodes) / Proportions-Slider / Shader + Partikel in Unity; starke Silhouetten-Abweichung = eigene Basis-Kreatur; alle Varianten teilen Rig + Clips. Bestehende Modelle bleiben (eingebrannte Details, Varianten nur Tönung + Anbauteile). **Prompt-Schritt und Baukasten sind noch nicht gebaut** (nach den Skeletten); bis dahin Brainstorming von Hand mit dem Nutzer. Details: README „Ablauf“.
@@ -81,9 +82,9 @@ Danach die bisherige Reihenfolge (Priorität des Nutzers: erst neue Skelette, da
 | Skelett | Rig | Baukasten | Muster |
 |---|---|---|---|
 | hexapod | rigging/hexapod_rig.py | motions/hexapod/hexapod_kit.py | ant (mantis, broodmother geplant) |
-| octopod | rigging/octopod_rig.py | motions/octopod/octopod_kit.py | crab, spider (Agent läuft) |
+| octopod | rigging/octopod_rig.py | motions/octopod/octopod_kit.py | crab, spider ✅ |
 | multileg | rigging/multileg_rig.py | motions/multileg/multileg_kit.py | scorpion |
-| quadruped | rigging/quadruped_rig.py | motions/quadruped/quadruped_kit.py | wolf, lizard, deer (+ tortoise, gorilla, monkey, frog … geplant) |
+| quadruped | rigging/quadruped_rig.py | motions/quadruped/quadruped_kit.py | wolf, lizard, deer, bear ✅ (+ tortoise, gorilla, monkey, frog … geplant) |
 | biped_raptor | rigging/biped_raptor_rig.py | motions/biped_raptor/biped_kit.py | raptor |
 | legless | rigging/legless_rig.py | motions/legless/legless_kit.py | cobra (+ sandworm, centipede, viper geplant) |
 | floater | rigging/floater_rig.py | motions/floater/floater_kit.py | tentacle |
@@ -104,7 +105,7 @@ Danach die bisherige Reihenfolge (Priorität des Nutzers: erst neue Skelette, da
 - **Eng stehende Beine** → `adaptive_belly_strip`. Zu breite Hinterbeine → `narrow_hind_legs`. Geweih/Hörner → `rigid_head_above`.
 - **Einseitige Flächen** (Flügel, Krausen) → `double_sided.py`.
 - **Unity-Viewer:** Boden = Bindepose (`RestLowestPoint`), nicht die erste Take-Pose.
-- **Dehnung** ist nur eine Info. Sie wird am Mesh gelöst, nie durch kleinere Bewegung. Die Gelenk-Verdichtung (C9) ist als Baustein fertig (opt-in). Die größten Dehnungen kommen aber aus den Gewichten (C15).
+- **Dehnung** ist nur eine Info. Sie wird am Mesh gelöst, nie durch kleinere Bewegung. Die Gelenk-Verdichtung (C9) ist als Baustein fertig (opt-in). Die größten Dehnungen kommen aber aus den Gewichten (C15 ✅: `zone_lock`, `spine_chain_blend`).
 - **TurnLeft-Vorzeichen** war bei Vierbeiner und Raptor falsch. Bei jedem neuen Muster prüfen.
 - **Windows-Dateisperre** beim GIF-Aufräumen → in der Pipeline behoben (Wiederholung).
 - **Death-Clips:** Der Code ist überall unverändert (Nutzer-Anweisung). Durch Rig-Änderungen weichen einzelne Death-Ergebnisse leicht ab (Skorpion, Tentakel, Raptor-Füße, Hirsch-Lücke 3,05 cm begründet freigegeben).
