@@ -192,6 +192,11 @@ for name, lg in LEGS.items():
         wrist = wrist if wrist is not None else h(RIG["back_hock"])
         elbow = bend(tr, 0.5, 0.95, 1)
         elbow = elbow if elbow is not None else h(RIG["back_knee"])
+        # knee_out (optional, Shellback 2026-11-23): Knie seitlich nach außen (Anteil H). Gespreizte Schildkröten-Hinterbeine
+        # sind als gerade Säule modelliert → Kette in Ruhe fast gestreckt (0,96–0,98), jede Rumpfbewegung zwang den Rumpf
+        # nach unten. Mit dem Knie außen beugt die IK seitlich (Knie nach außen, wie beim echten Tier). Ohne Wert wie bisher.
+        if RIG.get("knee_out", 0):
+            elbow = elbow + np.array([0, (1 if name[1] == "L" else -1) * RIG["knee_out"] * H, 0])
     par = f"Shoulder_{name}" if name[0] == "F" else "Hips"
     if name[0] == "F":                                 # Schulterblatt: Widerrist-Seite → Schultergelenk
         top = np.array([lg["joint"][0] - RIG["scapula_back"] * L, Y_MID + 0.7 * (lg["joint"][1] - Y_MID),
@@ -552,6 +557,52 @@ if RIG.get("rigid_head_above") is not None:
         print(f"RIG_INFO Übergang Kopf→Hals: {rings} Ringe, {[int(r.sum()) for r in n_ring]} Vertices, "
               f"x {V[allr, 0].min():.3f}..{V[allr, 0].max():.3f}, z über Boden {V[allr, 2].min() - GROUND:.3f}.."
               f"{V[allr, 2].max() - GROUND:.3f}")
+
+# Panzer 100 % starr (rigid_shell, Shellback 2026-11-23; ohne die Option ändert sich nichts):
+# Panzer = Hauptkörper ohne Bein-, Hals/Kopf- und Schwanz-Öffnungen, alles an EINEM Knochen (shell_bone). Sonst greifen
+# Schulterblatt/Oberarm/Oberschenkel, Hals und Schwanz in den Panzerrand → Rand wackelt bei jedem Schritt.
+# Übergang starr → weich über shell_blend_rings Kanten-Ringe AUSSERHALB des Panzers (Haut in den Öffnungen).
+SHELL = None
+if RIG.get("rigid_shell", False):
+    sb = names.index(RIG.get("shell_bone", "Spine_1"))
+    zg = V[:, 2] - GROUND
+    soft = np.zeros(N, bool)
+    # (1) Beine: nahe an der Beinkette (Leg_*_1..4) und unter dem Panzerrand (vorne/hinten eigene Randhöhe)
+    for leg in LEGS:
+        dl = np.min(np.stack([seg_dist(V, np.array(BONES[f"Leg_{leg}_{k}"][0]), np.array(BONES[f"Leg_{leg}_{k}"][1]))
+                              for k in (1, 2, 3, 4)], 1), 1)
+        rim = RIG.get("shell_rim_front" if leg[0] == "F" else "shell_rim_back", 0.4) * H
+        soft |= (dl < RIG.get("shell_leg_radius", 0.16) * H) & (zg < rim)
+    # (2) Hals/Kopf: vor der Halsöffnung (Ebene, oben ggf. weiter vorn: Nackenschild über dem Hals bleibt Panzer)
+    zn = BONES["Neck_1"][0][2]
+    x_open = x_sh + RIG.get("shell_front", 0.3) * (x_hb - x_sh) + RIG.get("shell_front_slope", 0.0) * (V[:, 2] - zn)
+    soft |= V[:, 0] > x_open
+    # (3) Schwanz: hinter der Schwanzöffnung und unter dem Panzerrand hinten
+    x_back = x_tail + RIG.get("shell_back", 0.12) * L
+    soft |= (V[:, 0] < x_back) & (zg < RIG.get("shell_rim_tail", 1.0) * H)
+    SHELL = main & ~soft
+    W[SHELL] = 0.0
+    W[SHELL, sb] = 1.0
+    rings = int(RIG.get("shell_blend_rings", 2))
+    rep = np.arange(N)
+    for g in WELD:
+        rep[g] = g[0]
+    done, n_ring = SHELL.copy(), []
+    for k in range(rings):
+        nb = np.zeros(N, bool)
+        cut = done[E[:, 0]] != done[E[:, 1]]
+        nb[E[cut].ravel()] = True
+        nb &= ~done
+        nr = np.zeros(N, bool)
+        nr[rep[nb]] = True
+        nb = nr[rep] & ~done
+        t = (rings - k) / (rings + 1)
+        W[nb] *= 1 - t
+        W[nb, sb] += t
+        done |= nb
+        n_ring.append(nb)
+    print(f"RIG_INFO Panzer starr an {names[sb]}: {int(SHELL.sum())} Vertices, Übergang {rings} Ringe "
+          f"{[int(r.sum()) for r in n_ring]} Vertices")
 for g in WELD:
     W[g] = W[g].mean(0)
 top = np.argsort(-W, 1)[:, :4]
@@ -577,6 +628,8 @@ report = {"vertices": N, "parts": int(len(ids)), "height_m": round(H, 3), "lengt
           "belly_z": {k: round(v["belly"] - GROUND, 3) for k, v in LEGS.items()}}
 if JDS:
     report["joint_densify"] = JD.finish(JDS, OUT)
+if SHELL is not None:
+    report["rigid_shell"] = {"bone": RIG.get("shell_bone", "Spine_1"), "vertices": int(SHELL.sum())}
 (OUT / "rig_report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
 sample = V[::max(1, N // 4000)]
 (OUT / "rig_debug.json").write_text(json.dumps({

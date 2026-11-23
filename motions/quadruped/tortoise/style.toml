@@ -1,0 +1,158 @@
+# Bewegungsmuster quadruped/tortoise – Schildkröte (erstes Modell: Shellback). Generator: tortoise_clips.py.
+# Panzer STARR (Rig-Option rigid_shell): Rumpfbewegung nur über den ganzen Körper (Root: Heben, Rollen, Gieren, Nicken),
+# nie über die Wirbelsäule. Diagonal gekoppelter lateraler Viertakt mit hohem Duty Factor, Panzer schaukelt, Kopf ruhig;
+# Schnappbiss mit Körper-Ausfall (Schnappschildkröte), Panzer-Rammstoß mit Root Motion (Kommentkampf Landschildkröten).
+# Nutzer-Entscheidungen 2026-11-23: Attack2 = Panzer-Rammstoß · Tempo lebhafter als echt (Walk ≈ 0,7 Hz, Run ≈ 1,2 Hz) ·
+# Kopf darf beim Einziehen halb (verdeckt) in den Panzer eintauchen.
+# Winkel in Grad, Längen als Anteil der Körperlänge (stride, neck_*, lunge) bzw. Rumpfhöhe (lift, bob, Höhen). 30 fps.
+[meta]
+skeleton = "quadruped"
+style = "tortoise"
+clip_prefix = "Quadruped_Tortoise"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[rig]
+scapula_stiffness = 0.7   # Schulterblatt liegt im Panzer, gleitet kaum mit
+
+[walk]   # lateraler Viertakt, diagonal gekoppelt (Schmidt et al. 2016): Aufsetzen HL 0 · VL 0,40 · HR 0,5 · VR 0,90
+cycle_frames = 42      # 0,71 Hz (Nutzer: lebhafter als echt)
+duty = 0.78            # meist 3 Füße am Boden (Jayes & Alexander 1980)
+order = { BL = 0.0, FL = 0.6, BR = 0.5, FR = 0.1 }   # Kit-Konvention: Aufsetzzeit = −order
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.5
+curl_peak = 0.4
+stride = 0.16
+lift_front = 0.10      # flacher Fußbogen
+lift_back = 0.08
+swing_out = 0.035      # Fuß schwingt im Bogen nach außen (gespreizte Beine), Anteil Länge
+toe_curl_deg = 12
+bob = 0.025            # Panzer hebt/senkt sich 2× pro Zyklus (Zani 2005: aktiv angehoben)
+sag_lag = 0.06         # Panzer sackt 2–3 Frames nach dem Diagonal-Aufsetzen nach
+roll_deg = 3.0         # Panzer schaukelt seitlich im Takt der Diagonalpaare
+yaw_deg = 2.5
+nod_deg = 1.2
+neck_pump = 0.02       # Hals schiebt im Takt leicht vor/zurück
+neck_lift_deg = -4     # Kopf tief, vorgestreckt
+head_steady = 0.7      # Kopf gleicht Panzer-Gieren/-Rollen zu 70 % aus (stabilisiert)
+tail_deg = 4
+reach_smooth = 4
+reach_flat = 0.5
+
+[run]    # hastiger Trab ohne Schwebe: gleiche Kopplung, höhere Frequenz, Panzer tiefer, stärker schaukelnd
+cycle_frames = 25      # 1,2 Hz
+duty = 0.62
+order = { BL = 0.0, FL = 0.6, BR = 0.5, FR = 0.1 }
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.5
+curl_peak = 0.4
+stride = 0.21
+lift_front = 0.13
+lift_back = 0.10
+swing_out = 0.04
+toe_curl_deg = 16
+crouch = 0.04          # Panzer tiefer (Anteil Rumpfhöhe)
+bob = 0.03
+sag_lag = 0.05
+roll_deg = 4.5
+yaw_deg = 3.5
+nod_deg = 2.0
+neck_pump = 0.025
+neck_reach = 0.02      # Kopf weiter vorgestreckt
+neck_lift_deg = -6
+head_steady = 0.6
+tail_deg = 5
+reach_smooth = 3
+reach_flat = 0.5
+
+[turn]   # auf der Stelle: Füße schieben tangential, Kopf giert voraus, starrer Panzer folgt (giert leicht in die Kurve,
+         # rollt nach außen), Schwanz schwingt nach außen
+cycle_frames = 26
+duty = 0.75
+turn_deg = 26          # pro Zyklus → 30 °/s (Füße schwenken ±13°: die fast gestreckten Beine haben wenig Reichweite)
+stride = 0.0
+turn_head_deg = 24     # Kopf führt
+turn_shell_deg = 6     # Panzer giert in die Kurve (Kopf > Panzer)
+turn_roll_deg = 1.0    # Panzer rollt leicht zur Außenseite (mehr überstreckt das innere Hinterbein)
+head_lead = 0.12       # Kopf ist diesen Zyklus-Anteil voraus (Panzer folgt verzögert)
+
+[idle]   # steht schwer, Panzer atmet, Kopf schaut langsam links/rechts, zieht einmal halb ein, VR wird nachgesetzt
+frames = 120
+breathe = 0.008
+look_deg = 28
+retract = 0.07         # Kopf halb in den Panzer (Anteil Länge, Nutzer: halb eintauchen erlaubt)
+step_leg = "FR"
+step_lift = 0.12
+reach_smooth = 3
+
+[ready]  # Drohen der Schnappschildkröte: Hinterteil hoch (Panzer kippt nach vorn), Kopf zurück, Maul weit offen, Wiegen
+frames = 54
+tilt_deg = 10          # Panzer kippt vorn nach unten (Hinterteil hoch)
+crouch = 0.03
+neck_back = 0.05
+head_up_deg = 14
+jaw_open_deg = 34
+sway_deg = 6           # langsames Wiegen links/rechts (Panzer giert, Kopf führt)
+reach_smooth = 3
+
+[attack1] # Schnappbiss: ausholen → Hinterbeine schieben, Körper-Ausfall, Panzer kippt vorn runter, Hals+Kopf schießen
+          # nach vorn-oben, Maul schlägt zu (hit) → zerren → schwer zurück
+frames = 30
+windup_end = 9
+strike_end = 13
+hit_frame = 12
+hold_end = 19
+lunge = 0.13           # Körper-Ausfall (Anteil Länge)
+neck_back = 0.05       # Ausholen: Kopf zurück
+neck_out = 0.11        # Zustoß: Hals fährt so weit vor
+neck_up = 0.03
+tilt_deg = 9           # Panzer kippt vorn nach unten beim Zustoß
+windup_tilt_deg = 4    # Ausholen: Hinterteil sinkt (vorn hoch)
+head_up_deg = 16       # Kopf schießt nach vorn-OBEN
+tug_deg = 10           # seitliches Zerren
+jaw_open_deg = 38
+reach_smooth = 3
+
+[attack2] # Panzer-Rammstoß (Root Motion): Kopf halb einziehen, tief ducken → schwerer Ausfall, vorderer Panzerrand und
+          # Stachelreihe voran, vorn aufbäumen (hit) → nachrutschen, Beine stemmen sich → Ruhe weiter vorn
+frames = 34
+duck_end = 11
+ram_end = 17
+hit_frame = 16
+settle_end = 26
+distance = 0.24        # Root Motion (Anteil Länge)
+overshoot = 0.04       # Panzer rutscht über das Ziel hinaus und federt zurück
+neck_back = 0.08       # Kopf eingezogen (halb im Panzer)
+duck = 0.08            # tief ducken (Anteil Rumpfhöhe)
+duck_tilt_deg = 5      # beim Ducken vorn runter
+rear_deg = 13          # beim Treffer vorn aufbäumen
+front_step = 1.0       # Vorderfüße treten mit (Anteil von distance)
+back_step = 1.0
+step_lift = 0.12       # Hinterfüße (Anteil Rumpfhöhe)
+front_lift = 0.30      # Vorderfüße heben sich beim Aufbäumen mit
+reach_smooth = 3
+
+[hit]    # Schreck-Reflex: Kopf zuckt halb unter den Panzer, Panzer sackt ab und kippt zurück, dann Ruhe
+frames = 14
+retract = 0.06
+drop = 0.06
+tilt_deg = 5
+roll_deg = 3
+reach_smooth = 2
+
+[death]  # PLATZHALTER (Nutzerregel: Death-Clips nicht anfassen) – zur Seite kippen wie quadruped/bear
+frames = 40
+collapse_start = 4
+collapse_end = 22
+side = 1
+legs_limp_deg = 25
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.04
+max_stretch = 1.9
+stretch_every = 3

@@ -19,3 +19,17 @@ role = "style"
 style = "quadruped/tortoise"
 variant = ""
 vorbild = ["Schnappschildkröte – Biss", "Landschildkröte – langsamer Gang, Kopf einziehen"]
+
+# Vierbeiner-Rig (rigging/quadruped_rig.py) – Schildkröten-Panzer 100 % starr (rigid_shell, nur Shellback)
+[quadruped.rig]
+rigid_shell = true
+shell_bone = "Spine_1"
+shell_front = 0.3          # Halsöffnung: Anteil Schultergelenk → Kopfansatz
+shell_front_slope = 0.0
+shell_rim_front = 0.5      # Panzerrand über den Vorderbeinen (Anteil Höhe)
+shell_rim_back = 0.42
+shell_leg_radius = 0.22
+shell_back = 0.19          # Schwanzöffnung: Anteil Länge vor der Schwanzspitze (Stachel-Ansatz unter dem Panzerrand)
+shell_rim_tail = 0.45      # … nur unterhalb dieser Höhe (hinterer Panzerrand oben bleibt starr)
+shell_blend_rings = 2
+knee_out = 0.07           # Hinterbein-Knie 4 cm nach außen: Kette in Ruhe gebeugt statt gestreckt (Reserve für Ausfall/Kippen)
