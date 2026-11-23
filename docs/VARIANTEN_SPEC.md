@@ -287,6 +287,8 @@ nicht).
 | `rand` | Breite des weichen Übergangs am Maskenrand (Anteil Größe) | 0–0.2 | 0.05 |
 | `rauschen` | unregelmäßiger, fleckiger Rand statt glatter Linie | 0–1 | 0.2 |
 | `gruppen` | nur Schicht 4, Körper-Ebenen: auf welche Körper-Farbgruppen die Ebene wirkt (Accessoires haben eigene Ebenen, 4.3) | Liste | alle |
+| `haut` | nur Schicht 4, Körper-Ebenen: wirkt auf die Haut (Basis-Mesh) (Nutzer 2026-11-23) | bool | true |
+| `bedeckung` | nur Schicht 4, Körper-Ebenen: `true` alle Lagen, `false` keine, `["lagen-id", …]` nur diese Lagen | bool/Liste | true |
 
 Material-Ebenen: `zonen` fehlt = `["ganzer_koerper"]`, `zonen: []` = nirgends (seit Format 2, 4.3).
 

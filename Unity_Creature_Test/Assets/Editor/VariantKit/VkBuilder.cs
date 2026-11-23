@@ -77,6 +77,7 @@ namespace VariantKit
         public List<JObj> ebenen = new List<JObj>();      // Körper-Ebenen (aktiv, höchstens 8)
         public List<JObj> ebenenAcc = new List<JObj>();   // Accessoire-Ebenen (aktiv, höchstens 4)
         public List<string> accIds = new List<string>();  // aktive Accessoire-Einträge, Index = Eintrags-Nummer im Shader
+        public int[] ebenenAuf = new int[0];              // pro Körper-Ebene: 1 = Haut, 2 = Lage 1, 4 = Lage 2 (VkSpec.AufBits)
         public IEnumerable<JObj> AlleEbenen => ebenen.Concat(ebenenAcc);
     }
 
@@ -105,6 +106,11 @@ namespace VariantKit
                 var z = m.L("zonen") == null ? new List<string> { "ganzer_koerper" } : m.Strs("zonen");
                 return b.zones.Mask(z, m.Strs("ohne"));
             }).ToList();
+            // Haut / Bedeckung (Nutzer 2026-11-23): wirkt die Ebene auf das Basis-Mesh und auf welche Lagen? Wird unten direkt in die
+            // Vertex-Masken TEXCOORD5/6 eingerechnet (Basis × Haut-Bit, Bedeckungs-Teil × Bit seiner Lage) → Vorschau-Shader,
+            // Textur-Backen und Spiel-Shader brauchen keine Änderung und sehen gleich aus.
+            var lagenIds = VkSpec.AktiveLagen(R).Select((l, k) => VkSpec.LageId(l, k)).ToList();
+            r.ebenenAuf = r.ebenen.Select(e => VkSpec.AufBits(e, lagenIds)).ToArray();
             // Accessoires mit `auf` (sitzen auf einem anderen Accessoire) nach den übrigen platzieren
             foreach (JObj acc in R.List("accessoires").OfType<JObj>().OrderBy(x => x["auf"] is string ? 1 : 0))
             {
@@ -607,7 +613,7 @@ namespace VariantKit
             for (int sm = 0; sm < b.mesh.subMeshCount; sm++) T.AddRange(b.mesh.GetTriangles(sm));
             float L = b.L;
             Vector4 Masks(int v, int off, Func<int, int, float> f) => new Vector4(f(off, v), f(off + 1, v), f(off + 2, v), f(off + 3, v));
-            float LM(int li, int v) => li < layerMasks.Count ? layerMasks[li][v] : 0;
+            float LM(int li, int v) => li < layerMasks.Count && (r.ebenenAuf[li] & 1) != 0 ? layerMasks[li][v] : 0;   // Haut-Bit
             for (int v = 0; v < nb; v++)
             {
                 G.Add(new Vector4(b.lightGroup[v], b.darkGroup[v], 0, 1));
@@ -620,7 +626,7 @@ namespace VariantKit
             // Haut-Bindung: Dreiecke in der Nähe vorsortieren
             foreach (var inst in r.instances)
             {
-                if (inst.cover) { AddCoverPart(b, inst, layerMasks, V, UV0, G, P, N, M0, M1, BW, T); for (int k = 0; k < inst.cv.Length; k++) SW.Add(Swing(inst, inst.ch[k])); continue; }
+                if (inst.cover) { AddCoverPart(b, inst, layerMasks, r.ebenenAuf, V, UV0, G, P, N, M0, M1, BW, T); for (int k = 0; k < inst.cv.Length; k++) SW.Add(Swing(inst, inst.ch[k])); continue; }
                 var form = VkParts.Get(inst.typ).First(f => f.name == inst.form);
                 inst.vStart = V.Count; inst.vCount = form.v.Length;
                 int g = VkSpec.GruppeIndex(inst.farbgruppe);
@@ -711,14 +717,16 @@ namespace VariantKit
             return bi >= 0 && bi < b.boneNames.Length ? VariantSchwingen.SlotFuer(b.boneNames[bi]) : 0;
         }
 
-        static void AddCoverPart(VkBase b, VkInstance inst, List<float[]> layerMasks, List<Vector3> V, List<Vector2> UV0, List<Vector4> G,
+        static void AddCoverPart(VkBase b, VkInstance inst, List<float[]> layerMasks, int[] auf, List<Vector3> V, List<Vector2> UV0, List<Vector4> G,
             List<Vector4> P, List<Vector4> N, List<Vector4> M0, List<Vector4> M1, List<BoneWeight> BW, List<int> T)
         {
             inst.vStart = V.Count; inst.vCount = inst.cv.Length;
             int g = VkSpec.GruppeIndex(inst.farbgruppe);
             var am = new float[8];
+            // Zonen-Maske am Ansatzpunkt (von der Basis, unabhängig vom Haut-Bit) × Bit der eigenen Lage (2 = Lage 1, 4 = Lage 2)
+            int lageBit = 2 << Mathf.Clamp(inst.lage - 1, 0, 1);
             for (int li = 0; li < 8; li++)
-                am[li] = li < layerMasks.Count ? layerMasks[li][b.tris[inst.tri * 3]] * inst.bary.x + layerMasks[li][b.tris[inst.tri * 3 + 1]] * inst.bary.y + layerMasks[li][b.tris[inst.tri * 3 + 2]] * inst.bary.z : 0;
+                am[li] = li < layerMasks.Count && (auf[li] & lageBit) != 0 ? layerMasks[li][b.tris[inst.tri * 3]] * inst.bary.x + layerMasks[li][b.tris[inst.tri * 3 + 1]] * inst.bary.y + layerMasks[li][b.tris[inst.tri * 3 + 2]] * inst.bary.z : 0;
             inst.layerMask = am;
             for (int k = 0; k < inst.cv.Length; k++)
             {

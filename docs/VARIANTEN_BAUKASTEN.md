@@ -436,8 +436,8 @@ Reiter **Material** im Unity-Fenster, unter den Farbgruppen:
 | **Accessoire-Ebenen – liegen immer obenauf** (max. 4) | nur Accessoires | **„gilt für“**: alle Accessoires, oder Typen (z. B. `kristall`) und/oder einzelne Einträge (z. B. `eis_kamm`), dazu oben/unten und fleckiger Rand im Teil |
 
 1. Unten im Bereich **Accessoire-Ebenen** einen Typ wählen (z. B. `risse`) → **„Accessoire-Ebene hinzufügen“**.
-2. Bei **„gilt für“** auf **Wählen…** klicken: „alle Accessoires“ oder unter *Typen* / *Einträge* abhaken. Angeboten wird
-   nur, was in der Variante vorkommt. Trifft die Ebene nichts, erscheint eine gelbe Warnung.
+2. Bei **„gilt für“** die Häkchen setzen: „alle Accessoires“ oder ein Häkchen pro Eintrag der Variante (seit 2026-11-23,
+   siehe F6; „Typen…“ wählt einen ganzen Typ). Trifft die Ebene nichts, erscheint eine gelbe Warnung.
 3. Die Körper-Ebenen bleiben wie bisher. Wählt man dort **alle Zonen ab**, wirkt die Ebene nirgends (Anzeige „– keine“).
    Fehlt das Feld ganz, gilt „ganzer_koerper (Standard)“.
 
@@ -510,3 +510,48 @@ Ergebnis 2026-11-22 (`temp/mg_pruefung/pruefung_ebenen.txt`, Bilder `temp/mg_pru
   `_gebaut.quell_hash` passt dadurch nicht mehr → das Fenster meldet „veraltet – neu backen“ (einmal Backen genügt).
 - Eisriese und die Testdateien des Nutzers (`ravine_test_01` Bär und Ravine Stalker) sind absichtlich NICHT umgeschrieben
   (ungespeicherte Arbeit des Nutzers). Sie laden über die Migration; beim nächsten Speichern im Fenster werden sie Format 2.
+
+### F6. Häkchen pro Eintrag, Haut/Bedeckung getrennt, Material im Reiter Accessoires (2026-11-23)
+**Bedienung**
+- **Accessoire-Ebenen:** unter „gilt für“ ein Häkchen „alle Accessoires“ und darunter **ein Häkchen pro Eintrag** der Variante
+  (auch abgeschaltete Einträge, mit „– aus“). Haken = die Ebene wirkt auf diesen Eintrag. Abwählen aus „alle“ ergibt die Liste
+  aller übrigen Einträge; trifft die Ebene einen Eintrag nur über seinen Typ („· über Typ“), wird der Typ beim Abwählen in seine
+  übrigen Einträge aufgelöst. „Typen…“ bleibt als Komfort. Umbenennen eines Eintrags zieht die Ziele nach.
+- **Reiter Accessoires:** jeder Eintrag hat unten den Aufklappbereich **„Material (n von m Accessoire-Ebenen wirken hier)“**:
+  alle Accessoire-Ebenen mit Häkchen „wirkt auf diesen Eintrag“, aufgeklappt mit „Ebene an“ und allen Reglern, dazu
+  „neue Ebene nur für diesen Eintrag“. Es sind **dieselben Daten** wie im Reiter Material (`material.ebenen_accessoires`).
+- **Körper-Ebenen:** Zeile **„wirkt auf: [x] Haut [x] Bedeckung“** in der Maske, Standard beide an. Bei 2 Bedeckungs-Lagen steht
+  statt „Bedeckung“ **ein Häkchen pro Lage** (z. B. `stacheln`, `fell_gesicht`). Die Ebenen-Zeile zeigt Abweichungen
+  („→ nur Bedeckung“, „→ Haut + stacheln“, „→ nirgends“).
+  *Vorschlag + Grund:* pro Lage statt nur „Bedeckung“, weil Varianten bis zu 2 Lagen haben (Quillback: Stacheln + Gesichtsfell)
+  und z. B. Glutrisse nur auf den Stacheln sinnvoll sind; bei 0/1 Lage bleibt es bei den zwei Häkchen, damit die Ansicht einfach bleibt.
+
+**Datei (Format 2, ohne neue Versionsnummer):** `maske.haut` (fehlt/true = an, `false` = nicht auf der Haut) und
+`maske.bedeckung` (fehlt/true = alle Lagen, `false` = keine, `["stacheln"]` = nur diese Lagen-ids). Geschrieben wird nur,
+was vom Standard abweicht. **Migration:** alte Dateien haben die Felder nicht → „beide an“ → unverändert
+(Stichprobe Quillback, Eisriese, Slagback: je ARPG + Seite pixelgleich, Abweichung 0,000, max 0).
+Blender reicht die Felder unverändert durch (bearbeitet keine Material-Ebenen).
+
+**Technik:** keine Shader-Änderung. `VkBuilder.Build` rechnet pro Körper-Ebene Bits (1 Haut, 2 Lage 1, 4 Lage 2,
+`VkSpec.AufBits`), `Combine` multipliziert damit die Vertex-Masken `TEXCOORD5/6`: Basis-Vertices × Haut-Bit,
+Bedeckungs-Teile × Bit ihrer Lage. Da Vorschau-Shader, Textur-Backen und Spiel-Mesh dieselben Masken lesen, sehen alle drei
+gleich aus (weiter 1 Material, E5). Accessoire-Ziele liefen schon über `TEXCOORD2.w` + Bit-Tabelle (F3).
+
+**Selbstprüfung** (`temp/ui_work/run.sh <log> VariantKit.VkUiBatch.Test|Shots …`, nur Laden, nichts gespeichert;
+Ergebnis `temp/ui_pruefung/pruefung_ui.txt`, Bilder `temp/ui_pruefung/PRUEF_*.png`, links Wirkung Körper-Ebene „nur
+Bedeckung“, rechts Accessoire-Ebene „nur 1 Eintrag“; mittlere Abweichung 0..255 je Pixel-Klasse):
+
+| Fall | Haut | Bedeckung | gewählter Eintrag | andere Accessoires |
+|---|---|---|---|---|
+| Eisriese `kalt_verlauf` Standard / nur Bedeckung / nur Haut | 1,63 / 0,01 / 1,62 | 1,68 / 1,55 / 0,20 | 0 | ≤ 0,06 |
+| Eisriese `frost_adern` alle / nur `eis_kamm` | 0,10 / 0,10 | 0 | 32,57 / 32,57 | 29,17 / **0,00** |
+| Slagback `glut_risse` Standard / nur Bedeckung (Slagback hat keine Lage) | 17,01 / **0,00** | – | 0 | ≤ 0,01 |
+| Slagback `glut_fugen` alle / nur `basalt_schulter` | ≤ 0,05 | – | 17,18 / 17,18 | 14,91 / **0,04** |
+
+Vorschau ↔ gebacken mit beiden Änderungen: Slagback 1,03 · Eisriese 0,86 (wie bisher ≈ 1). Reste 0,1–0,2 sind
+Kantenglättung an Teil-Rändern und Haut, die zwischen Fellteilen durchscheint.
+
+**Grenzen:** „Haut“ ist das ganze Basis-Mesh (auch Krallen/Augen/Maul; feiner über die Farbgruppen). Pro Lage nur die ersten 2
+aktiven Lagen (wie Blender). Ist die Bedeckung veraltet (Lagen umbenannt/umsortiert, ohne „In Blender bauen“), gilt die
+Lagen-Auswahl nach Position. Gezielte Einträge weiterhin max. 24 (F5). Ein Bedeckungs-Teil nimmt die Zonen-Maske seines
+Ansatzpunkts (wie bisher).

@@ -264,6 +264,93 @@ namespace VariantKit
             return string.Join(" · ", parts);
         }
 
+        /// <summary>Alle Accessoire-Einträge der Variante mit id (auch abgeschaltete) – die Zeilen der Häkchen-Liste.</summary>
+        public static List<JObj> AlleEintraege(JObj resolved) =>
+            (resolved.L("accessoires") ?? new List<object>()).OfType<JObj>().Where(a => a["id"] is string).ToList();
+
+        /// <summary>Häkchen „Ebene wirkt auf diesen Eintrag“ setzen/entfernen. Aus „alle“ wird beim Abwählen die Liste aller
+        /// übrigen Einträge; trifft die Ebene den Eintrag über seinen Typ, wird der Typ in seine übrigen Einträge aufgelöst.</summary>
+        public static void SetZielEintrag(JObj e, JObj acc, bool on, List<JObj> alle)
+        {
+            if (ZielTrifft(e, acc) == on) return;
+            string id = acc.S("id", ""), typ = acc.S("typ", "");
+            if (ZielAlle(e))
+            {
+                e["ziel"] = new JObj { ["typen"] = new List<object>(), ["eintraege"] = alle.Where(a => a != acc).Select(a => (object)a.S("id", "")).Distinct().ToList() };
+                return;
+            }
+            var z = e["ziel"] as JObj ?? new JObj();
+            var t = z.Strs("typen"); var n = z.Strs("eintraege");
+            if (on) { if (!n.Contains(id)) n.Add(id); }
+            else
+            {
+                n.RemoveAll(x => x == id);
+                if (t.Remove(typ))
+                    foreach (var a in alle)
+                        if (a != acc && a.S("typ", "") == typ && !n.Contains(a.S("id", ""))) n.Add(a.S("id", ""));
+            }
+            e["ziel"] = new JObj { ["typen"] = t.Cast<object>().ToList(), ["eintraege"] = n.Cast<object>().ToList() };
+        }
+
+        /// <summary>Nach dem Umbenennen eines Eintrags die Ziele der Accessoire-Ebenen nachziehen.</summary>
+        public static void RenameZiel(JObj resolved, string alt, string neu)
+        {
+            foreach (JObj e in (resolved.O("material")?.L("ebenen_accessoires") ?? new List<object>()).OfType<JObj>())
+                if (e["ziel"] is JObj z && z.L("eintraege") is List<object> l)
+                    for (int i = 0; i < l.Count; i++) if (l[i] as string == alt) l[i] = neu;
+        }
+
+        // ------------------------------------------------------------------ Körper-Ebenen: Haut / Bedeckung (Nutzer 2026-11-23)
+        // maske.haut      fehlt/true = wirkt auf die Haut (Basis-Mesh inkl. Krallen/Augen-Gruppen), false = nicht
+        // maske.bedeckung fehlt/true = alle Bedeckungs-Lagen, false = keine, [lagen-ids] = nur diese Lagen
+        // Standard = beide an (Haut und Bedeckung teilen sich die Ebene) – alte Dateien haben die Felder nicht → unverändert.
+
+        /// <summary>Aktive Bedeckungs-Lagen in Blender-Reihenfolge (höchstens 2, Lage-Nummer im Mesh = Index + 1).</summary>
+        public static List<JObj> AktiveLagen(JObj resolved) =>
+            (resolved.O("bedeckung")?.L("lagen") ?? new List<object>()).OfType<JObj>().Where(l => l.B("an", true)).Take(2).ToList();
+        public static string LageId(JObj lage, int index) => lage.S("id", $"lage_{index + 1}");
+
+        public static bool AufHaut(JObj e) => (e.O("maske") ?? new JObj()).B("haut", true);
+
+        /// <summary>Wirkt die Körper-Ebene auf diese Lage? lageId null = Lage ohne Eintrag in der Datei (nur true/false zählt).</summary>
+        public static bool AufLage(JObj e, string lageId)
+        {
+            var v = e.O("maske")?["bedeckung"];
+            if (v == null) return true;
+            if (v is bool b) return b;
+            if (v is List<object> l) return lageId != null && l.OfType<string>().Contains(lageId);
+            return true;
+        }
+
+        /// <summary>Lagen-Auswahl schreiben: alle an → Feld weg (Standard), keine → false, sonst Liste der ids.</summary>
+        public static void SetLagen(JObj mk, List<string> an, List<string> alle)
+        {
+            if (alle.Count > 0 && alle.All(an.Contains)) mk.Remove("bedeckung");
+            else if (an.Count == 0) mk["bedeckung"] = false;
+            else mk["bedeckung"] = an.Cast<object>().ToList();
+        }
+
+        /// <summary>Bits pro Körper-Ebene: 1 = Haut, 2 = Lage 1, 4 = Lage 2 (für VkBuilder.Combine).</summary>
+        public static int AufBits(JObj e, List<string> lagenIds)
+        {
+            int bits = AufHaut(e) ? 1 : 0;
+            for (int k = 0; k < 2; k++) if (AufLage(e, k < lagenIds.Count ? lagenIds[k] : null)) bits |= 2 << k;
+            return bits;
+        }
+
+        /// <summary>Kurztext für die Ebenen-Zeile: "" (Standard), „nur Haut“, „nur Bedeckung“, „Haut + fell“, „nirgends“.</summary>
+        public static string AufText(JObj e, List<string> lagenIds)
+        {
+            bool h = AufHaut(e);
+            var on = lagenIds.Where(id => AufLage(e, id)).ToList();
+            bool bedAlle = lagenIds.Count == 0 ? AufLage(e, null) : on.Count == lagenIds.Count;
+            if (h && bedAlle) return "";
+            if (!h && on.Count == 0 && !(lagenIds.Count == 0 && bedAlle)) return "nirgends";
+            string bed = bedAlle ? "Bedeckung" : string.Join(" + ", on);
+            if (!h) return "nur " + bed;
+            return on.Count == 0 ? "nur Haut" : "Haut + " + bed;
+        }
+
         // ------------------------------------------------------------------ Migration Format 1 → 2 (zwei Ebenen-Gruppen)
         /// <summary>Format 1 → 2 auf der AUFGELÖSTEN Fassung (Preset + Biom + Datei, alte Bedeutung). Bisher wirkte jede Ebene
         /// auch auf die Accessoires (Maske des Ansatzpunkts, nur durch die Farbgruppen gefiltert). Jetzt:
