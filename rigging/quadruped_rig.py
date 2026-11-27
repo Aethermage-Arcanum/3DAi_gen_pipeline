@@ -580,29 +580,66 @@ if RIG.get("rigid_shell", False):
     # (3) Schwanz: hinter der Schwanzöffnung und unter dem Panzerrand hinten
     x_back = x_tail + RIG.get("shell_back", 0.12) * L
     soft |= (V[:, 0] < x_back) & (zg < RIG.get("shell_rim_tail", 1.0) * H)
+    soft |= zg < RIG.get("shell_min_height", 0.0) * H                 # (4) nichts am Boden (Krallen/Fersen) gehört zum Panzer
     SHELL = main & ~soft
+    # (5) Halsöffnung frei von Schulterblatt/Bein: über dem vorderen Panzerrand und vor dem Schultergelenk zählen nur Hals,
+    #     Kopf und Panzer – sonst reißt die Haut zwischen vorschießendem Hals und Schulterblatt (Shellback Attack1)
+    if RIG.get("shell_neck_free", False):
+        # weich auslaufend (shell_neck_free_soft · H), sonst entsteht am Zonenrand eine harte Naht (Lückenprüfung 5,8 cm)
+        sft = max(1e-6, RIG.get("shell_neck_free_soft", 0.06) * H)
+        kx = np.clip(1.0 - (V[:, 0] - x_sh) / sft, 0.0, 1.0)                                 # hinter der Schulter: frei
+        ky = np.clip((np.abs(V[:, 1] - Y_MID) - RIG.get("shell_neck_free_width", 0.0) * H) / sft, 0.0, 1.0)  # Kehle
+        kz = np.clip((RIG.get("shell_rim_front", 0.4) * H - zg) / sft, 0.0, 1.0)            # über dem Panzerrand
+        kk = np.maximum(kx, np.minimum(ky, kz))
+        nz = kk < 1.0
+        lj = [j for j, n in enumerate(names) if n.startswith(("Leg_", "Shoulder_"))]
+        Wn = W[nz].copy()
+        Wn[:, lj] *= kk[nz, None]
+        ok_n = Wn.sum(1) > 1e-6
+        Wn[ok_n] /= Wn[ok_n].sum(1, keepdims=True)
+        Wn[~ok_n] = W[nz][~ok_n]
+        W[nz] = Wn
+        print(f"RIG_INFO Halsöffnung ohne Schulter/Bein: {int((kk == 0).sum())} Vertices, Übergang {int((nz & (kk > 0)).sum())}")
     W[SHELL] = 0.0
     W[SHELL, sb] = 1.0
-    rings = int(RIG.get("shell_blend_rings", 2))
-    rep = np.arange(N)
-    for g in WELD:
-        rep[g] = g[0]
-    done, n_ring = SHELL.copy(), []
-    for k in range(rings):
-        nb = np.zeros(N, bool)
-        cut = done[E[:, 0]] != done[E[:, 1]]
-        nb[E[cut].ravel()] = True
-        nb &= ~done
-        nr = np.zeros(N, bool)
-        nr[rep[nb]] = True
-        nb = nr[rep] & ~done
-        t = (rings - k) / (rings + 1)
-        W[nb] *= 1 - t
-        W[nb, sb] += t
-        done |= nb
-        n_ring.append(nb)
+    if RIG.get("shell_blend_width"):
+        # Übergang nach ABSTAND (Meter) statt Kanten-Ringen: Tripo-Low-Poly hat am Panzerrand sehr kurze Kanten (0,5–1 cm)
+        # neben langen; ein Ring-Übergang ist dort nur 1–2 cm breit → Haut reißt an der kurzen Kante. Anteil Panzer-Knochen
+        # fällt linear mit dem Abstand zum nächsten Panzer-Vertex (0 ab shell_blend_width · H).
+        from mathutils.kdtree import KDTree
+        kd = KDTree(int(SHELL.sum()))
+        for i in np.where(SHELL)[0]:
+            kd.insert(V[i], int(i))
+        kd.balance()
+        bw = RIG["shell_blend_width"] * H
+        out_ = np.where(~SHELL)[0]
+        dist = np.array([kd.find(V[i])[2] for i in out_])
+        t = np.clip(1.0 - dist / bw, 0.0, 1.0) ** RIG.get("shell_blend_power", 1.0)
+        W[out_] *= (1 - t)[:, None]
+        W[out_, sb] += t
+        n_ring = [(t > 0.5), (t > 0) & (t <= 0.5)]
+        rings = f"Abstand {bw:.3f} m"
+    else:
+        rings = int(RIG.get("shell_blend_rings", 2))
+        rep = np.arange(N)
+        for g in WELD:
+            rep[g] = g[0]
+        done, n_ring = SHELL.copy(), []
+        for k in range(rings):
+            nb = np.zeros(N, bool)
+            cut = done[E[:, 0]] != done[E[:, 1]]
+            nb[E[cut].ravel()] = True
+            nb &= ~done
+            nr = np.zeros(N, bool)
+            nr[rep[nb]] = True
+            nb = nr[rep] & ~done
+            t = (rings - k) / (rings + 1)
+            W[nb] *= 1 - t
+            W[nb, sb] += t
+            done |= nb
+            n_ring.append(nb)
     print(f"RIG_INFO Panzer starr an {names[sb]}: {int(SHELL.sum())} Vertices, Übergang {rings} Ringe "
-          f"{[int(r.sum()) for r in n_ring]} Vertices")
+          f"{[int(r.sum()) for r in n_ring]} Vertices (Übergang > 0,5 | ≤ 0,5)")
 for g in WELD:
     W[g] = W[g].mean(0)
 top = np.argsort(-W, 1)[:, :4]

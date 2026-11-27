@@ -164,6 +164,15 @@ Außerdem: leere Querschnitte in der Schwanzkette werden fortlaufend vom Vorgän
 Absturz bei gestrecktem Bären-Mesh im Statur-Test). Dazu beim Bären nur Werte: `leg_x_reach`/`leg_capture` (schräge Vorderbeine, Pranken weit vor der Schulter),
 `tail_base` (Stummelschwanz ganz hinten → Kruppe an Hips statt an Tail_*). Details: `creatures/32_rimehide_bear/README.md`.
 
+## Schildkröten-Panzer starr (`rigid_shell`, Shellback 2026-11-23)
+Opt-in im Vierbeiner-Rig, nur für die Shellback eingeschaltet (ohne die Zeilen alles wie bisher; Regression `--deep`
+Wolf, Reef Snapper, Hirsch, Bär identisch). Panzer = Hauptkörper ohne Bein-, Hals/Kopf- und Schwanz-Öffnungen
+(geometrisch: Beinkette + Randhöhe, Ebene der Halsöffnung, Schwanzöffnung, Mindesthöhe) → 100 % an `shell_bone`.
+Übergang in die Haut nach **Abstand** (`shell_blend_width`), nicht nach Kanten-Ringen – am Panzerrand liegen sehr kurze
+Kanten neben langen, ein Ring-Übergang war dort nur 1–2 cm breit (Dehnung bis 6,8). Dazu `shell_neck_free`
+(Halsöffnung/Kehle ohne Schulterblatt, weich auslaufend) und `knee_out` (Hinterbein-Knie seitlich, gegen gestreckte
+Säulenbeine). Alle Werte, Messungen und Begründung: `motions/quadruped/tortoise/README.md`.
+
 ## Frei hängende Teile (Lappen, Fühler, Hautfahnen) – ohne Knochen
 Standard-Baustein für alle Skelette (Backlog C7). Kleine Teile, die frei schwingen sollen, bekommen **keine Knochen**,
 sondern eine Markierung im Mesh; der Unity-Shader `Creature/Standard Dangling` lässt sie dann weich pendeln –

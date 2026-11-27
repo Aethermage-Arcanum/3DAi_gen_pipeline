@@ -1,0 +1,100 @@
+{
+  "fps": 30,
+  "clips": {
+    "Quadruped_Tortoise_Walk": [
+      {
+        "frame": 17,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 21,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 38,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Tortoise_Run": [
+      {
+        "frame": 10,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 23,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Tortoise_Idle": [],
+    "Quadruped_Tortoise_Ready": [],
+    "Quadruped_Tortoise_TurnLeft": [
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 24,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Tortoise_TurnRight": [
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 13,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 24,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Tortoise_Attack1": [
+      {
+        "frame": 12,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Tortoise_Attack2": [
+      {
+        "frame": 16,
+        "event": "hit"
+      },
+      {
+        "frame": 34,
+        "event": "root_motion",
+        "distance_m": 0.2399,
+        "axis": "x"
+      }
+    ],
+    "Quadruped_Tortoise_Hit": [],
+    "Quadruped_Tortoise_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

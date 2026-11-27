@@ -56,3 +56,16 @@ adaptive_belly_strip = false # Bauch-Streifen schmaler als der Fußabstand (eng 
 # zone_dorsal_soft = 0.25
 # spine_chain_blend = 1.0    # 0 = aus; Anteil der Wirbelkette (Hips…Neck_2) nach Lage ENTLANG der Kette verteilen,
 #                            # lineare Rampe dieser Breite (in Knochenlängen) um jedes Gelenk; 1 = Mitte zu Mitte
+# Schildkröten-Panzer (Shellback 2026-11-23) – ohne die Zeilen bleibt alles wie bisher (Regression identisch):
+# rigid_shell = true         # Panzer (Hauptkörper ohne Bein-/Hals-/Schwanz-Öffnungen) 100 % starr an shell_bone
+# shell_bone = "Spine_1"
+# shell_front = 0.3          # Halsöffnung: Anteil Schultergelenk → Kopfansatz;  shell_front_slope = 0 (Neigung der Ebene)
+# shell_rim_front = 0.5      # Bein weich nur unter dieser Höhe (Anteil H) und näher als shell_leg_radius an der Beinkette
+# shell_rim_back = 0.42
+# shell_leg_radius = 0.22
+# shell_back = 0.19          # Schwanzöffnung (Anteil L vor der Schwanzspitze), nur unter shell_rim_tail (Anteil H)
+# shell_rim_tail = 0.45
+# shell_min_height = 0.18    # darunter nie Panzer
+# shell_neck_free = true     # Halsöffnung/Kehle ohne Schulterblatt-/Bein-Gewichte; shell_neck_free_width, _soft (Anteil H)
+# shell_blend_width = 0.12   # Übergang nach Abstand (Anteil H); ohne: shell_blend_rings = 2 Kanten-Ringe
+# knee_out = 0.07            # Hinterbein-Knie seitlich nach außen (Anteil H): gerade modellierte Säulenbeine beugen

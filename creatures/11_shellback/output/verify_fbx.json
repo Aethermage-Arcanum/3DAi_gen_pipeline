@@ -1,0 +1,113 @@
+{
+  "skeleton": "quadruped",
+  "file": "Shellback.fbx",
+  "meshes": 1,
+  "triangles": 4344,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_7ab00f5b-f83a-4910-ad8c-3e7bf9503a5f"
+  ],
+  "textures": [
+    [
+      "Color_7ab00f5b-f83a-4910-ad8c-3e7bf9503a5f",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_7ab00f5b-f83a-4910-ad8c-3e7bf9503a5f",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Attack1",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Attack2",
+      [
+        1,
+        35
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Hit",
+      [
+        1,
+        15
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Ready",
+      [
+        1,
+        55
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Run",
+      [
+        1,
+        26
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_TurnLeft",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_TurnRight",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "Shellback|Shellback|Quadruped_Tortoise_Walk",
+      [
+        1,
+        43
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -0.99,
+    -0.16
+  ],
+  "foot_moves_m": 0.1025,
+  "dimensions_m": [
+    0.621,
+    1.01,
+    0.586
+  ],
+  "ok": true
+}

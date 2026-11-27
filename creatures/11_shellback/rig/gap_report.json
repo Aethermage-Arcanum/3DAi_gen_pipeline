@@ -1,0 +1,81 @@
+{
+  "pairs_checked": 114,
+  "threshold_m": 0.0152,
+  "max_opening_m": 0.0088,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Quadruped_Tortoise_Attack1": 0.0067,
+    "Quadruped_Tortoise_Attack2": 0.0046,
+    "Quadruped_Tortoise_Death": 0.0088,
+    "Quadruped_Tortoise_Hit": 0.0028,
+    "Quadruped_Tortoise_Idle": 0.0014,
+    "Quadruped_Tortoise_Ready": 0.0061,
+    "Quadruped_Tortoise_Run": 0.0084,
+    "Quadruped_Tortoise_TurnLeft": 0.004,
+    "Quadruped_Tortoise_TurnRight": 0.0059,
+    "Quadruped_Tortoise_Walk": 0.0058
+  },
+  "worst": [
+    [
+      "Quadruped_Tortoise_Death: Leg_FL_2 / Leg_FL_4",
+      0.0088,
+      13
+    ],
+    [
+      "Quadruped_Tortoise_Run: Leg_FL_1 / Spine_1",
+      0.0084,
+      9
+    ],
+    [
+      "Quadruped_Tortoise_Attack1: Leg_FL_1 / Spine_1",
+      0.0067,
+      13
+    ],
+    [
+      "Quadruped_Tortoise_Death: Leg_BL_2 / Leg_BL_3",
+      0.0064,
+      11
+    ],
+    [
+      "Quadruped_Tortoise_Ready: Leg_FR_2 / Leg_FR_4",
+      0.0061,
+      46
+    ],
+    [
+      "Quadruped_Tortoise_TurnRight: Leg_BR_2 / Leg_BR_3",
+      0.0059,
+      13
+    ],
+    [
+      "Quadruped_Tortoise_TurnRight: Leg_BR_2 / Leg_BR_4",
+      0.0059,
+      13
+    ],
+    [
+      "Quadruped_Tortoise_Walk: Leg_FL_1 / Spine_1",
+      0.0058,
+      16
+    ],
+    [
+      "Quadruped_Tortoise_Death: Leg_FL_1 / Leg_FL_2",
+      0.0056,
+      12
+    ],
+    [
+      "Quadruped_Tortoise_Run: Leg_FR_2 / Leg_FR_4",
+      0.0052,
+      19
+    ],
+    [
+      "Quadruped_Tortoise_TurnRight: Leg_FR_2 / Leg_FR_4",
+      0.005,
+      20
+    ],
+    [
+      "Quadruped_Tortoise_Ready: Leg_FL_2 / Leg_FL_4",
+      0.0049,
+      19
+    ]
+  ],
+  "ok": true
+}
