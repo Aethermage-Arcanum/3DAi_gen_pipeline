@@ -1,0 +1,54 @@
+{
+  "fps": 30,
+  "clips": {
+    "Legless_Sandworm_Walk": [],
+    "Legless_Sandworm_Run": [],
+    "Legless_Sandworm_Idle": [],
+    "Legless_Sandworm_Ready": [],
+    "Legless_Sandworm_TurnLeft": [],
+    "Legless_Sandworm_TurnRight": [],
+    "Legless_Sandworm_Attack1": [
+      {
+        "frame": 16,
+        "event": "hit"
+      }
+    ],
+    "Legless_Sandworm_Attack2": [
+      {
+        "frame": 22,
+        "event": "hit"
+      }
+    ],
+    "Legless_Sandworm_Hit": [],
+    "Legless_Sandworm_Burrow": [
+      {
+        "frame": 10,
+        "event": "sand_burst"
+      },
+      {
+        "frame": 56,
+        "event": "burrowed"
+      }
+    ],
+    "Legless_Sandworm_Emerge": [
+      {
+        "frame": 1,
+        "event": "sand_burst"
+      },
+      {
+        "frame": 21,
+        "event": "land"
+      },
+      {
+        "frame": 46,
+        "event": "emerged"
+      }
+    ],
+    "Legless_Sandworm_Death": [
+      {
+        "frame": 30,
+        "event": "dead"
+      }
+    ]
+  }
+}

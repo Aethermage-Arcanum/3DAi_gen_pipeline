@@ -3,6 +3,15 @@
 Prinzip: Krümmungswellen entlang der Wirbelkette (Spine_01 = Schwanzspitze … Spine_n = hinter dem Kopf).
 keep_centered() hält Blickrichtung + Körpermitte fest (Clips laufen "in place"), ground() sorgt für
 Bodenkontakt ohne Einsinken. Gebacken wird direkt als FK (keine Constraints nötig).
+
+Optionale Erweiterungen (opt-in, seit 2026-11-27 für legless/sandworm; ohne sie verhält sich alles wie vorher):
+- Mesh-Attribut "_NO_GROUND" (vom Rig mit [legless] ground_ignore_spikes): diese Vertices (Stacheln) zählen nicht
+  für Bodenkontakt/Einsinken – der Körper liegt auf, Stacheln stechen in den Sand.
+- [meta] key_scale = true: bake() setzt zusätzlich Skalierungs-Keys (Ring-Knochen für Peristaltik, Unity Generic).
+- [meta] render_ground = "rest": Vorschau-Boden (render_anim.py) auf Bodenhöhe in Ruhe statt auf den tiefsten Punkt.
+- Clip-Angabe below_ground = {"entry": (x, y), "dir": (dx, dy), "margin": m}: Clip darf abtauchen (Burrow/Emerge).
+  Statt "kein Einsinken" wird geprüft, dass alles unter dem Boden auf der Lochseite des Eintrittspunkts liegt
+  (entry_ok); dazu below_ground_depth_m (tiefster Punkt unter dem Boden).
 """
 import json
 import math
@@ -11,6 +20,7 @@ import sys
 import tomllib
 
 import bpy
+import numpy as np
 from mathutils import Quaternion, Vector
 
 UP, FWD, LEFT = Vector((0, 0, 1)), Vector((1, 0, 0)), Vector((0, 1, 0))
@@ -40,7 +50,7 @@ def load_style(style_dir, creature_toml=None):
 
 
 def init(style_dir):
-    global OUT, ST, FPS, PREFIX, arm, body_obj, PB, DB, SPINE, NSEG, SIZE, HGT, GROUND, sc, REST_DIR, REST_MID
+    global OUT, ST, FPS, PREFIX, arm, body_obj, PB, DB, SPINE, NSEG, SIZE, HGT, GROUND, sc, REST_DIR, REST_MID, BODY_IDX
     a = sys.argv[sys.argv.index("--") + 1:]
     OUT = pathlib.Path(a[0]).resolve()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -53,6 +63,12 @@ def init(style_dir):
     PB, DB = arm.pose.bones, arm.data.bones
     for pb in PB:
         pb.rotation_mode = "QUATERNION"
+    ng = body_obj.data.attributes.get("_NO_GROUND")      # opt-in: Stacheln zählen nicht für den Boden
+    BODY_IDX = None
+    if ng is not None:
+        m = np.zeros(len(body_obj.data.vertices), bool)
+        ng.data.foreach_get("value", m)
+        BODY_IDX = np.nonzero(~m)[0]
     SPINE = sorted([b.name for b in DB if b.name.startswith("Spine_")])
     NSEG = len(SPINE)
     xs = [b.head_local.x for b in DB] + [b.tail_local.x for b in DB]
@@ -62,6 +78,8 @@ def init(style_dir):
     GROUND = mesh_min_z()
     HGT = max(b.head_local.z for b in DB) - GROUND
     REST_DIR, REST_MID = heading(), spine_mid()
+    if ST["meta"].get("render_ground") == "rest":         # opt-in: Vorschau-Boden auf Ruhe-Bodenhöhe
+        sc["ground_z"] = GROUND
     print(f"LEGLESS_INIT Länge {SIZE:.3f} m, {NSEG} Wirbel, Stil {ST['meta']['skeleton']}/{ST['meta']['style']}")
 
 
@@ -69,6 +87,7 @@ def reset():
     for pb in PB:
         pb.rotation_quaternion = Quaternion()
         pb.location = Vector()
+        pb.scale = Vector((1.0, 1.0, 1.0))
 
 
 def rot(name, axis_world, angle):
@@ -171,12 +190,40 @@ def ground(mode="contact", lift=0.0):
 
 
 def mesh_min_z():
+    if BODY_IDX is not None:
+        return float(body_world()[BODY_IDX, 2].min())
     dg = bpy.context.evaluated_depsgraph_get()
     ev = body_obj.evaluated_get(dg)
     m = ev.to_mesh()
     z = min((body_obj.matrix_world @ v.co).z for v in m.vertices)
     ev.to_mesh_clear()
     return z
+
+
+def body_world():
+    """Verformte Vertex-Positionen (Weltraum) als numpy-Array (n, 3)."""
+    dg = bpy.context.evaluated_depsgraph_get()
+    ev = body_obj.evaluated_get(dg)
+    m = ev.to_mesh()
+    co = np.empty(len(m.vertices) * 3)
+    m.vertices.foreach_get("co", co)
+    ev.to_mesh_clear()
+    co = co.reshape(-1, 3)
+    mw = np.array(body_obj.matrix_world)
+    return co @ mw[:3, :3].T + mw[:3, 3]
+
+
+def entry_violation(bg, tol):
+    """below_ground-Clips: wie weit liegt Körper unter dem Boden auf der falschen Seite des Eintrittspunkts (m)?
+    → (Verletzung, Tiefe unter dem Boden)."""
+    P = body_world()
+    if BODY_IDX is not None:
+        P = P[BODY_IDX]
+    below = P[P[:, 2] < GROUND - tol]
+    if not len(below):
+        return 0.0, 0.0
+    d = (below[:, :2] - np.asarray(bg["entry"], float)) @ np.asarray(bg["dir"], float)
+    return float(max(0.0, -(d.min() + bg.get("margin", 0.0)))), float(GROUND - below[:, 2].min())
 
 
 # ---------------------------------------------------------------- Absolute Körperform (seit 2026-11-17)
@@ -322,6 +369,7 @@ def bake(clips):
         act.use_fake_user = True
         arm.animation_data.action = act
         mins, stretch, where, first, last = [], 1.0, "", None, None
+        bg, viol, depth = spec.get("below_ground"), 0.0, 0.0
         for f in range(N + 1):
             reset()
             spec["pose"](f)
@@ -329,10 +377,15 @@ def bake(clips):
             for pb in PB:
                 pb.keyframe_insert("rotation_quaternion", frame=f)
                 pb.keyframe_insert("location", frame=f)
+                if ST["meta"].get("key_scale"):
+                    pb.keyframe_insert("scale", frame=f)
             mats = {pb.name: pb.matrix.copy() for pb in PB}
             first = first or mats
             last = mats
             mins.append(mesh_min_z() - GROUND)
+            if bg:
+                v, dp = entry_violation(bg, tol)
+                viol, depth = max(viol, v), max(depth, dp)
             if f % C.get("stretch_every", 3) == 0:
                 s = max_stretch()
                 if s > stretch:
@@ -340,6 +393,10 @@ def bake(clips):
         r = {"frames": N, "seconds": round(N / FPS, 3), "loop": spec.get("loop", False)}
         r["lowest_point_m"] = [round(min(mins), 4), round(max(mins), 4)]
         r["no_ground_penetration"] = min(mins) >= -tol
+        if bg:                                                # Abtauchen erlaubt, aber nur am Eintrittspunkt
+            r["below_ground_depth_m"] = round(depth, 4)
+            r["entry_violation_m"] = round(viol, 4)
+            r["entry_ok"] = viol <= tol
         if spec.get("grounded", kind == "locomotion"):
             r["ground_contact_ok"] = max(mins) <= tol
         if r["loop"]:
@@ -355,7 +412,7 @@ def bake(clips):
         r["stretch_at"] = where
         r["stretch_ok"] = round(stretch, 2) <= (spec.get("max_stretch") or C["max_stretch"])
         oks = [v for k, v in r.items() if (k.endswith("_ok") and k != "stretch_ok")   # Dehnung = nur Info, bremst nie
-               or k in ("returns_to_rest", "no_ground_penetration")]
+               or k in ("returns_to_rest",) or (k == "no_ground_penetration" and not bg)]
         r["ok"] = all(oks)
         report[f"{PREFIX}_{cname}"] = r
         events[f"{PREFIX}_{cname}"] = list(spec.get("events", []))

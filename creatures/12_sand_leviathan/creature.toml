@@ -23,3 +23,21 @@ vorbild = ["Regenwurm – Peristaltik", "Python – rectilineare (geradlinige) F
 # Pflichtprüfung Tripo-Modell (Teil B), Sichtprüfung Claude 2026-11-18: review/model_check.png
 [model_check.freigabe]
 mittellinie = "Sichtprüfung: Körper liegt gerade, Mittellinie schnurgerade, Mesh symmetrisch; die Querschnitts-Drehung misst die Stachelkrause um das runde Maul (Fehlalarm)."
+
+# Rig (rigging/legless_rig.py, opt-in-Erweiterungen 2026-11-27): gedrungener Ringel-Wurm.
+# Wirbel-Grenzen auf den Ringfurchen (aus Draufsicht gemessen, Anteil Länge ab Schwanzspitze); 9 Ringe bis 0.605,
+# dahinter 4 Panzer-Wirbel auf den Plattenreihen (0.605–0.86), Kopf = rundes Maul ab 0.86 (vorderes Drittel = Panzer + Kopf).
+# Ringe hängen starr am Wirbel (Biegen nur in der Furche), Stacheln starr am Ansatz, Bauchstacheln stechen in den
+# Sand (Körper liegt auf), Ring-Knochen tragen die Peristaltik (Dick/Dünn per Skalierung).
+[legless]
+joints = [0.0, 0.08, 0.15, 0.218, 0.285, 0.348, 0.415, 0.485, 0.55, 0.605, 0.665, 0.735, 0.80, 0.86]
+axial_weights = true
+# Übergangszone je Grenze (± Anteil Länge): Ringfurchen schmal (Ringe starr), zwischen den Panzerplatten breiter
+# (Platten schieben sich übereinander), Kopfansatz am breitesten (Maul nickt beim Pumpen und Zielen)
+axial_blend = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.025, 0.03, 0.03, 0.03, 0.035]
+rigid_spikes = true
+ground_ignore_spikes = true
+ring_bones = true
+spike_core_pct = 40    # Körperradius = 40. Perzentil der Nachbarn (Median zählt die vielen Stacheln mit)
+spike_factor = 1.12
+spike_min = 0.006

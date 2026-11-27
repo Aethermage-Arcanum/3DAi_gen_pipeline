@@ -1,0 +1,227 @@
+{
+  "style": "legless/sandworm",
+  "variant": null,
+  "clips": {
+    "Legless_Sandworm_Walk": {
+      "frames": 44,
+      "seconds": 1.467,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "move_speed_mps": 0.123,
+      "max_stretch": 1.41,
+      "stretch_at": "Ring_10 @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Run": {
+      "frames": 26,
+      "seconds": 0.867,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "move_speed_mps": 0.438,
+      "max_stretch": 1.54,
+      "stretch_at": "Ring_12 @ Frame 15",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Idle": {
+      "frames": 120,
+      "seconds": 4.0,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.4,
+      "stretch_at": "Ring_13 @ Frame 90",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Ready": {
+      "frames": 40,
+      "seconds": 1.333,
+      "loop": true,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "max_stretch": 1.79,
+      "stretch_at": "Head @ Frame 27",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_TurnLeft": {
+      "frames": 44,
+      "seconds": 1.467,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "turn_speed_deg_s": 75,
+      "head_yaw_mean_deg": 50.1,
+      "turn_direction": "links",
+      "turn_dir_ok": true,
+      "max_stretch": 2.31,
+      "stretch_at": "Ring_11 @ Frame 21",
+      "stretch_ok": false,
+      "ok": true
+    },
+    "Legless_Sandworm_TurnRight": {
+      "frames": 44,
+      "seconds": 1.467,
+      "loop": true,
+      "lowest_point_m": [
+        -0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "loop_ok": true,
+      "turn_speed_deg_s": 75,
+      "head_yaw_mean_deg": -50.5,
+      "turn_direction": "rechts",
+      "turn_dir_ok": true,
+      "max_stretch": 2.33,
+      "stretch_at": "Ring_12 @ Frame 39",
+      "stretch_ok": false,
+      "ok": true
+    },
+    "Legless_Sandworm_Attack1": {
+      "frames": 34,
+      "seconds": 1.133,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "returns_to_start_ok": true,
+      "hit_reach_m": 0.219,
+      "hit_reach_body_frac": 0.22,
+      "hit_tip_height_m": 0.157,
+      "hit_ahead_of_body_m": 0.145,
+      "hit_in_front_ok": true,
+      "max_stretch": 1.91,
+      "stretch_at": "Ring_13 @ Frame 9",
+      "stretch_ok": false,
+      "ok": true
+    },
+    "Legless_Sandworm_Attack2": {
+      "frames": 42,
+      "seconds": 1.4,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "returns_to_start_ok": true,
+      "hit_reach_m": 0.197,
+      "hit_reach_body_frac": 0.2,
+      "hit_tip_height_m": 0.177,
+      "hit_ahead_of_body_m": 0.144,
+      "hit_in_front_ok": true,
+      "max_stretch": 1.9,
+      "stretch_at": "Ring_09 @ Frame 15",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Hit": {
+      "frames": 18,
+      "seconds": 0.6,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "returns_to_start_ok": true,
+      "max_stretch": 1.78,
+      "stretch_at": "Ring_13 @ Frame 3",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Burrow": {
+      "frames": 56,
+      "seconds": 1.867,
+      "loop": false,
+      "lowest_point_m": [
+        -0.4923,
+        0.0
+      ],
+      "no_ground_penetration": false,
+      "below_ground_depth_m": 0.4923,
+      "entry_violation_m": 0.0,
+      "entry_ok": true,
+      "entry_point_x_m": 0.36,
+      "root_motion_m": 0.898,
+      "max_stretch": 1.86,
+      "stretch_at": "Ring_11 @ Frame 24",
+      "stretch_ok": true,
+      "ok": true
+    },
+    "Legless_Sandworm_Emerge": {
+      "frames": 46,
+      "seconds": 1.533,
+      "loop": false,
+      "lowest_point_m": [
+        -1.0413,
+        0.0007
+      ],
+      "no_ground_penetration": false,
+      "below_ground_depth_m": 1.0413,
+      "entry_violation_m": 0.0004,
+      "entry_ok": true,
+      "exit_point_x_m": -0.493,
+      "peak_head_height_m": 0.642,
+      "peak_frame": 9,
+      "impact_head_height_m": 0.179,
+      "ends_in_ready_ok": true,
+      "max_stretch": 2.03,
+      "stretch_at": "Ring_05 @ Frame 30",
+      "stretch_ok": false,
+      "ok": true
+    },
+    "Legless_Sandworm_Death": {
+      "frames": 30,
+      "seconds": 1.0,
+      "loop": false,
+      "lowest_point_m": [
+        0.0,
+        0.0
+      ],
+      "no_ground_penetration": true,
+      "ground_contact_ok": true,
+      "max_stretch": 1.05,
+      "stretch_at": "Head @ Frame 0",
+      "stretch_ok": true,
+      "ok": true
+    }
+  },
+  "all_ok": true
+}

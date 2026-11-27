@@ -1,0 +1,22 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0146,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Legless_Sandworm_Attack1": 0.0,
+    "Legless_Sandworm_Attack2": 0.0,
+    "Legless_Sandworm_Burrow": 0.0,
+    "Legless_Sandworm_Death": 0.0,
+    "Legless_Sandworm_Emerge": 0.0,
+    "Legless_Sandworm_Hit": 0.0,
+    "Legless_Sandworm_Idle": 0.0,
+    "Legless_Sandworm_Ready": 0.0,
+    "Legless_Sandworm_Run": 0.0,
+    "Legless_Sandworm_TurnLeft": 0.0,
+    "Legless_Sandworm_TurnRight": 0.0,
+    "Legless_Sandworm_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}

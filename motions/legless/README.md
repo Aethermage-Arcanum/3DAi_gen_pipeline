@@ -1,7 +1,7 @@
 # Skelett legless (beinlos: Schlangen, Aale, Würmer)
 
 Rig: `rigging/legless_rig.py` (Werte `rigging/legless_defaults.toml`, pro Kreatur `[legless]`), gemeinsame Rig-Bausteine `rigging/rig_common.py`.
-Baukasten: `legless_kit.py`. Muster: `cobra/` (geplant: sandworm, Variante eel).
+Baukasten: `legless_kit.py`. Muster: `cobra/` (Variante eel), `sandworm/` (seit 2026-11-27, Sand Leviathan).
 Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Standard-Skelett (17 Knochen bei 14 Wirbeln, Unity „Generic“)
@@ -24,3 +24,14 @@ Ein Befehl: `python scripts/creature_pipeline.py creatures/<NN_name>`.
 
 ## Selbstprüfung pro Clip
 Bodenkontakt / kein Einsinken (tiefster Mesh-Punkt jedes Frames) · Schleife nahtlos · Rückkehr zur Ruhe · Mesh-Dehnung (Ort + Frame) · Lückenprüfung · Export-Gegentest.
+
+## Opt-in-Erweiterungen (seit 2026-11-27, für `sandworm`; ohne Angabe verhält sich alles wie vorher)
+Abwärtskompatibel: Eel Stalker per `scripts/regression.py --deep --creatures eel_stalker --against temp/sw_base` identisch.
+- **Rig** (`[legless]` der Kreatur): `joints` (Wirbel auf die Ringfurchen legen), `axial_weights` + `axial_blend`
+  (Ringe starr, Biegen nur in der Furche; Zahl oder Liste je Grenze), `rigid_spikes` (Stacheln starr am Ansatz),
+  `ground_ignore_spikes` (Mesh-Attribut `_NO_GROUND`: Stacheln zählen nicht für den Boden), `ring_bones`
+  (Blatt-Knochen `Ring_NN` tragen die Haut, Skalierung für Peristaltik, vererbt sich nicht). Details: Kopf von `rigging/legless_rig.py`.
+- **Baukasten**: `_NO_GROUND` wird in `mesh_min_z()`/`ground()` beachtet · `[meta] key_scale` backt Skalierungs-Keys ·
+  `[meta] render_ground = "rest"` setzt den Vorschau-Boden (`rigging/render_anim.py`) auf Ruhe-Bodenhöhe ·
+  Clip-Angabe `below_ground = {entry, dir, margin}` erlaubt Abtauchen; geprüft wird `entry_ok` (unter dem Boden nur auf
+  der Lochseite) statt „kein Einsinken“ · `body_world()` liefert die verformten Vertices als numpy-Array.

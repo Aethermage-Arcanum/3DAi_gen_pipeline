@@ -24,7 +24,7 @@ Dehnung auf den aus der SPIELKAMERA sichtbaren Flächen (C15, schräg von oben w
     Bereich = nächster Knochen in Ruhe (geometrisch, unabhängig von den Gewichten → vorher/nachher fair) + Normale:
       Rücken (Rumpf, Normale nach oben) · Flanke oben · Bauchlinie (Rumpf unter der Wirbelsäulen-Mitte) ·
       Hals/Nacken · Kopf · Schwanz · Schulter/Oberschenkel (Leg_*_1, Shoulder_*) · Unterbein
-      Achtbeiner (octopod): Thorax wie Rumpf, Abdomen_* → Hinterleib_oben (Normale nach oben) / Hinterleib,
+      Beinlos (legless): Spine_01…/Ring_01… wie Rumpf. Achtbeiner (octopod): Thorax wie Rumpf, Abdomen_* → Hinterleib_oben (Normale nach oben) / Hinterleib,
       Leg_*_Coxa/_Femur → Schulter/Oberschenkel
     Dehnung = Kantenlänge/Ruhelänge wie "orig" (verdichtete Kanten als Kette gemessen). Je Clip und Bereich:
     max, p99, Kanten > 1,5 / > 2,0, Frame; dazu die 40 schlimmsten sichtbaren Kanten aller Clips mit Gewichten
@@ -217,6 +217,7 @@ if MODE == "stretch":
 
 elif MODE == "visible":
     import math
+    import re
     from mathutils.bvhtree import BVHTree
     every = int(a[2]) if len(a) > 2 else 1
     me = body.data
@@ -277,7 +278,8 @@ elif MODE == "visible":
 
     def region(i):
         n = bname[i]
-        if n in ("Hips", "Spine_1", "Chest", "Thorax"):        # Thorax = Achtbeiner (octopod, seit 2026-11-21)
+        if n in ("Hips", "Spine_1", "Chest", "Thorax") or re.fullmatch(r"(Spine|Ring)_\d\d", n):
+            # Thorax = Achtbeiner (octopod, seit 2026-11-21); Spine_01…/Ring_01… = Beinlos-Rumpf (legless, 2026-11-27)
             if en[i, 2] > 0.55:
                 return "Ruecken"
             return "Bauchlinie" if mid[i, 2] < spine_z[i] else "Flanke"

@@ -1,0 +1,127 @@
+{
+  "skeleton": "legless",
+  "file": "SandLeviathan.fbx",
+  "meshes": 1,
+  "triangles": 4228,
+  "bones": 29,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 3,
+  "materials": [
+    "tripo_material_5ef34e47-9160-4183-b094-9ac3b95fcf9d"
+  ],
+  "textures": [
+    [
+      "Color_5ef34e47-9160-4183-b094-9ac3b95fcf9d",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_5ef34e47-9160-4183-b094-9ac3b95fcf9d",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Attack1",
+      [
+        1,
+        35
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Attack2",
+      [
+        1,
+        43
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Burrow",
+      [
+        1,
+        57
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Death",
+      [
+        1,
+        31
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Emerge",
+      [
+        1,
+        47
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Hit",
+      [
+        1,
+        19
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Ready",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Run",
+      [
+        1,
+        27
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_TurnLeft",
+      [
+        1,
+        45
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_TurnRight",
+      [
+        1,
+        45
+      ]
+    ],
+    [
+      "SandLeviathan|SandLeviathan|Legless_Sandworm_Walk",
+      [
+        1,
+        45
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.01,
+    -0.99,
+    0.1
+  ],
+  "foot_moves_m": null,
+  "dimensions_m": [
+    0.317,
+    0.978,
+    0.404
+  ],
+  "ok": true
+}

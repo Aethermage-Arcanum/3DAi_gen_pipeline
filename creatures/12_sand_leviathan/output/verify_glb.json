@@ -1,0 +1,134 @@
+{
+  "skeleton": "legless",
+  "file": "SandLeviathan.glb",
+  "meshes": 1,
+  "triangles": 4228,
+  "bones": 29,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 3,
+  "materials": [
+    "tripo_material_5ef34e47-9160-4183-b094-9ac3b95fcf9d"
+  ],
+  "textures": [
+    [
+      "Color_5ef34e47-9160-4183-b094-9ac3b95fcf9d",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_5ef34e47-9160-4183-b094-9ac3b95fcf9d",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_5ef34e47-9160-4183-b094-9ac3b95fcf9d",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Legless_Sandworm_Attack1",
+      [
+        0,
+        27
+      ]
+    ],
+    [
+      "Legless_Sandworm_Attack2",
+      [
+        0,
+        33
+      ]
+    ],
+    [
+      "Legless_Sandworm_Burrow",
+      [
+        0,
+        44
+      ]
+    ],
+    [
+      "Legless_Sandworm_Death",
+      [
+        0,
+        24
+      ]
+    ],
+    [
+      "Legless_Sandworm_Emerge",
+      [
+        0,
+        36
+      ]
+    ],
+    [
+      "Legless_Sandworm_Hit",
+      [
+        0,
+        14
+      ]
+    ],
+    [
+      "Legless_Sandworm_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Legless_Sandworm_Ready",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Legless_Sandworm_Run",
+      [
+        0,
+        20
+      ]
+    ],
+    [
+      "Legless_Sandworm_TurnLeft",
+      [
+        0,
+        35
+      ]
+    ],
+    [
+      "Legless_Sandworm_TurnRight",
+      [
+        0,
+        35
+      ]
+    ],
+    [
+      "Legless_Sandworm_Walk",
+      [
+        0,
+        35
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.01,
+    -0.99,
+    0.1
+  ],
+  "foot_moves_m": null,
+  "dimensions_m": [
+    0.318,
+    0.976,
+    0.405
+  ],
+  "ok": true
+}

@@ -34,6 +34,8 @@ sc.collection.objects.link(sun)
 # Boden als Kontaktreferenz (Füße müssen ihn berühren)
 body = bpy.data.objects["Body_Mesh"]
 zmin = min((body.matrix_world @ Vector(c)).z for c in body.bound_box)
+if "ground_z" in sc:                          # opt-in (z. B. legless_kit [meta] render_ground = "rest"): Abtauchen sichtbar
+    zmin = float(sc["ground_z"])
 bpy.ops.mesh.primitive_plane_add(size=6, location=(0, 0, zmin - 0.002))
 g = bpy.context.active_object
 gm = bpy.data.materials.new("g")

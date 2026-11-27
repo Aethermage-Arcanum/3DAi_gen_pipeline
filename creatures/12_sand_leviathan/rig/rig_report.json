@@ -1,0 +1,13 @@
+{
+  "vertices": 3409,
+  "parts": 1,
+  "length_m": 1.0,
+  "height_m": 0.326,
+  "bones": 29,
+  "segments": 13,
+  "weights": "axial",
+  "spike_vertices": 698,
+  "spike_groups": 70,
+  "lowest_body_z": -0.1443,
+  "lowest_spike_z": -0.1628
+}

@@ -1,0 +1,155 @@
+# Bewegungsmuster legless/sandworm – gedrungene Ringel-Würmer, die kriechen, sich eingraben und auftauchen
+# (erste Kreatur: Sand Leviathan). Recherche + Quellen: RESEARCH.md, Entscheidungen: README.md.
+# Winkel in Grad, Zeiten in Frames (30 fps). s = Bogenlänge der Wirbelkette: 0 = Schwanzspitze, 1 = Kopfansatz
+# (beim Leviathan: Ringe bis s ≈ 0.70, Panzer 0.70–1.0, dann Kopf/Maul). pitch/yaw = Abweichung von der GERADEN
+# Liege-Haltung des Modells (Ruhe-Richtung der Wirbel, keine feste Krümmung); head_pitch = Kopf gegenüber der Modell-Haltung (Welt).
+# Nutzer-Entscheidungen 2026-11-23: Wurm-Kriechen (Verdickungswellen + Wiegen ±10°) statt Schlängeln · Maul bleibt
+# offen und pumpt nur (keine neuen Maul-Knochen) · Burrow + Emerge mitbauen · Attack2 = Body Slam.
+# Peristaltik = Ring-Knochen werden dick+kurz bzw. dünn+lang (thick = Breite/Höhe, len_coupling = Kürzung je Dicke).
+
+[meta]
+skeleton = "legless"
+style = "sandworm"
+clip_prefix = "Legless_Sandworm"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Burrow", "Emerge", "Death"]
+inherit = { run = "walk", turn = "walk" }
+key_scale = true          # Ring-Knochen-Skalierung mitbacken (Peristaltik)
+render_ground = "rest"    # Vorschau-Boden auf Ruhe-Bodenhöhe (Abtauchen sichtbar, Stacheln stecken im Sand)
+
+[body]
+len_coupling = 0.8        # dick +10 % → 8 % kürzer (Regenwurm: dick+kurz verankert, dünn+lang streckt vor)
+thick_envelope = [[0.0, 0.5], [0.12, 1.0], [0.66, 1.0], [0.74, 0.35], [1.0, 0.25]]   # Panzer fast starr
+jaw_rest_deg = 0          # Maul wie modelliert (weit offen), Pumpen öffnet nur weiter
+neck = 3                  # Kopf-Knick auf Kopf + 3 Panzer-Wirbel verteilen (große Platten vertragen keinen Einzelknick)
+
+[walk]    # Wurm-Kriechen: 2 Verdickungswellen Kopf → Schwanz + Buckelwelle + ruhiges Wiegen, Kopf schiebt ruckartig
+cycle_frames = 44
+thick = 0.12              # Breite/Höhe ±12 %
+thick_waves = 2.0
+hump_deg = 5              # Neigen je Wirbel (Rückenplatten heben/senken sich)
+sway_deg = 10             # seitliches Wiegen (Gieren), Nutzer: etwa ±10°
+sway_waves = 0.6
+sway_envelope = [[0.0, 1.0], [0.6, 0.8], [1.0, 0.6]]
+head_lead_deg = 20        # Kopf ist der Wiege-Welle 20° Phase voraus (führt)
+head_pitch = 7            # Kopf leicht erhoben
+head_bob_deg = 4
+surge = 0.022             # Ruck-Gleiten: Körper schießt je Zyklus ±2,2 % der Länge vor/zurück (Unity schiebt konstant)
+jaw_pump_deg = 5
+pitch = [[0.0, 0], [0.9, 0], [1.0, 3]]   # Grundhaltung: liegt flach, Panzer-Ende minimal angehoben
+move_body_per_cycle = 0.18   # Vortrieb für Unity (Anteil Länge pro Zyklus, Regenwurm-Wert aus RESEARCH)
+
+[run]     # Sand-Pflügen (Sandfisch): eine große Welle, schneller, Kopf gesenkt wie ein Pflug
+cycle_frames = 26
+thick = 0.08
+thick_waves = 1.0
+hump_deg = 3
+sway_deg = 20
+sway_waves = 1.0
+sway_envelope = [[0.0, 1.0], [0.55, 0.9], [0.8, 0.6], [1.0, 0.45]]
+head_pitch = -6
+head_bob_deg = 3
+surge = 0.015
+jaw_pump_deg = 7
+move_body_per_cycle = 0.38
+
+[turn]    # Körper auf flachem Bogen (Modell-Grenze), Panzer + Kopf führen, Peristaltik läuft weiter (70 %)
+peristalsis_scale = 0.7
+arc_deg = 50              # Richtungsänderung Schwanz → Kopfansatz
+lead_deg = 18             # Panzer/Hals führt zusätzlich
+head_lead_deg = 10
+turn_speed_deg_s = 75     # für Unity (schwerfällig)
+
+[idle]    # liegt fast still, Ringe atmen, langsame Verdickungswelle, Kopf hebt sich und wittert, Maul pumpt langsam
+frames = 120
+breaths = 2
+breath = 0.03             # Breite ±3 %
+thick = 0.05
+thick_waves = 1.0
+look_deg = 12
+sniff_at = [0.3, 0.72]
+sniff_raise_deg = 9
+head_pitch = 4
+jaw_pump_deg = 4
+pitch = [[0.0, 0], [0.86, 0], [1.0, 4]]
+anchor_hi = 0.45          # hinterer Körper (s < 0.45) bleibt in allen Stand-Clips liegen (Anker)
+
+[ready]   # vorderes Drittel aufgerichtet (über die Panzer-Wirbel verteilt), Maul aufs Ziel, schnelles Pumpen
+frames = 40
+pitch = [[0.0, 0], [0.45, 0], [0.58, 10], [0.70, 24], [0.82, 36], [0.92, 42], [1.0, 40]]   # über 6 Wirbel verteilt
+head_pitch = -30          # Maul zeigt nach vorn auf das Ziel (gleicht die Aufrichtung aus)
+sway_deg = 7              # Pendeln des Vorderkörpers
+bob_deg = 3
+thick = 0.05              # schwache Verdickungswelle hält Spannung
+thick_waves = 1.5
+jaw_pump_deg = 8          # Hecheln
+pumps = 4                 # Pump-Zyklen pro Loop
+
+[attack1] # Vorstoß-Biss (Verschlingen): Stauchen → explosives Strecken mit Vorstoß → Raspeln → zurück in Ready
+frames = 34
+windup_end = 11
+strike_end = 16           # 5 Frames Zustoß
+rasp_end = 24
+hit_frame = 16
+windup = { pitch = [[0.0, 0], [0.5, 0], [0.62, 18], [0.74, 40], [0.86, 52], [1.0, 46]], head_pitch = -18, front_thick = 0.14, slide = -0.04 }
+strike = { pitch = [[0.0, 0], [0.5, 0], [0.62, 2], [0.74, -2], [0.86, -8], [1.0, -12]], head_pitch = -10, front_thick = -0.10, slide = 0.16 }
+rasp_roll_deg = 13        # Neunauge: Kopf rollt 2× hin und her
+rasp_tugs = 2             # Rumpf ruckt 2× nach
+rasp_tug = 0.02
+jaw_bite_deg = 10
+
+[attack2] # Body Slam: Vorderkörper steil hoch, kracht mit dem ganzen Vorderkörper vor dem Wurm auf den Boden, Nachfedern
+frames = 42
+rise_end = 14
+hold_end = 17
+impact_frame = 22
+settle_end = 30
+# rise: vordere ~65 % richten sich bis 75° auf (über 8 Wirbel verteilt), Maul schräg nach vorn-oben (head_pitch = Welt)
+rise = { pitch = [[0.0, 0], [0.3, 0], [0.45, 15], [0.6, 40], [0.75, 62], [0.88, 75], [1.0, 72]], head_pitch = 30, front_thick = 0.12, slide = -0.04 }
+slam = { pitch = [[0.0, 0], [0.3, 0], [0.45, 1], [0.6, 0], [0.75, -2], [0.88, -4], [1.0, -6]], head_pitch = -6, front_thick = -0.06, slide = 0.15 }
+impact_squash = 0.14      # Ringe am Vorderkörper quetschen beim Aufprall breit
+bounce_deg = 9            # Nachfedern (Vorderkörper hebt sich nach dem Aufprall noch einmal)
+
+[hit]     # Treffer aus Ready: Vorderkörper zuckt zurück, Stauchwelle läuft Kopf → Schwanz, zurück in Ready
+frames = 18
+peak = 0.2
+recoil_deg = 16
+head_snap_deg = 18
+jolt_deg = 10
+squash = 0.14             # Stauchwelle (dick + kurz), läuft bis ripple_end zum Schwanz
+ripple_end = 0.85
+slide = 0.04
+
+[burrow]  # Abtauchen: Kopf neigt sich und bohrt am festen Eintrittspunkt in den Boden, jeder Wirbel folgt dort
+frames = 56
+tilt_end = 10             # Kopf neigt sich nach unten (Körper liegt noch)
+dive_deg = 38             # Eintauchwinkel
+bend_window = 0.28        # Biegung über so viel Bogenlänge verteilt, liegt ganz VOR dem Loch (unter dem Boden)
+dive_end = 50             # bis hier ist der Körper bis zur Schwanzspitze im Loch
+end_e = -0.06             # am Ende ganz unter dem Boden
+thick = 0.07              # Schub-Peristaltik
+thick_waves = 2.0
+pushes = 3
+whip_deg = 22             # letzter Peitschenschlag der Schwanzspitze
+whip_start = 0.62         # Anteil des Clips
+
+[emerge]  # Auftauchen: steiler Durchbruch, Hochpunkt, Vorderkörper fällt mit Gewicht nach vorn, Rest zieht nach, Ready
+frames = 46
+rise_end = 9
+rise_e = 0.55             # bis hier (Bogenlänge) ist der Körper aus dem Loch (vordere ~45 %)
+start_depth = 0.35        # Frame 0: Nase liegt so viel Bogenlänge hinter dem Loch (ganz unter dem Boden)
+rise_deg = 62             # Austrittswinkel (steil, Maul zum Himmel)
+hold_end = 13
+impact_frame = 21         # Vorderkörper kracht auf den Boden
+bounce_end = 27
+bounce_deg = 8
+bend_window = 0.22        # Biegung am Loch, liegt ganz HINTER dem Loch (unter dem Boden)
+head_sky_deg = 25         # Maul zeigt beim Durchbruch nach oben
+
+[death]   # PLATZHALTER – Death-Clips sind gesperrt (Nutzer 2026-11-17), nicht ausarbeiten
+frames = 30
+
+[checks]
+ground_tolerance = 0.01
+max_stretch = 1.9
+stretch_every = 3
