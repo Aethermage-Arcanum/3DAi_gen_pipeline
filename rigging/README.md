@@ -286,3 +286,10 @@ Gelenk; Sohle starr, Hinterzehe nur am Toe; lose Teile je Vertex am nächsten Ha
 & "D:\Blender\blender.exe" -b <rig>/winged_rigged.blend -P rigging/winged_review.py -- rig <bild.png>
 & "D:\Blender\blender.exe" -b <rig>/clips.blend -P rigging/winged_review.py -- strip <bild.png> Winged_Drake_Walk 0,8,16 arpg,side,front
 ```
+
+## Säulenartige Gliedmaßen (Frost Colossus 2026-11-27)
+Opt-in in `quadruped_rig.py` (ohne die Zeilen alles wie bisher; Regression `--deep` Wolf, Reef Snapper, Hirsch, Bär, Shellback
+identisch): `leg_joints_fixed` (feste Gelenk-Anteile statt Biegungs-Suche, die an Eis-Armschienen verrauscht war), `leg_mirror`
+(links/rechts gemittelt), `joint_track_mean` (Hüfte über dem Bein statt im Schritt), `knee_forward`. Werte und Begründung:
+`creatures/13_frost_colossus/README.md`. Starre Eisplatten per Textur-Helligkeit wurden getestet und verworfen (sichtbare Dehnung
+schlechter), Details dort.

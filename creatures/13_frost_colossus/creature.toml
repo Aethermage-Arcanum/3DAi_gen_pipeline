@@ -19,3 +19,35 @@ role = "style"
 style = "quadruped/gorilla"
 variant = ""
 vorbild = ["Gorilla – Knöchelgang (vierbeinig)", "Gorilla – Aufrichten, Brusttrommeln, Schläge (Angriff eher humanoid)"]
+
+# Rig (Build-Agent 2026-11-27, Muster quadruped/gorilla). C15-Regeln von Anfang an (Dehnung aus der Spielkamera:
+# Rückenkamm, Schulterplatten, Nacken).
+[quadruped.rig]
+zone_lock = true          # Unterbein nicht über dem Ellbogen/Knie, Bein/Schulterblatt nicht auf dem Rückenkamm
+spine_chain_blend = 1.0   # Wirbelkette Becken→Hals entlang der Kette weich verteilt
+spine_top_pct = 78        # Eiszacken auf dem Rücken heben sonst die Wirbelsäulen-Mitte an (RESEARCH Hürde 1)
+joint_inset = 0.7         # breite Schultern: Arm dreht unter der Schulterplatte, nicht im Rumpf (Hürde 3)
+# Beingelenke (Hürde 2): die Biegungs-Suche griff an den säulenartigen Armen die Kante der Eis-Armschiene (Ellbogen links
+# 0,21 m, rechts 0,37 m über dem Boden) → feste Anteile der Spurhöhe, gemessen an der Seitenansicht (model_check.png):
+# Ellbogen 0,37 m (Oberkante Armschiene), Handgelenk 0,09 m (Oberkante Faust-Klotz), Knie 0,23 m, Sprunggelenk 0,09 m.
+leg_joints_fixed = true
+front_elbow = 0.92
+front_wrist = 0.22
+back_knee = 0.70
+back_hock = 0.27
+knee_forward = 0.05        # Knie 4 cm vor die Linie Hüfte–Sprunggelenk: IK knickt sicher nach vorn (Säulenbeine)
+leg_mirror = true         # links/rechts gespiegelt mitteln (Suche je Bein verrauscht)
+joint_track_mean = 0.5    # Hüft-/Schultergelenk aus dem oberen Spur-Abschnitt (Spur läuft oben in den Schritt)
+
+[quadruped.detect]
+spine_slice = 0.06        # grobes Low-Poly-Fell + Zacken: dickere Schnitte nur für Wirbelsäule + Hals
+mid_half_width = 0.06     # Bauch-Streifen schmaler: die dicken Oberschenkel ragen bei ±0,062 m in den Standard-Streifen
+                          # → Bauch über den Hinterbeinen wurde bei 0,18 m statt 0,32 m gelesen, Hüftgelenk viel zu tief
+
+[gaps]
+# 2026-11-28 (Build-Agent): Das Tripo-Mesh ist geometrisch EIN Teil, aber in Blender an jeder Facette aufgetrennt (1.569 UV-Inseln,
+# 7.717 statt ~2.400 Vertices). Mit pair_eps 0,015 zählte die Prüfung benachbarte Vertices verschiedener Facetten im Abstand
+# bis 1,5 cm als „aneinanderliegende Teile“ (Chest/Leg_F*_1 am Schulteransatz, bis 3,6 cm) – das ist Kantendehnung, keine Lücke.
+# Echte Risse gibt es nur zwischen deckungsgleichen Vertices; die haben im Rig identische Gewichte (WELD). Nachweis mit
+# pair_eps 0,001: 0 Paare an verschiedenen Knochen, Öffnung 0,0 cm in allen Clips (temp/go_gaps.json).
+pair_eps = 0.001

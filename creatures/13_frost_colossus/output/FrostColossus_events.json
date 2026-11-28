@@ -1,0 +1,156 @@
+{
+  "fps": 30,
+  "clips": {
+    "Quadruped_Gorilla_Walk": [
+      {
+        "frame": 5,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 21,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 26,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Gorilla_Run": [
+      {
+        "frame": 3,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 11,
+        "event": "footstep",
+        "leg": "FL"
+      },
+      {
+        "frame": 14,
+        "event": "footstep",
+        "leg": "FR"
+      }
+    ],
+    "Quadruped_Gorilla_Idle": [
+      {
+        "frame": 84,
+        "event": "slam"
+      }
+    ],
+    "Quadruped_Gorilla_Ready": [
+      {
+        "frame": 41,
+        "event": "slam"
+      }
+    ],
+    "Quadruped_Gorilla_Taunt": [
+      {
+        "frame": 29,
+        "event": "drum",
+        "leg": "FR"
+      },
+      {
+        "frame": 33,
+        "event": "drum",
+        "leg": "FL"
+      },
+      {
+        "frame": 36,
+        "event": "drum",
+        "leg": "FR"
+      },
+      {
+        "frame": 40,
+        "event": "drum",
+        "leg": "FL"
+      },
+      {
+        "frame": 44,
+        "event": "drum",
+        "leg": "FR"
+      },
+      {
+        "frame": 48,
+        "event": "drum",
+        "leg": "FL"
+      },
+      {
+        "frame": 51,
+        "event": "drum",
+        "leg": "FR"
+      },
+      {
+        "frame": 55,
+        "event": "drum",
+        "leg": "FL"
+      },
+      {
+        "frame": 70,
+        "event": "slam"
+      }
+    ],
+    "Quadruped_Gorilla_TurnLeft": [
+      {
+        "frame": 4,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Gorilla_TurnRight": [
+      {
+        "frame": 4,
+        "event": "footstep",
+        "leg": "FR"
+      },
+      {
+        "frame": 18,
+        "event": "footstep",
+        "leg": "BR"
+      },
+      {
+        "frame": 22,
+        "event": "footstep",
+        "leg": "FL"
+      }
+    ],
+    "Quadruped_Gorilla_Attack1": [
+      {
+        "frame": 31,
+        "event": "hit"
+      }
+    ],
+    "Quadruped_Gorilla_Attack2": [
+      {
+        "frame": 30,
+        "event": "hit"
+      },
+      {
+        "frame": 50,
+        "event": "root_motion",
+        "distance_m": 0.8496,
+        "axis": "x"
+      }
+    ],
+    "Quadruped_Gorilla_Hit": [],
+    "Quadruped_Gorilla_Death": [
+      {
+        "frame": 40,
+        "event": "dead"
+      }
+    ]
+  }
+}

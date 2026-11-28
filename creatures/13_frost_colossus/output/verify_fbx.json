@@ -1,0 +1,120 @@
+{
+  "skeleton": "quadruped",
+  "file": "FrostColossus.fbx",
+  "meshes": 1,
+  "triangles": 4669,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_be817a02-7109-4eb2-8728-9df2863063b0"
+  ],
+  "textures": [
+    [
+      "Color_be817a02-7109-4eb2-8728-9df2863063b0",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_be817a02-7109-4eb2-8728-9df2863063b0",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Attack1",
+      [
+        1,
+        58
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Attack2",
+      [
+        1,
+        51
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Death",
+      [
+        1,
+        41
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Hit",
+      [
+        1,
+        17
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Idle",
+      [
+        1,
+        121
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Ready",
+      [
+        1,
+        61
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Run",
+      [
+        1,
+        23
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Taunt",
+      [
+        1,
+        81
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_TurnLeft",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_TurnRight",
+      [
+        1,
+        37
+      ]
+    ],
+    [
+      "FrostColossus|FrostColossus|Quadruped_Gorilla_Walk",
+      [
+        1,
+        43
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    -0.0,
+    -1.0,
+    -0.06
+  ],
+  "foot_moves_m": 0.0986,
+  "dimensions_m": [
+    0.882,
+    0.978,
+    0.728
+  ],
+  "ok": true
+}

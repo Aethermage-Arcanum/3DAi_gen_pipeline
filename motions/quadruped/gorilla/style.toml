@@ -1,0 +1,191 @@
+# Bewegungsmuster quadruped/gorilla – Gorilla (erstes Modell: Frost Colossus). Schwerer Knöchelgang in Diagonal-Sequenz
+# (Körper stelzt über die gestreckten Arme, Schultern + Eisplatten rollen, Arme schwingen außen herum), Sturm-Galopp,
+# Drohen mit Boden-Schlag, Brusttrommeln (eigener Clip Taunt), Doppelfaust-Hammer, Sturm-Hieb mit Root Motion.
+# Generator: gorilla_clips.py. Herleitung + Naturreferenzen: README.md und RESEARCH.md.
+# Winkel in Grad, Längen als Anteil der Körperlänge (stride, dx, reach) bzw. Rumpfhöhe (lift, Höhen) → skalieren mit der Statur.
+# Nutzer-Entscheidungen 2026-11-23: Schwanz bleibt und schwingt mit · Brusttrommeln = eigener Clip Taunt ·
+# Attack2 = Sturm-Hieb mit Root Motion.
+[meta]
+skeleton = "quadruped"
+style = "gorilla"
+clip_prefix = "Quadruped_Gorilla"
+fps = 30
+clips = ["Walk", "Run", "Idle", "Ready", "Taunt", "TurnLeft", "TurnRight", "Attack1", "Attack2", "Hit", "Death"]
+inherit = { turn = "walk" }
+
+[rig]
+scapula_stiffness = 0.65 # Schulterblatt nur mäßig mitgleiten: das Rollen der Schultern kommt aus dem Schultergürtel (Chest);
+                          # 0,4 → Hals/Schulter-Übergang sichtbar gedehnt (Walk 2,27 → 1,98, Attack2 3,84 → 3,43)
+
+[walk]   # Knöchelgang, Diagonal-Sequenz: Aufsetzen HL 0 · VR 0,1 · HR 0,5 · VL 0,6 (Primaten; Sellers & Hirasaki 2018)
+cycle_frames = 42     # 1,4 s (Gorilla 0,5–2,1 s)
+duty = 0.70           # Menschenaffen 0,62–0,74; immer 3 Gliedmaßen am Boden
+order = { BL = 0.0, FR = 0.9, BR = 0.5, FL = 0.4 }
+foot_profile = "smooth"
+swing_match = 0.7
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.26
+lift_front = 0.11     # Faust wird flach nach vorn geschwungen …
+arm_out = 0.05       # … und schwingt dabei außen herum (Anteil Länge) – von oben gut lesbar
+lift_back = 0.07
+toe_curl_deg = 8      # Faust ohne Finger: Krallenreihe kaum einrollen (Hürde 9)
+bob = 0.02            # Brust steigt mitten im Stand der Arme (Stelze) und sinkt danach
+hip_yaw_deg = 5
+shoulder_yaw_deg = 13  # Schultergürtel giert …
+hip_roll_deg = 3
+shoulder_roll_deg = 14 # … und rollt deutlich: Schulterplatten + Eiszacken pendeln (Haupt-Lesemerkmal von oben)
+sway = 0.03          # Rumpf schwankt zur Standfaust (breite Armstellung)
+head_bob_deg = 2
+head_gain = 0.4       # Kopf tief und ruhig
+neck_lag = 0.06
+neck_lift_deg = -6
+head_swing_deg = 8    # kleines Seitpendeln gegen die Schultern
+head_swing_lag = 0.12
+tail_deg = 10          # schwerer Schwanz schwingt verzögert gegen das Becken
+tail_lift_deg = 0
+reach_smooth = 4
+reach_flat = 0.5
+
+[run]    # Sturm-Galopp (Schritt → Galopp, kein Trab): Füße HL 0 · HR 0,1, dann Fäuste VL 0,5 · VR 0,6; eine gesammelte Schwebe
+body = "gallop"
+cycle_frames = 22
+duty = 0.38
+order = { BL = 0.0, BR = 0.9, FL = 0.5, FR = 0.4 }
+foot_profile = "smooth"
+swing_match = 0.6
+lift_peak = 0.45
+curl_peak = 0.35
+stride = 0.30
+swing_ext_front = 0.08
+swing_ext_back = 0.06
+arm_out = 0.03
+reach_flat = 0.7
+lift_front = 0.22
+lift_back = 0.15
+toe_curl_deg = 12
+spine_flex_deg = 10   # Rücken rund beim Aufsetzen der Füße, gestreckt beim Abdruck
+flex_peak = 0.95
+pitch_deg = 8         # Buckel pumpt: Brust hoch beim Abdruck hinten, tief beim Landen der Fäuste
+pitch_peak = 0.30
+bob = 0.045
+bob_low = 0.2
+roll_deg = 4
+spine_side_deg = 3
+head_gain = 0.45
+neck_lift_deg = -10   # Kopf tief und vorgestreckt
+neck_lag = 0.06
+tail_deg = 5
+tail_lift_deg = 6     # Schwanz als Balance leicht gehoben
+reach_smooth = 3
+
+[turn]   # auf der Stelle: Fäuste wandern außen um die Füße herum, Brust dreht voraus, Kopf führt, Becken + Schwanz schleppen
+cycle_frames = 36
+duty = 0.64
+turn_deg = 32
+stride = 0.0
+turn_bend_deg = 18
+turn_head_deg = 30
+head_swing_deg = 3
+arm_out = 0.03
+
+[idle]   # schwer atmen, Gewicht verlagern, eine Faust hebt sich kurz und setzt schwer wieder auf, Kopf schaut um (Kopf führt)
+frames = 120
+breathe_deg = 2.5
+look_deg = 28
+fist_leg = "FL"
+fist_lift = 0.14
+reach_smooth = 3
+
+[ready]  # Drohen: Gewicht zurück, Brust halb hoch, Kopf schüttelt, Maul auf (Brüllen), eine Faust schlägt auf (slam), Gewicht pendelt
+frames = 60
+crouch = 0.05
+rear_deg = 5          # Brust hebt sich etwas um die Hüfte (Fäuste stehen, Arme fast gestreckt)
+sway = 0.03           # Gewicht pendelt schwer links/rechts (Anteil Länge)
+shake_deg = 16
+roar_deg = 30
+slap_leg = "FR"
+slap_lift = 0.42      # Faust hoch (Anteil Rumpfhöhe) …
+slap_reach = 0.06     # … und schlägt etwas weiter vorn auf (Anteil Länge)
+reach_smooth = 4
+
+[taunt]  # Brusttrommeln (Nutzer 2026-11-23: eigener Clip): ducken → ganz aufrichten, Hüfte setzt sich zurück, Arme weit
+         # seitlich auf → Hände abwechselnd vor die Brust (Ellbogen außen) → Arme weit auf, Brüllen → nach vorn auf die Fäuste
+frames = 80
+crouch_end = 8
+rise_end = 22
+open_end = 27
+drum_end = 57
+show_end = 62
+drop_end = 70
+beats = 8             # Schläge (abwechselnd), ≈ 8 in 1 s
+rear_deg = 50         # Rumpf-Neigung oben (Becken-Pivot) …
+spine_rear_deg = 14   # … plus Rücken streckt sich → Brust ≈ 70°
+sit_back = 0.06
+sit_down = 0.07
+tail_lift = 0.85      # Schwanz hebt sich gegen das Kippen (Anteil der Neigung) – rammt sonst in den Boden (Hürde 8)
+jaw_open_deg = 32
+kick_deg = 0
+reach_smooth = 3
+
+[attack1] # Doppelfaust-Hammer: ducken → hoch aufrichten, beide Fäuste über den Kopf, Brüllen (halten) → Körper fällt nach
+          # vorn, beide Fäuste schlagen weit vor dem Körper auf (hit) → Aufprall federt durch Schultern, Hals, Kopf, Schwanz
+frames = 57
+crouch_end = 7
+rise_end = 19
+hold_end = 26
+slam_end = 31
+hit_frame = 31
+rear_deg = 48
+spine_rear_deg = 12
+sit_back = 0.05
+sit_down = 0.06
+tail_lift = 0.85
+slam_reach = 0.36     # Fäuste schlagen so weit vor der Ruhe-Position auf (Anteil Länge) – vor dem Kopf
+slam_inward = 0.12    # … und so weit zur Mitte (Doppelfaust)
+slam_lunge = 0.11     # Rumpf schiebt beim Schlag nach vorn
+slam_pitch_deg = -9
+impact_crouch = 0.13
+jaw_open_deg = 34
+reach_smooth = 3
+
+[attack2] # Sturm-Hieb (Root Motion, Nutzer 2026-11-23): ducken → 2 Galoppsprünge aufs Ziel → im Vorbeistürmen seitlicher
+          # Schwinger mit dem rechten Arm (Rumpf verdreht sich zurück, Schulter führt, Faust fegt flach von außen nach
+          # innen-vorn auf Gegnerhöhe, hit) → Abbremsen auf drei Gliedmaßen → Faust setzt auf
+frames = 50
+distance = 0.85       # Root Motion (Anteil Länge)
+leg = "FR"
+windup = 23           # Faust außen hinten, Rumpf weggedreht
+hit_frame = 30
+strike_end = 31
+plant_frame = 38
+swing_height = 0.9    # Faust beim Treffer so hoch (Anteil Rumpfhöhe über dem Boden) – Gegnerhöhe, knapp unter der Schulter
+swing_ahead = 0.16    # … so weit vor der Nasenspitze in Ruhe (Anteil Länge, zuzüglich Root Motion)
+swing_across = 0.0    # … und so weit seitlich (0 = Körpermitte)
+twist_deg = 24        # Schultergürtel verdreht sich (Ausholen weg, Hieb zurück)
+pitch_deg = 7
+reach_smooth = 3
+
+[hit]
+frames = 16
+jolt = 0.04
+roll_deg = 6
+head_deg = 20
+reach_smooth = 2
+
+[death]  # PLATZHALTER (Nutzerregel: Death-Clips nicht anfassen) – zur Seite kippen wie quadruped/bear
+frames = 40
+collapse_start = 4
+collapse_end = 22
+side = 1
+legs_limp_deg = 25
+
+[checks]
+contact_tolerance = 0.012
+planted_tolerance = 0.012
+min_stride = 0.05
+max_stretch = 1.9
+stretch_every = 3
+
+[ik]   # steife Faust/Sohle: beim Absenken beugen Schulter/Ellbogen bzw. Hüfte/Knie
+stiffness = { Leg_3 = 0.8 }

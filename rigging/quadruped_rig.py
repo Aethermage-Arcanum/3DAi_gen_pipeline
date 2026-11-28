@@ -154,11 +154,33 @@ for name, fv in FEET.items():
             c = band[:, :2].mean(0)
         pts.append(np.array([c[0], c[1], z]))
         z += D["track_step"] * H
-    back = midline_profile(pts[-1][0], D["mid_half_width"] * H)
+    jp = pts[-1]
+    # joint_track_mean (optional, Frost Colossus 2026-11-27): Schulter-/Hüftgelenk (x, y) aus dem Mittel des oberen Spur-
+    # Abschnitts (Anteil der Spurhöhe) statt aus dem letzten Spurpunkt. Bei dicken Oberschenkeln läuft die Spur oben in
+    # den Bauch/Schritt (Gorilla: Hüfte bei x −0,05 statt über dem Bein bei −0,10). Ohne Wert wie bisher.
+    if RIG.get("joint_track_mean", 0):
+        tr_ = np.array(pts)
+        jp = tr_[tr_[:, 2] >= tr_[-1, 2] - RIG["joint_track_mean"] * (tr_[-1, 2] - tr_[0, 2])].mean(0)
+    back = midline_profile(jp[0], D["mid_half_width"] * H)
     top_z = back[1] if back else z_top + 0.2 * H
-    joint = np.array([pts[-1][0], Y_MID + RIG["joint_inset"] * (pts[-1][1] - Y_MID),
+    joint = np.array([jp[0], Y_MID + RIG["joint_inset"] * (jp[1] - Y_MID),
                       z_top + RIG["joint_depth"] * (top_z - z_top)])
     LEGS[name] = {"track": np.array(pts), "belly": z_top, "back": top_z, "joint": joint, "foot": fv}
+
+
+def mirror_y(p):
+    return np.array([p[0], 2 * Y_MID - p[1], p[2]])
+
+
+# leg_mirror (optional, Frost Colossus 2026-11-27): Beingelenke links/rechts gespiegelt gemittelt. Bauch-, Rücken- und
+# Ellbogensuche je Bein sind bei grobem Low-Poly verrauscht (Gorilla: Ellbogen links 0,21 m, rechts 0,37 m über dem
+# Boden) → asymmetrische Clips. Ohne Wert wie bisher.
+if RIG.get("leg_mirror", False):
+    for a_, b_ in (("FL", "FR"), ("BL", "BR")):
+        for k in ("belly", "back"):
+            LEGS[a_][k] = LEGS[b_][k] = (LEGS[a_][k] + LEGS[b_][k]) / 2
+        j = (LEGS[a_]["joint"] + mirror_y(LEGS[b_]["joint"])) / 2
+        LEGS[a_]["joint"], LEGS[b_]["joint"] = j, mirror_y(j)
 
 
 def bend(track, lo, hi, sign):
@@ -183,20 +205,28 @@ for name, lg in LEGS.items():
     tip[2] = GROUND
     ball = np.array([*fv[:, :2].mean(0), GROUND + D["ball_height"] * H])
     h = lambda f: tr[min(len(tr) - 1, int(round(f * (len(tr) - 1))))]  # noqa: E731
+    # leg_joints_fixed (optional, Frost Colossus 2026-11-27): Ellbogen/Knie/Handgelenk/Sprunggelenk an den festen Anteilen
+    # front_elbow/front_wrist/back_knee/back_hock der Spurhöhe statt per Biegungs-Suche (säulenartige Arme mit Eis-Armschiene:
+    # die Suche griff die Kante der Schiene). Ohne Wert wie bisher.
+    fixed = RIG.get("leg_joints_fixed", False)
     if name[0] == "F":                                 # vorne: fast gerade, Ellbogen hinten
         wrist = h(RIG["front_wrist"])
-        elbow = bend(tr, 0.5, 0.95, -1)
+        elbow = None if fixed else bend(tr, 0.5, 0.95, -1)
         elbow = elbow if elbow is not None else h(RIG["front_elbow"])
     else:                                              # hinten: Sprunggelenk hinten, Knie vorne
-        wrist = bend(tr, 0.15, 0.45, -1)
+        wrist = None if fixed else bend(tr, 0.15, 0.45, -1)
         wrist = wrist if wrist is not None else h(RIG["back_hock"])
-        elbow = bend(tr, 0.5, 0.95, 1)
+        elbow = None if fixed else bend(tr, 0.5, 0.95, 1)
         elbow = elbow if elbow is not None else h(RIG["back_knee"])
         # knee_out (optional, Shellback 2026-11-23): Knie seitlich nach außen (Anteil H). Gespreizte Schildkröten-Hinterbeine
         # sind als gerade Säule modelliert → Kette in Ruhe fast gestreckt (0,96–0,98), jede Rumpfbewegung zwang den Rumpf
         # nach unten. Mit dem Knie außen beugt die IK seitlich (Knie nach außen, wie beim echten Tier). Ohne Wert wie bisher.
         if RIG.get("knee_out", 0):
             elbow = elbow + np.array([0, (1 if name[1] == "L" else -1) * RIG["knee_out"] * H, 0])
+        # knee_forward (optional, Frost Colossus 2026-11-27): Knie nach vorn (Anteil H). Gerade Säulen-Hinterbeine: Hüfte,
+        # Knie und Sprunggelenk lagen fast auf einer Linie, die IK (ohne Pol-Ziel) hätte nach hinten knicken können.
+        if RIG.get("knee_forward", 0):
+            elbow = elbow + np.array([RIG["knee_forward"] * H, 0, 0])
     par = f"Shoulder_{name}" if name[0] == "F" else "Hips"
     if name[0] == "F":                                 # Schulterblatt: Widerrist-Seite → Schultergelenk
         top = np.array([lg["joint"][0] - RIG["scapula_back"] * L, Y_MID + 0.7 * (lg["joint"][1] - Y_MID),
@@ -206,6 +236,14 @@ for name, lg in LEGS.items():
     BONES[f"Leg_{name}_2"] = (elbow, wrist, f"Leg_{name}_1")
     BONES[f"Leg_{name}_3"] = (wrist, ball, f"Leg_{name}_2")
     BONES[f"Leg_{name}_4"] = (ball, tip, f"Leg_{name}_3")
+if RIG.get("leg_mirror", False):                       # Knochen links/rechts gespiegelt mitteln (siehe oben)
+    for a_, b_ in (("FL", "FR"), ("BL", "BR")):
+        for bn in ([f"Shoulder_{{}}"] if a_[0] == "F" else []) + [f"Leg_{{}}_{k}" for k in (1, 2, 3, 4)]:
+            A_, B_ = BONES[bn.format(a_)], BONES[bn.format(b_)]
+            hd = (np.asarray(A_[0]) + mirror_y(B_[0])) / 2
+            tl = (np.asarray(A_[1]) + mirror_y(B_[1])) / 2
+            BONES[bn.format(a_)] = (hd, tl, A_[2])
+            BONES[bn.format(b_)] = (mirror_y(hd), mirror_y(tl), B_[2])
 
 
 # ------------------------------------------------------------------ Wirbelsäule, Hals, Kopf, Schwanz

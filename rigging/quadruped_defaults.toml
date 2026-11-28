@@ -69,3 +69,8 @@ adaptive_belly_strip = false # Bauch-Streifen schmaler als der Fußabstand (eng 
 # shell_neck_free = true     # Halsöffnung/Kehle ohne Schulterblatt-/Bein-Gewichte; shell_neck_free_width, _soft (Anteil H)
 # shell_blend_width = 0.12   # Übergang nach Abstand (Anteil H); ohne: shell_blend_rings = 2 Kanten-Ringe
 # knee_out = 0.07            # Hinterbein-Knie seitlich nach außen (Anteil H): gerade modellierte Säulenbeine beugen
+# Säulenartige Gliedmaßen / grobes Low-Poly (Frost Colossus 2026-11-27) – ohne die Zeilen bleibt alles wie bisher:
+# leg_joints_fixed = true    # Ellbogen/Knie/Hand-/Sprunggelenk an front_elbow/front_wrist/back_knee/back_hock statt Biegungs-Suche
+# leg_mirror = true          # Beingelenke links/rechts gespiegelt mitteln
+# joint_track_mean = 0.5     # Schulter-/Hüftgelenk (x, y) aus dem Mittel des oberen Spur-Abschnitts (Anteil Spurhöhe)
+# knee_forward = 0.05        # Hinterbein-Knie nach vorn (Anteil H): gerade Säulenbeine knicken sicher nach vorn

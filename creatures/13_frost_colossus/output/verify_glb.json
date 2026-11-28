@@ -1,0 +1,127 @@
+{
+  "skeleton": "quadruped",
+  "file": "FrostColossus.glb",
+  "meshes": 1,
+  "triangles": 4669,
+  "bones": 30,
+  "missing_standard_bones": [],
+  "unweighted_vertices": 0,
+  "max_influences": 4,
+  "materials": [
+    "tripo_material_be817a02-7109-4eb2-8728-9df2863063b0"
+  ],
+  "textures": [
+    [
+      "Color_be817a02-7109-4eb2-8728-9df2863063b0",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "NormalGL_be817a02-7109-4eb2-8728-9df2863063b0",
+      [
+        1024,
+        1024
+      ]
+    ],
+    [
+      "ORM_be817a02-7109-4eb2-8728-9df2863063b0",
+      [
+        1024,
+        1024
+      ]
+    ]
+  ],
+  "actions": [
+    [
+      "Quadruped_Gorilla_Attack1",
+      [
+        0,
+        45
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Attack2",
+      [
+        0,
+        40
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Death",
+      [
+        0,
+        32
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Hit",
+      [
+        0,
+        12
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Idle",
+      [
+        0,
+        96
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Ready",
+      [
+        0,
+        48
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Run",
+      [
+        0,
+        17
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Taunt",
+      [
+        0,
+        64
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_TurnLeft",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_TurnRight",
+      [
+        0,
+        28
+      ]
+    ],
+    [
+      "Quadruped_Gorilla_Walk",
+      [
+        0,
+        33
+      ]
+    ]
+  ],
+  "head_direction_blender": [
+    0.0,
+    -1.0,
+    -0.06
+  ],
+  "foot_moves_m": 0.0818,
+  "dimensions_m": [
+    0.88,
+    0.978,
+    0.728
+  ],
+  "ok": true
+}

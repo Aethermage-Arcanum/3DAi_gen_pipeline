@@ -1,0 +1,21 @@
+{
+  "pairs_checked": 0,
+  "threshold_m": 0.0151,
+  "max_opening_m": 0.0,
+  "joints_over_threshold": 0,
+  "per_clip_max_m": {
+    "Quadruped_Gorilla_Attack1": 0.0,
+    "Quadruped_Gorilla_Attack2": 0.0,
+    "Quadruped_Gorilla_Death": 0.0,
+    "Quadruped_Gorilla_Hit": 0.0,
+    "Quadruped_Gorilla_Idle": 0.0,
+    "Quadruped_Gorilla_Ready": 0.0,
+    "Quadruped_Gorilla_Run": 0.0,
+    "Quadruped_Gorilla_Taunt": 0.0,
+    "Quadruped_Gorilla_TurnLeft": 0.0,
+    "Quadruped_Gorilla_TurnRight": 0.0,
+    "Quadruped_Gorilla_Walk": 0.0
+  },
+  "worst": [],
+  "ok": true
+}
